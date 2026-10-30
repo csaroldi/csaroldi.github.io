@@ -1,0 +1,1343 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Orlando, do nosso jeito: monte seus dias</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css">
+<style>
+:root{
+  --bg:#FAF5EE; --paper:#FFFFFF; --ink:#16323A; --muted:#5C5850; --faint:#8A8476;
+  --line:#E5DACB; --line2:#D2C4B0;
+  --teal:#127C7A; --teal-ink:#0A4F4E; --teal-soft:#DDF1EF;
+  --coral:#E0653F; --coral-soft:#FCE5DB; --coral-ink:#8C3214;
+  --green:#3E8E5A; --green-soft:#E3F1E7; --amber:#C98A1B; --amber-soft:#FAEEDA; --amber-ink:#7A4D06;
+  --red:#A32D2D; --c-soft:#EFE9F7; --c-ink:#4A3577;
+  --gem:#2A6FB0; --gem-soft:#E3EEFA;
+  --serif:'Cormorant Garamond',Georgia,serif; --sans:'DM Sans',system-ui,-apple-system,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.45;display:flex;flex-direction:column}
+button{font-family:inherit;font-size:15px;cursor:pointer;border-radius:10px;border:1px solid var(--line2);background:var(--paper);color:var(--ink);padding:9px 16px;min-height:42px}
+button:hover{border-color:var(--teal)}
+button.primary{background:var(--teal);border-color:var(--teal);color:#fff;font-weight:500}
+button.primary:hover{background:var(--teal-ink)}
+button.ghost{background:transparent;color:var(--teal);border-color:var(--teal)}
+input,textarea{font-family:inherit;font-size:16px;color:var(--ink);background:var(--paper);border:1px solid var(--line2);border-radius:10px;padding:9px 12px;width:100%}
+input:focus,textarea:focus,button:focus-visible{outline:3px solid #8FD0CB;outline-offset:1px}
+a{color:var(--teal)}
+
+/* topo */
+.top{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;padding:18px 28px 14px;border-bottom:1px solid var(--line);background:var(--bg);flex:none;position:relative}
+.eyebrow{margin:0;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--teal);font-weight:500}
+h1{font-family:var(--serif);font-weight:400;font-size:40px;line-height:1.05;margin:4px 0 2px;letter-spacing:.005em}
+h1 b{font-weight:600}
+h1 i{font-weight:400;font-size:.72em;color:var(--muted)}
+.by{margin:0;font-size:14px;color:var(--muted)}
+.by::after{content:"";display:block;width:44px;height:2px;background:var(--coral);margin-top:8px}
+.actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:flex-end}
+#progress{font-size:15px;color:var(--ink);font-weight:500;margin-right:6px}
+#autosave{font-size:13px;color:var(--green);margin-right:8px}
+#autosave i{vertical-align:-2px}
+.langs{position:absolute;top:14px;right:28px;display:flex;gap:6px}
+.langs button{min-height:30px;padding:3px 12px;border-radius:999px;font-size:13px;font-weight:500;letter-spacing:.05em}
+.langs button.on{background:var(--ink);border-color:var(--ink);color:#fff}
+.top .actions{margin-top:34px}
+.brand{flex:none}
+h1{white-space:nowrap}
+#btnTrip{display:inline-flex;align-items:center;gap:8px}
+
+/* intro */
+#intro{margin:14px 28px 0;background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:14px 18px;display:flex;gap:20px;align-items:center;flex:none}
+#intro ol{margin:0;padding:0;list-style:none;display:flex;gap:22px;flex:1}
+#intro li{display:flex;gap:10px;align-items:flex-start;font-size:15px;flex:1}
+#intro .n{flex:none;width:28px;height:28px;border-radius:50%;background:var(--teal);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:500;font-size:14px}
+#intro.hide{display:none}
+#introMini{align-self:flex-start;margin:10px 28px 0;min-height:34px;padding:5px 14px;font-size:14px;border-radius:999px;color:var(--teal);border-color:#A7D8D4;background:var(--paper);display:inline-flex;align-items:center;gap:6px;flex:none}
+#introMini.hide{display:none}
+
+/* barra de seleção */
+#selbar{margin:12px 28px 0;background:var(--teal);color:#fff;border-radius:12px;padding:10px 16px;display:flex;align-items:center;gap:14px;flex:none;font-size:16px}
+#selbar[hidden]{display:none}
+#selbar b{font-weight:700}
+#selbar button{background:transparent;color:#fff;border-color:#fff;min-height:36px;padding:6px 12px;margin-left:auto}
+
+/* colunas */
+.cols{flex:1;min-height:0;display:grid;grid-template-columns:minmax(380px,0.9fr) minmax(0,1.1fr);gap:22px;padding:14px 28px 0}
+.col{min-height:0;overflow-y:auto;padding-bottom:40px}
+.col h2{font-family:var(--serif);font-weight:600;font-size:28px;margin:0 0 8px}
+.lefthead,.righthead{position:sticky;top:0;background:var(--bg);z-index:5;padding-bottom:10px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.chip{border-radius:999px;padding:6px 14px;min-height:36px;font-size:14px;background:var(--paper);display:inline-flex;align-items:center;gap:6px}
+.chip.on{background:var(--teal);border-color:var(--teal);color:#fff}
+.chip i{font-size:15px}
+.found{font-size:13px;color:var(--muted);margin-top:8px}
+
+/* grupos */
+.grp{background:var(--paper);border:1px solid var(--line);border-radius:14px;margin-bottom:10px;overflow:hidden}
+.ghead{display:flex;align-items:center;gap:12px;width:100%;border:0;border-radius:0;background:transparent;padding:12px 16px;text-align:left;min-height:56px}
+.ghead:hover{background:#FCF8F2}
+.gbar{width:6px;align-self:stretch;border-radius:4px;flex:none}
+.gname{font-weight:500;font-size:17px}
+.gsub{font-size:13px;color:var(--muted)}
+.gcount{margin-left:auto;font-size:14px;color:var(--muted);white-space:nowrap}
+.gchev{transition:transform .2s;color:var(--muted)}
+.grp.open .gchev{transform:rotate(180deg)}
+.gbody{padding:4px 12px 12px}
+.addidea{width:100%;border-style:dashed;color:var(--c-ink);border-color:#B9A6DA;background:var(--c-soft);font-weight:500;margin:4px 0 8px}
+
+/* cartões */
+.card{display:flex;gap:12px;align-items:flex-start;border:1px solid var(--line);border-radius:12px;padding:8px;margin-top:8px;background:var(--paper);cursor:grab;position:relative;transition:border-color .15s, box-shadow .15s}
+.card:hover{border-color:var(--line2);box-shadow:0 2px 8px rgba(22,50,58,.07)}
+.card.sel{border:2px solid var(--teal);padding:7px;background:#F4FBFA}
+.card.dragging{opacity:.45}
+.card.out{opacity:.62}
+.thumb{width:76px;height:64px;border-radius:9px;flex:none;background:var(--c);display:flex;align-items:center;justify-content:center;color:#fff;font-size:28px;overflow:hidden;position:relative}
+.thumb img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0;opacity:0;transition:opacity .3s}
+.thumb img.ok{opacity:1}
+.cbody{flex:1;min-width:0}
+.cname{font-weight:500;font-size:16px;line-height:1.25}
+.cmeta{font-size:13px;color:var(--muted);margin-top:4px;display:flex;flex-wrap:wrap;gap:4px 8px;align-items:center}
+.eff{display:inline-flex;align-items:center;gap:5px}
+.eff::before{content:"";width:9px;height:9px;border-radius:50%;background:var(--dot)}
+.e1{--dot:var(--green)}.e2{--dot:var(--amber)}.e3{--dot:var(--red)}.e0{--dot:var(--line2)}
+.tag{font-size:12px;border-radius:999px;padding:1px 8px;background:#F3EDE3;color:var(--muted);white-space:nowrap}
+.tag.sleep{background:var(--coral-soft);color:var(--coral-ink)}
+.tag.used{background:var(--teal-soft);color:var(--teal-ink)}
+.tag.new{background:#FFF1C9;color:#7A5A00;font-weight:500}
+.tag.gem{background:var(--gem-soft);color:var(--gem);font-weight:500}
+.tag.free{background:var(--green-soft);color:#24603A}
+.tag.in{background:var(--green-soft);color:#24603A;font-weight:500}
+.tag.out{background:#EEE9E1;color:var(--faint);text-decoration:line-through}
+.tag.when{background:#F3EDE3;color:var(--ink)}
+.tag.mich{background:#FBE3E3;color:#9B1C1C;font-weight:500}
+.card.isfood{border-left:4px solid #B5552F}
+.tag.food{background:#F8E3D9;color:#7A3518;font-weight:500}
+.tag.br{background:#E2F0E3;color:#1F5A2E}
+.price{font-weight:500;color:#7A3518}
+.foodsep{font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:#7A3518;font-weight:500;margin:16px 2px 2px;padding-top:10px;border-top:1px dashed var(--line2)}
+.it.food{background:#F8E3D9;color:#7A3518}
+.sub{border:1px solid var(--line);border-radius:12px;margin-top:8px;overflow:hidden}
+.shead{display:flex;align-items:center;gap:10px;width:100%;border:0;border-radius:0;background:#EEF6F4;padding:10px 14px;text-align:left;min-height:52px}
+.shead:hover{background:#E2F0ED}
+.sname{font-weight:500;font-size:16px;color:var(--teal-ink)}
+.shead .gchev{margin-left:auto}
+.sub.open .gchev{transform:rotate(180deg)}
+.sbody{padding:4px 10px 10px}
+.howto{background:#EEF6F4;border-radius:10px;padding:8px 12px;margin-top:8px;font-size:14px;color:var(--teal-ink)}
+.howto p{margin:3px 0}
+.howto i{vertical-align:-2px}
+.cdesc{font-size:14px;color:var(--ink);margin-top:6px;line-height:1.45}
+.cdesc a{font-size:13px;white-space:nowrap}
+.more{flex:none;width:34px;height:34px;min-height:34px;padding:0;border-radius:50%;font-size:16px;color:var(--muted)}
+.ideabtns{display:flex;gap:6px;margin-top:6px}
+.ideabtns button{min-height:30px;padding:3px 10px;font-size:13px}
+.credit{font-size:12px;color:var(--faint);margin-top:12px}
+.empty{font-size:15px;color:var(--muted);padding:20px 4px}
+
+/* calendário */
+#cal{display:grid;grid-template-columns:repeat(auto-fill,minmax(46px,1fr));gap:5px;margin-top:4px;max-height:150px;overflow:auto}
+.cd{min-height:44px;padding:3px 0;border-radius:8px;font-size:12px;line-height:1.15;display:flex;flex-direction:column;align-items:center;justify-content:center;background:var(--paper)}
+.cd b{font-size:15px;font-weight:500}
+.cd.filled{background:var(--teal-soft);border-color:#A7D8D4;color:var(--teal-ink)}
+.cd.hol{box-shadow:inset 0 -3px 0 var(--coral)}
+.legend{display:flex;gap:16px;font-size:12px;color:var(--muted);margin-top:8px;flex-wrap:wrap}
+.legend span::before{content:"";display:inline-block;width:12px;height:12px;border-radius:3px;vertical-align:-2px;margin-right:5px;background:var(--sw)}
+
+/* sem datas ainda */
+.nodates{background:var(--paper);border:1.5px dashed var(--line2);border-radius:16px;padding:28px;text-align:center;margin-top:10px}
+.nodates h3{font-family:var(--serif);font-size:30px;font-weight:600;margin:0 0 6px}
+.nodates p{color:var(--muted);margin:0 0 16px}
+
+/* dias */
+.day{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:12px 14px 12px;margin-bottom:12px;scroll-margin-top:220px}
+.day.edge{border-left:4px solid var(--coral)}
+.day.flash{animation:flash 1.2s}
+@keyframes flash{0%{box-shadow:0 0 0 4px #8FD0CB}100%{box-shadow:0 0 0 0 transparent}}
+.dhead{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.dn{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);font-weight:500}
+.dt{font-family:var(--serif);font-size:24px;font-weight:600;line-height:1}
+.dt .wd{font-weight:400;color:var(--muted);margin-right:4px}
+.dtag{font-size:12px;border-radius:999px;padding:2px 10px;background:var(--coral-soft);color:var(--coral-ink);font-weight:500}
+.dtag.hol{background:#FDECC8;color:#7A4D06}
+.meter{margin-left:auto;font-size:13px;border-radius:999px;padding:2px 10px;font-weight:500}
+.m1{background:var(--green-soft);color:#24603A}.m2{background:var(--teal-soft);color:var(--teal-ink)}.m3{background:var(--amber-soft);color:var(--amber-ink)}
+.slots{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:10px}
+.slot{border:1.5px dashed var(--line2);border-radius:10px;padding:7px 8px;min-height:74px;cursor:pointer;transition:background .12s,border-color .12s}
+.slot:hover{border-color:var(--teal)}
+.slot.over{background:var(--teal-soft);border-color:var(--teal);border-style:solid}
+body.selecting .slot{border-color:var(--teal);background:#F4FBFA}
+.pl{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:500;display:block;margin-bottom:4px}
+.it{display:flex;align-items:center;gap:4px;background:var(--teal-soft);color:var(--teal-ink);border-radius:8px;padding:4px 4px 4px 9px;margin-top:4px;font-size:14px;line-height:1.25;cursor:grab}
+.it.idea{background:var(--c-soft);color:var(--c-ink)}
+.it.warn{outline:1.5px dashed var(--coral)}
+.it .x{border:0;background:transparent;color:inherit;min-height:26px;width:26px;padding:0;margin-left:auto;font-size:18px;line-height:1;flex:none;border-radius:6px}
+.it .x:hover{background:rgba(0,0,0,.08)}
+.fixed{display:flex;gap:6px;align-items:flex-start;background:var(--coral-soft);color:var(--coral-ink);border-radius:8px;padding:5px 9px;margin-top:4px;font-size:13px;font-weight:500;line-height:1.3}
+.slot .hint{font-size:13px;color:var(--faint)}
+.band{margin-top:10px;min-height:50px;background:repeating-linear-gradient(135deg,#FCF8F2,#FCF8F2 10px,#F7F0E5 10px,#F7F0E5 20px)}
+.band.has{background:#F4FBFA;border-style:solid;border-color:#A7D8D4}
+.slot.busy{opacity:.6}
+.it .pk{border:0;background:rgba(255,255,255,.75);color:inherit;min-height:26px;padding:2px 8px;font-size:12px;font-weight:500;border-radius:6px;display:inline-flex;align-items:center;gap:4px;flex:none}
+.it .pk:hover{background:#fff}
+.it .pk.on{background:var(--teal);color:#fff}
+.it .nm{flex:1;min-width:0}
+.picked{display:block;font-size:12px;opacity:.85;margin-top:2px}
+.subhead{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:500;margin:14px 4px 0}
+.subhead:first-child{margin-top:4px}
+.listbtn{margin-top:8px;min-height:34px;padding:5px 12px;font-size:14px;color:var(--teal);border-color:var(--teal);display:inline-flex;gap:6px;align-items:center}
+.phint{font-size:13px;color:var(--muted);margin-top:6px}
+.land{border:1px solid var(--line);border-radius:12px;padding:6px 12px 10px;margin:10px 0 0}
+.land legend{font-family:var(--serif);font-weight:600;font-size:20px;padding:0 6px}
+.mbox .pick,.pick{display:flex;gap:10px;align-items:flex-start;padding:6px 4px;border-radius:8px;font-size:15px;line-height:1.3;cursor:pointer;margin:0!important;font-weight:400!important}
+.pick:hover{background:#FCF8F2}
+.pick input{width:20px;height:20px;flex:none;margin-top:1px;accent-color:var(--teal)}
+.pick .ti{color:var(--muted);font-size:18px;flex:none}
+.pick .pt{flex:1;min-width:0}
+.pick .pn{display:block;font-size:13px;color:var(--muted)}
+.pick .tag{margin-left:4px}
+.pick.ro{cursor:default}
+.pick[hidden],.land[hidden]{display:none!important}
+.pcount{font-size:15px;font-weight:500;color:var(--teal-ink);margin-right:auto;align-self:center}
+.mbox.wide .mrow{position:sticky;bottom:-24px;background:var(--paper);padding:12px 0 4px;margin-bottom:-4px;border-top:1px solid var(--line)}
+.what{display:inline-flex;align-items:center;gap:4px;font-size:13px;white-space:nowrap;margin-left:10px}
+.pick .what{margin-left:auto;flex:none;align-self:center;padding:4px 6px;border-radius:6px}
+.pick .what:hover{background:var(--teal-soft)}
+.ver{margin-left:auto;font-size:12px;color:var(--faint);letter-spacing:.04em}
+.pfilters{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.note{margin-top:8px;min-height:42px;height:42px;resize:vertical;font-size:15px;background:#FCF8F2;border-color:var(--line)}
+.rfoot{font-size:13px;color:var(--muted);margin-top:18px;display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.rfoot button{min-height:34px;padding:5px 12px;font-size:13px;color:var(--muted)}
+
+/* modal */
+#modal{position:fixed;inset:0;background:rgba(22,50,58,.45);display:flex;align-items:center;justify-content:center;z-index:50;padding:20px}
+#modal[hidden]{display:none}
+.mbox{background:var(--paper);border-radius:16px;max-width:540px;width:100%;padding:24px 26px;box-shadow:0 20px 50px rgba(0,0,0,.25);max-height:90vh;overflow:auto}
+.mbox.wide{max-width:820px}
+.mbox h3{font-family:var(--serif);font-weight:600;font-size:28px;margin:0 0 6px}
+.mbox p{margin:6px 0 12px;font-size:16px;color:var(--muted)}
+.mbox label{display:block;font-size:14px;font-weight:500;margin:14px 0 6px}
+.mbox .opt{font-weight:400;color:var(--faint)}
+.mrow{display:flex;gap:10px;justify-content:flex-end;margin-top:20px;flex-wrap:wrap}
+.types{display:flex;flex-wrap:wrap;gap:8px}
+.err{color:var(--red);font-size:14px;margin-top:6px;min-height:0}
+.status{font-size:18px;display:flex;gap:10px;align-items:center;margin:8px 0}
+.status .big{font-size:30px}
+.spin{animation:spin 1s linear infinite;display:inline-block}
+@keyframes spin{to{transform:rotate(360deg)}}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.tripsum{background:var(--teal-soft);color:var(--teal-ink);border-radius:10px;padding:8px 12px;font-size:15px;margin-top:12px;min-height:20px}
+.tripsum:empty{display:none}
+
+/* maio x setembro */
+.season{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:10px}
+.scol{border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+.scol h4{font-family:var(--serif);font-size:24px;font-weight:600;margin:0 0 6px}
+.scol ul{margin:0;padding-left:18px;font-size:15px}
+.scol li{margin:5px 0}
+.scol.may{border-top:4px solid var(--teal)}
+.scol.sep{border-top:4px solid var(--coral)}
+.both{margin-top:12px;background:#FCF8F2;border-radius:12px;padding:10px 14px;font-size:15px}
+.both ul{margin:4px 0 0;padding-left:18px}
+
+#toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(20px);background:var(--ink);color:#fff;border-radius:12px;padding:12px 18px;font-size:15px;opacity:0;pointer-events:none;transition:all .25s;z-index:60;max-width:90vw}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+#toast.canundo{pointer-events:auto;display:flex;align-items:center;gap:14px;padding:8px 8px 8px 18px}
+#toast .undo{background:#fff;color:var(--ink);border:0;font-weight:700;min-height:38px;padding:6px 16px;font-size:15px}
+#toast .undo:hover{background:var(--coral-soft)}
+
+@media (max-width:980px){
+  body{height:auto;display:block}
+  .cols{grid-template-columns:1fr;display:block}
+  .col{overflow:visible}
+  .lefthead,.righthead{position:static}
+  #intro ol{flex-direction:column;gap:10px}
+  .top{flex-direction:column;align-items:flex-start;padding:16px}
+  .langs{right:16px}
+  .top .actions{margin-top:4px}
+  .actions{justify-content:flex-start}
+  .slots{grid-template-columns:1fr}
+  .season,.two{grid-template-columns:1fr}
+  .cols,#intro,#selbar{margin-left:16px;margin-right:16px;padding-left:0;padding-right:0}
+  h1{font-size:34px}
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="brand">
+    <p class="eyebrow" data-t="eyebrow"></p>
+    <h1 id="h1"></h1>
+    <p class="by" data-t="by"></p>
+  </div>
+  <div class="langs" role="group" aria-label="Idioma / Language">
+    <button type="button" data-lang="pt">PT</button>
+    <button type="button" data-lang="en">EN</button>
+  </div>
+  <div class="actions">
+    <span id="progress"></span>
+    <span id="autosave"><i class="ti ti-check" aria-hidden="true"></i> <span data-t="autosave"></span></span>
+    <button id="btnTrip" class="ghost" type="button"><i class="ti ti-calendar" aria-hidden="true"></i><span id="tripLabel"></span></button>
+    <button id="btnSeason" class="ghost" type="button"><i class="ti ti-sun" aria-hidden="true"></i><span data-t="season"></span></button>
+    <button id="btnCopy" class="ghost" type="button" data-t="copy"></button>
+    <button id="btnSave" class="primary" type="button" data-t="save"></button>
+  </div>
+</header>
+
+<section id="intro" aria-label="Como funciona">
+  <ol>
+    <li><span class="n">1</span><span data-t="i1"></span></li>
+    <li><span class="n">2</span><span data-t="i2"></span></li>
+    <li><span class="n">3</span><span data-t="i3"></span></li>
+  </ol>
+  <button type="button" id="introClose" data-t="gotit"></button>
+</section>
+<button type="button" id="introMini" class="hide" aria-expanded="false"><i class="ti ti-help-circle" aria-hidden="true"></i> <span data-t="howitworks"></span> <i class="ti ti-chevron-down" aria-hidden="true"></i></button>
+
+<div id="selbar" hidden>
+  <i class="ti ti-hand-click" aria-hidden="true"></i>
+  <span><span data-t="chosen"></span> <b id="selname"></b>. <span data-t="nowclick"></span></span>
+  <button type="button" id="selCancel" data-t="cancel"></button>
+</div>
+
+<main class="cols">
+  <section class="col" id="leftCol">
+    <div class="lefthead">
+      <h2 data-t="places"></h2>
+      <input id="q" type="search">
+      <div class="chips" id="chips"></div>
+      <div class="found" id="found"></div>
+    </div>
+    <div id="catalog"></div>
+    <p class="credit" data-t="credit"></p>
+  </section>
+
+  <section class="col" id="rightCol">
+    <div class="righthead">
+      <h2 data-t="mydays"></h2>
+      <div id="cal"></div>
+      <div class="legend" id="legend"></div>
+    </div>
+    <div id="days"></div>
+    <div class="rfoot">
+      <span data-t="footnote"></span>
+      <button type="button" id="btnDownload" data-t="download"></button>
+      <button type="button" id="btnReset" data-t="reset"></button>
+      <span class="ver" id="ver"></span>
+    </div>
+  </section>
+</main>
+
+<div id="modal" hidden role="dialog" aria-modal="true"><div class="mbox" id="mbox"></div></div>
+<div id="toast" role="status" aria-live="polite"></div>
+
+<script>
+/* ===== CONFIGURAÇÃO ===== */
+const CONFIG = {
+  // Código do FormSubmit (no lugar do e-mail, para não deixar o endereço visível no código da página).
+  SEND_TO: 'df9aa91efc0a8489ee84c1ce2536c880',
+  KEY: 'orlando-nosso-jeito-planejador-v1',
+  THUMBS_KEY: 'orlando-nosso-jeito-fotos-v1',
+  MAX_DAYS: 45,
+  VERSION: 'v1.1',
+  BUILT: '29/10/2026'
+};
+
+/* ===== TEXTOS PT / EN ===== */
+const TX = {
+pt: {
+  eyebrow:'Monte o seu field guide', h1:'<b>Orlando</b> <i>do nosso</i> <b>jeito.</b>', by:'por Claudio SAROLDI',
+  autosave:'Guardado neste computador', season:'Maio x Setembro', copy:'Copiar plano', save:'Salvar meu plano',
+  i1:'Primeiro, as <b>datas</b> (ou só quantos dias). Dá para mudar depois sem perder nada.',
+  i2:'Abra um grupo à esquerda e <b>arraste</b> o lugar até o dia. Ou clique no lugar e depois no período. Parque ocupa o <b>dia inteiro</b>: depois, clique em <b>Atrações</b> nele para marcar o que querem fazer.',
+  i3:'Use os filtros: <b>Joias escondidas</b> e <b>Novidades</b> são para quem já foi várias vezes. No fim, <b>Salvar meu plano</b>.',
+  gotit:'Entendi', howitworks:'Como funciona', chosen:'Escolhido:', nowclick:'Agora clique na Manhã, Tarde ou Noite de um dia.', cancel:'Cancelar',
+  places:'Lugares e passeios', search:'Buscar: springs, foguete, Harry Potter, cubano...', mydays:'Meus dias',
+  credit:'Fotos: Wikipedia e Wikimedia Commons. Horários, preços e datas serão conferidos no guia final.',
+  footnote:'Tudo é guardado sozinho neste computador enquanto você monta.', download:'Baixar arquivo do plano', reset:'Começar do zero',
+  morning:'Manhã', afternoon:'Tarde', night:'Noite', allDay:'Dia inteiro (manhã e tarde)', bandHint:'Parque, praia ou passeio longe. A noite fica livre para fogos ou jantar.',
+  picksBtn:'Atrações', listBtn:'Ver todas as atrações e onde comer', pickHint:'Para marcar o que querem fazer, coloque o parque num dia e clique em Atrações nele.', pickT:'O que vocês querem fazer', marked:'marcadas', clear:'Limpar', wantsTo:'Quer fazer', items:'itens',
+  ptype:{R:'Brinquedo',S:'Show',N:'Show noturno',T:'Passeio',P:'Personagens',K:'Infantil',F:'Lanche',D:'Restaurante'}, pf:{all:'Tudo',R:'Brinquedos',S:'Shows',T:'Passeios e personagens',F:'Comer'}, pflag:{a:'Emoção forte',x:'Novidade',k:'Crianças'}, dropHere:'Solte aqui', dayNote:'Notas do dia: dia de parque, descansar à tarde, jantar especial...',
+  nodatesT:'Quando vocês vão?', nodatesP:'Coloque as datas que vocês acham, ou só quantos dias. Os dias aparecem aqui.', chooseDates:'Escolher as datas',
+  tripNone:'Escolher datas', days:'dias', day:'Dia', withPlan:'com plano', of:'de',
+  arrival:'Chegada', departure:'Volta', holiday:'Feriado nos EUA', hollidayHint:'parques mais cheios',
+  arrivalHint:'Pegar o carro e abastecer a casa', departureHint:'Devolver o carro com tanque cheio',
+  legPlan:'Dia com plano', legHol:'Feriado nos EUA',
+  eff:['Sem esforço','Leve','Moderado','Puxado'], fullDay:'Dia inteiro', halfDay:'Meio dia',
+  byCar:'de carro', sleep:'Ideal dormir lá', used:'No plano', isNew:'Novidade', gem:'Joia escondida', free:'Grátis',
+  inDates:'Nas suas datas', outDates:'Fora das suas datas', seeMap:'Ver no mapa', whatIs:'O que é isso?', version:'Versão', eat:'Comer', brazilian:'Brasileiro', moreAbout:'Ver mais sobre',
+  michelin:{s:'Estrela Michelin', b:'Bib Gourmand', r:'Guia Michelin'},
+  foodTipo:{A:'Almoço e jantar',L:'Almoço',J:'Jantar',C:'Café e doces',B:'Lanche',F:'Café da manhã',M:'Mercado',R:'Rodízio',Q:'Buffet'},
+  eatHere:'Onde comer por aqui', toSee:'para ver', toEat:'para comer', nothing:'nada', idea:'ideia', ideas:'ideias',
+  noneFound:'Nada encontrado com esses filtros. Tente tirar algum.', found:'lugares encontrados',
+  filters:{datas:'Nas nossas datas',novo:'Novidades',joia:'Joias escondidas',gratis:'Grátis',chuva:'Bom com chuva',noite:'À noite',emocao:'Emoção forte',leve:'Esforço leve',perto:'Até 1h de carro',passeios:'Só passeios',comer:'Onde comer',naousei:'Ainda não usei'},
+  myIdea:'+ Minha ideia', ideaHelp:'Qualquer coisa vale: um lugar, um restaurante, visitar alguém, uma missa.',
+  ideaTypes:['Lugar para ver','Comer','Encontro com alguém','Outro'], name:'Nome', type:'Tipo', where:'Onde', whereOpt:'(se souber: cidade, endereço ou link do mapa)', note:'Nota', optional:'(opcional)',
+  ideaPh:'Igreja de Nossa Senhora', wherePh:'Kissimmee', notePh:'Ir no domingo de manhã', editIdea:'Editar ideia', save2:'Guardar', createIdea:'Criar ideia', writeName:'Escreva um nome para a ideia.',
+  edit:'Editar', del:'Apagar', delIdeaQ:'Apagar ideia?', alsoLeaves:'também sai de', dayW:'dia', daysW:'dias', fromPlan:'do plano',
+  ideaUpdated:'Ideia atualizada', ideaCreated:'Ideia criada. Agora é só colocar num dia.', ideaDeleted:'Ideia apagada',
+  enteredIn:'entrou em', leftFrom:'saiu de', undo:'Desfazer', undone:'Pronto, voltou como estava.', firstPick:'Primeiro clique num lugar à esquerda, ou arraste ele até aqui.',
+  tripT:'As datas da viagem', tripP:'Normalmente maio ou setembro, mas pode ser qualquer data. Mude quando quiser: o que já estiver nos dias fica no lugar.',
+  haveDates:'Tenho as datas', onlyCount:'Só sei quantos dias', arrive:'Chegada', leave:'Volta', howMany:'Quantos dias',
+  createDays:'Criar os dias', updateDays:'Atualizar os dias', badRange:'A volta tem que ser depois da chegada.', tooMany:'Até {n} dias por vez.', needDates:'Escolha a chegada e a volta.',
+  sumDates:'{n} dias, de {a} a {b}', sumCount:'{n} dias, sem datas ainda',
+  hiddenWarn:'Os dias {list} têm coisas no plano. Eles ficam guardados e voltam se a viagem aumentar.',
+  hiddenWarn1:'O dia {list} tem coisas no plano. Ele fica guardado e volta se a viagem aumentar.',
+  copied:'Plano copiado. Cole no WhatsApp ou num e-mail para o Claudio.', copyFail:'Não deu para copiar. Use Baixar arquivo do plano.',
+  saving:'Salvando o plano', sending:'Enviando para o Claudio...', saved:'Plano salvo!', savedMsg:'O Claudio vai receber o plano por e-mail.',
+  savedMore:'Pode continuar mexendo à vontade. Mudou alguma coisa? É só salvar de novo, a versão mais nova é a que vale.', ok:'Beleza',
+  failT:'Não deu para enviar agora', failMsg:'Fica tranquilo: o plano está guardado neste computador e nada se perdeu.', failMore:'Tente de novo daqui a pouco, ou copie o plano e mande pelo WhatsApp para o Claudio.',
+  dlFile:'Baixar arquivo', retry:'Tentar de novo', resetQ:'Começar do zero?', resetMsg:'Isso apaga todos os dias, notas, ideias e as datas deste computador. Não dá para desfazer.', eraseAll:'Apagar tudo', wiped:'Plano zerado',
+  needTrip:'Escolha as datas primeiro.', tripChanged:'Dias atualizados',
+  seasonT:'Maio ou setembro?', seasonP:'O que muda entre os dois meses de sempre. Valores aproximados, conferidos de novo no guia final.',
+  bothT:'Nos dois meses'
+},
+en: {
+  eyebrow:'Build your field guide', h1:'<b>Orlando,</b> <i>our</i> <b>way.</b>', by:'by Claudio SAROLDI',
+  autosave:'Saved on this computer', season:'May vs September', copy:'Copy plan', save:'Save my plan',
+  i1:'First, the <b>dates</b> (or just how many days). You can change them later without losing anything.',
+  i2:'Open a group on the left and <b>drag</b> a place into a day. Or click the place, then the slot. Parks take the <b>whole day</b>: then click <b>Rides</b> on it to tick what you want to do.',
+  i3:'Use the filters: <b>Hidden gems</b> and <b>New</b> are for people who have been many times. When done, <b>Save my plan</b>.',
+  gotit:'Got it', howitworks:'How it works', chosen:'Chosen:', nowclick:'Now click the Morning, Afternoon or Evening of a day.', cancel:'Cancel',
+  places:'Places and outings', search:'Search: springs, rocket, Harry Potter, Cuban...', mydays:'My days',
+  credit:'Photos: Wikipedia and Wikimedia Commons. Hours, prices and dates will be checked for the final guide.',
+  footnote:'Everything saves itself on this computer as you go.', download:'Download plan file', reset:'Start over',
+  morning:'Morning', afternoon:'Afternoon', night:'Evening', allDay:'Whole day (morning and afternoon)', bandHint:'A park, a beach or a long drive. The evening stays free for fireworks or dinner.',
+  picksBtn:'Rides', listBtn:'See every ride and place to eat', pickHint:'To tick what you want to do, put the park in a day and click Rides on it.', pickT:'What you want to do', marked:'ticked', clear:'Clear', wantsTo:'Wants to do', items:'items',
+  ptype:{R:'Ride',S:'Show',N:'Night show',T:'Walk-through',P:'Characters',K:'Kids area',F:'Quick bite',D:'Restaurant'}, pf:{all:'All',R:'Rides',S:'Shows',T:'Walk-throughs and characters',F:'Eat'}, pflag:{a:'Thrills',x:'New',k:'Kids'}, dropHere:'Drop here', dayNote:'Day notes: park day, rest in the afternoon, special dinner...',
+  nodatesT:'When are you going?', nodatesP:'Enter the dates you have in mind, or just how many days. The days will appear here.', chooseDates:'Choose the dates',
+  tripNone:'Choose dates', days:'days', day:'Day', withPlan:'planned', of:'of',
+  arrival:'Arrival', departure:'Going home', holiday:'US holiday', hollidayHint:'busier parks',
+  arrivalHint:'Pick up the car and stock the house', departureHint:'Return the car with a full tank',
+  legPlan:'Day with a plan', legHol:'US holiday',
+  eff:['No effort','Easy','Moderate','Demanding'], fullDay:'Full day', halfDay:'Half day',
+  byCar:'by car', sleep:'Best to stay over', used:'In plan', isNew:'New', gem:'Hidden gem', free:'Free',
+  inDates:'On your dates', outDates:'Not on your dates', seeMap:'See on map', whatIs:'What is it?', version:'Version', eat:'Eat', brazilian:'Brazilian', moreAbout:'More about',
+  michelin:{s:'Michelin star', b:'Bib Gourmand', r:'Michelin Guide'},
+  foodTipo:{A:'Lunch and dinner',L:'Lunch',J:'Dinner',C:'Coffee and sweets',B:'Snacks',F:'Breakfast',M:'Market',R:'Rodízio',Q:'Buffet'},
+  eatHere:'Where to eat nearby', toSee:'to see', toEat:'to eat', nothing:'nothing', idea:'idea', ideas:'ideas',
+  noneFound:'Nothing matches these filters. Try removing one.', found:'places found',
+  filters:{datas:'On our dates',novo:'New',joia:'Hidden gems',gratis:'Free',chuva:'Good when raining',noite:'Evening',emocao:'Thrills',leve:'Easy effort',perto:'Within 1h drive',passeios:'Outings only',comer:'Where to eat',naousei:'Not used yet'},
+  myIdea:'+ My idea', ideaHelp:'Anything goes: a place, a restaurant, visiting someone, a church service.',
+  ideaTypes:['Place to see','Eat','Meet someone','Other'], name:'Name', type:'Type', where:'Where', whereOpt:'(if you know: town, address or map link)', note:'Note', optional:'(optional)',
+  ideaPh:'Our Lady church', wherePh:'Kissimmee', notePh:'Go on Sunday morning', editIdea:'Edit idea', save2:'Save', createIdea:'Create idea', writeName:'Write a name for the idea.',
+  edit:'Edit', del:'Delete', delIdeaQ:'Delete idea?', alsoLeaves:'will also leave', dayW:'day', daysW:'days', fromPlan:'of the plan',
+  ideaUpdated:'Idea updated', ideaCreated:'Idea created. Now put it in a day.', ideaDeleted:'Idea deleted',
+  enteredIn:'added to', leftFrom:'removed from', undo:'Undo', undone:'Done, back as it was.', firstPick:'First click a place on the left, or drag it here.',
+  tripT:'Trip dates', tripP:'Usually May or September, but any dates work. Change them whenever you like: what is already in the days stays put.',
+  haveDates:'I have the dates', onlyCount:'I only know how many days', arrive:'Arrival', leave:'Going home', howMany:'How many days',
+  createDays:'Create the days', updateDays:'Update the days', badRange:'The return must be after the arrival.', tooMany:'Up to {n} days at a time.', needDates:'Choose the arrival and return dates.',
+  sumDates:'{n} days, {a} to {b}', sumCount:'{n} days, no dates yet',
+  hiddenWarn:'Days {list} have things planned. They are kept and come back if the trip gets longer.',
+  hiddenWarn1:'Day {list} has things planned. It is kept and comes back if the trip gets longer.',
+  copied:'Plan copied. Paste it into WhatsApp or an email to Claudio.', copyFail:'Could not copy. Use Download plan file.',
+  saving:'Saving the plan', sending:'Sending to Claudio...', saved:'Plan saved!', savedMsg:'Claudio will get the plan by email.',
+  savedMore:'Keep changing things as you like. Changed something? Just save again, the newest version wins.', ok:'Great',
+  failT:'Could not send right now', failMsg:'No worries: the plan is saved on this computer and nothing is lost.', failMore:'Try again in a bit, or copy the plan and send it to Claudio on WhatsApp.',
+  dlFile:'Download file', retry:'Try again', resetQ:'Start over?', resetMsg:'This erases all days, notes, ideas and dates on this computer. It cannot be undone.', eraseAll:'Erase everything', wiped:'Plan cleared',
+  needTrip:'Choose the dates first.', tripChanged:'Days updated',
+  seasonT:'May or September?', seasonP:'What changes between your two usual months. Approximate figures, checked again for the final guide.',
+  bothT:'In both months'
+}};
+
+const SEASON_HTML = {
+pt: `<div class="season">
+  <div class="scol may"><h4>Maio</h4><ul>
+    <li><b>Calor:</b> máximas por volta de 31 °C, noites perto de 19 °C.</li>
+    <li><b>Chuva:</b> começa a época das pancadas no fim da tarde, mais para o fim do mês.</li>
+    <li><b>Lotação:</b> tranquila no começo do mês. Enche no feriado do Memorial Day (31/5/2027) e com as férias escolares americanas.</li>
+    <li><b>Acontece:</b> Flower &amp; Garden no EPCOT até 31/5, Seven Seas no SeaWorld nos fins de semana (a confirmar), Orlando Fringe.</li>
+    <li><b>Novidade possível:</b> Carousel of Progress e áreas novas de 2027, se abrirem a tempo.</li>
+    <li><b>Dias longos:</b> sol até umas 20h15.</li>
+  </ul></div>
+  <div class="scol sep"><h4>Setembro</h4><ul>
+    <li><b>Calor:</b> máximas por volta de 32 °C, noites perto de 23 °C, bem úmido.</li>
+    <li><b>Chuva:</b> pancada quase todo dia à tarde, com raio. Ter plano coberto.</li>
+    <li><b>Furacões:</b> é o pico da temporada. Seguro viagem e reservas flexíveis.</li>
+    <li><b>Lotação:</b> das mais baixas do ano depois do Labor Day (6/9/2027). Hotéis mais baratos.</li>
+    <li><b>Acontece:</b> Food &amp; Wine no EPCOT, Halloween Horror Nights, festa de Halloween do Magic Kingdom e Howl-O-Scream.</li>
+    <li><b>Atenção:</b> nas noites de festa, o Magic Kingdom fecha mais cedo para quem não tem o ingresso da festa.</li>
+  </ul></div>
+</div>
+<div class="both"><b>Nos dois meses</b><ul>
+  <li>Parques de manhã cedo, descanso na hora mais quente, voltar à noite.</li>
+  <li>Lovebugs: mosquitinhos inofensivos que aparecem em maio e setembro e sujam o carro.</li>
+  <li>Caiaque bioluminescente e nadar nas springs funcionam nos dois.</li>
+  <li>Peixe-boi nas nascentes é coisa de inverno: em maio e setembro, só em Homosassa.</li>
+</ul></div>`,
+en: `<div class="season">
+  <div class="scol may"><h4>May</h4><ul>
+    <li><b>Heat:</b> highs around 31 °C, nights near 19 °C.</li>
+    <li><b>Rain:</b> the late-afternoon storm season begins, more towards the end of the month.</li>
+    <li><b>Crowds:</b> calm early in the month. Busy over Memorial Day (31/5/2027) and once US schools break up.</li>
+    <li><b>On:</b> EPCOT Flower &amp; Garden until 31/5, SeaWorld Seven Seas on weekends (to be confirmed), Orlando Fringe.</li>
+    <li><b>Maybe new:</b> Carousel of Progress and the 2027 areas, if they open in time.</li>
+    <li><b>Long days:</b> sunset around 8:15pm.</li>
+  </ul></div>
+  <div class="scol sep"><h4>September</h4><ul>
+    <li><b>Heat:</b> highs around 32 °C, nights near 23 °C, very humid.</li>
+    <li><b>Rain:</b> a storm most afternoons, with lightning. Have an indoor plan.</li>
+    <li><b>Hurricanes:</b> peak of the season. Travel insurance and flexible bookings.</li>
+    <li><b>Crowds:</b> among the lowest of the year after Labor Day (6/9/2027). Cheaper hotels.</li>
+    <li><b>On:</b> EPCOT Food &amp; Wine, Halloween Horror Nights, the Magic Kingdom Halloween party and Howl-O-Scream.</li>
+    <li><b>Note:</b> on party nights, Magic Kingdom closes early for guests without a party ticket.</li>
+  </ul></div>
+</div>
+<div class="both"><b>In both months</b><ul>
+  <li>Parks early in the morning, rest in the hottest hours, back out at night.</li>
+  <li>Lovebugs: harmless little flies that show up in May and September and dirty the car.</li>
+  <li>Bioluminescent kayaking and swimming in the springs work in both.</li>
+  <li>Manatees in the springs are a winter thing: in May and September, only at Homosassa.</li>
+</ul></div>`
+};
+
+/* ===== GRUPOS ===== */
+const GROUPS = [
+  {id:'ideias', n:['Minhas ideias','My ideas'], s:['O que vocês criarem aparece aqui','What you create shows up here'], c:'#7A5BA8'},
+  {id:'parques', n:['Parques temáticos','Theme parks'], s:['Disney, Universal, SeaWorld e outros','Disney, Universal, SeaWorld and more'], c:'#2A6FB0'},
+  {id:'idrive', n:['International Drive','International Drive'], s:['Roda-gigante, museus divertidos e kart','Observation wheel, fun museums and karts'], c:'#C0503A'},
+  {id:'kiss', n:['Kissimmee e Celebration','Kissimmee and Celebration'], s:['Jacarés, aerobarco e carros antigos','Alligators, airboats and classic cars'], c:'#8C6A2E'},
+  {id:'city', n:['Orlando de verdade','The real Orlando'], s:['Downtown, Winter Park e os bairros','Downtown, Winter Park and the neighbourhoods'], c:'#40707A'},
+  {id:'nat', n:['Natureza perto','Nature nearby'], s:['Springs, caiaque e bichos, até 45 min','Springs, kayaks and wildlife, within 45 min'], c:'#3E8E5A'},
+  {id:'shows', n:['Shows e noites','Shows and nights out'], s:['Jantares-espetáculo e música','Dinner shows and music'], c:'#5B4A8A'},
+  {id:'shop', n:['Compras','Shopping'], s:['Outlets, shoppings e mercados','Outlets, malls and markets'], c:'#9A5B7A'},
+  {id:'fora', n:['Passeios de carro','Road trips'], s:['Bate-voltas e noites fora','Day trips and nights away'], c:'#2E6A55'},
+  {id:'esp', n:['Especiais','Specials'], s:['Descanso, chegada e volta','Rest, arrival and departure'], c:'#6B6455'}
+];
+
+const PARK_SUBS = [
+  {id:'mk', head:'Disney', n:['Magic Kingdom','Magic Kingdom'], c:'#2A6FB0'},
+  {id:'epcot', head:'Disney', n:['EPCOT','EPCOT'], c:'#6A4FA0'},
+  {id:'hs', head:'Disney', n:['Hollywood Studios','Hollywood Studios'], c:'#B03A48'},
+  {id:'ak', head:'Disney', n:['Animal Kingdom','Animal Kingdom'], c:'#4F7A3E'},
+  {id:'wdw', head:'Disney', n:['Disney fora dos parques','Disney beyond the parks'], c:'#3A6EA5'},
+  {id:'usf', head:'Universal', n:['Universal Studios Florida','Universal Studios Florida'], c:'#1F5F8B'},
+  {id:'ioa', head:'Universal', n:['Islands of Adventure','Islands of Adventure'], c:'#2F7F6B'},
+  {id:'epic', head:'Universal', n:['Epic Universe','Epic Universe'], c:'#8A3FA0'},
+  {id:'uor', head:'Universal', n:['Volcano Bay e CityWalk','Volcano Bay and CityWalk'], c:'#C25B2A'},
+  {id:'sw', head:'SeaWorld', n:['SeaWorld, Aquatica e Discovery Cove','SeaWorld, Aquatica and Discovery Cove'], c:'#127C7A'},
+  {id:'outros', head:['Outros','Others'], n:['Legoland e Busch Gardens','Legoland and Busch Gardens'], c:'#8C6A2E', refs:['fp01','fp02','ft01','ft02'], how:['Ficam fora de Orlando, também aparecem em Passeios de carro.','Outside Orlando, also listed under Road trips.']}
+];
+const PARK_IDS = new Set(PARK_SUBS.map(x => x.id));
+const SUBS = [
+  {id:'space', n:['Space Coast: Kennedy e Cocoa Beach','Space Coast: Kennedy and Cocoa Beach'], how:['Uma hora de carro para o leste pela 528, com pedágio.','One hour east on the 528, a toll road.'], join:['Dá para juntar: Kennedy de dia e caiaque bioluminescente à noite. Ou praia de Cocoa e os navios saindo do porto.','Combine: Kennedy by day and bioluminescent kayaking at night. Or Cocoa Beach and the ships leaving port.']},
+  {id:'daytona', n:['Daytona e New Smyrna','Daytona and New Smyrna'], how:['Uma hora de carro pela I-4.','One hour on the I-4.'], join:['Dá para juntar: autódromo de manhã, farol de Ponce Inlet e praia à tarde, Buc-ee\'s na volta.','Combine: speedway in the morning, Ponce Inlet lighthouse and beach in the afternoon, Buc-ee\'s on the way back.']},
+  {id:'norte', n:['Ao norte: Sanford, DeLand e Blue Spring','North: Sanford, DeLand and Blue Spring'], how:['De 30 a 55 minutos pela I-4.','30 to 55 minutes on the I-4.'], join:['Dá para juntar: panqueca no De Leon Springs, Cassadaga e paraquedistas em DeLand.','Combine: pancakes at De Leon Springs, Cassadaga and the DeLand skydivers.']},
+  {id:'oeste', n:['Oeste: Winter Garden, Clermont e Mount Dora','West: Winter Garden, Clermont and Mount Dora'], how:['De 25 a 45 minutos.','25 to 45 minutes.'], join:['Dá para juntar: Winter Garden de manhã e vinícola em Clermont. Mount Dora vale um dia sozinho.','Combine: Winter Garden in the morning and the Clermont winery. Mount Dora deserves a day of its own.']},
+  {id:'polk', n:['Polk: Legoland, Bok Tower e Lakeland','Polk: Legoland, Bok Tower and Lakeland'], how:['De 40 minutos a uma hora pela I-4 ou pela 27.','40 minutes to an hour on the I-4 or the 27.'], join:['Dá para juntar: Bok Tower e Spook Hill num dia. Lakeland com Frank Lloyd Wright e Circle B noutro.','Combine: Bok Tower and Spook Hill in one day. Lakeland with Frank Lloyd Wright and Circle B in another.']},
+  {id:'ocala', n:['Ocala e as springs do norte','Ocala and the northern springs'], how:['Uma hora e meia ao norte. As springs do Golfo ficam a quase duas.','An hour and a half north. The Gulf-side springs are nearly two.'], join:['Dá para juntar: Silver Springs e fazenda de cavalos. Weeki Wachee e Homosassa noutro dia, ou com uma noite fora.','Combine: Silver Springs and a horse farm. Weeki Wachee and Homosassa another day, or with a night away.']},
+  {id:'staug', n:['St. Augustine','St. Augustine'], how:['Quase duas horas pela I-95. Melhor com uma noite lá.','Nearly two hours on the I-95. Better with a night there.'], join:['Dá para juntar: castelo, centro e Flagler no primeiro dia, farol e Alligator Farm no segundo.','Combine: fort, old town and Flagler on day one, lighthouse and Alligator Farm on day two.']},
+  {id:'tampa', n:['Tampa','Tampa'], how:['Uma hora e vinte pela I-4.','One hour twenty on the I-4.'], join:['Dá para juntar: Ybor City de manhã e Riverwalk à tarde. Busch Gardens pede o dia todo.','Combine: Ybor City in the morning and the Riverwalk in the afternoon. Busch Gardens needs a full day.']},
+  {id:'golfo', n:['Golfo: Clearwater, St. Pete e Sarasota','Gulf: Clearwater, St. Pete and Sarasota'], how:['Duas horas ou mais. Sarasota pede uma noite fora.','Two hours or more. Sarasota needs a night away.'], join:['Dá para juntar: Dalí e o píer de St. Pete, pôr do sol em Clearwater. Sarasota com Ringling e Siesta Key.','Combine: the Dalí and St. Pete pier, sunset in Clearwater. Sarasota with the Ringling and Siesta Key.']},
+  {id:'sudoeste', n:['Sudoeste: Fort Myers, Naples e Everglades','Southwest: Fort Myers, Naples and Everglades'], how:['Três horas ou mais. Pelo menos uma noite.','Three hours or more. At least one night.'], join:['Dá para juntar: Edison e Ford, Naples ao pôr do sol, Everglades no dia seguinte.','Combine: Edison and Ford, Naples at sunset, the Everglades the next day.']},
+  {id:'miami', n:['Miami e Keys','Miami and the Keys'], how:['Três horas e meia até Miami pela Turnpike, seis até Key West.','Three and a half hours to Miami on the Turnpike, six to Key West.'], join:['Pede duas ou três noites. Sawgrass Mills fica no caminho.','Needs two or three nights. Sawgrass Mills is on the way.']}
+];
+
+/* janelas de época: [início mm-dd, fim mm-dd, ano mínimo opcional] */
+const WINDOWS = {
+  ep12:['03-10','05-31'], ep13:['08-27','11-21'], mk12:['08-07','10-31'], us10:['08-28','11-02'], sw06:['09-11','11-01'],
+  sw05:['02-06','05-31'], ci17:['05-13','05-31'], fp08:['10-01','07-31'], fs03:['05-01','10-31'], fn01:['04-01','11-14'],
+  wd19:['06-21','12-31',2027]
+};
+
+/* ===== DADOS ===== */
+const PLACES = [["mk01","mk","","Magic Kingdom, o dia todo","Magic Kingdom, full day","2","D","","","","","Magic_Kingdom","O parque do castelo. Chegar cedo, sair depois dos fogos.","The castle park. Arrive early, leave after the fireworks.","building-castle"],["mk02","mk","","Fogos Happily Ever After","Happily Ever After fireworks","1","30 min","n","","","","","Os fogos com projeções no castelo. Ver da Main Street, um pouco recuado.","Fireworks with projections on the castle. Watch from Main Street, a little back.","sparkles"],["mk12","mk","","Mickey's Not-So-Scary Halloween Party","Mickey's Not-So-Scary Halloween Party","1","H","n","","","S","Mickey's_Not-So-Scary_Halloween_Party","Festa à noite com desfile e fogos próprios. De agosto a 31 de outubro, ingresso à parte.","Evening party with its own parade and fireworks. August to 31 October, separate ticket.","ghost"],["mk13","mk","","Tour Keys to the Kingdom","Keys to the Kingdom tour","2","5h","h","","","","","Tour de bastidores, inclusive os túneis embaixo do parque. Só adultos, reservar antes.","Backstage tour, including the tunnels under the park. Adults only, book ahead.","key"],["mk14","mk","","Fogos vistos de fora do parque","Fireworks from outside the park","0","1h","g,n,v,h","","","","","Assistir aos fogos da praia do Polynesian, sem ingresso e sem multidão.","Watch the fireworks from the Polynesian beach, no ticket and no crowds.","beach"],["ep01","epcot","","EPCOT, o dia todo","EPCOT, full day","2","D","","","","","Epcot","Future World de manhã, World Showcase à tarde e fogos à noite.","Future World in the morning, World Showcase in the afternoon, fireworks at night.","world"],["ep08","epcot","","Fogos Luminous","Luminous fireworks","1","30 min","n","","","","","Fogos no lago do World Showcase. Ver do lado do Japão ou da Itália.","Fireworks over the World Showcase lagoon. Watch from Japan or Italy.","sparkles"],["ep10","epcot","","Behind the Seeds","Behind the Seeds tour","1","1h","c,h","","","","","Tour pelas estufas do Living with the Land: plantas gigantes e peixes de criação. Pago, curto.","Tour of the Living with the Land greenhouses: giant plants and fish farming. Paid, short.","plant-2"],["ep12","epcot","","Flower & Garden Festival","Flower & Garden Festival","1","H","","","","M","Epcot_International_Flower_&_Garden_Festival","Esculturas de plantas, quiosques de comida e shows. Em 2027: 10 de março a 31 de maio.","Topiaries, food booths and concerts. In 2027: 10 March to 31 May.","flower"],["ep13","epcot","","Food & Wine Festival","Food & Wine Festival","1","H","","","","S","Epcot_International_Food_&_Wine_Festival","Dezenas de quiosques com pratos pequenos, inclusive um do Brasil. Em 2026 foi de 27/8 a 21/11; 2027 a confirmar.","Dozens of booths with small plates, including a Brazil one. In 2026 it ran 27/8 to 21/11; 2027 to be confirmed.","tools-kitchen-2"],["hs01","hs","","Hollywood Studios, o dia todo","Hollywood Studios, full day","2","D","","","","","Disney's_Hollywood_Studios","Star Wars, Toy Story e os shows. Fantasmic! à noite.","Star Wars, Toy Story and the shows. Fantasmic! at night.","movie"],["hs08","hs","","Fantasmic!","Fantasmic!","1","1h","n","","","","","Show noturno com água, fogo e os vilões. Chegar 30 min antes.","Night show with water, fire and the villains. Arrive 30 min early.","flame"],["ak01","ak","","Animal Kingdom, o dia todo","Animal Kingdom, full day","2","D","","","","","Disney's_Animal_Kingdom","Abre e fecha cedo. Os bichos ficam mais ativos de manhã.","Opens and closes early. Animals are most active in the morning.","paw"],["ak03","ak","","Pandora à noite","Pandora at night","1","1h","n,v","","","","","As plantas brilham no escuro. Vale ficar até fechar.","The plants glow in the dark. Worth staying until closing.","moon-stars"],["wd01","wdw","","Disney Springs","Disney Springs","1","H","g,n","","","","Disney_Springs","Lojas, restaurantes e música, entrada e estacionamento grátis.","Shops, restaurants and music, free entry and free parking.","shopping-bag"],["wd02","wdw","","Typhoon Lagoon","Typhoon Lagoon","2","D","","","","","Disney's_Typhoon_Lagoon","Piscina de ondas enorme e rio lento. Ver qual dos dois aquáticos estará aberto.","Huge wave pool and lazy river. Check which of the two water parks will be open.","swimming"],["wd03","wdw","","Blizzard Beach","Blizzard Beach","2","D","a","","","","Disney's_Blizzard_Beach","O aquático da estação de esqui, com o tobogã Summit Plummet.","The ski-resort water park, with the Summit Plummet slide.","snowflake"],["wd04","wdw","","Savana do Animal Kingdom Lodge","Animal Kingdom Lodge savanna","0","1h","g,h,v","","","","","Hotel com girafas e zebras na janela. Grátis para entrar e olhar, à noite tem visão noturna.","Hotel with giraffes and zebras outside the window. Free to walk in; night vision at night.","binoculars"],["wd05","wdw","","Volta de monorail pelos hotéis","Monorail loop of the hotels","0","1h","g,v,h","","","","","Polynesian, Grand Floridian e Contemporary, de graça. Fim de tarde é lindo.","Polynesian, Grand Floridian and Contemporary, free. Late afternoon is lovely.","train"],["wd06","wdw","","Skyliner, o teleférico","Skyliner gondola","0","45 min","g,v","","","","","Teleférico entre EPCOT, Hollywood Studios e hotéis. Grátis e com vista.","Gondola linking EPCOT, Hollywood Studios and hotels. Free with views.","aerial-lift"],["wd07","wdw","","BoardWalk à noite","BoardWalk at night","1","1h30","g,n","","","","","Calçadão à beira do lago, com música e doces. Dá para ir a pé até o EPCOT.","Lakeside boardwalk with music and sweets. Walkable to EPCOT.","moon"],["wd08","wdw","","Fogueira do Chip 'n' Dale","Chip 'n' Dale campfire","0","1h","g,n,h","","","","","No Fort Wilderness: fogueira, marshmallow e filme ao ar livre. Grátis.","At Fort Wilderness: campfire, marshmallows and an outdoor movie. Free.","campfire"],["wd09","wdw","","Electrical Water Pageant","Electrical Water Pageant","0","20 min","g,n,h","","","","Electrical_Water_Pageant","Desfile de barcas iluminadas no lago, desde 1971. Ver da praia de um hotel.","A parade of lit barges on the lake, since 1971. Watch from a hotel beach.","ship"],["wd10","wdw","","Wilderness Lodge e o gêiser","Wilderness Lodge and its geyser","0","1h","g,h","","","","Disney's_Wilderness_Lodge","Hotel de parque nacional com gêiser de hora em hora. Barco até o Magic Kingdom.","National-park style hotel with an hourly geyser. Boat to Magic Kingdom.","trees"],["wd11","wdw","","Hoop-Dee-Doo Musical Revue","Hoop-Dee-Doo Musical Revue","0","2h","n","","","","","Jantar-show de faroeste com frango frito e costela, desde 1974.","Wild West dinner show with fried chicken and ribs, since 1974.","music"],["wd12","wdw","","Drawn to Life, Cirque du Soleil","Drawn to Life, Cirque du Soleil","0","2h","c,n","","","","Drawn_to_Life_(Cirque_du_Soleil)","Circo com animação da Disney, em Disney Springs. Conferir se segue em cartaz.","Circus with Disney animation, at Disney Springs. Check it is still running.","mask"],["wd13","wdw","","Balão Aerophile","Aerophile balloon","0","30 min","v","","","","","Balão preso que sobe 120 metros sobre Disney Springs.","Tethered balloon rising 120 metres above Disney Springs.","balloon"],["wd14","wdw","","Passeio de Amphicar","Amphicar ride","0","30 min","h","","","","","Carro anfíbio dos anos 60 que entra no lago. No The BOATHOUSE, Disney Springs.","A 1960s amphibious car that drives into the lake. At The BOATHOUSE, Disney Springs.","car"],["wd15","wdw","","Minigolfe da Disney","Disney mini golf","1","1h30","","","","","","Fantasia Gardens ou Winter Summerland. Bom fim de tarde.","Fantasia Gardens or Winter Summerland. Nice late afternoon.","golf"],["wd16","wdw","","LEVEL99","LEVEL99","1","2h","c,x","","","","","Novo em 2026 em Disney Springs: salas de desafios em grupo.","New in 2026 at Disney Springs: group challenge rooms.","device-gamepad-2"],["wd17","wdw","","Barcos e o lago Seven Seas","Ferry boats and Seven Seas Lagoon","0","45 min","g,v","","","","","Barco grátis entre o estacionamento e o Magic Kingdom, ida e volta só pela vista.","Free ferry between the car park and Magic Kingdom, there and back just for the view.","ship"],["wd18","wdw","","Grand Floridian à noite","Grand Floridian at night","0","1h","g,n","","","","","Hotel vitoriano, com piano no lobby. Bom para um drinque.","Victorian hotel with a piano in the lobby. Good for a drink.","building"],["wd19","wdw","","Disney's Lakeshore Lodge","Disney's Lakeshore Lodge","0","1h","x","","","S","","Hotel novo no Bay Lake, previsto para o verão de 2027. Se abrir a tempo, vale a visita.","New hotel on Bay Lake, due summer 2027. If open in time, worth a look.","building"],["us01","usf","","Universal Studios Florida, o dia todo","Universal Studios Florida, full day","2","D","","","","","Universal_Studios_Florida","Harry Potter, Minions, Simpsons e Nova York.","Harry Potter, Minions, Simpsons and New York.","movie"],["us10","usf","","Halloween Horror Nights","Halloween Horror Nights","2","H","n,a","","","S","Halloween_Horror_Nights","Casas mal-assombradas à noite. Costuma começar no fim de agosto ou início de setembro. Ingresso à parte.","Haunted houses at night. Usually starts late August or early September. Separate ticket.","skull"],["io01","ioa","","Islands of Adventure, o dia todo","Islands of Adventure, full day","2","D","","","","","Universal_Islands_of_Adventure","Hogsmeade, dinossauros, Marvel e Dr. Seuss.","Hogsmeade, dinosaurs, Marvel and Dr. Seuss.","map-2"],["eu01","epic","","Epic Universe, o dia todo","Epic Universe, full day","3","D","x","","","","Universal_Epic_Universe","O parque mais novo, aberto em maio de 2025. Cinco mundos e muita fila.","The newest park, opened May 2025. Five worlds and long lines.","planet"],["eu07","epic","","Celestial Goodnight","Celestial Goodnight","0","30 min","n,x","","","","","Show noturno de fogos e fontes, desde julho de 2026.","Nightly fireworks and fountain show, since July 2026.","sparkles"],["uo01","uor","","Volcano Bay","Volcano Bay","2","D","a","","","","Universal's_Volcano_Bay","O aquático do vulcão, com pulseira que guarda o lugar na fila.","The volcano water park, with a wristband that holds your place in line.","swimming"],["uo02","uor","","CityWalk à noite","CityWalk at night","1","2h","g,n","","","","Universal_CityWalk","Restaurantes, música e bares entre os parques. Entrada grátis.","Restaurants, music and bars between the parks. Free entry.","music"],["uo03","uor","","Hollywood Drive-In Golf","Hollywood Drive-In Golf","1","1h30","n","","","","","Minigolfe de filmes de terror e ficção dos anos 50, à noite com luz.","1950s horror and sci-fi mini golf, lit up at night.","golf"],["uo04","uor","","Blue Man Group","Blue Man Group","0","2h","c,n,x","","","","Blue_Man_Group","Saiu da Universal e voltou em maio de 2026, num teatro novo no ICON Park.","Left Universal and returned in May 2026, in a new theatre at ICON Park.","music"],["uo05","uor","","Hogwarts Express à noite","Hogwarts Express at night","0","1h","n","","","","","Hogsmeade e Diagon Alley iluminados, sem as filas do dia.","Hogsmeade and Diagon Alley lit up, without the daytime crowds.","moon-stars"],["sw01","sw","","SeaWorld Orlando, o dia todo","SeaWorld Orlando, full day","2","D","","","","","SeaWorld_Orlando","Montanhas-russas fortes, pinguins e shows.","Big coasters, penguins and shows.","ripple"],["sw05","sw","","Seven Seas Food Festival","Seven Seas Food Festival","1","H","","","","M","","Festival de comida com shows, normalmente nos fins de semana da primavera. Datas de 2027 a confirmar.","Food festival with concerts, usually on spring weekends. 2027 dates to be confirmed.","tools-kitchen-2"],["sw06","sw","","Howl-O-Scream","Howl-O-Scream","2","H","n","","","S","","Halloween à noite no SeaWorld, de setembro a outubro.","Halloween nights at SeaWorld, September to October.","skull"],["sw07","sw","","Aquatica","Aquatica","2","D","a","","","","Aquatica_(water_park)","Aquático do SeaWorld, com toboágua que passa pelo tanque de golfinhos.","SeaWorld's water park, with a slide through a dolphin tank.","swimming"],["sw08","sw","","Discovery Cove","Discovery Cove","1","D","h","","","","Discovery_Cove","Dia tudo incluído: nadar com raias, snorkel e praia. Caro, gente limitada.","All-inclusive day: swim with rays, snorkel, beach. Pricey, limited guests.","beach"],["id01","idrive","","ICON Park e The Wheel","ICON Park and The Wheel","0","1h30","n,v","","","","ICON_Park","Roda-gigante de 120 metros com ar-condicionado. Melhor ao pôr do sol.","A 120-metre air-conditioned observation wheel. Best at sunset.","building-carousel"],["id02","idrive","","Madame Tussauds","Madame Tussauds","0","1h30","c","","","","Madame_Tussauds","Museu de cera no ICON Park. Combina com a roda-gigante.","Wax museum at ICON Park. Combine with the wheel.","user-star"],["id03","idrive","","SEA LIFE Aquarium","SEA LIFE Aquarium","0","1h30","c","","","","","Aquário com túnel de 360 graus. Pequeno, bom em dia de chuva.","Aquarium with a 360-degree tunnel. Small, good on a rainy day.","ripple"],["id04","idrive","","Museum of Illusions","Museum of Illusions","0","1h","c","","","","","Ilusões de ótica e fotos engraçadas, no ICON Park.","Optical illusions and funny photos, at ICON Park.","eye"],["id05","idrive","","WonderWorks","WonderWorks","1","2h","c","","","","WonderWorks_(attraction)","A casa de cabeça para baixo, com ciência mão na massa.","The upside-down house, with hands-on science.","atom"],["id06","idrive","","Ripley's Believe It or Not!","Ripley's Believe It or Not!","0","1h30","c,h","","","","","O prédio que está afundando, cheio de curiosidades do mundo.","The sinking building, full of oddities from around the world.","zoom-question"],["id07","idrive","","Fun Spot America Orlando","Fun Spot America Orlando","2","2h","a,n","","","","Fun_Spot_America_Theme_Parks","Kart em rampa e montanha-russa de madeira. Entrada grátis, paga por brinquedo.","Multi-level go-karts and a wooden coaster. Free entry, pay per ride.","steering-wheel"],["id08","idrive","","Dezerland e o museu de carros","Dezerland and the car museum","0","2h","c,h","","","","","Shopping virado parque coberto, com carros de cinema no Orlando Auto Museum.","A mall turned indoor park, with film cars in the Orlando Auto Museum.","car"],["id09","idrive","","Andretti Indoor Karting","Andretti Indoor Karting","2","2h","c,a","","","","","Kart elétrico coberto, simuladores e boliche.","Indoor electric karts, simulators and bowling.","steering-wheel"],["id10","idrive","","iFLY Orlando","iFLY Orlando","2","1h","a,c","","","","","Simulador de queda livre em túnel de vento.","Indoor skydiving in a wind tunnel.","parachute"],["id11","idrive","","Topgolf Orlando","Topgolf Orlando","1","2h","n","","","","","Golfe de bolinhas com alvos, comida e bebida. Divertido sem saber jogar.","Driving-range game with targets, food and drinks. Fun even if you cannot play.","golf"],["id12","idrive","","Passeio de helicóptero","Helicopter ride","0","30 min","v,a","","","","","Voo curto sobre os parques e lagos. Várias empresas na I-Drive.","Short flight over the parks and lakes. Several companies on I-Drive.","helicopter"],["id13","idrive","","ICEBAR Orlando","ICEBAR Orlando","0","1h","c,n","","","","","Bar de gelo abaixo de zero, com casaco e luvas.","An ice bar below freezing, coats and gloves provided.","snowflake"],["id14","idrive","","Pointe Orlando","Pointe Orlando","0","1h","g,n","","","","","Ruas com restaurantes e cinema, mais calmo que o ICON Park.","Streets of restaurants and a cinema, calmer than ICON Park.","map-pin"],["id15","idrive","","Crayola Experience","Crayola Experience","0","2h","c","","","","","Na Florida Mall: atividades com giz de cera. Mais para crianças.","At The Florida Mall: crayon activities. Mostly for kids.","palette"],["id16","idrive","","O maior McDonald's do mundo","The world's largest entertainment McDonald's","0","1h","g,h","","","","","Na I-Drive com Sand Lake: fliperama e cardápio com pizza e massa. Curiosidade.","At I-Drive and Sand Lake: arcade and a menu with pizza and pasta. A curiosity.","burger"],["id17","idrive","","Escape Game Orlando","The Escape Game Orlando","1","1h","c","","","","","Salas de enigma em grupo. Bom em dia de chuva.","Group puzzle rooms. Good on a rainy day.","puzzle"],["ki01","kiss","","Gatorland","Gatorland","1","H","h","","","","Gatorland","Parque dos jacarés desde 1949. Shows, passarela e muita foto.","The alligator park since 1949. Shows, boardwalks and lots of photos.","paw"],["ki02","kiss","","Screamin' Gator Zip Line","Screamin' Gator Zip Line","2","1h30","a","","","","","Tirolesa por cima dos jacarés do Gatorland.","Zip line over Gatorland's alligators.","aerial-lift"],["ki03","kiss","","Boggy Creek Airboat","Boggy Creek Airboat","0","1h","a","","","","","Aerobarco no lago Tohopekaliga. Tem versão noturna para ver os olhos dos jacarés.","Airboat on Lake Tohopekaliga. Night version to spot alligator eyes.","speedboat"],["ki04","kiss","","Wild Florida","Wild Florida","1","H","h","45","","","","Aerobarco e safári de carro com zebras e girafas, em Kenansville.","Airboat plus a drive-through safari with zebras and giraffes, in Kenansville.","binoculars"],["ki05","kiss","","Old Town: carros antigos","Old Town: classic cars","0","2h","g,n,h","","","","","Cruise de carros antigos sexta e sábado às 20:30, com show de muscle car na sexta.","Classic car cruise Friday and Saturday at 8:30pm, muscle cars on Friday.","car"],["ki06","kiss","","Celebration a pé","Celebration on foot","0","2h","g,h","","","","Celebration,_Florida","A cidade planejada pela Disney: lago, praça e casinhas.","The town Disney planned: lake, square and pretty houses.","home"],["ki07","kiss","","Passeio de balão ao amanhecer","Sunrise hot-air balloon","0","H","v,h","","","","","Sair antes de o sol nascer e ver Orlando do alto. Café depois. Várias empresas.","Leave before sunrise and see Orlando from above. Breakfast after. Several companies.","balloon"],["ki08","kiss","","Medieval Times","Medieval Times","0","2h","n,c","","","","Medieval_Times","Jantar com torneio de cavaleiros. Come-se com a mão.","Dinner with a knights' tournament. You eat with your hands.","swords"],["ki09","kiss","","Gaylord Palms","Gaylord Palms","0","1h","g,c","","","","","Hotel com átrio gigante que imita a Flórida. Entrar para passear.","Hotel with a giant atrium recreating Florida. Walk in for a stroll.","building"],["ki10","kiss","","Kissimmee Lakefront Park","Kissimmee Lakefront Park","0","1h","g,v","","","","","Calçadão no lago Toho, pôr do sol e garças.","Promenade on Lake Toho, sunsets and herons.","sunset"],["ki11","kiss","","Orlando Tree Trek","Orlando Tree Trek","3","2h","a","","","","","Arvorismo com tirolesas. Reservar antes.","Treetop ropes course with zip lines. Book ahead.","trees"],["ki12","kiss","","Exotic Animal Experience","Exotic Animal Experience","0","1h","c,h","","","","","Encontro com preguiça, canguru e outros bichos, em grupo pequeno.","Meet sloths, kangaroos and more in small groups.","paw"],["ki13","kiss","","Disney Wilderness Preserve","Disney Wilderness Preserve","1","2h","g,h","30","","","The_Disney_Wilderness_Preserve","Reserva natural que a Disney pagou. Trilha tranquila, pássaros e silêncio.","A nature reserve Disney paid for. Quiet trail, birds and silence.","trees"],["ki14","kiss","","Museum of Military History","Museum of Military History","0","1h30","c,h","","","","","Museu pequeno e caprichado, em Kissimmee.","Small, well-kept museum in Kissimmee.","building-bank"],["ki15","kiss","","Fun Spot Kissimmee","Fun Spot Kissimmee","2","2h","a","","","","","Kart e a montanha-russa de madeira Mine Blower, perto da 192.","Karts and the Mine Blower wooden coaster, near the 192.","steering-wheel"],["ki16","kiss","","Chocolate Kingdom","Chocolate Kingdom","0","1h","c","","","","","Tour da fábrica de chocolate, montar sua própria barra.","Chocolate factory tour, make your own bar.","cookie"],["ci01","city","","Lake Eola e o centro","Lake Eola and downtown","0","1h30","g,v","","","","Lake_Eola_Park","O lago com a fonte e os cisnes, cercado de prédios. Barco de cisne para pedalar.","The lake with the fountain and swans, ringed by towers. Swan pedal boats.","feather"],["ci02","city","","Feira de domingo do Lake Eola","Lake Eola Sunday market","0","1h30","g,h","","","","","Feira de domingo de manhã: frutas, comida e artesanato.","Sunday morning market: fruit, food and crafts.","basket"],["ci03","city","","Winter Park, Park Avenue","Winter Park, Park Avenue","0","H","g,h","","","","Winter_Park,_Florida","Rua de lojas e cafés com carvalhos. Cidadezinha elegante.","A street of shops and cafés under oak trees. An elegant small town.","walk"],["ci04","city","","Winter Park Scenic Boat Tour","Winter Park Scenic Boat Tour","0","1h","v,h","","","","","Barco de uma hora pelos lagos e canais, vendo as mansões. Desde 1938.","One-hour boat ride through lakes and canals past mansions. Since 1938.","sailboat"],["ci05","city","","Morse Museum e a capela Tiffany","Morse Museum and the Tiffany chapel","0","1h30","c,h","","","","Charles_Hosmer_Morse_Museum_of_American_Art","A maior coleção de Tiffany do mundo, com uma capela inteira. Ingresso barato.","The world's largest Tiffany collection, including a whole chapel. Cheap entry.","building-church"],["ci06","city","","Feira de sábado de Winter Park","Winter Park Saturday market","0","1h30","g","","","","","Feira de sábado de manhã na antiga estação.","Saturday morning market at the old station.","basket"],["ci07","city","","Albin Polasek Museum","Albin Polasek Museum","0","1h","h","","","","Albin_Polasek_Museum_&_Sculpture_Gardens","Casa e jardim de esculturas na beira do lago, em Winter Park.","House and sculpture garden on the lake, in Winter Park.","brush"],["ci08","city","","Harry P. Leu Gardens","Harry P. Leu Gardens","1","2h","h","","","","Harry_P._Leu_Gardens","Jardins de 20 hectares com camélias, rosas e floresta tropical.","20 hectares of gardens with camellias, roses and rainforest.","flower"],["ci09","city","","Orlando Science Center","Orlando Science Center","0","H","c","","","","Orlando_Science_Center","Museu de ciência com área nova de bichos e um observatório.","Science museum with a new live-animal area and an observatory.","atom"],["ci10","city","","Orlando Museum of Art","Orlando Museum of Art","0","1h30","c","","","","Orlando_Museum_of_Art","Museu de arte no Loch Haven Park, com exposições que mudam.","Art museum in Loch Haven Park, with rotating shows.","palette"],["ci11","city","","Mennello Museum","Mennello Museum","0","1h","c,h","","","","","Pequeno museu de arte americana com jardim de esculturas no lago.","Small American art museum with a lakeside sculpture garden.","palette"],["ci12","city","","Mills 50 e o bairro vietnamita","Mills 50 and the Vietnamese district","0","2h","g,h","","","","","Bairro de murais, comida asiática e lojinhas. Para comer bem e barato.","Neighbourhood of murals, Asian food and small shops. Eat well and cheap.","bowl"],["ci13","city","","Audubon Park e East End Market","Audubon Park and East End Market","0","1h30","h","","","","","Mercado de produtores locais, com o famoso cookie do Gideon's.","A market of local makers, home of the famous Gideon's cookie.","building-store"],["ci14","city","","Ivanhoe Village, antiquários","Ivanhoe Village antiques","0","1h30","h","","","","","Rua de antiquários e brechós perto do lago Ivanhoe.","Street of antique and vintage shops by Lake Ivanhoe.","clock"],["ci15","city","","Dr. Phillips Center, ver programação","Dr. Phillips Center, check listings","0","3h","c,n","","","","","Musicais da Broadway e concertos no centro. Ver o que tem nas datas.","Broadway tours and concerts downtown. Check what is on.","ticket"],["ci16","city","","Jogo do Orlando City","Orlando City match","1","3h","n","","","","Orlando_City_SC","Futebol da MLS, com torcida animada. A temporada pega maio e setembro.","MLS soccer with lively fans. The season covers May and September.","ball-football"],["ci17","city","","Orlando Fringe","Orlando Fringe","0","3h","n","","","M","Orlando_International_Fringe_Theatre_Festival","Festival de teatro alternativo em maio, no Loch Haven Park.","Alternative theatre festival in May, in Loch Haven Park.","mask"],["ci18","city","","Orlando Wetlands Park","Orlando Wetlands Park","1","2h","g,h","40","","","Orlando_Wetlands_Park","Charcos com jacarés e aves por todo lado. Grátis, em Christmas, FL.","Wetlands with alligators and birds everywhere. Free, in Christmas, FL.","binoculars"],["ci19","city","","Lake Apopka Wildlife Drive","Lake Apopka Wildlife Drive","0","2h","g,h","40","","","","Estrada de terra de 18 km para ver jacarés e aves do carro. Só sexta a domingo e feriados.","An 18 km dirt road to see alligators and birds from the car. Friday to Sunday and holidays only.","car"],["ci20","city","","Tibet-Butler Preserve","Tibet-Butler Preserve","1","1h30","g,h","","","","","Trilhas de mata perto da Disney, quase ninguém. Bom de manhã.","Woodland trails near Disney, almost nobody there. Good in the morning.","trees"],["ci21","city","","Coleção Disney da biblioteca","The library's Disney Collection","0","45 min","g,c,h","","","","","Canto da biblioteca do centro dedicado à história dos parques.","A corner of the downtown library devoted to park history.","book"],["ci22","city","","Lake Nona e a coleção de arte","Lake Nona and its art","0","1h30","g,h","","","","","Bairro novo com arte pública e o hotel Wave, cheio de obras.","A new district with public art and the Wave hotel, full of artworks.","building-skyscraper"],["ci23","city","","Speakeasy no centro","Downtown speakeasy","0","1h30","n,h","","","","","Hanson's Shoe Repair: bar escondido que pede senha. Reservar antes.","Hanson's Shoe Repair: a hidden bar that needs a password. Book ahead.","glass"],["ci25","city","","Kraft Azalea Garden","Kraft Azalea Garden","0","45 min","g,v,h","","","","","Jardim de beira de lago com um pórtico de colunas, em Winter Park. Pouca gente.","Lakeside garden with a columned exedra, in Winter Park. Few people.","flower"],["ci26","city","","Cornell Fine Arts Museum","Cornell Fine Arts Museum","0","1h","g,c,h","","","","","Museu de arte da Rollins College, entrada grátis.","Rollins College art museum, free entry.","palette"],["ci24","city","","Thornton Park e Church Street","Thornton Park and Church Street","0","1h30","g,n","","","","","Ruas antigas do centro com restaurantes e bares.","Old downtown streets with restaurants and bars.","map-pin"],["na01","nat","","Wekiwa Springs","Wekiwa Springs","1","H","h","30","","","Wekiwa_Springs_State_Park","Nascente de água azul a 22 °C o ano todo. Nadar e alugar caiaque.","A blue spring at 22 °C all year. Swim and rent a kayak.","droplet"],["na02","nat","","Kelly Park, Rock Springs","Kelly Park, Rock Springs","1","H","h","35","","","Rock_Springs_(Florida)","Descer de boia pela nascente. Lota rápido: chegar na abertura.","Float down the spring on a tube. Fills up fast: arrive at opening.","ripple"],["na03","nat","","Caiaque transparente em Rock Springs","Clear kayak at Rock Springs","1","2h","h","35","","","","Tour guiado em caiaque transparente, vendo o fundo da nascente.","Guided tour in a clear kayak, seeing the spring floor.","kayak"],["na04","nat","","Wekiva Island","Wekiva Island","0","H","","30","","","","Clube na beira do rio: caiaque, redes e comida.","Riverside hangout: kayaks, hammocks and food.","kayak"],["na05","nat","","Cavalgada no Lake Louisa","Horse ride at Lake Louisa","1","2h","h","35","","","","Passeio a cavalo guiado no parque estadual.","Guided horse ride in the state park.","horse"],["na06","nat","","Caiaque no Shingle Creek","Kayak on Shingle Creek","1","2h","h","","","","","A nascente dos Everglades começa aqui. Caiaque entre ciprestes, em Kissimmee.","Where the Everglades begin. Kayak among cypress trees, in Kissimmee.","kayak"],["na07","nat","","Central Florida Zoo","Central Florida Zoo","1","H","","30","","","Central_Florida_Zoo_and_Botanical_Gardens","Zoológico pequeno e tranquilo em Sanford.","Small, relaxed zoo in Sanford.","paw"],["na08","nat","","Nona Adventure Park","Nona Adventure Park","2","H","a","20","","","","Wakeboard, obstáculos infláveis no lago e escalada.","Wakeboarding, inflatable lake obstacles and climbing.","ripple"],["sh01","shows","","Pirates Dinner Adventure","Pirates Dinner Adventure","0","2h","c,n","","","","","Jantar-show de piratas com navio no salão.","Pirate dinner show with a ship in the arena.","ship"],["sh02","shows","","Sleuths Mystery Dinner Shows","Sleuths Mystery Dinner Shows","0","2h","c,n,h","","","","","Jantar com mistério para a mesa resolver. Em inglês.","Dinner with a murder mystery for the table to solve. In English.","zoom-question"],["sh03","shows","","Outta Control Magic Show","Outta Control Magic Show","0","1h30","c,n","","","","","Show de mágica e comédia dentro do WonderWorks.","Magic and comedy show inside WonderWorks.","wand"],["sh04","shows","","Disney à noite em sequência","Disney night hop","1","3h","n,v","","","","","Fim de tarde no EPCOT e fogos, ou drinque no Contemporary vendo o Magic Kingdom.","Late afternoon at EPCOT plus fireworks, or a drink at the Contemporary facing Magic Kingdom.","moon"],["sh05","shows","","Jazz no Blue Bamboo","Jazz at Blue Bamboo","0","2h","n,h","","","","","Casa de jazz pequena em Winter Park. Ver programação.","Small jazz venue in Winter Park. Check listings.","music"],["sp01","shop","","Orlando Vineland Premium Outlets","Orlando Vineland Premium Outlets","1","H","","","","","Orlando_Vineland_Premium_Outlets","Outlet perto da Disney, com marcas mais caras.","Outlet near Disney, with higher-end brands.","shopping-bag"],["sp02","shop","","Orlando International Premium Outlets","Orlando International Premium Outlets","1","H","","","","","","Outlet da I-Drive, o maior e mais variado.","The I-Drive outlet, the biggest and most varied.","shopping-bag"],["sp03","shop","","Disney Character Warehouse","Disney Character Warehouse","0","1h","h","","","","","A loja de saldos da Disney dentro dos outlets. Coisa de parque bem mais barata.","Disney's clearance store inside the outlets. Park merchandise much cheaper.","tag"],["sp04","shop","","The Mall at Millenia","The Mall at Millenia","0","H","c","","","","Mall_at_Millenia","Shopping de luxo com Apple Store e lojas de grife.","Upmarket mall with an Apple Store and designer shops.","shopping-bag"],["sp05","shop","","The Florida Mall","The Florida Mall","0","H","c","","","","The_Florida_Mall","O shopping grande e prático, com lojas de departamento.","The big practical mall with department stores.","shopping-bag"],["sp06","shop","","Lake Buena Vista Factory Stores","Lake Buena Vista Factory Stores","0","2h","","","","","","Outlet menor e mais tranquilo, perto da Disney.","Smaller, quieter outlet near Disney.","tag"],["sp07","shop","","Ross, TJ Maxx e Marshalls","Ross, TJ Maxx and Marshalls","1","2h","c,h","","","","","Garimpo de marca barata. Bom em dia de chuva.","Bargain hunting for brands. Good on a rainy day.","hanger"],["sp08","shop","","Walmart, Target e Best Buy","Walmart, Target and Best Buy","0","2h","c","","","","","Supermercados gigantes e eletrônicos. Uma tarde de compras práticas.","Giant superstores and electronics. An afternoon of practical shopping.","shopping-cart"],["sp09","shop","","Costco","Costco","0","1h30","c","","","","","Para abastecer a casa ou para passear. Precisa de cartão de sócio.","To stock the house or just to browse. Needs a membership card.","shopping-cart"],["sp10","shop","","Publix e o sanduíche Pub Sub","Publix and its Pub Sub","0","1h","c,h","","","","","O supermercado querido da Flórida. Sanduíche feito na hora.","Florida's favourite supermarket. Made-to-order subs.","shopping-cart"],["sp11","shop","","Supermercados brasileiros","Brazilian supermarkets","0","1h","c","","","","","SuperBras na I-Drive e Mais Brazil na Kirkman: guaraná, requeijão e picanha.","SuperBras on I-Drive and Mais Brazil on Kirkman: guaraná, requeijão and picanha.","basket"],["sp12","shop","","Renninger's, antiquários em Mount Dora","Renninger's antiques, Mount Dora","1","H","h","45","","","","Mercado de antiguidades enorme, nos fins de semana.","Huge antiques market, on weekends.","clock"],["fs01","fora","space","Kennedy Space Center","Kennedy Space Center","2","D","c","60","","","Kennedy_Space_Center_Visitor_Complex","O Saturno V, o ônibus espacial Atlantis e a área nova Gateway.","The Saturn V, the shuttle Atlantis and the new Gateway area.","rocket"],["fs02","fora","space","Ver um lançamento de foguete","Watch a rocket launch","0","3h","g,n,h","60","","","","Lançamentos quase toda semana. Ver o calendário perto da data e ir a Titusville ou à praia.","Launches almost every week. Check the schedule close to the date and head to Titusville or the beach.","rocket"],["fs03","fora","space","Caiaque bioluminescente","Bioluminescent kayak","1","2h","n,h","60","","","","Água que brilha a cada remada. Temporada de maio a outubro, melhor perto da lua nova.","Water that glows with every paddle stroke. Season May to October, best near the new moon.","sparkles"],["fs04","fora","space","Black Point Wildlife Drive","Black Point Wildlife Drive","0","1h30","h","60","","","Merritt_Island_National_Wildlife_Refuge","Estrada de 11 km no refúgio de Merritt Island: jacarés, aves e às vezes peixe-boi.","An 11 km drive in Merritt Island refuge: alligators, birds and sometimes manatees.","binoculars"],["fs05","fora","space","Praia de Playalinda","Playalinda Beach","1","H","v,h","60","","","Canaveral_National_Seashore","Praia selvagem com as plataformas de lançamento ao fundo.","Wild beach with the launch pads in the distance.","beach"],["fs06","fora","space","Cocoa Beach e o píer","Cocoa Beach and the pier","1","H","v","60","","","Cocoa_Beach,_Florida","A praia de Orlando, com o píer de madeira e a Ron Jon gigante.","Orlando's beach, with the wooden pier and the giant Ron Jon store.","beach"],["fs07","fora","space","Jetty Park e os navios","Jetty Park and the cruise ships","0","2h","v,h","60","","","","Ver os navios de cruzeiro saindo de Port Canaveral no fim da tarde.","Watch cruise ships leave Port Canaveral in the late afternoon.","ship"],["fs08","fora","space","Valiant Air Command Warbird Museum","Valiant Air Command Warbird Museum","0","1h30","c,h","55","","","Valiant_Air_Command_Warbird_Museum","Hangar cheio de aviões militares históricos, em Titusville.","A hangar full of historic military aircraft, in Titusville.","plane"],["fs09","fora","space","American Space Museum","American Space Museum","0","1h","c,h","55","","","","Museu pequeno feito por quem trabalhou na NASA, em Titusville.","Small museum run by former space workers, in Titusville.","planet"],["fs10","fora","space","Brevard Zoo","Brevard Zoo","1","H","","70","","","Brevard_Zoo","Zoológico com caiaque entre girafas e passarelas nas árvores.","Zoo with kayaking past giraffes and treetop walkways.","paw"],["fs11","fora","space","KSC Up-Close tours","KSC Up-Close tours","1","3h","h","60","","","","Ônibus até as plataformas de lançamento. Pago à parte, reservar.","Bus to the launch pads. Paid extra, book ahead.","bus"],["fd01","fora","daytona","Daytona International Speedway","Daytona International Speedway","1","2h","h","60","","","Daytona_International_Speedway","Tour pelo autódromo da Daytona 500, até a pista.","Tour of the Daytona 500 track, down to the circuit.","steering-wheel"],["fd02","fora","daytona","Dirigir na areia de Daytona","Drive on Daytona's sand","0","1h","v,h","60","","","Daytona_Beach,_Florida","Pode entrar de carro na praia, pagando uma taxa. Devagar.","You can drive onto the beach for a fee. Slowly.","car"],["fd03","fora","daytona","Ponce Inlet Lighthouse","Ponce Inlet Lighthouse","3","1h30","v,h","70","","","Ponce_de_Leon_Inlet_Light","O farol mais alto da Flórida, 203 degraus.","Florida's tallest lighthouse, 203 steps.","building-lighthouse"],["fd04","fora","daytona","Marine Science Center","Marine Science Center","0","1h","h","70","","","","Hospital de tartarugas marinhas e aves em Ponce Inlet.","A sea turtle and bird hospital in Ponce Inlet.","droplet"],["fd05","fora","daytona","New Smyrna Beach","New Smyrna Beach","1","H","v,h","60","","","New_Smyrna_Beach,_Florida","Praia de surfistas e a Canal Street, mais charmosa que Daytona.","A surf beach and Canal Street, more charming than Daytona.","beach"],["fd06","fora","daytona","Museum of Arts & Sciences","Museum of Arts & Sciences","0","2h","c,h","60","","","Museum_of_Arts_and_Sciences","Arte cubana, uma preguiça-gigante fóssil e vagões de trem com coleção da Coca-Cola.","Cuban art, a giant ground sloth fossil and railcars with a Coca-Cola collection.","building-bank"],["fd07","fora","daytona","Buc-ee's de Daytona","Buc-ee's Daytona","0","1h","h","60","","","","Posto de gasolina gigante e famoso: sanduíche de brisket, doces e souvenirs.","Huge, famous petrol station: brisket sandwiches, sweets and souvenirs.","building-store"],["fd08","fora","daytona","Tanger Outlets Daytona","Tanger Outlets Daytona","1","H","","60","","","","Outlet na volta da praia, mais vazio que os de Orlando.","An outlet on the way back from the beach, quieter than Orlando's.","shopping-bag"],["fn01","fora","norte","Blue Spring e passeio de barco","Blue Spring and the boat tour","1","H","h","45","","","Blue_Spring_State_Park","Nadar na nascente (abril a meados de novembro) ou barco de 2 horas no rio St. Johns.","Swim in the spring (April to mid-November) or take a 2-hour St. Johns River boat tour.","droplet"],["fn02","fora","norte","Panquecas no De Leon Springs","Pancakes at De Leon Springs","0","2h","h","55","","","De_Leon_Springs_State_Park","Você faz a própria panqueca na chapa da mesa, num moinho antigo. Depois, nadar na nascente.","You cook your own pancakes on a table griddle in an old mill. Then swim in the spring.","egg-fried"],["fn03","fora","norte","Cassadaga","Cassadaga","0","1h30","h","45","","","Cassadaga_Spiritualist_Camp","Vilarejo de médiuns desde 1894. Curioso, tranquilo, casas antigas.","A village of mediums since 1894. Curious, quiet, old houses.","crystal-ball"],["fn04","fora","norte","Paraquedistas em DeLand","Skydivers at DeLand","0","1h","g,h","50","","","","Ver os saltos de graça do gramado da Skydive DeLand. Quem quiser, salta duplo.","Watch the jumps for free from the Skydive DeLand lawn. The brave can go tandem.","parachute"],["fn05","fora","norte","Centro de DeLand","Downtown DeLand","0","2h","g","50","","","DeLand,_Florida","Rua principal bonita com lojas e cafés, perto da universidade Stetson.","A pretty main street with shops and cafés, near Stetson University.","walk"],["fn06","fora","norte","Sanford e o Riverwalk","Sanford and the Riverwalk","0","2h","g,h","30","","","Sanford,_Florida","Centro histórico de tijolinho com cervejarias, no lago Monroe.","Historic brick downtown with breweries, on Lake Monroe.","walk"],["fn07","fora","norte","Cruzeiro no rio St. Johns","St. Johns River cruise","0","2h","v","30","","","","Barco saindo de Sanford ou do Blue Spring, com jacarés e garças.","Boat from Sanford or Blue Spring, with alligators and herons.","ship"],["fw01","fora","oeste","Centro de Winter Garden","Downtown Winter Garden","0","2h","g,h","25","","","Winter_Garden,_Florida","Cidadezinha charmosa com feira de sábado e o Plant Street Market.","A charming small town with a Saturday market and Plant Street Market.","walk"],["fw02","fora","oeste","Bicicleta no West Orange Trail","Bike the West Orange Trail","2","2h","h","25","","","West_Orange_Trail","Ciclovia plana, com aluguel de bike em Winter Garden.","A flat bike trail, with bike hire in Winter Garden.","bike"],["fw03","fora","oeste","Citrus Tower","Citrus Tower","0","45 min","v,h","35","","","Citrus_Tower","Torre de 1956 em Clermont, com vista das colinas e lagos.","A 1956 tower in Clermont, with views of hills and lakes.","building-lighthouse"],["fw04","fora","oeste","Lakeridge Winery","Lakeridge Winery","0","1h30","h","40","","","","Vinícola com tour e degustação grátis, em Clermont.","Winery with a free tour and tasting, in Clermont.","glass-full"],["fw05","fora","oeste","Showcase of Citrus","Showcase of Citrus","1","2h","h","45","","","","Fazenda de laranjas com safári de caminhão monstro.","An orange farm with a monster-truck safari.","lemon"],["fw06","fora","oeste","Mount Dora","Mount Dora","1","H","h","45","","","Mount_Dora,_Florida","Cidade de colinas, antiquários e casinhas. Ótima para um dia lento.","Hilly town of antiques and old houses. Great for a slow day.","home"],["fw07","fora","oeste","Barco pelo Dora Canal","Boat on the Dora Canal","0","2h","v,h","45","","","","Passeio de barco por um canal de ciprestes, saindo de Mount Dora.","Boat ride along a cypress canal, leaving from Mount Dora.","sailboat"],["fp01","fora","polk","Legoland Florida","Legoland Florida","1","D","","50","","","Legoland_Florida","Parque da Lego com jardins antigos de Cypress Gardens.","The Lego park with the old Cypress Gardens botanical gardens.","lego"],["fp02","fora","polk","Peppa Pig Theme Park","Peppa Pig Theme Park","0","H","","50","","","Peppa_Pig_Theme_Park","Parque pequeno ao lado do Legoland. Só se tiver criança junto.","Small park next to Legoland. Only if there are kids along.","horse-toy"],["fp03","fora","polk","Bok Tower Gardens","Bok Tower Gardens","1","H","v,h","60","","","Bok_Tower_Gardens","Torre de sinos em jardim, num dos pontos mais altos da Flórida. Concerto de carrilhão à tarde.","A bell tower in gardens on one of Florida's highest points. Carillon concerts in the afternoon.","building-lighthouse"],["fp04","fora","polk","Spook Hill","Spook Hill","0","20 min","g,h","60","","","Spook_Hill","Ladeira onde o carro parece subir sozinho em ponto morto. Ilusão clássica.","A hill where your car seems to roll uphill in neutral. A classic illusion.","car"],["fp05","fora","polk","Frank Lloyd Wright em Lakeland","Frank Lloyd Wright in Lakeland","1","2h","h","50","","","Florida_Southern_College_Architectural_District","O maior conjunto de prédios dele num só lugar, no campus. Tour guiado.","His largest group of buildings in one place, on a campus. Guided tour.","building"],["fp06","fora","polk","Circle B Bar Reserve","Circle B Bar Reserve","1","2h","g,h","50","","","Circle_B_Bar_Reserve","Trilhas com muitos jacarés e aves, perto de Lakeland.","Trails with lots of alligators and birds, near Lakeland.","binoculars"],["fp07","fora","polk","Fantasy of Flight","Fantasy of Flight","0","2h","c,h","40","","","Fantasy_of_Flight","Coleção particular de aviões antigos em Polk City. Abre em dias limitados, conferir calendário.","A private collection of vintage aircraft in Polk City. Limited opening days, check the calendar.","plane"],["fp08","fora","polk","Solomon's Castle","Solomon's Castle","1","2h","h","105","","M","Solomon's_Castle","Castelo de alumínio feito por um artista, no meio do mato. Fecha em agosto e setembro.","An aluminium castle built by an artist in the backwoods. Closed in August and September.","building-castle"],["fp09","fora","polk","Florida Air Museum","Florida Air Museum","0","1h30","c","50","","","","Aviões e história da aviação em Lakeland.","Aircraft and aviation history in Lakeland.","plane"],["fo01","fora","ocala","Silver Springs, barco de fundo de vidro","Silver Springs glass-bottom boat","0","H","h","80","","","Silver_Springs_State_Park","Barcos de fundo de vidro desde 1878 sobre a nascente. Macacos selvagens às vezes.","Glass-bottom boats over the spring since 1878. Wild monkeys sometimes.","sailboat"],["fo02","fora","ocala","Rainbow Springs","Rainbow Springs","1","H","h","100","","","Rainbow_Springs","Nascente com cachoeiras e descida de boia no Rainbow River.","A spring with waterfalls and tubing on the Rainbow River.","droplet"],["fo03","fora","ocala","Devil's Den","Devil's Den","2","2h","h","100","","","","Snorkel numa nascente dentro de uma caverna pré-histórica. Reservar.","Snorkel in a spring inside a prehistoric cave. Book ahead.","droplet"],["fo04","fora","ocala","Fazendas de cavalos de Ocala","Ocala horse farms","0","2h","h","80","","","Ocala,_Florida","Ocala é a capital do cavalo: tours guiados pelas fazendas de puro-sangue.","Ocala is the horse capital: guided tours of thoroughbred farms.","horse"],["fo05","fora","ocala","Alexander e Juniper Springs","Alexander and Juniper Springs","1","H","h","70","","","Alexander_Springs","Nascentes na Ocala National Forest, com canoa por dentro da mata.","Springs in the Ocala National Forest, with canoeing through the woods.","kayak"],["fo06","fora","ocala","Weeki Wachee, as sereias","Weeki Wachee mermaids","0","H","h","90","","","Weeki_Wachee_Springs","Show de sereias embaixo d'água desde 1947. Muito anos 50.","Underwater mermaid show since 1947. Very 1950s.","ripple"],["fo07","fora","ocala","Homosassa Springs","Homosassa Springs","0","H","h","95","","","Homosassa_Springs_Wildlife_State_Park","Observatório embaixo d'água com peixes-boi o ano todo.","Underwater observatory with manatees all year.","droplet"],["fo08","fora","ocala","Appleton Museum","Appleton Museum","0","1h30","c,h","80","","","Appleton_Museum_of_Art","Museu de arte surpreendente em Ocala.","A surprising art museum in Ocala.","building-bank"],["fa01","fora","staug","Castillo de San Marcos","Castillo de San Marcos","1","1h30","v","110","","","Castillo_de_San_Marcos","Forte espanhol de 1695, o mais antigo de pedra dos EUA.","A 1695 Spanish fort, the oldest masonry fort in the US.","building-castle"],["fa02","fora","staug","St. George Street e o centro","St. George Street and the old town","1","H","g","110","","","St._Augustine,_Florida","A cidade mais antiga dos EUA, de 1565. Ruas de pedestre.","The oldest city in the US, from 1565. Pedestrian streets.","walk"],["fa03","fora","staug","Flagler College","Flagler College","0","1h","c","110","","","Flagler_College","O antigo hotel de luxo virado universidade, com vitrais Tiffany. Tour guiado.","The former luxury hotel turned college, with Tiffany windows. Guided tour.","building"],["fa04","fora","staug","Lightner Museum","Lightner Museum","0","1h30","c,h","110","","","Lightner_Museum","Outro hotel antigo, agora museu de curiosidades da Era Dourada.","Another old hotel, now a museum of Gilded Age curiosities.","building-bank"],["fa05","fora","staug","Farol de St. Augustine","St. Augustine Lighthouse","2","1h30","v","115","","","St._Augustine_Light","Farol listrado com 219 degraus e vista da cidade.","A striped lighthouse with 219 steps and city views.","building-lighthouse"],["fa06","fora","staug","Alligator Farm","Alligator Farm","1","2h","h","115","","","St._Augustine_Alligator_Farm_Zoological_Park","Zoológico de jacarés de 1893, com ninhal de garças na primavera.","An 1893 alligator zoo, with nesting herons in spring.","paw"],["fa07","fora","staug","Fort Matanzas","Fort Matanzas","1","1h30","g,h","120","","","Fort_Matanzas_National_Monument","Fortinho espanhol numa ilha, com barco grátis.","A small Spanish fort on an island, with a free ferry.","ship"],["fa08","fora","staug","Tour fantasma à noite","Ghost tour at night","1","1h30","n","110","","","","A cidade velha tem fama de assombrada. Passeios a pé ou de trem.","The old town is known as haunted. Walking or trolley tours.","ghost"],["fa09","fora","staug","Destilaria e chocolate","Distillery and chocolate","0","2h","h","110","","","","Tour grátis da St. Augustine Distillery e fábrica da Whetstone.","Free St. Augustine Distillery tour and the Whetstone chocolate factory.","glass-full"],["fa10","fora","staug","Marineland","Marineland","0","2h","h","100","","","Marineland_of_Florida","O primeiro oceanário do mundo, de 1938, ainda funcionando.","The world's first oceanarium, from 1938, still open.","droplet"],["fa11","fora","staug","Fountain of Youth","Fountain of Youth","0","1h30","","110","","","Fountain_of_Youth_Archaeological_Park","Parque arqueológico com a fonte da lenda. Turístico, mas divertido.","Archaeological park with the legendary spring. Touristy but fun.","droplet"],["ft01","fora","tampa","Busch Gardens Tampa Bay","Busch Gardens Tampa Bay","3","D","a","80","","","Busch_Gardens_Tampa_Bay","Montanhas-russas fortes e safári africano no mesmo parque.","Big coasters and an African safari in one park.","rollercoaster"],["ft02","fora","tampa","Adventure Island","Adventure Island","2","D","","80","","","Adventure_Island_(water_park)","O aquático do Busch Gardens.","Busch Gardens' water park.","swimming"],["ft03","fora","tampa","Ybor City","Ybor City","1","H","h","80","","","Ybor_City","Bairro cubano e espanhol das fábricas de charuto, com galos soltos na rua.","The Cuban and Spanish cigar-factory district, with roosters in the street.","walk"],["ft04","fora","tampa","Tampa Riverwalk e Armature Works","Tampa Riverwalk and Armature Works","1","2h","g,v","80","","","Tampa_Riverwalk","Calçadão no rio e mercado de comida num galpão antigo.","A riverside walk and a food hall in an old depot.","walk"],["ft05","fora","tampa","Henry B. Plant Museum","Henry B. Plant Museum","0","1h30","c,h","80","","","Henry_B._Plant_Museum","Hotel mourisco de 1891, hoje museu, com minaretes prateados.","An 1891 Moorish-style hotel, now a museum, with silver minarets.","building-monument"],["ft06","fora","tampa","The Florida Aquarium","The Florida Aquarium","0","2h","c","80","","","The_Florida_Aquarium","Aquário grande no porto de Tampa.","Large aquarium at the Port of Tampa.","ripple"],["ft07","fora","tampa","ZooTampa","ZooTampa","1","H","","80","","","ZooTampa_at_Lowry_Park","Zoológico com centro de peixes-boi resgatados.","Zoo with a rescued manatee centre.","paw"],["fg01","fora","golfo","Clearwater Beach","Clearwater Beach","0","H","v","120","","","Clearwater_Beach,_Florida","Areia branca fininha. Pôr do sol no Pier 60.","Fine white sand. Sunset at Pier 60.","beach"],["fg02","fora","golfo","Honeymoon e Caladesi Island","Honeymoon and Caladesi islands","1","H","h","130","","","Caladesi_Island_State_Park","Ilha sem prédios, com barco até Caladesi. Uma das melhores praias dos EUA.","An undeveloped island, with a ferry to Caladesi. One of the best beaches in the US.","beach"],["fg03","fora","golfo","Dunedin","Dunedin","0","2h","h","125","","","Dunedin,_Florida","Cidade de origem escocesa com centrinho e cervejarias.","A town of Scottish origin with a cute centre and breweries.","walk"],["fg04","fora","golfo","Tarpon Springs","Tarpon Springs","0","2h","h","120","","","Tarpon_Springs,_Florida","Vila grega das esponjas: docas, padarias e lojinhas.","The Greek sponge village: docks, bakeries and little shops.","building-store"],["fg05","fora","golfo","Dalí Museum","Dalí Museum","0","2h","c","110","","","Salvador_Dalí_Museum","A maior coleção de Dalí fora da Europa, em St. Pete.","The largest Dalí collection outside Europe, in St. Pete.","palette"],["fg06","fora","golfo","Museu do Arts and Crafts","Arts and Crafts Movement museum","0","1h30","c,h","110","","","","Museu lindo e pouco conhecido em St. Pete, de móveis e cerâmica.","A beautiful, little-known St. Pete museum of furniture and pottery.","building-bank"],["fg07","fora","golfo","St. Pete Pier","St. Pete Pier","0","2h","g,v","110","","","St._Pete_Pier","Píer novo com parque, restaurantes e vista da baía.","A new pier with a park, restaurants and bay views.","walk"],["fg08","fora","golfo","Fort De Soto","Fort De Soto","1","H","h","120","","","Fort_De_Soto_Park","Praia selvagem e um forte antigo, na ponta de St. Pete.","A wild beach and an old fort, at the tip of St. Pete.","beach"],["fg09","fora","golfo","Ringling Museum","Ringling Museum","1","H","c","130","1","","John_and_Mable_Ringling_Museum_of_Art","Palácio veneziano do dono do circo, museu de arte e museu do circo, em Sarasota.","The circus owner's Venetian palace, art museum and circus museum, in Sarasota.","building-castle"],["fg10","fora","golfo","Siesta Key","Siesta Key","0","H","v","135","1","","Siesta_Key,_Florida","Areia de quartzo que não esquenta, das mais brancas do país.","Quartz sand that stays cool, among the whitest in the country.","beach"],["fg11","fora","golfo","Myakka River","Myakka River","1","H","h","135","1","","Myakka_River_State_Park","Parque com passarela nas copas das árvores e muitos jacarés.","A park with a treetop walkway and many alligators.","trees"],["fg12","fora","golfo","Pinecraft, a vila amish","Pinecraft, the Amish village","0","1h30","h","135","","","Pinecraft,_Florida","Bairro amish de Sarasota: bicicletas, tortas e quadra de shuffleboard.","Sarasota's Amish neighbourhood: tricycles, pies and shuffleboard.","bike"],["fx01","fora","sudoeste","Edison and Ford Winter Estates","Edison and Ford Winter Estates","1","H","h","180","1","","Edison_and_Ford_Winter_Estates","As casas de inverno de Thomas Edison e Henry Ford, com o laboratório.","The winter homes of Thomas Edison and Henry Ford, with the laboratory.","bulb"],["fx02","fora","sudoeste","Sanibel e as conchas","Sanibel and its shells","1","H","v","190","1","","Sanibel,_Florida","Ilha famosa pelas conchas na areia. Ainda se recuperando dos furacões.","An island famous for shells on the sand. Still recovering from hurricanes.","beach"],["fx03","fora","sudoeste","Naples e o píer","Naples and its pier","0","H","v","210","1","","Naples,_Florida","Cidade elegante, 5th Avenue e pôr do sol no píer.","An elegant town, 5th Avenue and sunset on the pier.","sunset"],["fx04","fora","sudoeste","Everglades","Everglades","1","H","h","240","1","","Everglades_National_Park","Aerobarco no pântano gigante ou o trenzinho do Shark Valley.","Airboat in the vast wetland or the Shark Valley tram.","speedboat"],["fx05","fora","sudoeste","Koreshan","Koreshan","1","1h30","h","190","1","","Koreshan_State_Park","Vila de uma seita do século 19, preservada no mato.","A 19th-century religious commune, preserved in the woods.","home"],["fm01","fora","miami","Miami Beach e Art Deco","Miami Beach and Art Deco","1","D","v","210","1","","Miami_Beach,_Florida","South Beach, Ocean Drive e os prédios coloridos dos anos 30.","South Beach, Ocean Drive and the colourful 1930s buildings.","beach"],["fm02","fora","miami","Wynwood Walls","Wynwood Walls","1","2h","h","210","1","","Wynwood","Bairro de grafites gigantes e galerias.","A district of giant murals and galleries.","brush"],["fm03","fora","miami","Little Havana","Little Havana","1","2h","h","210","1","","Little_Havana","Calle Ocho, dominó no parque e café cubano.","Calle Ocho, dominoes in the park and Cuban coffee.","coffee"],["fm04","fora","miami","Vizcaya","Vizcaya","1","2h","v","215","1","","Vizcaya_Museum_and_Gardens","Mansão italiana na baía, com jardins.","An Italian-style mansion on the bay, with gardens.","building-castle"],["fm05","fora","miami","Coral Castle","Coral Castle","0","1h","h","240","1","","Coral_Castle","Castelo de pedra feito por um homem só, ninguém sabe bem como.","A stone castle built by one man, nobody quite knows how.","building-castle"],["fm06","fora","miami","Sawgrass Mills","Sawgrass Mills","2","D","","190","1","","Sawgrass_Mills","Um dos maiores outlets dos EUA, perto de Fort Lauderdale.","One of the largest outlets in the US, near Fort Lauderdale.","shopping-bag"],["fm07","fora","miami","Estrada para Key West","The road to Key West","1","D","v","360","1","","Overseas_Highway","Ponte de 11 km sobre o mar (Seven Mile Bridge). Pede duas noites fora.","An 11 km bridge over the sea (Seven Mile Bridge). Needs two nights away.","road"],["es01","esp","","Dia de piscina","Pool day","0","D","g","","","","","Sem parque, sem carro. Piscina, cochilo e jantar perto.","No parks, no driving. Pool, nap and dinner nearby.","swimming"],["es02","esp","","Dia livre","Free day","0","D","g","","","","","Decidir na hora. Bom depois de dois dias de parque.","Decide on the day. Good after two park days.","sofa"],["es03","esp","","Brunch e manhã devagar","Brunch and a slow morning","0","H","","","","","","Acordar tarde, café da manhã demorado.","Wake up late, a long breakfast.","coffee"],["es04","esp","","Abastecer a casa","Stock up the house","0","2h","c","","","","","Supermercado na chegada: água, café, frutas e lanche para os parques.","Supermarket on arrival: water, coffee, fruit and park snacks.","shopping-cart"],["es05","esp","","Pegar ou devolver o carro","Pick up or return the car","0","2h","","","","","","Conta tempo de fila na locadora e para abastecer antes de devolver.","Allow time for the rental queue and to refuel before returning.","car"],["es06","esp","","Fazer as malas","Pack the bags","0","H","c","","","","","Pesar as malas e ver o que comprar de última hora.","Weigh the bags and check last-minute buys.","briefcase"],["es07","esp","","Dia de chuva, plano B","Rainy day, plan B","0","D","c","","","","","Cinema, shopping ou museu. A Flórida chove forte e passa.","Cinema, mall or museum. Florida rain is heavy and passes.","umbrella"]];
+const FOOD = [["k01","mk","","Be Our Guest","A","$$$","","","","O salão da Fera, dentro do castelo. Reservar.","The Beast's ballroom, inside the castle. Book ahead."],["k02","mk","","Liberty Tree Tavern","J","$$","","","","Jantar de Ação de Graças o ano todo: peru, carne e acompanhamentos à vontade.","Thanksgiving dinner all year: turkey, beef and sides, all you can eat."],["k03","mk","","Casey's Corner e Dole Whip","B","$","","","","Cachorro-quente na Main Street e o sorvete de abacaxi do Aloha Isle.","Hot dogs on Main Street and the pineapple Dole Whip at Aloha Isle."],["k04","epcot","","Space 220","A","$$$","","","","Restaurante que simula uma estação espacial, com a Terra na janela.","A restaurant styled as a space station, with Earth out the window."],["k05","epcot","","Le Cellier","A","$$$","","","","Churrascaria canadense no pavilhão do Canadá, famosa pela sopa de queijo.","Canadian steakhouse in the Canada pavilion, known for its cheese soup."],["k06","epcot","","Les Halles e Biergarten","B","$","","","","Padaria francesa para lanche e buffet alemão com música, no World Showcase.","French bakery for a snack and a German buffet with music, in World Showcase."],["k07","epcot","","Regal Eagle Smokehouse","A","$","","","","Churrasco americano no pavilhão dos EUA. Rápido e farto.","American barbecue in the USA pavilion. Quick and generous."],["k08","hs","","Sci-Fi Dine-In Theater","A","$$","","","","Comer dentro de carros antigos vendo filmes B de ficção.","Eat inside vintage cars watching B-movie sci-fi."],["k09","hs","","50's Prime Time Café","A","$$","","","","Comida caseira da vovó americana, com garçom que dá bronca de brincadeira.","Grandma's home cooking, with waiters who scold you in jest."],["k10","hs","","Docking Bay 7 e Oga's Cantina","B","$$","","","","Comida e bebida de Star Wars dentro de Galaxy's Edge.","Star Wars food and drinks inside Galaxy's Edge."],["k11","ak","","Tiffins","A","$$$","","","","O restaurante mais caprichado da Disney dentro de parque, com sabores do mundo.","Disney's most refined in-park restaurant, with global flavours."],["k12","ak","","Satu'li Canteen","L","$","","","","Tigelas montadas em Pandora. Rápido e gostoso.","Build-your-own bowls in Pandora. Quick and tasty."],["k13","wdw","","Boma, café da manhã","F","$$","","","","Buffet africano no Animal Kingdom Lodge, depois ver as girafas.","African buffet at Animal Kingdom Lodge, then see the giraffes."],["k14","wdw","","Sanaa","A","$$","","","","Comida indiana e africana com vista da savana.","Indian and African food with a savanna view."],["k15","wdw","","'Ohana, café da manhã","F","$$","","","","Café da manhã com Lilo e Stitch no Polynesian.","Breakfast with Lilo and Stitch at the Polynesian."],["k16","wdw","","Whispering Canyon Café","A","$$","","","","Garçons que brincam com tudo, no Wilderness Lodge. Peça ketchup.","Waiters who joke about everything, at Wilderness Lodge. Ask for ketchup."],["k17","wdw","","Victoria & Albert's","J","$$$$","","s","Victoria_&_Albert's","O único Michelin com estrela dentro da Disney. Para uma noite especial.","The only Michelin-starred restaurant inside Disney. For a special night."],["k18","wdw","","The Polite Pig","A","$$","","r","","Churrasco americano em Disney Springs, recomendado pelo Michelin.","American barbecue at Disney Springs, Michelin-recommended."],["k19","wdw","","Gideon's Bakehouse","C","$","","","","O cookie gigante mais famoso de Orlando. Fila virtual em Disney Springs.","Orlando's most famous giant cookie. Virtual queue at Disney Springs."],["k20","wdw","","Chicken Guy! e Earl of Sandwich","B","$","","","","Opções baratas e rápidas em Disney Springs.","Cheap, quick options at Disney Springs."],["k21","usf","","Leaky Cauldron","A","$$","","","","Comida inglesa no Diagon Alley.","English pub food in Diagon Alley."],["k22","ioa","","Three Broomsticks","A","$$","","","","Café da manhã inglês e frango assado em Hogsmeade.","English breakfast and roast chicken in Hogsmeade."],["k23","uor","","Toothsome Chocolate Emporium","A","$$","","","","Restaurante steampunk no CityWalk, milk-shakes enormes.","Steampunk restaurant at CityWalk, huge milkshakes."],["k24","uor","","Bread Box e Hot Dog Hall of Fame","B","$","","","","Sanduíches e cachorro-quente baratos no CityWalk.","Cheap sandwiches and hot dogs at CityWalk."],["k25","epic","","Toadstool Cafe","A","$$","","","","Comer dentro do mundo do Mario.","Eat inside Mario's world."],["k26","epic","","The Burning Blade Tavern","B","$$","","","","Taverna do Dark Universe, clima de vila assombrada.","Dark Universe tavern, haunted-village vibe."],["k27","idrive","","Pão Gostoso","C","$","1","","","Padaria brasileira na I-Drive: pão francês, coxinha e pão de queijo.","Brazilian bakery on I-Drive: French rolls, coxinha and pão de queijo."],["k28","idrive","","Amor em Pedaços","C","$","1","","","Padaria brasileira desde 2013: pão na chapa, salgados e bolos.","Brazilian bakery since 2013: buttered toast, savoury snacks and cakes."],["k29","idrive","","Camila's Restaurant","Q","$","1","","","Buffet por quilo de comida caseira: feijoada e bife à parmegiana.","Home-style pay-by-weight buffet: feijoada and steak parmigiana."],["k30","idrive","","Boteco do Manolo","B","$$","1","","","Boteco carioca: pastel, coxinha e chopp.","A carioca-style boteco: pastel, coxinha and draught beer."],["k31","idrive","","Café Mineiro","Q","$$","1","","","Buffet e rodízio com feijão tropeiro e costelinha.","Buffet and rodízio with feijão tropeiro and pork ribs."],["k32","idrive","","Boi Brazil Churrascaria","R","$$$","1","","","Rodízio com bom preço e carnes no estilo paulista.","Good-value rodízio with São Paulo-style cuts."],["k33","idrive","","Fogo de Chão e Texas de Brazil","R","$$$","1","","","Os rodízios grandes da I-Drive, para uma noite especial.","The big I-Drive rodízios, for a special night."],["k34","idrive","","Twenty Pho Hour","A","$","","r","","Pho vietnamita recomendado pelo Michelin, perto da I-Drive.","Michelin-recommended Vietnamese pho near I-Drive."],["k35","idrive","","Hash House A Go Go","F","$$","","","","Café da manhã de porção gigante. Dá para dividir.","Giant breakfast portions. Made for sharing."],["k36","idrive","","Café Tu Tu Tango","J","$$","","","","Petiscos num ateliê com artistas pintando na hora. Diferente.","Small plates in an artist studio, painters working as you eat. Different."],["k37","idrive","","Isan Zaap","A","$$","","b","","Comida tailandesa do nordeste, Bib Gourmand do Michelin.","North-eastern Thai food, Michelin Bib Gourmand."],["k38","idrive","","Mrs. Potato","L","$","1","","","Batata recheada e polenta frita, na Kirkman.","Loaded potatoes and fried polenta, on Kirkman Road."],["k39","idrive","","Mais Brazil","M","$","1","","","Mercado, açougue com picanha e restaurante, na Kirkman.","Grocery, butcher with picanha and a restaurant, on Kirkman Road."],["k40","kiss","","Sabor Brasil","L","$","1","","","Pequeno, tempero de casa e suco de laranja na hora.","Small place with home-style seasoning and fresh orange juice."],["k41","kiss","","H&H Brazilian Steakhouse","R","$$$","1","","","Rodízio gaúcho em Kissimmee.","Gaúcho-style rodízio in Kissimmee."],["k42","kiss","","Q'Kenan","L","$","","","","Arepas e cachapas venezuelanas, perto da Disney.","Venezuelan arepas and cachapas, near Disney."],["k43","kiss","","Sofrito Latin Café","L","$","","","","Sanduíche cubano e porco assado, perto da Disney.","Cuban sandwiches and roast pork, near Disney."],["k44","kiss","","Columbia de Celebration","A","$$","","","","Filial do restaurante cubano-espanhol de 1905, com a salada 1905.","A branch of the 1905 Cuban-Spanish restaurant, with its 1905 salad."],["k45","city","","Bánh Mì Boy","L","$","","b","","Sanduíche vietnamita em Mills 50, Bib Gourmand.","Vietnamese sandwiches in Mills 50, Bib Gourmand."],["k46","city","","Domu","J","$$","","b","","Lámen japonês em Audubon Park, Bib Gourmand.","Japanese ramen in Audubon Park, Bib Gourmand."],["k47","city","","Smokemade Meats + Eats","L","$$","","b","","Churrasco texano de fila, Bib Gourmand.","Texas barbecue worth the queue, Bib Gourmand."],["k48","city","","Black Bean Deli","L","$","","","","Comida cubana de bairro em Mills 50 e Winter Park.","Neighbourhood Cuban food in Mills 50 and Winter Park."],["k49","city","","Beefy King","L","$","","","","Sanduíche de rosbife desde 1968. Bem old school.","Roast beef sandwiches since 1968. Very old school."],["k50","city","","Se7enBites","F","$","","r","","Café da manhã sulista e tortas, recomendado pelo Michelin.","Southern breakfast and pies, Michelin-recommended."],["k51","city","","The Ravenous Pig","J","$$$","","b","","Gastropub em Winter Park, Bib Gourmand.","Gastropub in Winter Park, Bib Gourmand."],["k52","city","","Pizza Bruno","J","$$","","r","","Pizza de fermentação natural, recomendada pelo Michelin.","Sourdough pizza, Michelin-recommended."],["k53","city","","Taste of Chengdu","J","$$","","b","","Comida de Sichuan apimentada, Bib Gourmand.","Spicy Sichuan food, Bib Gourmand."],["k54","city","","4 Rivers Smokehouse","L","$","","","","Churrasco americano com brisket e sobremesas.","American barbecue with brisket and desserts."],["k55","city","","Hawkers","J","$$","","","","Comida de rua asiática em pratinhos.","Asian street food in small plates."],["k56","city","","Yellow Dog Eats","L","$$","","","","Churrasco num armazém antigo em Gotha. Conferir horários.","Barbecue in an old general store in Gotha. Check hours."],["k57","fora","space","Chat with an Astronaut","L","$$$","","","","Almoço com um astronauta de verdade no Kennedy. Pago à parte.","Lunch with a real astronaut at Kennedy. Paid extra."],["k58","fora","norte","Old Sugar Mill Pancake House","F","$","","","","Panqueca feita na mesa, dentro do De Leon Springs.","Make-your-own pancakes at the table, inside De Leon Springs."],["k59","fora","oeste","1921, Mount Dora","J","$$$","","r","","Restaurante novo no guia Michelin 2026.","New to the 2026 Michelin guide."],["k60","fora","tampa","Columbia Restaurant de Ybor","A","$$","","","Columbia_Restaurant","O restaurante mais antigo da Flórida, de 1905, com azulejos e flamenco.","Florida's oldest restaurant, from 1905, with tiles and flamenco."],["k61","fora","tampa","La Segunda Bakery","C","$","","","","Pão cubano assado desde 1915, para o sanduíche cubano.","Cuban bread baked since 1915, for the Cuban sandwich."],["k62","fora","tampa","Bern's Steak House","J","$$$$","","","Bern's_Steak_House","Churrascaria lendária, com salão só de sobremesas no andar de cima.","A legendary steakhouse, with a dessert-only room upstairs."],["k63","fora","golfo","Yoder's","L","$","","","","Comida amish e tortas caseiras em Pinecraft, Sarasota.","Amish food and homemade pies in Pinecraft, Sarasota."],["k64","fora","golfo","Hellas Bakery","C","$","","","","Doces gregos em Tarpon Springs.","Greek pastries in Tarpon Springs."],["k65","fora","miami","Versailles","A","$$","","","Versailles_Restaurant","O café cubano mais famoso de Little Havana.","Little Havana's most famous Cuban café."]];
+const PARKS = {"mk01":[["Main Street, U.S.A.",[["R","Walt Disney World Railroad","z","Conferir: pode ter trechos parados pelas obras em Frontierland","Check: sections may be paused by Frontierland works"],["R","Main Street Vehicles",""],["P","Meet Mickey Mouse at Town Square Theater",""],["S","The Dapper Dans",""],["S","Casey's Corner Pianist",""],["D","The Crystal Palace","","Buffet com o Ursinho Pooh","Buffet with Winnie the Pooh"],["D","Tony's Town Square Restaurant",""],["D","The Plaza Restaurant",""],["F","Casey's Corner","","Cachorro-quente","Hot dogs"],["F","Main Street Bakery","","Starbucks","Starbucks"],["F","Plaza Ice Cream Parlor",""]]],["Adventureland",[["R","Pirates of the Caribbean",""],["R","Jungle Cruise",""],["R","The Magic Carpets of Aladdin","k"],["S","Walt Disney's Enchanted Tiki Room",""],["T","Swiss Family Treehouse",""],["D","Jungle Navigation Co. Ltd. Skipper Canteen",""],["F","Aloha Isle","","Dole Whip","Dole Whip"],["F","Sunshine Tree Terrace",""]]],["Frontierland",[["R","Big Thunder Mountain Railroad","a,x","Renovada em 2026","Refreshed in 2026"],["R","Tiana's Bayou Adventure","a"],["S","Country Bear Musical Jamboree",""],["T","Piston Peak, em obras || Piston Peak, under construction","z","Rio e ilha fechados para a área nova de Carros, sem data","River and island closed for the new Cars area, no date"],["F","Pecos Bill Tall Tale Inn and Cafe",""],["F","Golden Oak Outpost",""]]],["Liberty Square",[["R","The Haunted Mansion",""],["S","The Hall of Presidents",""],["D","Liberty Tree Tavern","","Ceia de Ação de Graças","Thanksgiving-style feast"],["F","Sleepy Hollow","","Waffles","Waffles"]]],["Fantasyland",[["R","Seven Dwarfs Mine Train","a"],["R","Peter Pan's Flight",""],["R","\"it's a small world\"",""],["R","The Many Adventures of Winnie the Pooh",""],["R","Under the Sea: Journey of the Little Mermaid",""],["R","Prince Charming Regal Carrousel","k"],["R","Mad Tea Party",""],["R","Dumbo the Flying Elephant","k"],["R","The Barnstormer","k"],["S","Mickey's PhilharMagic",""],["S","Enchanted Tales with Belle",""],["P","Princess Fairytale Hall",""],["P","Ariel's Grotto",""],["P","Pete's Silly Sideshow",""],["K","Casey Jr. Splash 'N' Soak Station","k"],["D","Be Our Guest Restaurant",""],["D","Cinderella's Royal Table","","Dentro do castelo","Inside the castle"],["F","Pinocchio Village Haus",""],["F","Gaston's Tavern",""],["F","Cheshire Café",""]]],["Tomorrowland",[["R","TRON Lightcycle / Run","a"],["R","Space Mountain","a"],["R","Buzz Lightyear's Space Ranger Spin","x","Renovado em 2026","Refreshed in 2026"],["R","Tomorrowland Transit Authority PeopleMover",""],["R","Astro Orbiter",""],["R","Tomorrowland Speedway",""],["S","Monsters, Inc. Laugh Floor",""],["S","Walt Disney's Carousel of Progress","z","Reabre em 2027 com Walt animatrônico, conferir","Reopens 2027 with an animatronic Walt, check"],["F","Cosmic Ray's Starlight Café",""],["F","The Lunching Pad",""],["F","Cool Ship",""]]],["Shows, desfiles e noite || Shows, parades and night",[["S","Mickey's Magical Friendship Faire","","No palco do castelo","On the castle stage"],["S","Disney Festival of Fantasy Parade",""],["S","Disney Adventure Friends Cavalcade",""],["N","Disney Starlight: Dream the Night Away","x","Desfile noturno","Night parade"],["N","Happily Ever After","","Fogos","Fireworks"]]]],"ep01":[["World Celebration",[["R","Spaceship Earth","z","Mudança anunciada em 2026, sem data","Changes announced in 2026, no date"],["R","Journey Into Imagination with Figment",""],["S","Disney & Pixar Short Film Festival",""],["T","CommuniCore Hall",""],["F","Connections Eatery",""],["F","Connections Café","","Starbucks","Starbucks"]]],["World Discovery",[["R","Guardians of the Galaxy: Cosmic Rewind","a"],["R","Test Track","a,x","Nova versão desde 2025","New version since 2025"],["R","Mission: SPACE","a","Laranja forte, verde leve","Orange intense, green mild"],["D","Space 220 Restaurant",""]]],["World Nature",[["R","Soarin' Across America","x","Filme novo desde 2026","New film since 2026"],["R","Living with the Land",""],["R","The Seas with Nemo & Friends",""],["S","Turtle Talk with Crush",""],["S","Awesome Planet",""],["T","Journey of Water, Inspired by Moana",""],["D","Garden Grill Restaurant","","Com personagens","With characters"],["F","Sunshine Seasons",""]]],["World Showcase: México",[["R","Gran Fiesta Tour Starring The Three Caballeros",""],["D","San Angel Inn Restaurante",""],["D","La Hacienda de San Angel",""],["F","La Cantina de San Angel",""]]],["World Showcase: Norway",[["R","Frozen Ever After",""],["D","Akershus Royal Banquet Hall","","Com princesas","With princesses"],["F","Kringla Bakeri og Kafe",""]]],["World Showcase: China",[["S","Reflections of China",""],["D","Nine Dragons Restaurant",""],["F","Lotus Blossom Café",""]]],["World Showcase: Germany",[["D","Biergarten Restaurant","","Buffet com música","Buffet with live music"],["F","Sommerfest",""]]],["World Showcase: Italy",[["D","Via Napoli Ristorante e Pizzeria",""],["D","Tutto Italia Ristorante",""]]],["World Showcase: The American Adventure",[["S","The American Adventure",""],["S","Voices of Liberty",""],["F","Regal Eagle Smokehouse",""]]],["World Showcase: Japan",[["T","Mitsukoshi Department Store",""],["D","Teppan Edo",""],["F","Katsura Grill",""]]],["World Showcase: Morocco",[["D","Spice Road Table",""],["F","Tangierine Café",""]]],["World Showcase: France",[["R","Remy's Ratatouille Adventure",""],["S","Beauty and the Beast Sing-Along",""],["D","Chefs de France",""],["F","Les Halles Boulangerie-Patisserie",""],["F","L'Artisan des Glaces",""]]],["World Showcase: United Kingdom",[["D","Rose & Crown Dining Room",""]]],["World Showcase: Canada",[["S","Canada Far and Wide",""],["D","Le Cellier Steakhouse",""]]],["Noite || Night",[["N","Luminous: The Symphony of Us","","Fogos no lago","Fireworks over the lagoon"]]]],"hs01":[["Hollywood Boulevard",[["R","Mickey & Minnie's Runaway Railway",""],["D","The Hollywood Brown Derby",""],["F","Trolley Car Café","","Starbucks","Starbucks"]]],["Echo Lake",[["R","Star Tours: The Adventures Continue",""],["S","Indiana Jones Epic Stunt Spectacular!",""],["S","For the First Time in Forever: A Frozen Sing-Along Celebration",""],["S","Vacation Fun",""],["P","Meet Olaf at Celebrity Spotlight",""],["D","50's Prime Time Café",""],["D","Hollywood & Vine","","Com personagens","With characters"],["F","Backlot Express",""]]],["Sunset Boulevard",[["R","Rock 'n' Roller Coaster Starring The Muppets","a,x","Com os Muppets desde 2026","With the Muppets since 2026"],["R","The Twilight Zone Tower of Terror","a"],["S","Beauty and the Beast Live on Stage",""],["S","Disney Villains: Unfairly Ever After",""],["N","Fantasmic!",""],["F","Hollywood Scoops",""]]],["Commissary Lane",[["P","Red Carpet Dreams","","Mickey e Minnie","Mickey and Minnie"],["D","Sci-Fi Dine-In Theater Restaurant",""],["F","ABC Commissary",""]]],["The Walt Disney Studios",[["S","The Magic of Disney Animation","x"],["S","Disney Jr. Mickey Mouse Clubhouse Live!","x,k"],["S","The Little Mermaid: A Musical Adventure","x"],["T","Walt Disney Presents",""]]],["Pixar Place",[["P","Meet Pixar Pals",""],["P","The Edna Mode Experience",""]]],["Toy Story Land",[["R","Slinky Dog Dash","a"],["R","Toy Story Mania!",""],["R","Alien Swirling Saucers",""],["D","Roundup Rodeo BBQ",""],["F","Woody's Lunch Box",""]]],["Star Wars: Galaxy's Edge",[["R","Star Wars: Rise of the Resistance",""],["R","Millennium Falcon: Smugglers Run","x","Missão nova desde 2026","New mission since 2026"],["T","Savi's Workshop","","Montar o próprio sabre de luz, pago","Build your own lightsaber, paid"],["F","Docking Bay 7 Food and Cargo",""],["F","Ronto Roasters",""],["F","Oga's Cantina","","Bar","Bar"]]],["Monstropolis",[["T","Monstropolis, área nova || Monstropolis, new area","z","Previsto para 2027, conferir","Due 2027, check"]]],["Noite || Night",[["N","Wonderful World of Animation","","Projeções no Chinese Theatre","Projections on the Chinese Theatre"]]]],"ak01":[["Oasis",[["T","Oasis Exhibits",""],["D","Rainforest Cafe","","Na entrada do parque","At the park entrance"]]],["Discovery Island",[["S","Zootopia: Better Zoogether!","x"],["T","Discovery Island Trails",""],["N","Tree of Life Awakenings",""],["D","Tiffins",""],["D","Nomad Lounge","","Bar","Bar"],["F","Flame Tree Barbecue",""],["F","Pizzafari",""]]],["Pandora: The World of Avatar",[["R","Avatar Flight of Passage","a"],["R","Na'vi River Journey",""],["F","Satu'li Canteen",""],["F","Pongu Pongu",""]]],["Africa",[["R","Kilimanjaro Safaris",""],["S","Festival of the Lion King",""],["T","Gorilla Falls Exploration Trail",""],["D","Tusker House Restaurant","","Buffet com personagens","Character buffet"],["F","Harambe Market",""]]],["Rafiki's Planet Watch",[["R","Wildlife Express Train",""],["T","Conservation Station",""],["T","Affection Section","k"],["P","Bluey's Wild World","x,k"]]],["Asia",[["R","Expedition Everest","a"],["R","Kali River Rapids","a","Molha muito","You get soaked"],["T","Maharajah Jungle Trek",""],["S","Feathered Friends in Flight!",""],["D","Yak & Yeti Restaurant",""],["F","Yak & Yeti Local Food Cafes",""]]],["Pueblo Esperanza (antiga DinoLand) || Pueblo Esperanza (former DinoLand)",[["R","Indiana Jones and the Myth of the Jade Serpent","a,z","Previsto para 2027, conferir","Due 2027, check"],["R","Antonio's Fiesta de Encanto","z","Previsto para 2027, conferir","Due 2027, check"],["R","El Carrusel de los Animalitos","k,z","Previsto para 2027, conferir","Due 2027, check"],["S","Finding Nemo: The Big Blue... and Beyond!","z","Conferir se segue durante as obras","Check it runs during the works"]]]],"us01":[["Production Central",[["R","Transformers: The Ride 3D","a"],["R","Despicable Me Minion Mayhem",""],["R","Illumination's Villain-Con Minion Blast",""],["F","Minion Café",""]]],["New York",[["R","Revenge of the Mummy","a"],["R","Race Through New York Starring Jimmy Fallon",""],["S","The Blues Brothers Show",""],["D","Finnegan's Bar & Grill",""],["F","Louie's Italian Restaurant",""]]],["San Francisco",[["F","Richter's Burger Co.",""],["T","Fast & Furious: Hollywood Drift","a,z","Montanha-russa nova prevista para 2027, conferir","New coaster due 2027, check"]]],["The Wizarding World: Diagon Alley",[["R","Harry Potter and the Escape from Gringotts","a"],["R","Hogwarts Express: King's Cross","","Precisa de ingresso dos dois parques","Needs a two-park ticket"],["S","Celestina Warbeck and the Banshees",""],["S","Tales of Beedle the Bard",""],["T","Ollivanders",""],["F","The Leaky Cauldron",""],["F","Florean Fortescue's Ice-Cream Parlour",""]]],["Springfield e World Expo || Springfield and World Expo",[["R","The Simpsons Ride",""],["R","Kang & Kodos' Twirl 'n' Hurl","k"],["R","Men in Black: Alien Attack",""],["F","Krusty Burger",""],["F","Luigi's Pizza",""],["F","Cletus' Chicken Shack",""],["F","Lard Lad Donuts",""],["F","Moe's Tavern","","Bar","Bar"]]],["DreamWorks Land",[["R","Trolls Trollercoaster","k"],["S","DreamWorks Imagination Celebration","k"],["K","Po's Kung Fu Training Camp","k"],["K","Shrek's Swamp for Little Ogres","k"],["K","Poppy's Playground","k"]]],["Hollywood",[["R","E.T. Adventure",""],["S","The Bourne Stuntacular",""],["S","Universal Horror Make-Up Show","x","Versão nova desde o inverno de 2026","New version since winter 2026"],["S","Marilyn and the Diamond Bellas",""],["F","Mel's Drive-In",""]]]],"io01":[["Port of Entry",[["D","Confisco Grille",""]]],["Marvel Super Hero Island",[["R","The Incredible Hulk Coaster","a"],["R","The Amazing Adventures of Spider-Man",""],["R","Doctor Doom's Fearfall","a"],["R","Storm Force Accelatron",""],["F","Captain America Diner",""],["F","Café 4",""]]],["Toon Lagoon",[["R","Dudley Do-Right's Ripsaw Falls","a","Molha","You get wet"],["R","Popeye & Bluto's Bilge-Rat Barges","a","Molha muito","You get soaked"],["K","Me Ship, The Olive","k"],["F","Comic Strip Café",""],["F","Wimpy's",""]]],["Skull Island",[["R","Skull Island: Reign of Kong",""]]],["Jurassic Park",[["R","Jurassic World VelociCoaster","a"],["R","Jurassic Park River Adventure","a"],["R","Pteranodon Flyers","k"],["K","Camp Jurassic","k"],["T","Jurassic Park Discovery Center",""],["D","Thunder Falls Terrace","z","Virando restaurante novo em 2027","Becoming a new restaurant in 2027"]]],["The Wizarding World: Hogsmeade",[["R","Hagrid's Magical Creatures Motorbike Adventure","a"],["R","Harry Potter and the Forbidden Journey","a"],["R","Flight of the Hippogriff","k"],["R","Hogwarts Express: Hogsmeade","","Precisa de ingresso dos dois parques","Needs a two-park ticket"],["T","Ollivanders",""],["F","Three Broomsticks",""],["F","Hog's Head","","Bar","Bar"]]],["The Lost Continent",[["D","Mythos Restaurant","z","Fecha em 2027, a área está virando outra","Closes in 2027, the area is being replaced"]]],["Seuss Landing",[["R","The Cat in the Hat",""],["R","One Fish, Two Fish, Red Fish, Blue Fish","k"],["R","The High in the Sky Seuss Trolley Train Ride!",""],["R","Caro-Seuss-el","k"],["K","If I Ran the Zoo","k"],["S","Oh! The Stories You'll Hear!","k"],["F","Circus McGurkus Café Stoo-pendous",""]]]],"eu01":[["Celestial Park",[["R","Stardust Racers","a"],["R","Constellation Carousel",""],["K","Astronomica","k"],["N","Universal Celestial Goodnight","x","Fogos e fontes","Fireworks and fountains"],["D","The Blue Dragon Pan-Asian Restaurant",""],["F","The Oak & Star Tavern","","Churrasco americano","American barbecue"],["F","Meteor Astropub",""],["F","Pizza Moon",""],["F","Star Sui Bao",""],["F","Frosty Moon",""]]],["Super Nintendo World",[["R","Mario Kart: Bowser's Challenge",""],["R","Mine-Cart Madness","a","Donkey Kong Country","Donkey Kong Country"],["R","Yoshi's Adventure","k"],["T","Power-Up Band","","Pulseira interativa","Interactive wristband"],["F","Toadstool Café",""],["F","Turbo Boost Treats",""],["F","Yoshi's Snack Island",""],["F","The Bubbly Barrel",""]]],["Dark Universe",[["R","Monsters Unchained: The Frankenstein Experiment","a"],["R","Curse of the Werewolf","a"],["T","Darkmoor Monster Makeup Experience",""],["T","Brinquedo novo em obras || New ride under construction","z","Sem data","No date"],["F","The Burning Blade Tavern",""],["F","Das Stakehaus",""],["F","De Lacey's Cottage",""]]],["The Wizarding World: Ministry of Magic",[["R","Harry Potter and the Battle at the Ministry","a"],["S","Le Cirque Arcanus",""],["F","Café L'Air De La Sirène",""],["F","Le Gobelet Noir",""],["F","Bar Moonshine","","Bar","Bar"]]],["How to Train Your Dragon: Isle of Berk",[["R","Hiccup's Wing Gliders","a"],["R","Dragon Racer's Rally","a"],["R","Fyre Drill","z","Fechado de 25/1 a 4/2/2027","Closed 25/1 to 4/2/2027"],["S","The Untrainable Dragon",""],["K","Viking Training Camp","k"],["F","Mead Hall",""],["F","Spit Fyre Grill",""],["F","Hooligan's Grog & Gruel",""]]]],"sw01":[["Sea of Power",[["R","Pipeline: The Surf Coaster","a"],["R","Ice Breaker","a"],["R","Expedition Odyssey: Fire and Ice","x"],["S","Orca Encounter",""],["F","Voyager's Smokehouse",""]]],["Sea of Mystery",[["R","Mako","a"],["R","Flamingo Paddle Boats","","Pago à parte","Extra fee"],["T","Shark Wreck Reef",""]]],["Sea of Legends",[["R","Kraken","a"],["R","Journey to Atlantis","a","Molha","You get wet"],["T","Jewel of the Sea Aquarium",""]]],["Sea of Shallows",[["R","Manta","a"],["S","Dolphin Adventures",""],["T","Dolphin Cove",""],["T","Stingray Lagoon","","Dá para tocar nas raias","You can touch the rays"],["T","Manatee Rehabilitation Area",""],["T","Coral Rescue Center",""]]],["Sea of Delight",[["R","Sky Tower","","Torre com vista do parque","Tower with park views"],["S","Sea Lions: Flippers, Facts & Fun",""],["T","Pacific Point Preserve",""]]],["Sea of Fun",[["R","Infinity Falls","a","Molha muito","You get soaked"]]],["Sea of Ice",[["R","Penguin Trek",""],["T","Antarctica: pinguins || Antarctica: penguins","","O frio de verdade","Properly cold"]]],["Sesame Street Land",[["R","Super Grover's Box Car Derby","k"],["R","Elmo's Choo-Choo Train","k"],["R","Abby's Flower Tower","k"],["R","Cookie Drop!","k"],["R","Slimey's Slider","k"],["R","Sunny Day Carousel","k"],["S","Sesame Street Party Parade","k"]]],["Novo || New",[["R","SEAQuest: Legends of the Deep","x,z","Prevista para 2026, conferir se abriu","Due 2026, check it has opened"]]]]};
+const QUERY = {"mk01":"Magic Kingdom Walt Disney World","mk02":"Happily Ever After fireworks Magic Kingdom","mk12":"Mickey's Not-So-Scary Halloween Party","mk13":"Keys to the Kingdom tour Magic Kingdom","mk14":"watch Magic Kingdom fireworks from Polynesian beach","ep01":"EPCOT Walt Disney World","ep08":"Luminous The Symphony of Us EPCOT","ep10":"Behind the Seeds tour EPCOT","ep12":"EPCOT International Flower and Garden Festival","ep13":"EPCOT International Food and Wine Festival","hs01":"Disney's Hollywood Studios","hs08":"Fantasmic Hollywood Studios","ak01":"Disney's Animal Kingdom","ak03":"Pandora World of Avatar at night Animal Kingdom","wd01":"Disney Springs Orlando","wd02":"Disney's Typhoon Lagoon","wd03":"Disney's Blizzard Beach","wd04":"Disney's Animal Kingdom Lodge savanna","wd05":"Walt Disney World monorail resort loop","wd06":"Disney Skyliner","wd07":"Disney's BoardWalk","wd08":"Chip 'n' Dale Campfire Sing-a-Long Fort Wilderness","wd09":"Electrical Water Pageant Disney","wd10":"Disney's Wilderness Lodge geyser","wd11":"Hoop-Dee-Doo Musical Revue","wd12":"Drawn to Life Cirque du Soleil Disney Springs","wd13":"Aerophile balloon Disney Springs","wd14":"Amphicar The Boathouse Disney Springs","wd15":"Disney's Fantasia Gardens mini golf","wd16":"LEVEL99 Disney Springs","wd17":"Magic Kingdom ferry boat Seven Seas Lagoon","wd18":"Disney's Grand Floridian Resort","wd19":"Disney's Lakeshore Lodge","us01":"Universal Studios Florida","us10":"Halloween Horror Nights Orlando","io01":"Universal Islands of Adventure","eu01":"Universal Epic Universe","eu07":"Universal Celestial Goodnight Epic Universe","uo01":"Universal's Volcano Bay","uo02":"Universal CityWalk Orlando","uo03":"Hollywood Drive-In Golf Universal CityWalk","uo04":"Blue Man Group ICON Park Orlando","uo05":"Hogwarts Express Universal Orlando","sw01":"SeaWorld Orlando","sw05":"Seven Seas Food Festival SeaWorld Orlando","sw06":"Howl-O-Scream SeaWorld Orlando","sw07":"Aquatica Orlando","sw08":"Discovery Cove Orlando","id01":"The Wheel at ICON Park Orlando","id02":"Madame Tussauds Orlando","id03":"SEA LIFE Orlando Aquarium","id04":"Museum of Illusions Orlando","id05":"WonderWorks Orlando","id06":"Ripley's Believe It or Not Orlando","id07":"Fun Spot America Orlando","id08":"Dezerland Park Orlando Auto Museum","id09":"Andretti Indoor Karting Orlando","id10":"iFLY Orlando","id11":"Topgolf Orlando","id12":"helicopter tour Orlando International Drive","id13":"ICEBAR Orlando","id14":"Pointe Orlando","id15":"Crayola Experience Orlando","id16":"world's largest entertainment McDonald's Orlando","id17":"The Escape Game Orlando","ki01":"Gatorland Orlando","ki02":"Screamin' Gator Zip Line Gatorland","ki03":"Boggy Creek Airboat Adventures","ki04":"Wild Florida Airboats and Wildlife Park","ki05":"Old Town Kissimmee car cruise","ki06":"Celebration Florida town","ki07":"hot air balloon ride Orlando sunrise","ki08":"Medieval Times Orlando","ki09":"Gaylord Palms Resort Kissimmee","ki10":"Kissimmee Lakefront Park","ki11":"Orlando Tree Trek Adventure Park","ki12":"Exotic Animal Experience Kissimmee","ki13":"Disney Wilderness Preserve Kissimmee","ki14":"Museum of Military History Kissimmee","ki15":"Fun Spot America Kissimmee","ki16":"Chocolate Kingdom Kissimmee","ci01":"Lake Eola Park Orlando","ci02":"Lake Eola Sunday Market","ci03":"Park Avenue Winter Park Florida","ci04":"Scenic Boat Tour Winter Park","ci05":"Charles Hosmer Morse Museum of American Art Tiffany chapel","ci06":"Winter Park Farmers Market","ci07":"Albin Polasek Museum and Sculpture Gardens","ci08":"Harry P. Leu Gardens Orlando","ci09":"Orlando Science Center","ci10":"Orlando Museum of Art","ci11":"Mennello Museum of American Art","ci12":"Mills 50 district Orlando","ci13":"East End Market Audubon Park Orlando","ci14":"Ivanhoe Village Orlando antiques","ci15":"Dr. Phillips Center for the Performing Arts","ci16":"Orlando City SC Inter&Co Stadium","ci17":"Orlando Fringe Festival","ci18":"Orlando Wetlands Park","ci19":"Lake Apopka Wildlife Drive","ci20":"Tibet-Butler Nature Preserve","ci21":"Disney Collection Orlando Public Library","ci22":"Lake Nona public art Wave Hotel","ci23":"Hanson's Shoe Repair speakeasy Orlando","ci24":"Thornton Park Orlando","ci25":"Kraft Azalea Garden Winter Park","ci26":"Cornell Fine Arts Museum Rollins","na01":"Wekiwa Springs State Park","na02":"Kelly Park Rock Springs Apopka","na03":"clear kayak tour Rock Springs Kelly Park","na04":"Wekiva Island","na05":"Lake Louisa State Park horseback riding","na06":"Shingle Creek Regional Park kayak","na07":"Central Florida Zoo and Botanical Gardens","na08":"Nona Adventure Park","sh01":"Pirates Dinner Adventure Orlando","sh02":"Sleuths Mystery Dinner Shows Orlando","sh03":"Outta Control Magic Show WonderWorks","sh04":"Contemporary Resort California Grill fireworks view","sh05":"Blue Bamboo Center for the Arts Winter Park","sp01":"Orlando Vineland Premium Outlets","sp02":"Orlando International Premium Outlets","sp03":"Disney Character Warehouse outlet Orlando","sp04":"The Mall at Millenia","sp05":"The Florida Mall","sp06":"Lake Buena Vista Factory Stores","sp07":"Ross TJ Maxx Marshalls Orlando","sp08":"Walmart Target Best Buy Orlando","sp09":"Costco Orlando","sp10":"Publix Pub Sub","sp11":"SuperBras supermarket Orlando","sp12":"Renninger's Antique Center Mount Dora","fs01":"Kennedy Space Center Visitor Complex","fs02":"rocket launch viewing Space Coast","fs03":"bioluminescent kayak tour Titusville","fs04":"Black Point Wildlife Drive Merritt Island","fs05":"Playalinda Beach Canaveral National Seashore","fs06":"Cocoa Beach Pier","fs07":"Jetty Park Port Canaveral","fs08":"Valiant Air Command Warbird Museum","fs09":"American Space Museum Titusville","fs10":"Brevard Zoo","fs11":"Kennedy Space Center bus tour launch pads","fd01":"Daytona International Speedway tour","fd02":"driving on Daytona Beach","fd03":"Ponce de Leon Inlet Lighthouse","fd04":"Marine Science Center Ponce Inlet","fd05":"New Smyrna Beach Florida","fd06":"Museum of Arts and Sciences Daytona","fd07":"Buc-ee's Daytona Beach","fd08":"Tanger Outlets Daytona Beach","fn01":"Blue Spring State Park Orange City","fn02":"Old Sugar Mill Pancake House De Leon Springs","fn03":"Cassadaga Spiritualist Camp","fn04":"Skydive DeLand","fn05":"downtown DeLand Florida","fn06":"Sanford Riverwalk Florida","fn07":"St. Johns River boat tour Sanford","fw01":"downtown Winter Garden Florida","fw02":"West Orange Trail","fw03":"Citrus Tower Clermont","fw04":"Lakeridge Winery Clermont","fw05":"Showcase of Citrus Clermont","fw06":"Mount Dora Florida","fw07":"Dora Canal boat tour Mount Dora","fp01":"Legoland Florida","fp02":"Peppa Pig Theme Park Winter Haven","fp03":"Bok Tower Gardens","fp04":"Spook Hill Lake Wales","fp05":"Frank Lloyd Wright Florida Southern College","fp06":"Circle B Bar Reserve","fp07":"Fantasy of Flight Polk City","fp08":"Solomon's Castle Ona Florida","fp09":"Florida Air Museum Lakeland","fo01":"Silver Springs State Park glass bottom boat","fo02":"Rainbow Springs State Park","fo03":"Devil's Den Prehistoric Spring","fo04":"Ocala horse farm tours","fo05":"Alexander Springs Juniper Springs Ocala National Forest","fo06":"Weeki Wachee Springs mermaid show","fo07":"Homosassa Springs Wildlife State Park","fo08":"Appleton Museum of Art Ocala","fa01":"Castillo de San Marcos","fa02":"St. George Street St. Augustine","fa03":"Flagler College tour","fa04":"Lightner Museum St. Augustine","fa05":"St. Augustine Lighthouse","fa06":"St. Augustine Alligator Farm","fa07":"Fort Matanzas National Monument","fa08":"ghost tour St. Augustine","fa09":"St. Augustine Distillery Whetstone Chocolates","fa10":"Marineland Dolphin Adventure","fa11":"Fountain of Youth Archaeological Park","ft01":"Busch Gardens Tampa Bay","ft02":"Adventure Island Tampa","ft03":"Ybor City Tampa","ft04":"Tampa Riverwalk Armature Works","ft05":"Henry B. Plant Museum","ft06":"The Florida Aquarium Tampa","ft07":"ZooTampa at Lowry Park","fg01":"Clearwater Beach Pier 60","fg02":"Caladesi Island State Park","fg03":"Dunedin Florida","fg04":"Tarpon Springs sponge docks","fg05":"The Dali Museum St. Petersburg","fg06":"Museum of the American Arts and Crafts Movement","fg07":"St. Pete Pier","fg08":"Fort De Soto Park","fg09":"The Ringling Museum Sarasota","fg10":"Siesta Key Beach","fg11":"Myakka River State Park canopy walkway","fg12":"Pinecraft Amish Sarasota","fx01":"Edison and Ford Winter Estates","fx02":"Sanibel Island shells","fx03":"Naples Pier Florida","fx04":"Everglades National Park","fx05":"Koreshan State Park","fm01":"South Beach Art Deco Historic District Miami","fm02":"Wynwood Walls Miami","fm03":"Little Havana Calle Ocho","fm04":"Vizcaya Museum and Gardens","fm05":"Coral Castle Museum","fm06":"Sawgrass Mills","fm07":"Overseas Highway Seven Mile Bridge Key West","k01":"Be Our Guest Restaurant Magic Kingdom","k02":"Liberty Tree Tavern Magic Kingdom","k03":"Casey's Corner Dole Whip Magic Kingdom","k04":"Space 220 Restaurant EPCOT","k05":"Le Cellier Steakhouse EPCOT","k06":"Les Halles Boulangerie EPCOT","k07":"Regal Eagle Smokehouse EPCOT","k08":"Sci-Fi Dine-In Theater Restaurant","k09":"50's Prime Time Cafe Hollywood Studios","k10":"Docking Bay 7 Galaxy's Edge","k11":"Tiffins Animal Kingdom","k12":"Satu'li Canteen Pandora","k13":"Boma Flavors of Africa breakfast","k14":"Sanaa Animal Kingdom Lodge","k15":"'Ohana breakfast Polynesian","k16":"Whispering Canyon Cafe Wilderness Lodge","k17":"Victoria & Albert's Grand Floridian","k18":"The Polite Pig Disney Springs","k19":"Gideon's Bakehouse Disney Springs","k20":"Earl of Sandwich Disney Springs","k21":"Leaky Cauldron Universal Orlando","k22":"Three Broomsticks Universal Orlando","k23":"Toothsome Chocolate Emporium","k24":"Bread Box Universal CityWalk","k25":"Toadstool Cafe Epic Universe","k26":"The Burning Blade Tavern Epic Universe","k27":"Pão Gostoso Bakery Orlando","k28":"Amor em Pedaços Bakery Orlando","k29":"Camila's Restaurant Orlando International Drive","k30":"Boteco do Manolo Orlando","k31":"Café Mineiro Brazilian Steakhouse Orlando","k32":"Boi Brazil Churrascaria Orlando","k33":"Fogo de Chão Orlando International Drive","k34":"Twenty Pho Hour Orlando","k35":"Hash House A Go Go Orlando","k36":"Cafe Tu Tu Tango Orlando","k37":"Isan Zaap Orlando","k38":"Mrs. Potato Orlando","k39":"Mais Brazil Food Mart Orlando","k40":"Sabor Brasil Kissimmee","k41":"H&H Brazilian Steakhouse Kissimmee","k42":"Q'Kenan Orlando","k43":"Sofrito Latin Cafe Orlando","k44":"Columbia Restaurant Celebration","k45":"Banh Mi Boy Orlando","k46":"Domu Orlando","k47":"Smokemade Meats + Eats Orlando","k48":"Black Bean Deli Orlando","k49":"Beefy King Orlando","k50":"Se7enBites Orlando","k51":"The Ravenous Pig Winter Park","k52":"Pizza Bruno Orlando","k53":"Taste of Chengdu Orlando","k54":"4 Rivers Smokehouse Winter Park","k55":"Hawkers Asian Street Food Orlando","k56":"Yellow Dog Eats Gotha","k57":"Chat with an Astronaut Kennedy Space Center","k58":"Old Sugar Mill Pancake House De Leon Springs","k59":"1921 Mount Dora restaurant","k60":"Columbia Restaurant Ybor City","k61":"La Segunda Bakery Tampa","k62":"Bern's Steak House Tampa","k63":"Yoder's Restaurant Sarasota","k64":"Hellas Bakery Tarpon Springs","k65":"Versailles Restaurant Miami"};
+const googleURL = q => 'https://www.google.com/search?q=' + encodeURIComponent(q) + '&hl=' + (S.lang === 'en' ? 'en' : 'pt-BR');
+
+const CARDS = PLACES.map(r => ({id:r[0], g:PARK_IDS.has(r[1]) ? 'parques' : r[1], sub:PARK_IDS.has(r[1]) ? r[1] : r[2], n:[r[3], r[4]||r[3]], e:+r[5]||0, dur:r[6], tags:r[7] ? r[7].split(',') : [], car:+r[8]||0, s:r[9]==='1', w:r[11], d:[r[12], r[13]], i:r[14]}))
+  .concat(FOOD.map(r => ({id:r[0], g:PARK_IDS.has(r[1]) ? 'parques' : r[1], sub:PARK_IDS.has(r[1]) ? r[1] : r[2], n:[r[3], r[3]], e:0, dur:'', tags:['f'], car:0, s:false, w:r[8], d:[r[9], r[10]], i:'tools-kitchen-2',
+    food:{tipo:r[4], preco:r[5], br:r[6]==='1', mich:r[7]}})));
+const SUB = Object.fromEntries(SUBS.concat(PARK_SUBS).map(s => [s.id, s]));
+GROUPS.find(g => g.id === 'parques').subs = PARK_SUBS;
+GROUPS.find(g => g.id === 'fora').subs = SUBS;
+const CARD = Object.fromEntries(CARDS.map(c => [c.id, c]));
+const GROUP = Object.fromEntries(GROUPS.map(g => [g.id, g]));
+const PERIODS = ['M','T','N'];
+const SLOTS = ['D','M','T','N'];
+const blankDay = () => ({D:[],M:[],T:[],N:[],note:'',picks:{}});
+const WD = {pt:['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'], en:['Sun','Mon','Tue','Wed','Thu','Fri','Sat']};
+const MO = {pt:['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'], en:['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']};
+
+/* ===== estado ===== */
+function blankState(){ return {v:1, lang:'pt', trip:null, days:[], ideas:[], seq:0, introHidden:false}; }
+let S = blankState();
+function load(){
+  try {
+    const raw = localStorage.getItem(CONFIG.KEY);
+    if (!raw) return;
+    const o = JSON.parse(raw);
+    if (o && o.v === 1) {
+      S.lang = o.lang === 'en' ? 'en' : 'pt';
+      S.trip = o.trip || null;
+      S.days = Array.isArray(o.days) ? o.days.map(d => Object.assign(blankDay(), d)) : [];
+      S.ideas = Array.isArray(o.ideas) ? o.ideas : [];
+      S.seq = o.seq || S.ideas.length;
+      S.introHidden = !!o.introHidden;
+    }
+  } catch(e) {}
+}
+let saveTimer = null;
+function persist(){
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(() => { try { localStorage.setItem(CONFIG.KEY, JSON.stringify(S)); flashSaved(); } catch(e) {} }, 250);
+}
+function saveNow(){ clearTimeout(saveTimer); try { localStorage.setItem(CONFIG.KEY, JSON.stringify(S)); } catch(e) {} }
+function flashSaved(){ const el = document.getElementById('autosave'); el.style.opacity = .4; setTimeout(() => el.style.opacity = 1, 200); }
+
+/* ===== utilidades ===== */
+const $ = s => document.querySelector(s);
+const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const norm = s => String(s||'').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'');
+const L = () => S.lang === 'en' ? 1 : 0;
+const t = k => (TX[S.lang] && TX[S.lang][k] !== undefined) ? TX[S.lang][k] : TX.pt[k];
+const fill = (s, o) => s.replace(/\{(\w+)\}/g, (_, k) => o[k]);
+const pLabel = p => ({D:t('allDay'), M:t('morning'), T:t('afternoon'), N:t('night')})[p];
+const pad = n => String(n).padStart(2,'0');
+
+/* ===== datas e dias ===== */
+function parseISO(s){ const [y,m,d] = s.split('-').map(Number); return new Date(Date.UTC(y, m-1, d)); }
+function iso(dt){ return dt.toISOString().slice(0,10); }
+function addDays(dt, n){ return new Date(dt.getTime() + n*86400000); }
+function nthWeekday(y, m, wd, n){ // n=1 primeiro; n=-1 último
+  if (n > 0) { const d = new Date(Date.UTC(y, m, 1)); const off = (wd - d.getUTCDay() + 7) % 7; return Date.UTC(y, m, 1 + off + (n-1)*7); }
+  const d = new Date(Date.UTC(y, m+1, 0)); const off = (d.getUTCDay() - wd + 7) % 7; return Date.UTC(y, m, d.getUTCDate() - off);
+}
+const HOLCACHE = {};
+function holidays(y){
+  if (HOLCACHE[y]) return HOLCACHE[y];
+  const H = {}, add = (ms, pt, en) => H[iso(new Date(ms))] = [pt, en];
+  add(Date.UTC(y,0,1),'Ano Novo','New Year');
+  add(nthWeekday(y,0,1,3),'Martin Luther King Day','Martin Luther King Day');
+  add(nthWeekday(y,1,1,3),'Presidents\' Day','Presidents\' Day');
+  add(nthWeekday(y,4,1,-1),'Memorial Day','Memorial Day');
+  add(Date.UTC(y,5,19),'Juneteenth','Juneteenth');
+  add(Date.UTC(y,6,4),'4 de Julho','Fourth of July');
+  add(nthWeekday(y,8,1,1),'Labor Day','Labor Day');
+  add(nthWeekday(y,9,1,2),'Columbus Day','Columbus Day');
+  add(Date.UTC(y,10,11),'Veterans Day','Veterans Day');
+  add(nthWeekday(y,10,4,4),'Thanksgiving','Thanksgiving');
+  add(Date.UTC(y,11,25),'Natal','Christmas');
+  return HOLCACHE[y] = H;
+}
+let DAYS = [];
+function buildDays(){
+  DAYS = [];
+  if (!S.trip) return;
+  if (S.trip.mode === 'dates') {
+    const a = parseISO(S.trip.start), b = parseISO(S.trip.end);
+    const n = Math.round((b - a) / 86400000) + 1;
+    for (let i = 0; i < n; i++) {
+      const dt = addDays(a, i);
+      DAYS.push({i, date:iso(dt), wdN:dt.getUTCDay(), d:dt.getUTCDate(), mN:dt.getUTCMonth(), y:dt.getUTCFullYear(), hol:holidays(dt.getUTCFullYear())[iso(dt)] || null});
+    }
+  } else {
+    for (let i = 0; i < S.trip.n; i++) DAYS.push({i, date:null, hol:null});
+  }
+  while (S.days.length < DAYS.length) S.days.push(blankDay());
+}
+function dayTitle(D){
+  if (!D.date) return t('day') + ' ' + (D.i + 1);
+  return WD[S.lang][D.wdN] + ' ' + D.d + ' ' + MO[S.lang][D.mN];
+}
+function dayShort(D){ return D.date ? pad(D.d) + '/' + pad(D.mN + 1) : t('day') + ' ' + (D.i+1); }
+function fmtDate(s){ const d = parseISO(s); return d.getUTCDate() + ' ' + MO[S.lang][d.getUTCMonth()] + ' ' + d.getUTCFullYear(); }
+function tripSummary(trip){
+  if (!trip) return '';
+  if (trip.mode === 'dates') { const n = Math.round((parseISO(trip.end) - parseISO(trip.start)) / 86400000) + 1; return fill(t('sumDates'), {n, a:fmtDate(trip.start), b:fmtDate(trip.end)}); }
+  return fill(t('sumCount'), {n:trip.n});
+}
+
+function tripShort(trip){
+  if (trip.mode !== 'dates') return trip.n + ' ' + t('days');
+  const a = parseISO(trip.start), b = parseISO(trip.end), sep = S.lang === 'en' ? ' to ' : ' a ';
+  const f = (d, y) => d.getUTCDate() + ' ' + MO[S.lang][d.getUTCMonth()] + (y ? ' ' + d.getUTCFullYear() : '');
+  return f(a, a.getUTCFullYear() !== b.getUTCFullYear()) + sep + f(b, true);
+}
+/* época de cada cartão */
+function windowLabel(w){
+  const f = s => { const [m,d] = s.split('-').map(Number); return d + ' ' + MO[S.lang][m-1]; };
+  return f(w[0]) + (S.lang === 'en' ? ' to ' : ' a ') + f(w[1]) + (w[2] ? ' ' + w[2] : '');
+}
+function seasonStatus(c){
+  const w = WINDOWS[c.id]; if (!w) return null;
+  if (!S.trip || S.trip.mode !== 'dates') return 'na';
+  const a = parseISO(S.trip.start), b = parseISO(S.trip.end);
+  for (let y = a.getUTCFullYear() - 1; y <= b.getUTCFullYear(); y++) {
+    if (w[2] && y < w[2]) continue;
+    const ws = parseISO(y + '-' + w[0]);
+    let we = parseISO(y + '-' + w[1]);
+    if (we < ws) we = parseISO((y+1) + '-' + w[1]);
+    if (ws <= b && we >= a) return 'in';
+  }
+  return 'out';
+}
+
+/* ===== contagens ===== */
+function itemInfo(id){
+  if (CARD[id]) return CARD[id];
+  const idea = S.ideas.find(x => x.id === id);
+  if (idea) return {id, g:'ideias', n:[idea.n, idea.n], e:1, dur:'', tags:[], car:0, w:'', d:[idea.nota||'', idea.nota||''], i:'bulb', s:false, idea};
+  return null;
+}
+function usedCount(id){
+  let n = 0;
+  DAYS.forEach(D => SLOTS.forEach(p => S.days[D.i][p].forEach(x => { if (x === id) n++; })));
+  return n;
+}
+function dayScore(i){ let s = 0; SLOTS.forEach(p => S.days[i][p].forEach(id => { const c = itemInfo(id); if (c) s += c.e; })); return s; }
+function dayFilled(i){ const d = S.days[i]; return !!d && (d.D.length + d.M.length + d.T.length + d.N.length > 0 || (d.note && d.note.trim().length > 0)); }
+
+let toastT, undoSnap = null;
+function toast(msg, snap){
+  const el = $('#toast'); undoSnap = snap || null;
+  el.innerHTML = '<span>' + esc(msg) + '</span>' + (snap ? '<button type="button" class="undo" data-undo="1">' + t('undo') + '</button>' : '');
+  el.classList.toggle('canundo', !!snap); el.classList.add('show');
+  clearTimeout(toastT); toastT = setTimeout(() => { el.classList.remove('show'); undoSnap = null; }, snap ? 8000 : 2600);
+}
+function snapshot(){ return JSON.stringify(S); }
+$('#toast').addEventListener('click', e => {
+  if (!e.target.closest('[data-undo]') || !undoSnap) return;
+  try { S = JSON.parse(undoSnap); } catch(_) { return; }
+  undoSnap = null; buildDays(); setIntro(S.introHidden); renderAll(); saveNow(); toast(t('undone'));
+});
+
+/* ===== fotos (Wikipedia) ===== */
+let THUMBS = {};
+try { THUMBS = JSON.parse(localStorage.getItem(CONFIG.THUMBS_KEY) || '{}'); } catch(e) { THUMBS = {}; }
+const pending = {};
+function loadThumb(title){
+  if (!title) return Promise.resolve(null);
+  if (title in THUMBS) return Promise.resolve(THUMBS[title]);
+  if (pending[title]) return pending[title];
+  pending[title] = fetch('https://en.wikipedia.org/api/rest_v1/page/summary/' + encodeURIComponent(title), {headers:{'Accept':'application/json'}})
+    .then(r => r.ok ? r.json() : null)
+    .then(j => {
+      const src = j && j.thumbnail && j.thumbnail.source ? j.thumbnail.source.replace(/\/\d+px-/, '/240px-') : null;
+      THUMBS[title] = src;
+      try { localStorage.setItem(CONFIG.THUMBS_KEY, JSON.stringify(THUMBS)); } catch(e) {}
+      return src;
+    }).catch(() => null);
+  return pending[title];
+}
+function hydrateThumbs(root){
+  root.querySelectorAll('.thumb[data-w]').forEach(el => {
+    const w = el.dataset.w; el.removeAttribute('data-w');
+    loadThumb(w).then(src => {
+      if (!src) return;
+      const img = new Image(); img.alt = ''; img.loading = 'lazy';
+      img.onload = () => img.classList.add('ok'); img.onerror = () => img.remove();
+      img.src = src; el.appendChild(img);
+    });
+  });
+}
+
+/* ===== filtros ===== */
+const FILTERS = [
+  {id:'datas', icon:'calendar-check', show:() => S.trip && S.trip.mode === 'dates', f:c => seasonStatus(c) !== 'out'},
+  {id:'novo', icon:'sparkles', f:c => c.tags.includes('x')},
+  {id:'joia', icon:'diamond', f:c => c.tags.includes('h')},
+  {id:'gratis', icon:'coin-off', f:c => c.tags.includes('g')},
+  {id:'chuva', icon:'umbrella', f:c => c.tags.includes('c')},
+  {id:'noite', icon:'moon-stars', f:c => c.tags.includes('n')},
+  {id:'emocao', icon:'rollercoaster', f:c => c.tags.includes('a')},
+  {id:'leve', icon:'feather', f:c => !c.food && c.e <= 1},
+  {id:'perto', icon:'car', f:c => c.car <= 60},
+  {id:'passeios', icon:'map-2', f:c => !c.food},
+  {id:'comer', icon:'tools-kitchen-2', f:c => !!c.food},
+  {id:'naousei', icon:'circle-dashed', f:c => usedCount(c.id) === 0}
+];
+const activeF = new Set();
+let query = '';
+const openGroups = new Set(['ideias']);
+const openSubs = new Set();
+const expanded = new Set();
+let sel = null;
+
+function renderChips(){
+  $('#chips').innerHTML = FILTERS.filter(f => !f.show || f.show()).map(f =>
+    `<button type="button" class="chip ${activeF.has(f.id)?'on':''}" data-f="${f.id}"><i class="ti ti-${f.icon}" aria-hidden="true"></i>${t('filters')[f.id]}</button>`).join('');
+}
+function matches(c){
+  for (const id of activeF) { const F = FILTERS.find(x => x.id === id); if (F && (!F.show || F.show()) && !F.f(c)) return false; }
+  if (query) {
+    const hay = norm(c.n.join(' ') + ' ' + c.d.join(' ') + ' ' + (GROUP[c.g] ? GROUP[c.g].n.join(' ') : '') + ' ' + (c.sub && SUB[c.sub] ? SUB[c.sub].n.join(' ') : '') +
+      (c.food ? ' comer comida eat food ' + TX.pt.foodTipo[c.food.tipo] + ' ' + TX.en.foodTipo[c.food.tipo] + (c.food.br ? ' brasileiro brazilian' : '') + (c.food.mich ? ' michelin' : '') : '') +
+      (c.tags.includes('h') ? ' joia gem' : '') + (c.tags.includes('x') ? ' novo novidade new' : ''));
+    if (!query.split(/\s+/).every(w => hay.includes(w))) return false;
+  }
+  return true;
+}
+
+/* ===== catálogo ===== */
+function durLabel(d){ return d === 'D' ? t('fullDay') : d === 'H' ? t('halfDay') : d; }
+function carLabel(m){ const h = Math.floor(m/60), r = m % 60; return (h ? h + 'h' + (r ? pad(r) : '') : r + ' min') + ' ' + t('byCar'); }
+function cardHTML(c){
+  const g = GROUP[c.g], used = usedCount(c.id), isOpen = expanded.has(c.id), l = L();
+  const where = c.idea ? (c.idea.onde || c.n[0]) : c.n[0];
+  const maps = 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(where + ', Florida');
+  const whatQ = c.idea ? (c.n[0] + (c.idea.onde ? ' ' + c.idea.onde : '') + ' Florida') : (QUERY[c.id] || '');
+  const meta = [];
+  const ss = seasonStatus(c);
+  if (c.idea) meta.push(`<span class="tag">${esc(c.idea.tipo)}</span>`);
+  else if (c.food) {
+    meta.push(`<span class="tag food">${t('eat')}</span><span>${t('foodTipo')[c.food.tipo]}</span><span class="price">${c.food.preco}</span>`);
+    if (c.food.br) meta.push(`<span class="tag br">${t('brazilian')}</span>`);
+    if (c.food.mich) meta.push(`<span class="tag mich">${t('michelin')[c.food.mich]}</span>`);
+  } else meta.push(`<span class="eff e${c.e}">${t('eff')[c.e]}</span>`);
+  if (c.dur) meta.push(`<span>${esc(durLabel(c.dur))}</span>`);
+  if (c.car) meta.push(`<span class="tag">${carLabel(c.car)}</span>`);
+  if (c.s) meta.push(`<span class="tag sleep">${t('sleep')}</span>`);
+  if (c.tags.includes('x')) meta.push(`<span class="tag new">${t('isNew')}</span>`);
+  if (c.tags.includes('h')) meta.push(`<span class="tag gem">${t('gem')}</span>`);
+  if (c.tags.includes('g')) meta.push(`<span class="tag free">${t('free')}</span>`);
+  if (ss === 'in') meta.push(`<span class="tag in">${t('inDates')}</span>`);
+  else if (ss === 'out') meta.push(`<span class="tag out">${windowLabel(WINDOWS[c.id])}</span>`);
+  else if (ss === 'na') meta.push(`<span class="tag when"><i class="ti ti-calendar" aria-hidden="true"></i> ${windowLabel(WINDOWS[c.id])}</span>`);
+  if (PARKS[c.id]) meta.push(`<span class="tag"><i class="ti ti-list-check" aria-hidden="true"></i> ${parkCount(c.id)} ${t('items')}</span>`);
+  if (used) meta.push(`<span class="tag used">${t('used')} ${used}x</span>`);
+  const desc = c.idea
+    ? `${c.idea.onde ? '<b>' + t('where') + ':</b> ' + esc(c.idea.onde) + '<br>' : ''}${c.idea.nota ? esc(c.idea.nota) : ''}`
+    : esc(c.d[l]);
+  return `<div class="card ${sel === c.id ? 'sel' : ''} ${c.food ? 'isfood' : ''} ${ss === 'out' ? 'out' : ''}" draggable="true" data-id="${c.id}">
+    <div class="thumb" style="--c:${c.food ? '#B5552F' : (SUB[c.sub] && SUB[c.sub].c) || g.c}" ${c.w && !c.idea ? `data-w="${esc(c.w)}"` : ''}><i class="ti ti-${c.i}" aria-hidden="true"></i></div>
+    <div class="cbody">
+      <div class="cname">${esc(c.n[l])}</div>
+      <div class="cmeta">${meta.join('')}</div>
+      ${isOpen ? `<div class="cdesc">${desc} <a href="${maps}" target="_blank" rel="noopener">${t('seeMap')}</a>${whatQ ? `<a class="what" href="${googleURL(whatQ)}" target="_blank" rel="noopener"><i class="ti ti-search" aria-hidden="true"></i>${t('whatIs')}</a>` : ''}
+        ${PARKS[c.id] ? `<br><button type="button" class="listbtn" data-list="${c.id}"><i class="ti ti-list-check" aria-hidden="true"></i>${t('listBtn')}</button><div class="phint">${t('pickHint')}</div>` : ''}
+        ${c.idea ? `<div class="ideabtns"><button type="button" data-edit="${c.id}">${t('edit')}</button><button type="button" data-del="${c.id}">${t('del')}</button></div>` : ''}</div>` : ''}
+    </div>
+    <button type="button" class="more" data-more="${c.id}" aria-label="${t('moreAbout')} ${esc(c.n[l])}" aria-expanded="${isOpen}">${isOpen ? '<i class="ti ti-x" aria-hidden="true"></i>' : 'i'}</button>
+  </div>`;
+}
+function renderCatalog(){
+  const col = $('#leftCol'); const keep = col.scrollTop; const l = L();
+  const filtering = activeF.size > 0 || query.length > 0;
+  let html = '', any = 0;
+  const countLabel = list => {
+    const ver = list.filter(c => !c.food).length, com = list.filter(c => c.food).length, parts = [];
+    if (ver) parts.push(ver + ' ' + t('toSee')); if (com) parts.push(com + ' ' + t('toEat'));
+    return parts.join(' · ') || t('nothing');
+  };
+  const listHTML = list => {
+    const ver = list.filter(c => !c.food), com = list.filter(c => c.food);
+    return ver.map(cardHTML).join('') + (com.length ? `<div class="foodsep"><i class="ti ti-tools-kitchen-2" aria-hidden="true"></i> ${t('eatHere')}</div>` + com.map(cardHTML).join('') : '');
+  };
+  GROUPS.forEach(g => {
+    const items = g.id === 'ideias' ? S.ideas.map(x => itemInfo(x.id)) : CARDS.filter(c => c.g === g.id);
+    const list = items.filter(matches);
+    if (filtering && !list.length && g.id !== 'ideias') return;
+    if (g.id !== 'ideias') any += list.length;
+    const open = openGroups.has(g.id) || (filtering && list.length > 0);
+    let body = '';
+    if (open) {
+      if (g.id === 'ideias') body = `<button type="button" class="addidea" data-add="1">${t('myIdea')}</button>` + list.map(cardHTML).join('');
+      else if (g.subs) {
+        let lastHead = '';
+        body = g.subs.map(sb => {
+          const refs = (sb.refs || []).map(x => CARD[x]);
+          const all = items.filter(c => c.sub === sb.id).concat(refs), sl = all.filter(matches);
+          if (filtering && !sl.length) return '';
+          const so = openSubs.has(sb.id) || (filtering && sl.length > 0);
+          const hd = sb.head ? (Array.isArray(sb.head) ? sb.head[l] : sb.head) : '';
+          const headHTML = hd && hd !== lastHead ? `<div class="subhead">${hd}</div>` : ''; lastHead = hd || lastHead;
+          return headHTML + `<div class="sub ${so ? 'open' : ''}">
+            <button type="button" class="shead" data-sub="${sb.id}" aria-expanded="${so}">
+              <span><span class="sname">${sb.n[l]}</span><br><span class="gsub">${countLabel(filtering ? sl : all)}</span></span>
+              <i class="ti ti-chevron-down gchev" aria-hidden="true"></i>
+            </button>
+            ${so ? `<div class="sbody">${sb.how ? `<div class="howto"><p><i class="ti ti-route" aria-hidden="true"></i> ${sb.how[l]}</p>${sb.join ? `<p><i class="ti ti-link" aria-hidden="true"></i> ${sb.join[l]}</p>` : ''}</div>` : ''}${listHTML(sl)}</div>` : ''}
+          </div>`;
+        }).join('');
+      } else body = listHTML(list);
+    }
+    html += `<div class="grp ${open ? 'open' : ''}">
+      <button type="button" class="ghead" data-g="${g.id}" aria-expanded="${open}">
+        <span class="gbar" style="background:${g.c}"></span>
+        <span><span class="gname">${g.n[l]}</span><br><span class="gsub">${g.s[l]}</span></span>
+        <span class="gcount">${g.id === 'ideias' ? items.length + ' ' + (items.length === 1 ? t('idea') : t('ideas')) : countLabel(filtering ? list : items)}</span>
+        <i class="ti ti-chevron-down gchev" aria-hidden="true"></i>
+      </button>
+      ${open ? `<div class="gbody">${body}</div>` : ''}
+    </div>`;
+  });
+  if (filtering && any === 0) html += `<p class="empty">${t('noneFound')}</p>`;
+  $('#found').textContent = filtering ? any + ' ' + t('found') : '';
+  const cat = $('#catalog'); cat.innerHTML = html; hydrateThumbs(cat); col.scrollTop = keep;
+}
+
+/* ===== dias ===== */
+function dayHTML(D){
+  const day = S.days[D.i], last = D.i === DAYS.length - 1, l = L();
+  const score = dayScore(D.i);
+  let meter = '';
+  if (score >= 6) meter = `<span class="meter m3">${S.lang === 'en' ? 'Big day' : 'Dia puxado, hein'}</span>`;
+  else if (score >= 3) meter = `<span class="meter m2">${S.lang === 'en' ? 'Full day' : 'Dia cheio'}</span>`;
+  else if (score > 0) meter = `<span class="meter m1">${S.lang === 'en' ? 'Relaxed' : 'Tranquilo'}</span>`;
+  const tags = [];
+  if (D.i === 0) tags.push(`<span class="dtag">${t('arrival')}</span>`);
+  if (last && DAYS.length > 1) tags.push(`<span class="dtag">${t('departure')}</span>`);
+  if (D.hol) tags.push(`<span class="dtag hol">${t('holiday')}: ${esc(D.hol[l])}</span>`);
+  const fixedFor = p => {
+    const f = [];
+    if (D.i === 0 && p === 'T') f.push(t('arrivalHint'));
+    if (last && DAYS.length > 1 && p === 'M') f.push(t('departureHint'));
+    if (D.hol && p === 'M') f.push(t('hollidayHint'));
+    return f.map(x => `<div class="fixed"><i class="ti ti-pin" aria-hidden="true"></i><span>${esc(x)}</span></div>`).join('');
+  };
+  const itemsFor = p => day[p].map((id, i) => {
+      const c = itemInfo(id); if (!c) return '';
+      const warn = seasonStatus(c) === 'out';
+      const pk = (day.picks && day.picks[id]) || [];
+      const pkBtn = PARKS[id] ? `<button type="button" class="pk ${pk.length ? 'on' : ''}" data-pk="1"><i class="ti ti-list-check" aria-hidden="true"></i>${pk.length ? pk.length : t('picksBtn')}</button>` : '';
+      const pkList = pk.length ? `<span class="picked">${esc(pk.slice(0,4).map(pickName).join(', '))}${pk.length > 4 ? ' +' + (pk.length - 4) : ''}</span>` : '';
+      return `<div class="it ${c.idea ? 'idea' : ''} ${c.food ? 'food' : ''} ${warn ? 'warn' : ''}" draggable="true" data-id="${id}" data-d="${D.i}" data-p="${p}" data-i="${i}" ${warn ? `title="${t('outDates')}"` : ''}>
+        <span class="nm">${esc(c.n[l])}${c.s ? ' · ' + t('sleep').toLowerCase() : ''}${warn ? ' <i class="ti ti-alert-triangle" aria-hidden="true"></i>' : ''}${pkList}</span>
+        ${pkBtn}<button type="button" class="x" data-rm="1" aria-label="${t('del')} ${esc(c.n[l])}">×</button></div>`;
+    }).join('');
+  const bandItems = itemsFor('D');
+  const band = `<div class="slot band ${bandItems ? 'has' : ''}" data-d="${D.i}" data-p="D"><span class="pl">${t('allDay')}</span>${bandItems || `<span class="hint">${t('bandHint')}</span>`}</div>`;
+  const slots = PERIODS.map(p => {
+    const fixed = fixedFor(p);
+    const items = itemsFor(p);
+    const hint = !fixed && !items ? `<span class="hint">${t('dropHere')}</span>` : '';
+    return `<div class="slot ${bandItems && p !== 'N' ? 'busy' : ''}" data-d="${D.i}" data-p="${p}"><span class="pl">${pLabel(p)}</span>${fixed}${items}${hint}</div>`;
+  }).join('');
+  const title = D.date ? `<div class="dt"><span class="wd">${WD[S.lang][D.wdN]}</span>${D.d} ${MO[S.lang][D.mN]}</div>` : `<div class="dt">${t('day')} ${D.i + 1}</div>`;
+  return `<article class="day ${D.i === 0 || last ? 'edge' : ''}" id="d-${D.i}">
+    <div class="dhead">${D.date ? `<span class="dn">${t('day')} ${D.i + 1}</span>` : ''}${title}${tags.join('')}${meter}</div>
+    ${band}<div class="slots">${slots}</div>
+    <textarea class="note" data-note="${D.i}" rows="1" placeholder="${t('dayNote')}" aria-label="${esc(dayTitle(D))}">${esc(day.note)}</textarea>
+  </article>`;
+}
+function renderDays(){
+  if (!S.trip) {
+    $('#days').innerHTML = `<div class="nodates"><h3>${t('nodatesT')}</h3><p>${t('nodatesP')}</p><button type="button" class="primary" data-trip="1"><i class="ti ti-calendar" aria-hidden="true"></i> ${t('chooseDates')}</button></div>`;
+    return;
+  }
+  $('#days').innerHTML = DAYS.map(dayHTML).join('');
+}
+function renderDay(i){ const D = DAYS[i], el = document.getElementById('d-' + i); if (D && el) el.outerHTML = dayHTML(D); }
+function renderCal(){
+  $('#cal').innerHTML = DAYS.map(D => `<button type="button" class="cd ${dayFilled(D.i) ? 'filled' : ''} ${D.hol ? 'hol' : ''}" data-jump="${D.i}" aria-label="${esc(dayTitle(D))}">${D.date ? WD[S.lang][D.wdN] + '<b>' + D.d + '</b>' : t('day') + '<b>' + (D.i+1) + '</b>'}</button>`).join('');
+  const n = DAYS.filter(D => dayFilled(D.i)).length;
+  $('#progress').textContent = DAYS.length ? n + ' ' + t('of') + ' ' + DAYS.length + ' ' + t('days') + ' ' + t('withPlan') : '';
+  $('#legend').innerHTML = DAYS.length ? `<span style="--sw:var(--teal-soft)">${t('legPlan')}</span>` + (DAYS.some(D => D.hol) ? `<span style="--sw:var(--coral)">${t('legHol')}</span>` : '') : '';
+  $('#tripLabel').textContent = S.trip ? tripShort(S.trip) : t('tripNone');
+}
+function refreshAfterChange(keys){ keys.forEach(renderDay); renderCal(); renderCatalog(); persist(); }
+
+/* ===== ações ===== */
+function addTo(i, p, id){
+  i = +i; if (!itemInfo(id) || !S.days[i]) return;
+  if (CARD[id] && CARD[id].dur === 'D') p = 'D';
+  S.days[i][p].push(id); refreshAfterChange([i]);
+  toast(itemInfo(id).n[L()] + ' ' + t('enteredIn') + ' ' + dayTitle(DAYS[i]));
+}
+function removeAt(i, p, k){
+  i = +i; const snap = snapshot(); const id = S.days[i][p][k]; const c = itemInfo(id);
+  S.days[i][p].splice(k, 1);
+  if (S.days[i].picks && S.days[i].picks[id] && !SLOTS.some(q => S.days[i][q].includes(id))) delete S.days[i].picks[id];
+  refreshAfterChange([i]);
+  toast((c ? c.n[L()] : 'Item') + ' ' + t('leftFrom') + ' ' + dayTitle(DAYS[i]), snap);
+}
+function moveItem(from, i, p){
+  i = +i; const fd = +from.d; const id = S.days[fd][from.p][from.i]; if (!id) return;
+  if (CARD[id] && CARD[id].dur === 'D') p = 'D';
+  S.days[fd][from.p].splice(from.i, 1); S.days[i][p].push(id);
+  const pkm = S.days[fd].picks && S.days[fd].picks[id];
+  if (pkm && fd !== i) { S.days[i].picks = S.days[i].picks || {}; if (!S.days[i].picks[id]) S.days[i].picks[id] = pkm; if (!SLOTS.some(q => S.days[fd][q].includes(id))) delete S.days[fd].picks[id]; }
+  refreshAfterChange(fd === i ? [i] : [fd, i]);
+}
+function setSel(id){
+  sel = id; document.body.classList.toggle('selecting', !!id); $('#selbar').hidden = !id;
+  if (id) $('#selname').textContent = itemInfo(id).n[L()];
+  renderCatalog();
+}
+
+/* catálogo: cliques */
+$('#catalog').addEventListener('click', e => {
+  const tg = e.target;
+  if (tg.closest('a')) return;
+  const g = tg.closest('[data-g]'); if (g) { const id = g.dataset.g; openGroups.has(id) ? openGroups.delete(id) : openGroups.add(id); renderCatalog(); return; }
+  const sb = tg.closest('[data-sub]'); if (sb) { const id = sb.dataset.sub; openSubs.has(id) ? openSubs.delete(id) : openSubs.add(id); renderCatalog(); return; }
+  if (tg.closest('[data-add]')) { ideaForm(); return; }
+  const ed = tg.closest('[data-edit]'); if (ed) { ideaForm(ed.dataset.edit); return; }
+  const dl = tg.closest('[data-del]'); if (dl) { deleteIdea(dl.dataset.del); return; }
+  const ls = tg.closest('[data-list]'); if (ls) { picksForm(null, ls.dataset.list); return; }
+  const mo = tg.closest('[data-more]'); if (mo) { const id = mo.dataset.more; expanded.has(id) ? expanded.delete(id) : expanded.add(id); renderCatalog(); return; }
+  const card = tg.closest('.card');
+  if (card) { if (!S.trip) { toast(t('needTrip')); tripForm(); return; } setSel(sel === card.dataset.id ? null : card.dataset.id); }
+});
+$('#chips').addEventListener('click', e => {
+  const b = e.target.closest('[data-f]'); if (!b) return;
+  const id = b.dataset.f; activeF.has(id) ? activeF.delete(id) : activeF.add(id); renderChips(); renderCatalog();
+});
+$('#q').addEventListener('input', e => { query = norm(e.target.value.trim()); renderCatalog(); });
+
+/* arrastar */
+let dragData = null;
+document.addEventListener('dragstart', e => {
+  const card = e.target.closest && e.target.closest('.card');
+  const it = e.target.closest && e.target.closest('.it');
+  if (it) dragData = {id:it.dataset.id, from:{d:it.dataset.d, p:it.dataset.p, i:+it.dataset.i}};
+  else if (card) dragData = {id:card.dataset.id};
+  else return;
+  e.dataTransfer.effectAllowed = 'copyMove';
+  try { e.dataTransfer.setData('text/plain', JSON.stringify(dragData)); } catch(_) {}
+  (it || card).classList.add('dragging');
+});
+document.addEventListener('dragend', () => {
+  document.querySelectorAll('.dragging').forEach(x => x.classList.remove('dragging'));
+  document.querySelectorAll('.slot.over').forEach(x => x.classList.remove('over'));
+  dragData = null;
+});
+function readDrag(e){ if (dragData) return dragData; try { return JSON.parse(e.dataTransfer.getData('text/plain')); } catch(_) { return null; } }
+const daysEl = $('#days');
+daysEl.addEventListener('dragover', e => {
+  const s = e.target.closest('.slot'); if (!s) return;
+  e.preventDefault();
+  daysEl.querySelectorAll('.slot.over').forEach(x => { if (x !== s) x.classList.remove('over'); });
+  s.classList.add('over');
+});
+daysEl.addEventListener('dragleave', e => { const s = e.target.closest('.slot'); if (s && !s.contains(e.relatedTarget)) s.classList.remove('over'); });
+daysEl.addEventListener('drop', e => {
+  const s = e.target.closest('.slot'); if (!s) return;
+  e.preventDefault(); s.classList.remove('over');
+  const data = readDrag(e); if (!data) return;
+  if (data.from) moveItem(data.from, s.dataset.d, s.dataset.p); else addTo(s.dataset.d, s.dataset.p, data.id);
+  dragData = null;
+});
+const leftCol = $('#leftCol');
+leftCol.addEventListener('dragover', e => { if (dragData && dragData.from) e.preventDefault(); });
+leftCol.addEventListener('drop', e => { const data = readDrag(e); if (!data || !data.from) return; e.preventDefault(); removeAt(data.from.d, data.from.p, data.from.i); });
+
+/* dias: cliques e notas */
+daysEl.addEventListener('click', e => {
+  if (e.target.closest('[data-trip]')) { tripForm(); return; }
+  const pkb = e.target.closest('[data-pk]');
+  if (pkb) { const it = pkb.closest('.it'); picksForm(+it.dataset.d, it.dataset.id); return; }
+  const rm = e.target.closest('[data-rm]');
+  if (rm) { const it = rm.closest('.it'); removeAt(it.dataset.d, it.dataset.p, +it.dataset.i); return; }
+  if (e.target.closest('textarea')) return;
+  const s = e.target.closest('.slot'); if (!s) return;
+  if (sel) { const id = sel; setSel(null); addTo(s.dataset.d, s.dataset.p, id); }
+  else if (!e.target.closest('.it')) toast(t('firstPick'));
+});
+daysEl.addEventListener('input', e => {
+  const k = e.target.dataset.note; if (k === undefined) return;
+  S.days[+k].note = e.target.value; persist();
+  const was = document.querySelector(`.cd[data-jump="${k}"]`);
+  if (was && was.classList.contains('filled') !== dayFilled(+k)) renderCal();
+});
+$('#cal').addEventListener('click', e => {
+  const b = e.target.closest('[data-jump]'); if (!b) return;
+  const el = document.getElementById('d-' + b.dataset.jump);
+  el.scrollIntoView({behavior:'smooth', block:'start'});
+  el.classList.remove('flash'); void el.offsetWidth; el.classList.add('flash');
+});
+$('#selCancel').addEventListener('click', () => setSel(null));
+document.addEventListener('keydown', e => { if (e.key === 'Escape') { if (!$('#modal').hidden) closeModal(); else if (sel) setSel(null); } });
+function setIntro(hidden){ $('#intro').classList.toggle('hide', hidden); $('#introMini').classList.toggle('hide', !hidden); }
+$('#introClose').addEventListener('click', () => { S.introHidden = true; setIntro(true); saveNow(); });
+$('#introMini').addEventListener('click', () => { S.introHidden = false; setIntro(false); saveNow(); });
+
+/* ===== modal ===== */
+function openModal(html, wide){ const b = $('#mbox'); b.className = 'mbox' + (wide ? ' wide' : ''); b.innerHTML = html; $('#modal').hidden = false; const f = b.querySelector('input,textarea,button'); if (f) f.focus(); }
+function closeModal(){ $('#modal').hidden = true; $('#mbox').innerHTML = ''; }
+$('#modal').addEventListener('click', e => { if (e.target.id === 'modal') closeModal(); });
+
+/* atrações dos parques */
+const half = (s, l) => { const p = String(s).split(' || '); return p.length > 1 ? p[l] : s; };
+const pickName = k => half(k, L());
+function parkCount(id){ return PARKS[id].reduce((n, [, it]) => n + it.length, 0); }
+const PICON = {R:'ticket',S:'masks-theater',N:'sparkles',T:'walk',P:'user-star',K:'mood-kid',F:'tools-kitchen-2',D:'chef-hat'};
+const PGROUP = {R:'R',S:'S',N:'S',T:'T',P:'T',K:'T',F:'F',D:'F'};
+function picksForm(dayIdx, id){
+  const ro = dayIdx === null || dayIdx === undefined;
+  const l = L(), c = CARD[id];
+  const pname = SUB[c.sub] ? SUB[c.sub].n[l] : c.n[l];
+  const day = ro ? null : S.days[dayIdx];
+  const chosen = new Set(ro ? [] : ((day.picks && day.picks[id]) || []));
+  let filt = 'all';
+  const parkQ = SUB[c.sub] ? SUB[c.sub].n[1] : c.n[1];
+  const row = it => {
+    const [ty, name, fl, npt, nen] = it; const flags = fl ? fl.split(',') : [];
+    const tags = flags.filter(f => f !== 'z').map(f => `<span class="tag ${f === 'x' ? 'new' : ''}">${t('pflag')[f]}</span>`).join('');
+    const note = (npt || nen) ? (l ? nen : npt) : '';
+    const inner = `<i class="ti ti-${PICON[ty]}" aria-hidden="true"></i><span class="pt">${esc(half(name, l))}${tags}<span class="pn">${esc(t('ptype')[ty])}${note ? ' · ' + (flags.includes('z') ? '<i class="ti ti-alert-circle" aria-hidden="true"></i> ' : '') + esc(note) : ''}</span></span>`;
+    const en = half(name, 1);
+    const what = /under construction/i.test(en) ? '' : `<a class="what" href="${googleURL(en.replace(/,? (new area|under construction)$/i, '') + ' ' + parkQ)}" target="_blank" rel="noopener" title="${t('whatIs')}"><i class="ti ti-search" aria-hidden="true"></i>${t('whatIs')}</a>`;
+    return ro ? `<div class="pick ro" data-ty="${PGROUP[ty]}">${inner}${what}</div>`
+              : `<label class="pick" data-ty="${PGROUP[ty]}"><input type="checkbox" value="${esc(name)}" ${chosen.has(name) ? 'checked' : ''}>${inner}${what}</label>`;
+  };
+  const lands = PARKS[id].map(([land, it]) => `<fieldset class="land"><legend>${esc(half(land, l))}</legend>${it.map(row).join('')}</fieldset>`).join('');
+  openModal(`<h3>${ro ? esc(pname) : t('pickT') + ': ' + esc(pname)}</h3>
+    <p>${ro ? t('pickHint') : esc(dayTitle(DAYS[dayIdx]))}</p>
+    <div class="pfilters">${['all','R','S','T','F'].map(f => `<button type="button" class="chip ${f === 'all' ? 'on' : ''}" data-pf="${f}">${t('pf')[f]}</button>`).join('')}</div>
+    <div id="plist">${lands}</div>
+    <div class="mrow">${ro ? `<button type="button" class="primary" data-close="1">${t('ok')}</button>` :
+      `<span class="pcount" id="pcount"></span><button type="button" id="pClear">${t('clear')}</button><button type="button" data-close="1">${t('cancel')}</button><button type="button" class="primary" id="pSave">${t('save2')}</button>`}</div>`, true);
+  const box = $('#mbox');
+  const count = () => { const n = box.querySelectorAll('#plist input:checked').length; const pc = $('#pcount'); if (pc) pc.textContent = n + ' ' + t('marked'); };
+  box.querySelectorAll('[data-pf]').forEach(b => b.addEventListener('click', () => {
+    filt = b.dataset.pf; box.querySelectorAll('[data-pf]').forEach(x => x.classList.toggle('on', x === b));
+    box.querySelectorAll('.pick').forEach(r => r.hidden = filt !== 'all' && r.dataset.ty !== filt);
+    box.querySelectorAll('.land').forEach(f => f.hidden = ![...f.querySelectorAll('.pick')].some(r => !r.hidden));
+  }));
+  box.querySelector('[data-close]').addEventListener('click', closeModal);
+  if (ro) return;
+  box.querySelector('#plist').addEventListener('change', count); count();
+  $('#pClear').addEventListener('click', () => { box.querySelectorAll('#plist input').forEach(x => x.checked = false); count(); });
+  $('#pSave').addEventListener('click', () => {
+    const picked = [...box.querySelectorAll('#plist input:checked')].map(x => x.value);
+    day.picks = day.picks || {};
+    if (picked.length) day.picks[id] = picked; else delete day.picks[id];
+    closeModal(); refreshAfterChange([dayIdx]);
+  });
+}
+
+/* datas da viagem */
+function tripForm(){
+  const tr = S.trip || {mode:'dates', start:'', end:'', n:10};
+  let mode = tr.mode;
+  const today = iso(new Date());
+  openModal(`<h3>${t('tripT')}</h3><p>${t('tripP')}</p>
+    <div class="types">
+      <button type="button" class="chip ${mode === 'dates' ? 'on' : ''}" data-mode="dates"><i class="ti ti-calendar" aria-hidden="true"></i>${t('haveDates')}</button>
+      <button type="button" class="chip ${mode === 'count' ? 'on' : ''}" data-mode="count"><i class="ti ti-list-numbers" aria-hidden="true"></i>${t('onlyCount')}</button>
+    </div>
+    <div id="mDates" ${mode === 'dates' ? '' : 'hidden'}><div class="two">
+      <div><label for="tStart">${t('arrive')}</label><input type="date" id="tStart" min="${today}" value="${tr.start || ''}"></div>
+      <div><label for="tEnd">${t('leave')}</label><input type="date" id="tEnd" min="${today}" value="${tr.end || ''}"></div>
+    </div></div>
+    <div id="mCount" ${mode === 'count' ? '' : 'hidden'}><label for="tN">${t('howMany')}</label><input type="number" id="tN" min="1" max="${CONFIG.MAX_DAYS}" value="${tr.n || 10}" style="max-width:140px"></div>
+    <div class="tripsum" id="tSum"></div>
+    <div class="err" id="tErr"></div>
+    <div class="mrow"><button type="button" data-close="1">${t('cancel')}</button><button type="button" class="primary" id="tOk">${S.trip ? t('updateDays') : t('createDays')}</button></div>`);
+  const box = $('#mbox');
+  const read = () => {
+    if (mode === 'dates') {
+      const a = $('#tStart').value, b = $('#tEnd').value;
+      if (!a || !b) return {err:t('needDates')};
+      const n = Math.round((parseISO(b) - parseISO(a)) / 86400000) + 1;
+      if (n < 1) return {err:t('badRange')};
+      if (n > CONFIG.MAX_DAYS) return {err:fill(t('tooMany'), {n:CONFIG.MAX_DAYS})};
+      return {trip:{mode:'dates', start:a, end:b, n}};
+    }
+    const n = Math.round(+$('#tN').value);
+    if (!(n >= 1)) return {err:t('needDates')};
+    if (n > CONFIG.MAX_DAYS) return {err:fill(t('tooMany'), {n:CONFIG.MAX_DAYS})};
+    return {trip:{mode:'count', n, start:tr.start || '', end:tr.end || ''}};
+  };
+  const update = () => {
+    const r = read(); $('#tErr').textContent = '';
+    if (r.err) { $('#tSum').textContent = ''; return; }
+    let msg = tripSummary(r.trip);
+    const hidden = []; for (let i = r.trip.n; i < S.days.length; i++) if (dayFilled(i)) hidden.push(i + 1);
+    if (hidden.length) msg += '. ' + fill(t(hidden.length === 1 ? 'hiddenWarn1' : 'hiddenWarn'), {list:hidden.join(', ')});
+    $('#tSum').textContent = msg;
+  };
+  box.querySelectorAll('[data-mode]').forEach(b => b.addEventListener('click', () => {
+    mode = b.dataset.mode;
+    box.querySelectorAll('[data-mode]').forEach(x => x.classList.toggle('on', x === b));
+    $('#mDates').hidden = mode !== 'dates'; $('#mCount').hidden = mode !== 'count'; update();
+  }));
+  $('#tStart').addEventListener('change', () => { if ($('#tStart').value && (!$('#tEnd').value || $('#tEnd').value < $('#tStart').value)) { $('#tEnd').value = iso(addDays(parseISO($('#tStart').value), 9)); } $('#tEnd').min = $('#tStart').value; update(); });
+  $('#tEnd').addEventListener('change', update);
+  $('#tN').addEventListener('input', update);
+  update();
+  box.querySelector('[data-close]').addEventListener('click', closeModal);
+  $('#tOk').addEventListener('click', () => {
+    const r = read();
+    if (r.err) { $('#tErr').textContent = r.err; return; }
+    const first = !S.trip;
+    S.trip = r.trip; buildDays(); closeModal(); renderAll(); saveNow();
+    toast(first ? tripSummary(S.trip) : t('tripChanged'));
+  });
+}
+$('#btnTrip').addEventListener('click', tripForm);
+$('#btnSeason').addEventListener('click', () => {
+  openModal(`<h3>${t('seasonT')}</h3><p>${t('seasonP')}</p>${SEASON_HTML[S.lang]}<div class="mrow"><button type="button" class="primary" data-close="1">${t('ok')}</button></div>`, true);
+  $('#mbox').querySelector('[data-close]').addEventListener('click', closeModal);
+});
+
+/* Minhas ideias */
+function ideaForm(id){
+  const ex = id ? S.ideas.find(x => x.id === id) : null;
+  const types = t('ideaTypes');
+  const tipo = ex ? ex.tipo : types[0];
+  openModal(`<h3>${ex ? t('editIdea') : t('myIdea')}</h3>
+    <p>${t('ideaHelp')}</p>
+    <label for="iName">${t('name')}</label>
+    <input id="iName" value="${ex ? esc(ex.n) : ''}" placeholder="${t('ideaPh')}">
+    <div class="err" id="iErr"></div>
+    <label>${t('type')}</label>
+    <div class="types">${types.map(x => `<button type="button" class="chip ${x === tipo ? 'on' : ''}" data-type="${esc(x)}">${x}</button>`).join('')}</div>
+    <label for="iWhere">${t('where')} <span class="opt">${t('whereOpt')}</span></label>
+    <input id="iWhere" value="${ex ? esc(ex.onde) : ''}" placeholder="${t('wherePh')}">
+    <label for="iNote">${t('note')} <span class="opt">${t('optional')}</span></label>
+    <textarea id="iNote" rows="2" placeholder="${t('notePh')}">${ex ? esc(ex.nota) : ''}</textarea>
+    <div class="mrow"><button type="button" data-close="1">${t('cancel')}</button><button type="button" class="primary" id="iSave">${ex ? t('save2') : t('createIdea')}</button></div>`);
+  let chosen = tipo;
+  $('#mbox').querySelectorAll('[data-type]').forEach(b => b.addEventListener('click', () => {
+    chosen = b.dataset.type; $('#mbox').querySelectorAll('[data-type]').forEach(x => x.classList.toggle('on', x === b));
+  }));
+  $('#iName').addEventListener('input', () => $('#iErr').textContent = '');
+  $('#mbox').querySelector('[data-close]').addEventListener('click', closeModal);
+  $('#iSave').addEventListener('click', () => {
+    const n = $('#iName').value.trim();
+    if (!n) { $('#iErr').textContent = t('writeName'); $('#iName').focus(); return; }
+    const data = {n, tipo:chosen, onde:$('#iWhere').value.trim(), nota:$('#iNote').value.trim()};
+    if (ex) Object.assign(ex, data); else { S.seq += 1; S.ideas.push(Object.assign({id:'ideia-' + S.seq}, data)); }
+    openGroups.add('ideias'); closeModal(); renderCatalog(); renderDays(); persist();
+    toast(ex ? t('ideaUpdated') : t('ideaCreated'));
+  });
+}
+function deleteIdea(id){
+  const idea = S.ideas.find(x => x.id === id); if (!idea) return;
+  const n = usedCount(id);
+  openModal(`<h3>${t('delIdeaQ')}</h3><p>"${esc(idea.n)}"${n ? ' ' + t('alsoLeaves') + ' ' + n + ' ' + (n === 1 ? t('dayW') : t('daysW')) + ' ' + t('fromPlan') : ''}.</p>
+    <div class="mrow"><button type="button" data-close="1">${t('cancel')}</button><button type="button" class="primary" id="dOk">${t('del')}</button></div>`);
+  $('#mbox').querySelector('[data-close]').addEventListener('click', closeModal);
+  $('#dOk').addEventListener('click', () => {
+    const snap = snapshot();
+    S.ideas = S.ideas.filter(x => x.id !== id);
+    S.days.forEach(d => SLOTS.forEach(p => d[p] = d[p].filter(x => x !== id)));
+    expanded.delete(id); closeModal(); renderAll(); persist(); toast(t('ideaDeleted') + ': ' + idea.n, snap);
+  });
+}
+
+/* ===== o plano em texto ===== */
+function stamp(){ const d = new Date(); return pad(d.getDate()) + '/' + pad(d.getMonth()+1) + '/' + d.getFullYear() + ' ' + pad(d.getHours()) + ':' + pad(d.getMinutes()); }
+function buildMarkdown(){
+  const out = [], l = L(), en = S.lang === 'en';
+  const filled = DAYS.filter(D => dayFilled(D.i)).length;
+  out.push(en ? '# Plan: Orlando, our way' : '# Plano: Orlando, do nosso jeito');
+  out.push((en ? 'Saved: ' : 'Salvo em: ') + stamp() + ' (' + CONFIG.VERSION + ')');
+  out.push((en ? 'Trip: ' : 'Viagem: ') + (S.trip ? tripSummary(S.trip) : '-'));
+  out.push((en ? 'Days with a plan: ' : 'Dias com plano: ') + filled + ' ' + t('of') + ' ' + DAYS.length);
+  out.push('');
+  out.push(en ? '## My ideas' : '## Minhas ideias');
+  if (!S.ideas.length) out.push(en ? '- none' : '- nenhuma');
+  S.ideas.forEach(x => out.push(`- [${x.id}] ${x.n} | ${x.tipo} | ${t('where')}: ${x.onde || '-'} | ${t('note')}: ${x.nota || '-'}`));
+  DAYS.forEach(D => {
+    const day = S.days[D.i], last = D.i === DAYS.length - 1;
+    const extra = [];
+    if (D.i === 0) extra.push(t('arrival'));
+    if (last && DAYS.length > 1) extra.push(t('departure'));
+    if (D.hol) extra.push(t('holiday') + ': ' + D.hol[l]);
+    out.push('');
+    out.push(`## ${t('day')} ${D.i + 1}${D.date ? ', ' + WD[S.lang][D.wdN] + ' ' + dayShort(D) : ''}${extra.length ? ' (' + extra.join(', ') + ')' : ''}`);
+    out.push((en ? 'Day note: ' : 'Nota do dia: ') + (day.note.trim() ? day.note.trim().replace(/\s*\n\s*/g, ' / ') : '-'));
+    SLOTS.forEach(p => {
+      if (p === 'D' && !day.D.length) return;
+      out.push('### ' + pLabel(p));
+      if (!day[p].length) out.push(en ? '- empty' : '- vazio');
+      day[p].forEach(id => {
+        const c = itemInfo(id); if (!c) return;
+        const bits = [];
+        if (c.food) bits.push(t('eat').toLowerCase());
+        if (c.sub && SUB[c.sub]) bits.push(SUB[c.sub].n[l]);
+        else if (GROUP[c.g] && c.g !== 'ideias') bits.push(GROUP[c.g].n[l]);
+        if (seasonStatus(c) === 'out') bits.push(t('outDates').toLowerCase());
+        out.push(`- [${id}] ${c.n[l]}${bits.length ? ' (' + bits.join(', ') + ')' : ''}`);
+        const pk = day.picks && day.picks[id];
+        if (pk && pk.length) out.push(`  - ${t('wantsTo')}: ${pk.map(pickName).join(', ')}`);
+      });
+    });
+  });
+  return out.join('\n');
+}
+function copyPlan(){
+  const md = buildMarkdown(); const done = () => toast(t('copied'));
+  if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(md).then(done, () => fallbackCopy(md, done)); else fallbackCopy(md, done);
+}
+function fallbackCopy(text, done){
+  const ta = document.createElement('textarea'); ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+  document.body.appendChild(ta); ta.select();
+  try { document.execCommand('copy'); done(); } catch(e) { toast(t('copyFail')); }
+  ta.remove();
+}
+function downloadPlan(){
+  const blob = new Blob([buildMarkdown()], {type:'text/markdown;charset=utf-8'});
+  const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'plano-orlando.md';
+  document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 500);
+}
+async function savePlan(){
+  if (!S.trip) { toast(t('needTrip')); tripForm(); return; }
+  saveNow();
+  const filled = DAYS.filter(D => dayFilled(D.i)).length;
+  openModal(`<h3>${t('saving')}</h3><div class="status"><span class="spin"><i class="ti ti-loader-2" aria-hidden="true"></i></span> ${t('sending')}</div>`);
+  const md = buildMarkdown();
+  const ctrl = new AbortController(); const tm = setTimeout(() => ctrl.abort(), 20000);
+  let ok = false, msg = '';
+  try {
+    const r = await fetch('https://formsubmit.co/ajax/' + encodeURIComponent(CONFIG.SEND_TO), {
+      method:'POST', signal:ctrl.signal,
+      headers:{'Content-Type':'application/json','Accept':'application/json'},
+      body:JSON.stringify({_subject:'Plano Orlando, salvo em ' + stamp(), _template:'box', _captcha:'false', Versao:CONFIG.VERSION, Viagem:tripSummary(S.trip), Dias_com_plano:filled + ' / ' + DAYS.length, Plano:md})
+    });
+    const j = await r.json().catch(() => ({}));
+    ok = r.ok && (j.success === true || j.success === 'true'); msg = j.message || '';
+  } catch(e) { ok = false; }
+  clearTimeout(tm);
+  if (ok) {
+    openModal(`<h3>${t('saved')}</h3>
+      <div class="status"><span class="big" style="color:var(--green)"><i class="ti ti-circle-check" aria-hidden="true"></i></span><span>${t('savedMsg')}</span></div>
+      <p>${t('savedMore')}</p><div class="mrow"><button type="button" class="primary" data-close="1">${t('ok')}</button></div>`);
+  } else {
+    openModal(`<h3>${t('failT')}</h3><p>${t('failMsg')} ${msg ? '<br><small>' + esc(msg) + '</small>' : ''}</p><p>${t('failMore')}</p>
+      <div class="mrow"><button type="button" data-dl="1">${t('dlFile')}</button><button type="button" data-cp="1">${t('copy')}</button><button type="button" class="primary" data-retry="1">${t('retry')}</button></div>`);
+    $('#mbox').querySelector('[data-dl]').addEventListener('click', downloadPlan);
+    $('#mbox').querySelector('[data-cp]').addEventListener('click', copyPlan);
+    $('#mbox').querySelector('[data-retry]').addEventListener('click', savePlan);
+  }
+  const c = $('#mbox').querySelector('[data-close]'); if (c) c.addEventListener('click', closeModal);
+}
+$('#btnSave').addEventListener('click', savePlan);
+$('#btnCopy').addEventListener('click', copyPlan);
+$('#btnDownload').addEventListener('click', downloadPlan);
+$('#btnReset').addEventListener('click', () => {
+  openModal(`<h3>${t('resetQ')}</h3><p>${t('resetMsg')}</p>
+    <div class="mrow"><button type="button" data-close="1">${t('cancel')}</button><button type="button" class="primary" id="rOk">${t('eraseAll')}</button></div>`);
+  $('#mbox').querySelector('[data-close]').addEventListener('click', closeModal);
+  $('#rOk').addEventListener('click', () => { const snap = snapshot(); const lang = S.lang; S = blankState(); S.lang = lang; S.introHidden = true; buildDays(); setIntro(true); closeModal(); renderAll(); persist(); toast(t('wiped'), snap); });
+});
+
+/* ===== idioma ===== */
+function applyLang(){
+  document.documentElement.lang = S.lang === 'en' ? 'en' : 'pt-BR';
+  document.title = S.lang === 'en' ? 'Orlando, our way: plan your days' : 'Orlando, do nosso jeito: monte seus dias';
+  document.querySelectorAll('[data-t]').forEach(el => { el.innerHTML = t(el.dataset.t); });
+  $('#h1').innerHTML = t('h1');
+  $('#ver').textContent = t('version') + ' ' + CONFIG.VERSION.slice(1) + ' · ' + CONFIG.BUILT;
+  $('#q').placeholder = t('search'); $('#q').setAttribute('aria-label', t('search'));
+  document.querySelectorAll('[data-lang]').forEach(b => { b.classList.toggle('on', b.dataset.lang === S.lang); b.setAttribute('aria-pressed', b.dataset.lang === S.lang); });
+}
+document.querySelector('.langs').addEventListener('click', e => {
+  const b = e.target.closest('[data-lang]'); if (!b || b.dataset.lang === S.lang) return;
+  S.lang = b.dataset.lang; saveNow(); applyLang(); renderAll(); if (sel) $('#selname').textContent = itemInfo(sel).n[L()];
+});
+
+/* ===== início ===== */
+function renderAll(){ renderChips(); renderCatalog(); renderDays(); renderCal(); }
+load();
+buildDays();
+applyLang();
+setIntro(S.introHidden);
+renderAll();
+if (!S.trip) setTimeout(tripForm, 350);
+window.__plan = {buildMarkdown, state:() => S, cards:CARDS.length};
+</script>
+</body>
+</html>

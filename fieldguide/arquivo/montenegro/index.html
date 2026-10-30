@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0a0f0f">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Montenegro Guide">
+<link rel="manifest" href="manifest.json">
+<title>Montenegro: A Field Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --gold:#c9a84c;--gold-l:#e0c070;--gold-d:#8a6e1e;
+  --accent:#1a5f6e;--accent-l:rgba(26,95,110,0.18);
+  --ink:#0a0f0f;--cream:#f0e8d8;--muted:#7a7868;
+  --border:rgba(255,255,255,0.07);--border-gold:rgba(201,168,76,0.2);
+  --border-teal:rgba(26,95,110,0.3);--card:rgba(255,255,255,0.025);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{font-size:16px;scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{font-family:'DM Sans',sans-serif;background:var(--ink);color:var(--cream);min-height:100vh;overflow-x:hidden;padding-bottom:80px}
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:9999;opacity:0.4}
+
+/* CONTROLS */
+.top-controls{position:fixed;top:16px;right:16px;z-index:1000;display:flex;gap:8px}
+.lang-group{display:flex}
+.ctrl-btn{height:30px;padding:0 12px;border:1px solid rgba(201,168,76,0.35);background:transparent;color:rgba(201,168,76,0.5);font-size:0.62rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.2s;font-family:'DM Sans',sans-serif;-webkit-tap-highlight-color:transparent}
+.lang-btn:first-child{border-radius:3px 0 0 3px;border-right:none}
+.lang-btn:last-child{border-radius:0 3px 3px 0}
+.ctrl-btn.active{background:var(--gold);color:var(--ink);border-color:var(--gold)}
+.theme-btn{border-radius:3px;font-size:0.8rem;width:30px;padding:0}
+
+/* COVER */
+.cover{position:relative;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;overflow:hidden;background:var(--ink)}
+.cover-bg{position:absolute;inset:0;background:
+  radial-gradient(ellipse 70% 55% at 50% 30%,rgba(26,95,110,0.18) 0%,transparent 65%),
+  radial-gradient(ellipse 50% 40% at 15% 75%,rgba(201,168,76,0.08) 0%,transparent 55%),
+  radial-gradient(ellipse 40% 50% at 85% 65%,rgba(26,95,110,0.1) 0%,transparent 55%),
+  linear-gradient(160deg,#07100f 0%,#0a1414 50%,#070d0d 100%)}
+.cover-pattern{position:absolute;inset:0;opacity:0.03;background-image:repeating-linear-gradient(45deg,var(--gold) 0px,var(--gold) 1px,transparent 1px,transparent 40px);z-index:0}
+.cover-content{position:relative;z-index:2;padding:24px;animation:fadeUp 1.2s ease both}
+@keyframes fadeUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
+.cover-eyebrow{font-size:0.62rem;font-weight:500;letter-spacing:0.38em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:24px}
+.cover-title{font-family:'Cormorant Garamond',serif;font-size:clamp(3.2rem,14vw,7.5rem);font-weight:300;line-height:0.9;color:var(--cream);letter-spacing:-0.02em;margin-bottom:16px}
+.cover-title em{font-style:italic;color:var(--gold-l);font-weight:400}
+.cover-author{font-size:0.56rem;font-weight:600;letter-spacing:0.3em;text-transform:uppercase;color:var(--gold-d);margin-bottom:20px}
+.cover-rule{width:40px;height:1px;background:var(--gold-d);opacity:0.5;margin:16px auto}
+.cover-subtitle{font-family:'Cormorant Garamond',serif;font-size:clamp(1rem,2.8vw,1.3rem);font-style:italic;color:rgba(240,232,216,0.45)}
+.cover-scroll{position:absolute;bottom:32px;left:50%;transform:translateX(-50%);color:rgba(201,168,76,0.35);font-size:1.2rem;animation:bob 2s ease-in-out infinite;z-index:2}
+@keyframes bob{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(7px)}}
+
+/* OFFLINE */
+.offline-banner{display:none;background:rgba(26,95,110,0.15);border-bottom:1px solid rgba(26,95,110,0.3);text-align:center;padding:8px;font-size:0.75rem;color:#80c0c8}
+
+/* SECTION */
+.section-wrap{max-width:820px;margin:0 auto;padding:0 20px}
+.section-header{padding:52px 0 8px;display:flex;align-items:center;gap:14px}
+.section-tag{font-size:0.58rem;font-weight:600;letter-spacing:0.3em;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;gap:10px;white-space:nowrap}
+.section-tag::before{content:'';width:20px;height:1px;background:var(--gold)}
+.section-title{font-family:'Cormorant Garamond',serif;font-size:2.2rem;font-weight:300;color:var(--cream);line-height:1.1;letter-spacing:-0.01em}
+.section-title em{font-style:italic;color:var(--gold-l)}
+.section-rule{flex:1;height:1px;background:linear-gradient(90deg,var(--border-gold),transparent)}
+.section-intro{font-family:'Cormorant Garamond',serif;font-size:1rem;font-style:italic;color:var(--muted);margin:8px 0 20px;line-height:1.7}
+.section-divider{height:1px;background:linear-gradient(90deg,transparent,var(--border-gold),transparent);margin:48px auto 0;max-width:820px;padding:0 20px}
+
+/* CARDS */
+.card{background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden;margin-bottom:10px;transition:border-color 0.3s;animation:fadeUp 0.5s ease-out both}
+.card.open{border-color:var(--border-gold)}
+.card-trigger{width:100%;background:none;border:none;padding:18px 20px;cursor:pointer;display:flex;align-items:center;gap:14px;text-align:left;-webkit-tap-highlight-color:transparent}
+.card-icon{width:36px;height:36px;border-radius:10px;background:rgba(201,168,76,0.08);border:1px solid var(--border-gold);display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0}
+.card-info{flex:1}
+.card-name{font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:600;color:var(--cream);line-height:1.2}
+.card-sub{font-size:0.7rem;color:var(--muted);font-style:italic;margin-top:2px}
+.card-arrow{width:22px;height:22px;border-radius:50%;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:0.6rem;transition:all 0.3s;flex-shrink:0}
+.card.open .card-arrow{background:var(--gold);border-color:var(--gold);color:var(--ink);transform:rotate(180deg)}
+.card-body{display:none;padding:0 20px 20px}
+.card.open .card-body{display:block}
+.card-rule{height:1px;background:linear-gradient(90deg,transparent,var(--border-gold),transparent);margin-bottom:16px}
+
+.ess-item{display:flex;gap:12px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.04);align-items:flex-start}
+.ess-item:last-child{border-bottom:none;padding-bottom:0}
+.ess-dot{width:5px;height:5px;border-radius:50%;background:var(--gold);flex-shrink:0;margin-top:7px}
+.ess-text{font-size:0.86rem;line-height:1.65;color:rgba(240,232,216,0.72);font-weight:300}
+.ess-text strong{color:var(--cream);font-weight:500;display:block;margin-bottom:1px;font-size:0.88rem}
+
+/* EXPERIENCE BLOCKS */
+.block-card{background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden;margin-bottom:10px;transition:border-color 0.3s;animation:fadeUp 0.5s ease-out both}
+.block-card.open{border-color:var(--border-gold)}
+.block-trigger{width:100%;background:none;border:none;padding:18px 20px;cursor:pointer;display:flex;align-items:center;gap:14px;text-align:left;-webkit-tap-highlight-color:transparent}
+.block-num{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:600;color:rgba(201,168,76,0.2);line-height:1;min-width:44px;transition:color 0.3s}
+.block-card.open .block-num{color:var(--gold)}
+.block-info{flex:1}
+.block-name{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:600;color:var(--cream);line-height:1.2;margin-bottom:3px}
+.block-tagline{font-size:0.7rem;color:var(--muted);font-style:italic}
+.block-badge{font-size:0.58rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;padding:2px 7px;background:rgba(201,168,76,0.12);color:var(--gold);border:1px solid rgba(201,168,76,0.25);border-radius:3px;white-space:nowrap;flex-shrink:0}
+.block-arrow{width:22px;height:22px;border-radius:50%;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:0.6rem;transition:all 0.3s;flex-shrink:0}
+.block-card.open .block-arrow{background:var(--gold);border-color:var(--gold);color:var(--ink);transform:rotate(180deg)}
+.block-body{display:none;padding:0 16px 20px}
+.block-card.open .block-body{display:block}
+.block-divider{height:1px;background:linear-gradient(90deg,transparent,var(--border-gold),transparent);margin-bottom:16px}
+
+/* VISIT CHECKBOX */
+.visit-row{display:flex;align-items:center;gap:12px;padding:10px 0 6px}
+.visit-check{width:22px;height:22px;border-radius:50%;border:1.5px solid rgba(255,255,255,0.18);background:transparent;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all 0.25s;cursor:pointer}
+.visit-check::after{content:'✓';font-size:0.62rem;color:var(--ink);opacity:0;transition:opacity 0.2s;font-weight:700}
+.block-card.visited .visit-check{background:var(--gold);border-color:var(--gold);box-shadow:0 0 12px rgba(201,168,76,0.35)}
+.block-card.visited .visit-check::after{opacity:1}
+.visit-label{font-size:0.7rem;color:var(--muted);letter-spacing:0.06em}
+
+/* STOP DETAILS */
+.detail-desc{font-size:0.86rem;line-height:1.65;color:rgba(240,232,216,0.72);font-weight:300;margin-bottom:10px}
+.detail-curiosity{background:rgba(201,168,76,0.06);border-left:2px solid var(--gold);padding:8px 12px;border-radius:0 4px 4px 0;font-size:0.8rem;color:rgba(240,232,216,0.65);font-style:italic;margin-bottom:10px}
+.detail-curiosity strong{font-style:normal;font-size:0.65rem;text-transform:uppercase;letter-spacing:0.1em;display:block;margin-bottom:3px;color:var(--gold)}
+.detail-teal{background:rgba(26,95,110,0.08);border-left:2px solid var(--accent);padding:8px 12px;border-radius:0 4px 4px 0;font-size:0.8rem;color:rgba(240,232,216,0.65);margin-bottom:10px}
+.detail-teal strong{font-size:0.65rem;text-transform:uppercase;letter-spacing:0.1em;display:block;margin-bottom:3px;color:rgba(100,180,190,0.8);font-style:normal}
+.map-btn{display:inline-flex;align-items:center;gap:6px;margin-top:6px;padding:7px 14px;background:transparent;border:1px solid var(--border-gold);border-radius:8px;color:var(--gold-l);font-size:0.7rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;text-decoration:none;transition:all 0.2s;-webkit-tap-highlight-color:transparent}
+.map-btn:active{background:rgba(201,168,76,0.1)}
+
+/* FOOD */
+.food-block{margin-top:14px;border-radius:11px;background:rgba(26,95,110,0.04);border:1px solid rgba(26,95,110,0.2);overflow:hidden}
+.food-header{padding:11px 15px;display:flex;align-items:center;gap:10px;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.food-title{font-size:0.58rem;font-weight:600;letter-spacing:0.22em;text-transform:uppercase;color:#6dbf8a;flex:1}
+.food-arrow{font-size:0.55rem;color:var(--muted);transition:transform 0.3s}
+.food-block.open .food-arrow{transform:rotate(180deg)}
+.food-body{display:none;padding:0 15px 13px}
+.food-block.open .food-body{display:block}
+.food-rule{height:1px;background:rgba(26,95,110,0.2);margin-bottom:11px}
+.food-item{display:flex;gap:10px;padding:7px 0;border-bottom:1px solid rgba(255,255,255,0.04);align-items:flex-start}
+.food-item:last-child{border-bottom:none;padding-bottom:0}
+.food-tag{font-size:0.6rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#6dbf8a;flex-shrink:0;padding-top:2px;min-width:48px}
+.food-info{flex:1}
+.food-name{font-family:'Cormorant Garamond',serif;font-size:0.95rem;color:var(--cream);font-weight:600}
+.food-desc{font-size:0.79rem;color:rgba(240,232,216,0.55);line-height:1.5;margin-top:1px}
+.food-maps{display:inline-flex;align-items:center;gap:4px;font-size:0.68rem;color:var(--gold);text-decoration:none;margin-top:3px;opacity:0.75;transition:opacity 0.2s}
+.food-maps:hover{opacity:1}
+
+/* NOTES */
+.notes-wrap{margin-top:14px}
+.notes-label{font-size:0.56rem;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);margin-bottom:7px;display:block}
+.notes-area{width:100%;background:rgba(255,255,255,0.025);border:1px solid var(--border);border-radius:9px;padding:12px;color:var(--cream);font-family:'DM Sans',sans-serif;font-size:0.86rem;font-weight:300;line-height:1.6;resize:none;outline:none;min-height:76px;transition:border-color 0.2s}
+.notes-area::placeholder{color:rgba(122,120,104,0.4)}
+.notes-area:focus{border-color:var(--border-gold)}
+
+/* LOCAL FOOD GRID */
+.local-food-grid{display:flex;flex-direction:column;gap:8px}
+.lf-card{background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden;transition:border-color 0.2s}
+.lf-card.open{border-color:var(--border-gold)}
+.lf-trigger{width:100%;background:none;border:none;padding:14px 18px;cursor:pointer;display:flex;align-items:center;gap:12px;text-align:left;-webkit-tap-highlight-color:transparent}
+.lf-emoji{font-size:1.4rem;flex-shrink:0}
+.lf-info{flex:1}
+.lf-name{font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:600;color:var(--cream)}
+.lf-price{font-size:0.68rem;color:#6dbf8a;font-weight:600;white-space:nowrap;flex-shrink:0}
+.lf-arrow{width:18px;height:18px;border-radius:50%;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:0.55rem;transition:all 0.3s;flex-shrink:0}
+.lf-card.open .lf-arrow{background:var(--gold);border-color:var(--gold);color:var(--ink);transform:rotate(180deg)}
+.lf-body{display:none;padding:0 18px 14px}
+.lf-card.open .lf-body{display:block}
+.lf-desc{font-size:0.84rem;color:rgba(240,232,216,0.65);line-height:1.6}
+
+/* GTK */
+.gtk-item{display:flex;gap:12px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.04);align-items:flex-start}
+.gtk-item:last-child{border-bottom:none;padding-bottom:0}
+.gtk-dot{width:5px;height:5px;border-radius:50%;background:var(--gold);flex-shrink:0;margin-top:7px}
+.gtk-text{font-size:0.86rem;line-height:1.65;color:rgba(240,232,216,0.72);font-weight:300}
+.gtk-text strong{color:var(--cream);font-weight:500;display:block;margin-bottom:1px}
+
+/* PHRASES */
+.phrase-group{margin-bottom:20px}
+.phrase-group-title{font-size:0.6rem;font-weight:600;letter-spacing:0.28em;text-transform:uppercase;color:var(--gold);margin-bottom:8px;display:flex;align-items:center;gap:10px}
+.phrase-group-title::after{content:'';flex:1;height:1px;background:var(--border-gold)}
+.phrase-row{background:var(--card);border:1px solid var(--border);border-radius:8px;margin-bottom:4px;padding:12px 16px;display:flex;align-items:center;gap:12px}
+.phrase-texts{flex:1}
+.phrase-orig{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1rem;color:var(--cream);margin-bottom:2px}
+.phrase-pronoun{font-size:0.68rem;color:var(--gold);font-style:italic}
+.phrase-meaning{font-size:0.8rem;font-weight:500;color:rgba(240,232,216,0.7)}
+.speak-btn{background:none;border:1px solid var(--border);border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;transition:all 0.2s;color:var(--gold)}
+.speak-btn:hover{background:rgba(201,168,76,0.1);border-color:var(--gold)}
+.speak-btn svg{width:13px;height:13px;fill:currentColor}
+
+/* FOOTER */
+footer{text-align:center;padding:52px 24px 32px;color:rgba(122,120,104,0.35);font-size:0.6rem;letter-spacing:0.18em;text-transform:uppercase;line-height:2;border-top:1px solid var(--border)}
+footer em{color:var(--gold-d);font-style:italic}
+
+/* LIGHT */
+body.light{background:#f0ece0;color:#1a1a14}
+body.light .cover{background:#0a1010}
+body.light .card,body.light .block-card,body.light .lf-card{background:#fff;border-color:rgba(0,0,0,0.08);box-shadow:0 1px 6px rgba(0,0,0,0.05)}
+body.light .card.open,body.light .block-card.open,body.light .lf-card.open{border-color:rgba(138,110,30,0.3)}
+body.light .block-num{color:rgba(138,110,30,0.2)}
+body.light .block-card.open .block-num{color:#8a6e1e}
+body.light .block-name,body.light .card-name,body.light .lf-name{color:#1a1a14}
+body.light .detail-desc,body.light .ess-text,body.light .gtk-text{color:#444}
+body.light .notes-area{background:#fff;border-color:rgba(0,0,0,0.1);color:#1a1a14}
+body.light .food-block{background:rgba(26,95,110,0.04);border-color:rgba(26,95,110,0.15)}
+body.light .phrase-row{background:#fff;border-color:rgba(0,0,0,0.08)}
+body.light .phrase-orig{color:#1a1a14}
+body.light footer{color:rgba(100,98,80,0.4);border-top-color:rgba(0,0,0,0.08)}
+body.light .ctrl-btn{color:rgba(107,84,24,0.6);border-color:rgba(138,110,30,0.3)}
+body.light .ctrl-btn.active{background:#8a6e1e;color:#fff;border-color:#8a6e1e}
+body.light .section-title{color:#1a1a14}
+
+@media(max-width:560px){.cover-title{font-size:3rem}.block-name{font-size:1.1rem}}
+</style>
+</head>
+<body>
+
+<div class="offline-banner" id="offlineBanner">You are offline. All content is available from cache.</div>
+
+<div class="top-controls">
+  <div class="lang-group">
+    <button class="ctrl-btn lang-btn active" id="btnEN" onclick="setLang('en')">EN</button>
+    <button class="ctrl-btn lang-btn" id="btnPT" onclick="setLang('pt')">PT</button>
+  </div>
+  <button class="ctrl-btn theme-btn" onclick="toggleTheme()" id="themeBtn">☀️</button>
+</div>
+
+<!-- COVER -->
+<div class="cover">
+  <div class="cover-bg"></div>
+  <div class="cover-pattern"></div>
+  <div class="cover-content">
+    <span class="cover-eyebrow" data-en="A Field Guide to" data-pt="Um Guia de Campo para">A Field Guide to</span>
+    <h1 class="cover-title">Monte<em>negro</em></h1>
+    <p class="cover-author">by Claudio SAROLDI</p>
+    <div class="cover-rule"></div>
+    <p class="cover-subtitle" data-en="Where mountains crash into the Adriatic." data-pt="Onde as montanhas se lançam no Adriático.">Where mountains crash into the Adriatic.</p>
+  </div>
+  <div class="cover-scroll">↓</div>
+</div>
+
+<main>
+
+<!-- ESSENTIALS -->
+<div class="section-wrap">
+  <div class="section-header">
+    <div class="section-tag" data-en="Before You Go" data-pt="Antes de Ir">Before You Go</div>
+    <h2 class="section-title" data-en="The <em>Essentials</em>" data-pt="O <em>Essencial</em>">The <em>Essentials</em></h2>
+    <div class="section-rule"></div>
+  </div>
+  <p class="section-intro" data-en="Everything you need before leaving the hotel." data-pt="Tudo que você precisa antes de sair do hotel.">Everything you need before leaving the hotel.</p>
+
+  <div class="card" id="ess1" style="animation-delay:0.05s">
+    <button class="card-trigger" onclick="toggleCard('ess1')">
+      <div class="card-icon">🚗</div>
+      <div class="card-info"><div class="card-name" data-en="Getting Around" data-pt="Como se Mover">Getting Around</div><div class="card-sub" data-en="Car, taxi, bus" data-pt="Carro, táxi, ônibus">Car, taxi, bus</div></div>
+      <div class="card-arrow">▼</div>
+    </button>
+    <div class="card-body"><div class="card-rule"></div>
+      <div class="ess-item"><div class="ess-dot"></div><div class="ess-text"><strong data-en="Rent a car — it makes a huge difference" data-pt="Alugue um carro — faz uma enorme diferença">Rent a car — it makes a huge difference</strong><span data-en="Roads are winding but manageable and the scenery is extraordinary. Many of the best places are impossible without one. Kotor is the best base." data-pt="As estradas são sinuosas mas gerenciáveis e a paisagem é extraordinária. Muitos dos melhores lugares são impossíveis sem carro. Kotor é a melhor base.">Roads are winding but manageable. The scenery is extraordinary. Many of the best places are impossible without one.</span></div></div>
+      <div class="ess-item"><div class="ess-dot"></div><div class="ess-text"><strong data-en="Kotor is the best base for everything" data-pt="Kotor é a melhor base para tudo">Kotor is the best base for everything</strong><span data-en="Perast is 20 min away. Budva is 30 min. Cetinje is 40 min. Lake Skadar is an hour. Everything is reachable in a day." data-pt="Perast está a 20 min. Budva a 30 min. Cetinje a 40 min. Lago Skadar a uma hora. Tudo é alcançável em um dia.">Perast 20 min. Budva 30 min. Cetinje 40 min. Lake Skadar 1 hr. Everything reachable in a day.</span></div></div>
+      <div class="ess-item"><div class="ess-dot"></div><div class="ess-text"><strong data-en="Taxis are cheap and reliable in towns" data-pt="Táxis são baratos e confiáveis nas cidades">Taxis are cheap and reliable in towns</strong><span data-en="Agree the fare before getting in if there is no meter. Most drivers in tourist areas speak basic English." data-pt="Combine o preço antes de entrar se não houver taxímetro. A maioria dos motoristas em áreas turísticas fala inglês básico.">Agree the fare before getting in if no meter. Most drivers in tourist areas speak basic English.</span></div></div>
+    </div>
+  </div>
+
+  <div class="card" id="ess2" style="animation-delay:0.1s">
+    <button class="card-trigger" onclick="toggleCard('ess2')">
+      <div class="card-icon">💶</div>
+      <div class="card-info"><div class="card-name" data-en="Money &amp; Costs" data-pt="Dinheiro e Custos">Money &amp; Costs</div><div class="card-sub" data-en="Currency, cards, budget" data-pt="Moeda, cartões, orçamento">Currency, cards, budget</div></div>
+      <div class="card-arrow">▼</div>
+    </button>
+    <div class="card-body"><div class="card-rule"></div>
+      <div class="ess-item"><div class="ess-dot"></div><div class="ess-text"><strong data-en="Currency is Euro (€) — despite not being in the EU" data-pt="A moeda é o Euro (€) — apesar de não ser membro da UE">Currency is Euro (€) — despite not being in the EU</strong><span data-en="Cards accepted in most hotels and larger restaurants. Carry cash for small bakeries, boats, and markets." data-pt="Cartões aceitos na maioria dos hotéis e restaurantes maiores. Leve dinheiro para padarias, barcos e mercados.">Cards accepted in most hotels and larger restaurants. Carry cash for small bakeries, boats, and markets.</span></div></div>
+      <div class="ess-item"><div class="ess-dot"></div><div class="ess-text"><strong data-en="Montenegro is genuinely cheap" data-pt="Montenegro é genuinamente barato">Montenegro is genuinely cheap</strong><span data-en="A coffee is €1–1.50. A beer is €2–3. A full meal at a konoba is €8–15. Budget accommodation runs €30–50 per night." data-pt="Um café é €1–1,50. Uma cerveja é €2–3. Uma refeição completa numa konoba é €8–15. Hospedagem simples custa €30–50 por noite.">Coffee €1–1.50. Beer €2–3. Full meal at a konoba €8–15. Budget accommodation €30–50/night.</span></div></div>
+      <div class="ess-item"><div class="ess-dot"></div><div class="ess-text"><strong data-en="Best time to visit: May, June, September" data-pt="Melhor época para visitar: maio, junho, setembro">Best time to visit: May, June, September</strong><span data-en="July and August are peak season — hot, crowded, expensive. Spring and early autumn are perfect: warm, quieter, prices drop significantly." data-pt="Julho e agosto são alta temporada — quentes, lotados, caros. Primavera e início do outono são perfeitos.">July–August: hot, crowded, expensive. May, June, September: warm, quieter, prices drop significantly.</span></div></div>
+    </div>
+  </div>
+
+  <div class="card" id="ess3" style="animation-delay:0.15s">
+    <button class="card-trigger" onclick="toggleCard('ess3')">
+      <div class="card-icon">🌤️</div>
+      <div class="card-info"><div class="card-name" data-en="Weather &amp; What to Pack" data-pt="Clima e O Que Levar">Weather &amp; What to Pack</div><div class="card-sub" data-en="Coast vs mountains" data-pt="Costa vs montanhas">Coast vs mountains</div></div>
+      <div class="card-arrow">▼</div>
+    </button>
+    <div class="card-body"><div class="card-rule"></div>
+      <div class="ess-item"><div class="ess-dot"></div><div class="ess-text"><strong data-en="The coast is Mediterranean — the mountains are Alpine" data-pt="A costa é mediterrânea — as montanhas são alpinas">The coast is Mediterranean — the mountains are Alpine</strong><span data-en="Kotor and the bay can be very hot in summer. Durmitor and Cetinje are significantly cooler. Pack for both if heading inland." data-pt="Kotor e a baía podem ser muito quentes no verão. Durmitor e Cetinje são significativamente mais frescos. Leve roupas para ambos se for ao interior.">Kotor and the bay can be hot in summer. Durmitor and Cetinje are significantly cooler. Pack for both if heading inland.</span></div></div>
+      <div class="ess-item"><div class="ess-dot"></div><div class="ess-text"><strong data-en="Good walking shoes are essential" data-pt="Boas botas de caminhada são essenciais">Good walking shoes are essential</strong><span data-en="Kotor's city walls are 1,355 steps. The roads in many villages are uneven stone. Flip flops will not cut it." data-pt="As muralhas de Kotor têm 1.355 degraus. As estradas em muitas aldeias são pedras irregulares. Chinelos não servem.">Kotor's city walls are 1,355 steps. Village roads are uneven stone. Flip flops will not cut it.</span></div></div>
+      <div class="ess-item"><div class="ess-dot"></div><div class="ess-text"><strong data-en="Sun protection is non-negotiable on the coast" data-pt="Proteção solar é essencial na costa">Sun protection is non-negotiable on the coast</strong><span data-en="The bay creates a heat trap in summer. The sun reflects off the water. Bring high-factor sunscreen." data-pt="A baía cria uma armadilha de calor no verão. O sol reflete na água. Leve protetor solar de fator alto.">The bay creates a heat trap in summer. The sun reflects off the water. Bring high-factor sunscreen.</span></div></div>
+    </div>
+  </div>
+
+  <div class="card" id="ess4" style="animation-delay:0.2s">
+    <button class="card-trigger" onclick="toggleCard('ess4')">
+      <div class="card-icon">📱</div>
+      <div class="card-info"><div class="card-name" data-en="Staying Connected" data-pt="Ficar Conectado">Staying Connected</div><div class="card-sub" data-en="SIM, apps, connectivity" data-pt="SIM, apps, conectividade">SIM, apps, connectivity</div></div>
+      <div class="card-arrow">▼</div>
+    </button>
+    <div class="card-body"><div class="card-rule"></div>
+      <div class="ess-item"><div class="ess-dot"></div><div class="ess-text"><strong data-en="Get an eSIM before you fly" data-pt="Compre um eSIM antes de viajar">Get an eSIM before you fly</strong><span data-en="Airalo sells Montenegro data eSIMs. Install it on the plane. Works the moment you land." data-pt="Airalo vende eSIMs de dados para Montenegro. Instale no avião. Funciona assim que você pousar.">Airalo sells Montenegro eSIMs. Install on the plane, works on landing.</span></div></div>
+      <div class="ess-item"><div class="ess-dot"></div><div class="ess-text"><strong data-en="Download Google Maps offline before you go" data-pt="Baixe o Google Maps offline antes de ir">Download Google Maps offline before you go</strong><span data-en="Signal in the mountains and remote areas is patchy. Download the Montenegro map offline before you leave home." data-pt="O sinal nas montanhas e áreas remotas é instável. Baixe o mapa de Montenegro offline antes de sair de casa.">Signal in the mountains is patchy. Download Montenegro on Google Maps offline before you travel.</span></div></div>
+    </div>
+  </div>
+
+  <div class="card" id="ess5" style="animation-delay:0.25s">
+    <button class="card-trigger" onclick="toggleCard('ess5')">
+      <div class="card-icon">🚑</div>
+      <div class="card-info"><div class="card-name" data-en="Useful Numbers" data-pt="Números Úteis">Useful Numbers</div><div class="card-sub" data-en="Emergency and essential contacts" data-pt="Emergência e contatos essenciais">Emergency and essential contacts</div></div>
+      <div class="card-arrow">▼</div>
+    </button>
+    <div class="card-body"><div class="card-rule"></div>
+      <div class="ess-item"><div class="ess-dot"></div><div class="ess-text"><strong>112</strong><span data-en="— EU-compatible emergency number. Police, ambulance, fire." data-pt="— Número de emergência compatível com a UE. Polícia, ambulância, bombeiros.">— EU-compatible emergency number. Police, ambulance, fire.</span></div></div>
+      <div class="ess-item"><div class="ess-dot"></div><div class="ess-text"><strong>122</strong><span data-en="— Police (local). Non-urgent incidents and assistance." data-pt="— Polícia (local). Incidentes não urgentes e assistência.">— Police (local). Non-urgent incidents and assistance.</span></div></div>
+      <div class="ess-item"><div class="ess-dot"></div><div class="ess-text"><strong>124</strong><span data-en="— Ambulance (local). Medical emergencies." data-pt="— Ambulância (local). Emergências médicas.">— Ambulance (local). Medical emergencies.</span></div></div>
+      <div class="ess-item"><div class="ess-dot"></div><div class="ess-text"><strong data-en="Brazilian Embassy in Belgrade (nearest): +381 11 3281 076" data-pt="Embaixada Brasileira em Belgrado (mais próxima): +381 11 3281 076">Brazilian Embassy in Belgrade (nearest): +381 11 3281 076</strong><span data-en="— Montenegro has no Brazilian consulate. Belgrade is the nearest." data-pt="— Montenegro não tem consulado brasileiro. Belgrado é o mais próximo.">— Montenegro has no Brazilian consulate. Belgrade is the nearest.</span></div></div>
+    </div>
+  </div>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- ITINERARY -->
+<div class="section-wrap">
+  <div class="section-header">
+    <div class="section-tag" data-en="The Itinerary" data-pt="O Roteiro">The Itinerary</div>
+    <h2 class="section-title" data-en="The <em>Experiences</em>" data-pt="As <em>Experiências</em>">The <em>Experiences</em></h2>
+    <div class="section-rule"></div>
+  </div>
+  <p class="section-intro" data-en="Seven experiences across the country. Mix and match by day. Tick each one when you've been — progress saves automatically." data-pt="Sete experiências por todo o país. Combine como quiser. Marque cada uma quando for — o progresso salva automaticamente.">Seven experiences across the country. Mix and match by day. Tick each when you've been.</p>
+
+  <!-- 01 KOTOR -->
+  <div class="block-card" id="exp1" style="animation-delay:0.05s">
+    <button class="block-trigger" onclick="toggleBlock('exp1')">
+      <span class="block-num">01</span>
+      <div class="block-info">
+        <div class="block-name" data-en="Kotor Old Town &amp; City Walls" data-pt="Cidade Velha de Kotor e Muralhas">Kotor Old Town &amp; City Walls</div>
+        <div class="block-tagline">Kotor · UNESCO World Heritage Site</div>
+      </div>
+      <span class="block-badge" data-en="Must" data-pt="Essencial">Must</span>
+      <div class="block-arrow">▼</div>
+    </button>
+    <div class="block-body"><div class="block-divider"></div>
+      <div class="visit-row"><div class="visit-check" onclick="toggleVisited('exp1')"></div><span class="visit-label" data-en="Mark as visited" data-pt="Marcar como visitado">Mark as visited</span></div>
+      <p class="detail-desc" data-en="The walled old town of Kotor sits at the base of dramatic limestone cliffs at the inner end of the Bay of Kotor. The walls climb 1,355 steps up the mountain to the fortress of San Giovanni. Go at sunrise before the cruise ships arrive. The town itself is a maze of tiny squares, baroque churches, and cats." data-pt="A cidade velha amuralhada de Kotor fica ao pé de dramáticos penhascos de calcário no fundo da Baía de Kotor. As muralhas sobem 1.355 degraus até a fortaleza de São João. Vá ao nascer do sol antes dos navios de cruzeiro. A cidade é um labirinto de pequenas praças, igrejas barrocas e gatos.">The walled old town sits at the base of dramatic limestone cliffs. The walls climb 1,355 steps to the fortress of San Giovanni. Go at sunrise before the cruise ships arrive.</p>
+      <div class="detail-curiosity"><strong data-en="Curiosity" data-pt="Curiosidade">Curiosity</strong><span data-en="Kotor has a centuries-old colony of cats brought by sailors. The city treats them as residents, not strays. There is even a small cat museum inside the old town." data-pt="Kotor tem uma colônia centenária de gatos trazidos por marinheiros. A cidade os trata como residentes. Há até um pequeno museu dos gatos dentro da cidade velha.">Kotor has a centuries-old colony of cats brought by sailors. The city treats them as residents — there is even a small cat museum inside the old town.</span></div>
+      <a class="map-btn" href="https://maps.google.com/?q=Kotor+Old+Town,+Montenegro" target="_blank" rel="noopener">📍 <span data-en="Take me there" data-pt="Me leve lá">Take me there</span></a>
+      <div class="food-block" id="food_exp1"><div class="food-header" onclick="toggleFood('food_exp1')"><span class="food-title" data-en="🍽 Where to Eat Nearby" data-pt="🍽 Onde Comer por Aqui">🍽 Where to Eat Nearby</span><span class="food-arrow">▼</span></div><div class="food-body"><div class="food-rule"></div>
+        <div class="food-item"><span class="food-tag" data-en="Lunch" data-pt="Almoço">Lunch</span><div class="food-info"><div class="food-name">Tanjga Grill</div><div class="food-desc" data-en="Just outside the old town walls. Huge portions of marinated grilled meats, cevapi and pljeskavica. Mostly locals, very cheap." data-pt="Logo fora das muralhas. Porções enormes de carnes grelhadas, ćevapi e pljeskavica. Frequentado por locais, muito barato.">Just outside the walls. Huge portions of grilled meats, ćevapi. Mostly locals, very cheap.</div><a class="food-maps" href="https://maps.google.com/?q=Tanjga+Grill+Kotor" target="_blank">Maps ↗</a></div></div>
+        <div class="food-item"><span class="food-tag" data-en="Lunch" data-pt="Almoço">Lunch</span><div class="food-info"><div class="food-name">LAV Gastro Bar</div><div class="food-desc" data-en="Just outside the old town. More varied menu, prices around a third less than inside the walls. Good for a relaxed solo lunch." data-pt="Logo fora da cidade velha. Cardápio mais variado, preços cerca de um terço menores que dentro das muralhas.">Just outside the old town. More varied menu, prices a third less than inside the walls.</div><a class="food-maps" href="https://maps.google.com/?q=LAV+Gastro+Bar+Kotor" target="_blank">Maps ↗</a></div></div>
+        <div class="food-item"><span class="food-tag" data-en="Dinner" data-pt="Jantar">Dinner</span><div class="food-info"><div class="food-name">Konoba Scala Santa</div><div class="food-desc" data-en="Inside the old town in a small square, often with a violinist outside. Stone walls, local wine, well-priced pasta and meat dishes. Best value dinner in Kotor." data-pt="Dentro da cidade velha numa pequena praça, muitas vezes com violinista. Paredes de pedra, vinho local, massas e carnes bem precificadas.">Inside the old town, often with a violinist outside. Stone walls, local wine. Best value dinner in Kotor.</div><a class="food-maps" href="https://maps.google.com/?q=Konoba+Scala+Santa+Kotor" target="_blank">Maps ↗</a></div></div>
+        <div class="food-item"><span class="food-tag" data-en="Dinner" data-pt="Jantar">Dinner</span><div class="food-info"><div class="food-name">Restaurant Przun</div><div class="food-desc" data-en="Creative local menu at very reasonable prices for the quality. One of the best restaurants inside the old town. Book ahead in summer." data-pt="Cardápio local criativo a preços muito razoáveis. Um dos melhores restaurantes dentro da cidade velha. Reserve no verão.">Creative local menu, very reasonable for the quality. One of the best inside the old town. Book ahead in summer.</div><a class="food-maps" href="https://maps.google.com/?q=Restaurant+Przun+Kotor" target="_blank">Maps ↗</a></div></div>
+      </div></div>
+      <div class="notes-wrap"><span class="notes-label" data-en="Notes" data-pt="Notas">Notes</span><textarea class="notes-area" data-notes-id="mne-exp1" oninput="saveNote(this)" placeholder="..."></textarea></div>
+    </div>
+  </div>
+
+  <!-- 02 PERAST -->
+  <div class="block-card" id="exp2" style="animation-delay:0.1s">
+    <button class="block-trigger" onclick="toggleBlock('exp2')">
+      <span class="block-num">02</span>
+      <div class="block-info">
+        <div class="block-name" data-en="Perast &amp; Our Lady of the Rocks" data-pt="Perast e Nossa Senhora das Rochas">Perast &amp; Our Lady of the Rocks</div>
+        <div class="block-tagline" data-en="Bay of Kotor · 20 min from Kotor" data-pt="Baía de Kotor · 20 min de Kotor">Bay of Kotor · 20 min from Kotor</div>
+      </div>
+      <span class="block-badge" data-en="Must" data-pt="Essencial">Must</span>
+      <div class="block-arrow">▼</div>
+    </button>
+    <div class="block-body"><div class="block-divider"></div>
+      <div class="visit-row"><div class="visit-check" onclick="toggleVisited('exp2')"></div><span class="visit-label" data-en="Mark as visited" data-pt="Marcar como visitado">Mark as visited</span></div>
+      <p class="detail-desc" data-en="Perast is a tiny baroque village of around 300 residents on the bay, frozen in the 18th century. Just offshore is Our Lady of the Rocks — an artificial island built by sailors over 500 years. A tiny church with 2,500 silver votive tablets sits on top. A short boat ride gets you there." data-pt="Perast é uma minúscula aldeia barroca de cerca de 300 habitantes na baía, congelada no século XVIII. Logo ao largo fica Nossa Senhora das Rochas — uma ilha artificial construída por marinheiros ao longo de 500 anos.">Perast is a tiny baroque village frozen in the 18th century. Just offshore: Our Lady of the Rocks — an artificial island built by sailors over 500 years. A short boat ride gets you there.</p>
+      <div class="detail-curiosity"><strong data-en="Curiosity" data-pt="Curiosidade">Curiosity</strong><span data-en="The island was literally hand-built over five centuries with no machinery — purely as a ritual act of faith by passing sailors. Every stone was placed by hand." data-pt="A ilha foi literalmente construída à mão ao longo de cinco séculos, sem maquinário, puramente como ato ritual de fé por marinheiros que passavam. Cada pedra foi colocada à mão.">The island was hand-built over five centuries with no machinery — purely as a ritual act of faith by passing sailors. Every stone placed by hand.</span></div>
+      <a class="map-btn" href="https://maps.google.com/?q=Our+Lady+of+the+Rocks,+Montenegro" target="_blank" rel="noopener">📍 <span data-en="Take me there" data-pt="Me leve lá">Take me there</span></a>
+      <div class="food-block" id="food_exp2"><div class="food-header" onclick="toggleFood('food_exp2')"><span class="food-title" data-en="🍽 Where to Eat Nearby" data-pt="🍽 Onde Comer por Aqui">🍽 Where to Eat Nearby</span><span class="food-arrow">▼</span></div><div class="food-body"><div class="food-rule"></div>
+        <div class="food-item"><span class="food-tag" data-en="Lunch" data-pt="Almoço">Lunch</span><div class="food-info"><div class="food-name">Restaurant Conte</div><div class="food-desc" data-en="Right on the Perast waterfront with direct views of Our Lady of the Rocks. Consistently recommended by locals. Book for sunset." data-pt="Na orla de Perast com vista direta para Nossa Senhora das Rochas. Consistentemente recomendado por locais. Reserve para o pôr do sol.">Right on the waterfront with direct views of the island. Consistently recommended by locals.</div><a class="food-maps" href="https://maps.google.com/?q=Restaurant+Conte+Perast" target="_blank">Maps ↗</a></div></div>
+        <div class="food-item"><span class="food-tag" data-en="Lunch" data-pt="Almoço">Lunch</span><div class="food-info"><div class="food-name">Restaurant Djardin</div><div class="food-desc" data-en="Garden setting near St. Nicholas Church, views over both islands. More casual and affordable than the main waterfront spots." data-pt="Ambiente de jardim perto da Igreja de São Nicolau, com vista para as duas ilhas. Mais informal e acessível.">Garden setting near St. Nicholas Church, views over both islands. More casual and affordable.</div><a class="food-maps" href="https://maps.google.com/?q=Restaurant+Djardin+Perast" target="_blank">Maps ↗</a></div></div>
+        <div class="food-item"><span class="food-tag" data-en="Dinner" data-pt="Jantar">Dinner</span><div class="food-info"><div class="food-name">Trattoria Rosmarino</div><div class="food-desc" data-en="Hidden 70 steps above the waterfront up a staircase. One of the most praised restaurants in the whole bay. Creative menu, run by a single chef. Very personal." data-pt="Escondido 70 degraus acima da orla, numa escadaria. Um dos restaurantes mais elogiados de toda a baía. Cardápio criativo, comandado por um único chef.">Hidden 70 steps above the waterfront. One of the most praised restaurants in the bay. Single chef, very personal.</div><a class="food-maps" href="https://maps.google.com/?q=Trattoria+Rosmarino+Perast" target="_blank">Maps ↗</a></div></div>
+      </div></div>
+      <div class="notes-wrap"><span class="notes-label" data-en="Notes" data-pt="Notas">Notes</span><textarea class="notes-area" data-notes-id="mne-exp2" oninput="saveNote(this)" placeholder="..."></textarea></div>
+    </div>
+  </div>
+
+  <!-- 03 BUDVA -->
+  <div class="block-card" id="exp3" style="animation-delay:0.15s">
+    <button class="block-trigger" onclick="toggleBlock('exp3')">
+      <span class="block-num">03</span>
+      <div class="block-info">
+        <div class="block-name" data-en="Budva Old Town" data-pt="Cidade Velha de Budva">Budva Old Town</div>
+        <div class="block-tagline" data-en="Budva · 30 min from Kotor" data-pt="Budva · 30 min de Kotor">Budva · 30 min from Kotor</div>
+      </div>
+      <span class="block-badge" data-en="Must" data-pt="Essencial">Must</span>
+      <div class="block-arrow">▼</div>
+    </button>
+    <div class="block-body"><div class="block-divider"></div>
+      <div class="visit-row"><div class="visit-check" onclick="toggleVisited('exp3')"></div><span class="visit-label" data-en="Mark as visited" data-pt="Marcar como visitado">Mark as visited</span></div>
+      <p class="detail-desc" data-en="Budva's Stari Grad sits on a small peninsula with medieval walls right on the Adriatic. Visit early morning before tourists fill the lanes. Then walk south along the coast to Mogren Beach — a lovely cove reached through a tunnel cut into the cliff." data-pt="A Stari Grad de Budva fica numa pequena península com muralhas medievais à beira do Adriático. Visite de manhã cedo antes dos turistas. Depois caminhe para o sul até a Praia Mogren — uma enseada encantadora acessada por um túnel na rocha.">Budva's old town sits on a small peninsula with medieval walls on the Adriatic. Visit early morning. Then walk south to Mogren Beach — a lovely cove through a tunnel cut into the cliff.</p>
+      <div class="detail-curiosity"><strong data-en="Curiosity" data-pt="Curiosidade">Curiosity</strong><span data-en="Budva is one of the oldest urban settlements on the Adriatic, said to be 2,500 years old. The old town was almost entirely destroyed by an earthquake in 1979 and rebuilt stone by stone." data-pt="Budva é um dos assentamentos urbanos mais antigos do Adriático, com cerca de 2.500 anos. A cidade velha foi quase totalmente destruída por um terremoto em 1979 e reconstruída pedra por pedra.">Budva is said to be 2,500 years old. The old town was almost entirely destroyed by an earthquake in 1979 and rebuilt stone by stone.</span></div>
+      <a class="map-btn" href="https://maps.google.com/?q=Budva+Old+Town,+Montenegro" target="_blank" rel="noopener">📍 <span data-en="Take me there" data-pt="Me leve lá">Take me there</span></a>
+      <div class="food-block" id="food_exp3"><div class="food-header" onclick="toggleFood('food_exp3')"><span class="food-title" data-en="🍽 Where to Eat Nearby" data-pt="🍽 Onde Comer por Aqui">🍽 Where to Eat Nearby</span><span class="food-arrow">▼</span></div><div class="food-body"><div class="food-rule"></div>
+        <div class="food-item"><span class="food-tag" data-en="Lunch" data-pt="Almoço">Lunch</span><div class="food-info"><div class="food-name">Kužina</div><div class="food-desc" data-en="The go-to for proper inland Montenegrin food in Budva. Lamb cooked under the bell, cevapi, kacamak. First come first served — arrive early." data-pt="O destino certo para comida montenegrina do interior em Budva. Cordeiro sob a campânula, ćevapi, kačamak. Por ordem de chegada — chegue cedo.">Proper inland Montenegrin food. Lamb under the bell, ćevapi, kačamak. First come, first served — arrive early.</div><a class="food-maps" href="https://maps.google.com/?q=Kuzina+Restaurant+Budva" target="_blank">Maps ↗</a></div></div>
+        <div class="food-item"><span class="food-tag" data-en="Lunch" data-pt="Almoço">Lunch</span><div class="food-info"><div class="food-name">Konoba Bocun</div><div class="food-desc" data-en="Family-run for over 20 years, slightly off the main drag. Modest prices, excellent food. Try the homemade cheese and baklava." data-pt="Gerida pela mesma família há mais de 20 anos, um pouco fora da rota principal. Preços modestos, comida excelente.">Family-run for over 20 years, slightly off the main drag. Modest prices, excellent food. Try the homemade cheese.</div><a class="food-maps" href="https://maps.google.com/?q=Konoba+Bocun+Budva" target="_blank">Maps ↗</a></div></div>
+        <div class="food-item"><span class="food-tag" data-en="Dinner" data-pt="Jantar">Dinner</span><div class="food-info"><div class="food-name">Konoba Stari Grad</div><div class="food-desc" data-en="Stone walls, intimate atmosphere, traditional Montenegrin coastal food inside the old town. Often has live music." data-pt="Paredes de pedra, atmosfera íntima, comida montenegrina costeira dentro da cidade velha. Frequentemente com música ao vivo.">Stone walls, intimate, traditional food inside the old town. Often has live music.</div><a class="food-maps" href="https://maps.google.com/?q=Konoba+Stari+Grad+Budva" target="_blank">Maps ↗</a></div></div>
+        <div class="food-item"><span class="food-tag" data-en="Dinner" data-pt="Jantar">Dinner</span><div class="food-info"><div class="food-name">Zeleni Gaj</div><div class="food-desc" data-en="A hidden garden near Slovenska Plaza beach. Shaded terrace, relaxed vibe, Njeguška prsuta and lamb under the bell. Very local crowd." data-pt="Um jardim escondido perto da Praia Slovenska. Terraço sombreado, ambiente descontraído. Frequentado por locais.">Hidden garden near Slovenska Plaza. Shaded terrace, Njeguška pršuta and lamb under the bell. Very local crowd.</div><a class="food-maps" href="https://maps.google.com/?q=Zeleni+Gaj+Budva" target="_blank">Maps ↗</a></div></div>
+      </div></div>
+      <div class="notes-wrap"><span class="notes-label" data-en="Notes" data-pt="Notas">Notes</span><textarea class="notes-area" data-notes-id="mne-exp3" oninput="saveNote(this)" placeholder="..."></textarea></div>
+    </div>
+  </div>
+
+  <!-- 04 SVETI STEFAN -->
+  <div class="block-card" id="exp4" style="animation-delay:0.2s">
+    <button class="block-trigger" onclick="toggleBlock('exp4')">
+      <span class="block-num">04</span>
+      <div class="block-info">
+        <div class="block-name" data-en="Sveti Stefan Viewpoint" data-pt="Mirante de Sveti Stefan">Sveti Stefan Viewpoint</div>
+        <div class="block-tagline" data-en="South of Budva · 15 min drive" data-pt="Ao sul de Budva · 15 min de carro">South of Budva · 15 min drive</div>
+      </div>
+      <div class="block-arrow">▼</div>
+    </button>
+    <div class="block-body"><div class="block-divider"></div>
+      <div class="visit-row"><div class="visit-check" onclick="toggleVisited('exp4')"></div><span class="visit-label" data-en="Mark as visited" data-pt="Marcar como visitado">Mark as visited</span></div>
+      <p class="detail-desc" data-en="Sveti Stefan is a tiny island village connected to the mainland by a narrow causeway — now an ultra-luxury hotel you cannot enter. But the viewpoint from the road above is one of the most photographed scenes in the entire Balkans. Worth the short drive from Budva." data-pt="Sveti Stefan é uma minúscula aldeia-ilha ligada ao continente por uma estreita faixa de areia, hoje um hotel de ultra-luxo inacessível. Mas o mirante na estrada acima é uma das cenas mais fotografadas dos Bálcãs.">A tiny island village now an ultra-luxury hotel you cannot enter. The viewpoint from the road above is one of the most photographed scenes in the Balkans. Worth the short drive.</p>
+      <div class="detail-curiosity"><strong data-en="Curiosity" data-pt="Curiosidade">Curiosity</strong><span data-en="In the 1950s, the Yugoslav government relocated all the village residents and converted the entire island into a hotel. Every house became a hotel room. The whole community was displaced overnight." data-pt="Nos anos 1950, o governo iugoslavo realocou todos os moradores e converteu a ilha inteira em hotel. Cada casa virou um quarto. Toda a comunidade foi deslocada da noite para o dia.">In the 1950s, the Yugoslav government relocated all residents and converted the island into a hotel. Every house became a hotel room — overnight.</span></div>
+      <a class="map-btn" href="https://maps.google.com/?q=Sveti+Stefan,+Montenegro" target="_blank" rel="noopener">📍 <span data-en="Take me there" data-pt="Me leve lá">Take me there</span></a>
+      <div class="food-block" id="food_exp4"><div class="food-header" onclick="toggleFood('food_exp4')"><span class="food-title" data-en="🍽 Where to Eat Nearby" data-pt="🍽 Onde Comer por Aqui">🍽 Where to Eat Nearby</span><span class="food-arrow">▼</span></div><div class="food-body"><div class="food-rule"></div>
+        <div class="food-item"><span class="food-tag" data-en="Lunch" data-pt="Almoço">Lunch</span><div class="food-info"><div class="food-name">Giardino (Režević village)</div><div class="food-desc" data-en="On the main road between Budva and Petrovac. Large terrace with Adriatic views, lamb under the bell. Easy to miss — worth stopping for." data-pt="Na estrada principal entre Budva e Petrovac. Grande terraço com vistas do Adriático, cordeiro sob a campânula. Fácil de passar — vale a pena parar.">On the road between Budva and Petrovac. Terrace with Adriatic views, lamb under the bell. Worth stopping.</div><a class="food-maps" href="https://maps.google.com/?q=Giardino+Restaurant+Rezevici+Montenegro" target="_blank">Maps ↗</a></div></div>
+        <div class="food-item"><span class="food-tag" data-en="Dinner" data-pt="Jantar">Dinner</span><div class="food-info"><div class="food-name">Konoba Bocun (back in Budva)</div><div class="food-desc" data-en="If the viewpoint is a quick stop, head back to Budva for dinner. Best value local dinner in the area." data-pt="Se o mirante for uma parada rápida, volte a Budva para jantar. Melhor jantar local com custo-benefício da região.">If the viewpoint is a quick stop, head back to Budva for dinner. Best value local dinner in the area.</div><a class="food-maps" href="https://maps.google.com/?q=Konoba+Bocun+Budva" target="_blank">Maps ↗</a></div></div>
+      </div></div>
+      <div class="notes-wrap"><span class="notes-label" data-en="Notes" data-pt="Notas">Notes</span><textarea class="notes-area" data-notes-id="mne-exp4" oninput="saveNote(this)" placeholder="..."></textarea></div>
+    </div>
+  </div>
+
+  <!-- 05 CETINJE -->
+  <div class="block-card" id="exp5" style="animation-delay:0.25s">
+    <button class="block-trigger" onclick="toggleBlock('exp5')">
+      <span class="block-num">05</span>
+      <div class="block-info">
+        <div class="block-name" data-en="Cetinje — Old Royal Capital" data-pt="Cetinje — Antiga Capital Real">Cetinje — Old Royal Capital</div>
+        <div class="block-tagline" data-en="Inland · 40 min from Kotor" data-pt="Interior · 40 min de Kotor">Inland · 40 min from Kotor</div>
+      </div>
+      <div class="block-arrow">▼</div>
+    </button>
+    <div class="block-body"><div class="block-divider"></div>
+      <div class="visit-row"><div class="visit-check" onclick="toggleVisited('exp5')"></div><span class="visit-label" data-en="Mark as visited" data-pt="Marcar como visitado">Mark as visited</span></div>
+      <p class="detail-desc" data-en="Cetinje was the old royal capital of Montenegro, set in a high plateau completely different in character from the coast. It feels small, quiet, and almost untouched. The Cetinje Monastery holds what the church claims is the mummified hand of John the Baptist. The road up from the coast is spectacular." data-pt="Cetinje foi a antiga capital real do Montenegro, num planalto elevado com caráter completamente diferente da costa. Parece pequena, tranquila e quase intocada. O Mosteiro de Cetinje guarda o que a Igreja afirma ser a mão mumificada de João Batista.">Cetinje was Montenegro's royal capital, set in a high plateau completely different from the coast. Small, quiet, almost untouched. The monastery holds what the church claims is the mummified hand of John the Baptist.</p>
+      <div class="detail-curiosity"><strong data-en="Curiosity" data-pt="Curiosidade">Curiosity</strong><span data-en="Montenegro means 'Black Mountain' in Venetian Italian. The country was named by Venetian traders who saw the dark outline of Mount Lovcen from the sea." data-pt="'Montenegro' significa 'Montanha Negra' em italiano veneziano. O país foi nomeado por comerciantes venezianos que viam o contorno escuro do Monte Lovćen do mar.">'Montenegro' means 'Black Mountain' in Venetian Italian — named by traders who saw the dark outline of Mount Lovćen from the sea.</span></div>
+      <a class="map-btn" href="https://maps.google.com/?q=Cetinje,+Montenegro" target="_blank" rel="noopener">📍 <span data-en="Take me there" data-pt="Me leve lá">Take me there</span></a>
+      <div class="food-block" id="food_exp5"><div class="food-header" onclick="toggleFood('food_exp5')"><span class="food-title" data-en="🍽 Where to Eat Nearby" data-pt="🍽 Onde Comer por Aqui">🍽 Where to Eat Nearby</span><span class="food-arrow">▼</span></div><div class="food-body"><div class="food-rule"></div>
+        <div class="food-item"><span class="food-tag" data-en="Lunch" data-pt="Almoço">Lunch</span><div class="food-info"><div class="food-name">Konoba Korzo</div><div class="food-desc" data-en="A locals' favourite in Cetinje, described as feeling like a home-cooked meal. Traditional inland food in a relaxed setting. Very affordable." data-pt="Favorito dos moradores de Cetinje, descrito como uma refeição caseira. Comida tradicional do interior num ambiente descontraído. Muito acessível.">A locals' favourite. Traditional inland food in a relaxed setting. Feels like a home-cooked meal. Very affordable.</div><a class="food-maps" href="https://maps.google.com/?q=Konoba+Korzo+Cetinje" target="_blank">Maps ↗</a></div></div>
+        <div class="food-item"><span class="food-tag" data-en="Lunch" data-pt="Almoço">Lunch</span><div class="food-info"><div class="food-name">Kod Pera na Bukovicu</div><div class="food-desc" data-en="A family-run hillside restaurant on the road between the coast and Cetinje. Famous for Njegusi sausage, local cured meats and cheeses made on site." data-pt="Restaurante familiar numa encosta entre a costa e Cetinje. Famoso pela salsicha de Njeguši, carnes curadas e queijos feitos no local.">Family-run on the road between coast and Cetinje. Famous for Njeguši sausage, local cured meats and cheeses.</div><a class="food-maps" href="https://maps.google.com/?q=Kod+Pera+na+Bukovicu+Montenegro" target="_blank">Maps ↗</a></div></div>
+      </div></div>
+      <div class="notes-wrap"><span class="notes-label" data-en="Notes" data-pt="Notas">Notes</span><textarea class="notes-area" data-notes-id="mne-exp5" oninput="saveNote(this)" placeholder="..."></textarea></div>
+    </div>
+  </div>
+
+  <!-- 06 LAKE SKADAR -->
+  <div class="block-card" id="exp6" style="animation-delay:0.3s">
+    <button class="block-trigger" onclick="toggleBlock('exp6')">
+      <span class="block-num">06</span>
+      <div class="block-info">
+        <div class="block-name" data-en="Lake Skadar National Park" data-pt="Parque Nacional do Lago Skadar">Lake Skadar National Park</div>
+        <div class="block-tagline" data-en="National Park · 1 hr from Kotor" data-pt="Parque Nacional · 1 hr de Kotor">National Park · 1 hr from Kotor</div>
+      </div>
+      <span class="block-badge" data-en="Must" data-pt="Essencial">Must</span>
+      <div class="block-arrow">▼</div>
+    </button>
+    <div class="block-body"><div class="block-divider"></div>
+      <div class="visit-row"><div class="visit-check" onclick="toggleVisited('exp6')"></div><span class="visit-label" data-en="Mark as visited" data-pt="Marcar como visitado">Mark as visited</span></div>
+      <p class="detail-desc" data-en="The largest lake in the Balkans, shared between Montenegro and Albania. A national park on both sides. Take a boat trip to see ancient monastery islands, vineyards running to the water's edge, and pelicans. The rare Dalmatian pelican nests here." data-pt="O maior lago dos Bálcãs, compartilhado entre Montenegro e Albânia. Parque nacional em ambos os lados. Faça um passeio de barco para ver ilhas-mosteiro antigas, vinhedos à beira d'água e pelicanos.">The largest lake in the Balkans. Take a boat trip to see ancient monastery islands, vineyards to the water's edge, and pelicans. The rare Dalmatian pelican nests here.</p>
+      <div class="detail-curiosity"><strong data-en="Curiosity" data-pt="Curiosidade">Curiosity</strong><span data-en="The Dalmatian pelican is one of the world's rarest birds. Lake Skadar is one of its last remaining breeding grounds in Europe. You can spot them from a basic boat tour." data-pt="O pelicano-dálmata é uma das aves mais raras do mundo. O lago Skadar é um dos seus últimos locais de reprodução na Europa. Dá para avistá-los de um simples passeio de barco.">The Dalmatian pelican is one of the world's rarest birds. Lake Skadar is one of its last European breeding grounds. Spot them from a basic boat tour.</span></div>
+      <a class="map-btn" href="https://maps.google.com/?q=Lake+Skadar+National+Park,+Montenegro" target="_blank" rel="noopener">📍 <span data-en="Take me there" data-pt="Me leve lá">Take me there</span></a>
+      <div class="food-block" id="food_exp6"><div class="food-header" onclick="toggleFood('food_exp6')"><span class="food-title" data-en="🍽 Where to Eat Nearby" data-pt="🍽 Onde Comer por Aqui">🍽 Where to Eat Nearby</span><span class="food-arrow">▼</span></div><div class="food-body"><div class="food-rule"></div>
+        <div class="food-item"><span class="food-tag" data-en="Lunch" data-pt="Almoço">Lunch</span><div class="food-info"><div class="food-name">Konoba Ckla (Virpazar)</div><div class="food-desc" data-en="A well-regarded local konoba in the small lakeside village of Virpazar, the main entry point to the lake. Traditional food, lake fish, local wine from nearby vineyards." data-pt="Uma konoba local bem considerada em Virpazar, principal ponto de entrada para o lago. Comida tradicional, peixe do lago, vinho local.">Local konoba in Virpazar, the main entry point. Traditional food, lake fish, local wine from nearby vineyards.</div><a class="food-maps" href="https://maps.google.com/?q=Konoba+Ckla+Virpazar+Montenegro" target="_blank">Maps ↗</a></div></div>
+        <div class="food-item"><span class="food-tag" data-en="Lunch" data-pt="Almoço">Lunch</span><div class="food-info"><div class="food-name">Boat Restaurant Silistria (Virpazar)</div><div class="food-desc" data-en="A floating restaurant right on the lake. Fresh fish, local wine, views of the water. Good option after a morning boat tour." data-pt="Um restaurante flutuante à beira do lago. Peixe fresco, vinho local, vistas da água. Boa opção após o passeio de barco.">A floating restaurant on the lake. Fresh fish, local wine, views of the water. Good after a morning boat tour.</div><a class="food-maps" href="https://maps.google.com/?q=Boat+Restaurant+Silistria+Virpazar" target="_blank">Maps ↗</a></div></div>
+      </div></div>
+      <div class="notes-wrap"><span class="notes-label" data-en="Notes" data-pt="Notas">Notes</span><textarea class="notes-area" data-notes-id="mne-exp6" oninput="saveNote(this)" placeholder="..."></textarea></div>
+    </div>
+  </div>
+
+  <!-- 07 DURMITOR -->
+  <div class="block-card" id="exp7" style="animation-delay:0.35s">
+    <button class="block-trigger" onclick="toggleBlock('exp7')">
+      <span class="block-num">07</span>
+      <div class="block-info">
+        <div class="block-name" data-en="Durmitor National Park &amp; Tara Canyon" data-pt="Parque Nacional Durmitor e Cânion do Tara">Durmitor &amp; Tara Canyon</div>
+        <div class="block-tagline" data-en="North Montenegro · 2.5 hrs from Kotor" data-pt="Norte de Montenegro · 2,5 hrs de Kotor">North Montenegro · 2.5 hrs from Kotor</div>
+      </div>
+      <div class="block-arrow">▼</div>
+    </button>
+    <div class="block-body"><div class="block-divider"></div>
+      <div class="visit-row"><div class="visit-check" onclick="toggleVisited('exp7')"></div><span class="visit-label" data-en="Mark as visited" data-pt="Marcar como visitado">Mark as visited</span></div>
+      <p class="detail-desc" data-en="A completely different Montenegro. Alpine, wild, and dramatic. The Tara River Canyon is the deepest in Europe after the Grand Canyon. Best suited to a 5-day trip or if you are prepared for a long but spectacular drive. Worth it if you love raw landscapes." data-pt="Um Montenegro completamente diferente. Alpino, selvagem e dramático. O Cânion do Rio Tara é o mais profundo da Europa depois do Grand Canyon. Ideal para uma viagem de 5 dias.">A completely different Montenegro — Alpine, wild, dramatic. The Tara Canyon is the deepest in Europe after the Grand Canyon. Best for a 5-day trip or if you love raw landscapes.</p>
+      <div class="detail-curiosity"><strong data-en="Curiosity" data-pt="Curiosidade">Curiosity</strong><span data-en="The Tara Canyon reaches 1,300 metres deep in places. The river is so clean it is classified as one of the last pristine river ecosystems in Europe." data-pt="O Cânion do Tara chega a 1.300 metros de profundidade. O rio é tão limpo que é classificado como um dos últimos ecossistemas fluviais pristinos da Europa.">The Tara Canyon reaches 1,300 metres deep. The river is so clean it's classified as one of the last pristine river ecosystems in Europe.</span></div>
+      <a class="map-btn" href="https://maps.google.com/?q=Durmitor+National+Park,+Montenegro" target="_blank" rel="noopener">📍 <span data-en="Take me there" data-pt="Me leve lá">Take me there</span></a>
+      <div class="food-block" id="food_exp7"><div class="food-header" onclick="toggleFood('food_exp7')"><span class="food-title" data-en="🍽 Where to Eat Nearby" data-pt="🍽 Onde Comer por Aqui">🍽 Where to Eat Nearby</span><span class="food-arrow">▼</span></div><div class="food-body"><div class="food-rule"></div>
+        <div class="food-item"><span class="food-tag" data-en="Lunch" data-pt="Almoço">Lunch</span><div class="food-info"><div class="food-name" data-en="Local grill in Žabljak" data-pt="Grill local em Žabljak">Local grill in Žabljak</div><div class="food-desc" data-en="Žabljak is the main town near Durmitor. Look for any small konoba on the main street. Lamb on the spit, cevapi, kajmak and local cheese. Ask what they have that day." data-pt="Žabljak é a principal cidade perto do Durmitor. Procure qualquer konoba na rua principal. Cordeiro no espeto, ćevapi, kajmak e queijo local.">Žabljak is the main town. Any konoba on the main street. Lamb on the spit, ćevapi, kajmak. Ask what they have that day.</div><a class="food-maps" href="https://maps.google.com/?q=Zabljak+Montenegro" target="_blank">Maps ↗</a></div></div>
+        <div class="food-item"><span class="food-tag" data-en="Dinner" data-pt="Jantar">Dinner</span><div class="food-info"><div class="food-name" data-en="Any konoba in Žabljak" data-pt="Qualquer konoba em Žabljak">Any konoba in Žabljak</div><div class="food-desc" data-en="After a day in the mountains, grilled meat, local bread and Vranac wine is exactly right. Just walk in." data-pt="Após um dia nas montanhas, carne grelhada, pão local e vinho Vranac é exatamente o que precisa. É só entrar.">After a day in the mountains, grilled meat, local bread and Vranac wine is exactly right. Just walk in.</div><a class="food-maps" href="https://maps.google.com/?q=Zabljak+Montenegro+restaurant" target="_blank">Maps ↗</a></div></div>
+      </div></div>
+      <div class="notes-wrap"><span class="notes-label" data-en="Notes" data-pt="Notas">Notes</span><textarea class="notes-area" data-notes-id="mne-exp7" oninput="saveNote(this)" placeholder="..."></textarea></div>
+    </div>
+  </div>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- GOOD TO KNOW -->
+<div class="section-wrap">
+  <div class="section-header">
+    <div class="section-tag" data-en="Insider Tips" data-pt="Dicas de Insider">Insider Tips</div>
+    <h2 class="section-title" data-en="Good to <em>Know</em>" data-pt="Bom <em>Saber</em>">Good to <em>Know</em></h2>
+    <div class="section-rule"></div>
+  </div>
+  <p class="section-intro" data-en="The things guidebooks either miss or refuse to say." data-pt="O que os guias turísticos ignoram ou não têm coragem de falar.">The things guidebooks either miss or refuse to say.</p>
+
+  <div class="card" id="gtk1" style="animation-delay:0.05s">
+    <button class="card-trigger" onclick="toggleCard('gtk1')">
+      <div class="card-icon">🍽️</div>
+      <div class="card-info"><div class="card-name" data-en="How to Eat Like a Local" data-pt="Como Comer Como um Local">How to Eat Like a Local</div><div class="card-sub" data-en="The konoba is everything" data-pt="A konoba é tudo">The konoba is everything</div></div>
+      <div class="card-arrow">▼</div>
+    </button>
+    <div class="card-body"><div class="card-rule"></div>
+      <div class="gtk-item"><div class="gtk-dot"></div><div class="gtk-text"><strong data-en="Look for a konoba — the traditional family tavern" data-pt="Procure uma konoba — a taverna familiar tradicional">Look for a konoba — the traditional family tavern</strong><span data-en="Avoid anywhere with photos on the menu or someone outside trying to pull you in. A konoba with a handwritten menu is always the right choice." data-pt="Evite lugares com fotos no cardápio ou alguém do lado de fora tentando te convencer. Uma konoba com cardápio escrito à mão é sempre a escolha certa.">Avoid anywhere with photos on the menu or someone outside pulling you in. A handwritten menu is always the right choice.</span></div></div>
+      <div class="gtk-item"><div class="gtk-dot"></div><div class="gtk-text"><strong data-en="Lamb under the bell (ispod sača) is the dish" data-pt="Cordeiro sob a campânula (ispod sača) é o prato">Lamb under the bell (ispod sača) is the dish</strong><span data-en="A cast iron bell is placed over the meat with embers heaped on top. Slow cooked for hours. If a konoba has it, order it. No hesitation." data-pt="Uma campânula de ferro fundido é colocada sobre a carne com brasas por cima. Cozinhado lentamente por horas. Se uma konoba tiver, peça. Sem hesitação.">A cast iron bell covers the meat with embers on top. Slow cooked for hours. If a konoba has it, order it. No hesitation.</span></div></div>
+      <div class="gtk-item"><div class="gtk-dot"></div><div class="gtk-text"><strong data-en="Njeguški pršut and cheese are worth seeking out" data-pt="Pršut e queijo de Njeguši valem a busca">Njeguški pršut and cheese are worth seeking out</strong><span data-en="Smoke-cured ham from the village of Njeguši. Paired with local cheese and a glass of wine — the definitive Montenegrin starter." data-pt="Presunto defumado da aldeia de Njeguši. Acompanhado de queijo local e uma taça de vinho — o aperitivo definitivo do Montenegro.">Smoke-cured ham from Njeguši village. With local cheese and wine — the definitive Montenegrin starter.</span></div></div>
+    </div>
+  </div>
+
+  <div class="card" id="gtk2" style="animation-delay:0.1s">
+    <button class="card-trigger" onclick="toggleCard('gtk2')">
+      <div class="card-icon">🍷</div>
+      <div class="card-info"><div class="card-name" data-en="Drinking in Montenegro" data-pt="Bebidas no Montenegro">Drinking in Montenegro</div><div class="card-sub" data-en="Wine, rakija, and the rules" data-pt="Vinho, rakija e as regras">Wine, rakija, and the rules</div></div>
+      <div class="card-arrow">▼</div>
+    </button>
+    <div class="card-body"><div class="card-rule"></div>
+      <div class="gtk-item"><div class="gtk-dot"></div><div class="gtk-text"><strong data-en="Vranac is Montenegro's own red grape — always order local" data-pt="Vranac é a uva tinta própria de Montenegro — sempre peça o local">Vranac is Montenegro's own red grape — always order local</strong><span data-en="Dark, full-bodied, slightly dry. Very good and very cheap — €2–4 per glass. Ask for domaće vino (house wine) in any konoba." data-pt="Escuro, encorpado, levemente seco. Muito bom e muito barato — €2–4 por taça. Peça domaće vino (vinho da casa) em qualquer konoba.">Dark, full-bodied, slightly dry. Very good and cheap — €2–4 per glass. Ask for domaće vino in any konoba.</span></div></div>
+      <div class="gtk-item"><div class="gtk-dot"></div><div class="gtk-text"><strong data-en="Rakija will be offered constantly — do not refuse the first glass" data-pt="Rakija será oferecida constantemente — não recuse o primeiro copo">Rakija will be offered constantly — do not refuse the first glass</strong><span data-en="Local fruit brandy. It is considered rude to refuse when someone offers. Sip it — do not shoot it. Nodding and saying živjeli is all you need." data-pt="Aguardente de frutas local. É considerado indelicado recusar quando alguém oferece. Beba aos goles — não de uma vez. Acenar e dizer živjeli é tudo que precisa.">Local fruit brandy. Refusing is considered rude. Sip it, do not shoot it. Say živjeli and you are fine.</span></div></div>
+    </div>
+  </div>
+
+  <div class="card" id="gtk3" style="animation-delay:0.15s">
+    <button class="card-trigger" onclick="toggleCard('gtk3')">
+      <div class="card-icon">🌊</div>
+      <div class="card-info"><div class="card-name" data-en="Navigating the Bay of Kotor" data-pt="Navegando pela Baía de Kotor">Navigating the Bay of Kotor</div><div class="card-sub" data-en="The things nobody tells you" data-pt="As coisas que ninguém te conta">The things nobody tells you</div></div>
+      <div class="card-arrow">▼</div>
+    </button>
+    <div class="card-body"><div class="card-rule"></div>
+      <div class="gtk-item"><div class="gtk-dot"></div><div class="gtk-text"><strong data-en="The bay road is narrow and the cruise ship crowds are real" data-pt="A estrada da baía é estreita e as multidões dos navios de cruzeiro são reais">The bay road is narrow and the cruise ship crowds are real</strong><span data-en="Kotor old town fills completely in the middle of the day when cruise ships dock. Go to the walls very early or late afternoon. Midday is a mistake." data-pt="A cidade velha de Kotor enche completamente ao meio-dia quando os navios de cruzeiro atracam. Vá às muralhas bem cedo ou no final da tarde. Ao meio-dia é um erro.">Kotor fills completely at midday when cruise ships dock. Go to the walls very early or late afternoon. Midday is a mistake.</span></div></div>
+      <div class="gtk-item"><div class="gtk-dot"></div><div class="gtk-text"><strong data-en="The ferry across the bay saves 30 minutes" data-pt="A balsa para atravessar a baía economiza 30 minutos">The ferry across the bay saves 30 minutes</strong><span data-en="Between Lepetane and Kamenari — runs frequently, costs a few euros, cuts the bay drive dramatically. Worth using if heading south." data-pt="Entre Lepetane e Kamenari — funciona com frequência, custa alguns euros, encurta muito a condução pela baía. Vale usar se for para o sul.">Lepetane to Kamenari — runs frequently, costs a few euros, cuts the bay drive significantly. Worth using if heading south.</span></div></div>
+      <div class="gtk-item"><div class="gtk-dot"></div><div class="gtk-text"><strong data-en="The viewpoint above Kotor is free and extraordinary" data-pt="O mirante acima de Kotor é gratuito e extraordinário">The viewpoint above Kotor is free and extraordinary</strong><span data-en="The road up the mountain above Kotor has switchbacks with pull-offs that look directly down into the entire bay. Pull over at any of them." data-pt="A estrada pela montanha acima de Kotor tem curvas fechadas com acostamentos que olham diretamente para toda a baía. Pare em qualquer um deles.">The mountain road above Kotor has switchbacks with pull-offs looking directly down into the entire bay. Stop at any of them.</span></div></div>
+    </div>
+  </div>
+
+  <div class="card" id="gtk4" style="animation-delay:0.2s">
+    <button class="card-trigger" onclick="toggleCard('gtk4')">
+      <div class="card-icon">⚡</div>
+      <div class="card-info"><div class="card-name" data-en="Things to Never Do" data-pt="Coisas para Nunca Fazer">Things to Never Do</div><div class="card-sub" data-en="Consider yourself warned" data-pt="Você foi avisado">Consider yourself warned</div></div>
+      <div class="card-arrow">▼</div>
+    </button>
+    <div class="card-body"><div class="card-rule"></div>
+      <div class="gtk-item"><div class="gtk-dot"></div><div class="gtk-text"><strong data-en="Never eat at restaurants immediately next to the old town entrance" data-pt="Nunca coma em restaurantes imediatamente perto da entrada da cidade velha">Never eat at restaurants immediately next to the old town entrance</strong><span data-en="The restaurants on the main gate square in Kotor are priced for cruise ship passengers and the quality matches. Walk two streets in." data-pt="Os restaurantes na praça do portão principal de Kotor têm preços para passageiros de cruzeiro e a qualidade corresponde. Ande duas ruas para dentro.">Restaurants on the main gate square in Kotor are priced for cruise passengers. Walk two streets in.</span></div></div>
+      <div class="gtk-item"><div class="gtk-dot"></div><div class="gtk-text"><strong data-en="Never underestimate driving times on mountain roads" data-pt="Nunca subestime os tempos de condução em estradas de montanha">Never underestimate driving times on mountain roads</strong><span data-en="Google Maps times assume normal roads. Mountain roads in Montenegro are narrow, winding, and shared with local drivers who know them well. Add 30–40% to any estimated time." data-pt="Os tempos do Google Maps assumem estradas normais. As estradas de montanha são estreitas, sinuosas. Adicione 30–40% ao tempo estimado.">Google Maps assumes normal roads. Mountain roads are narrow and winding. Add 30–40% to any estimated time.</span></div></div>
+    </div>
+  </div>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- LOCAL PHRASES -->
+<div class="section-wrap">
+  <div class="section-header">
+    <div class="section-tag" data-en="Speak Like a Local" data-pt="Fale Como um Local">Speak Like a Local</div>
+    <h2 class="section-title" data-en="A Few Words of <em>Montenegrin</em>" data-pt="Algumas Palavras em <em>Montenegrino</em>">A Few Words of <em>Montenegrin</em></h2>
+    <div class="section-rule"></div>
+  </div>
+  <p class="section-intro" data-en="Montenegrin is essentially Serbian in both Latin and Cyrillic script. A few words go a surprisingly long way — locals genuinely appreciate the effort." data-pt="O montenegrino é essencialmente sérvio em alfabeto latino e cirílico. Algumas palavras fazem uma diferença surpreendente — os locais genuinamente apreciam o esforço.">Montenegrin is essentially Serbian. A few words go a long way — locals genuinely appreciate the effort. Press play to hear each phrase.</p>
+
+  <div class="phrase-group">
+    <div class="phrase-group-title" data-en="Basic Manners" data-pt="Educação Básica">Basic Manners</div>
+    <div class="phrase-row"><div class="phrase-texts"><div class="phrase-orig">Zdravo</div><div class="phrase-pronoun">ZDRA-vo</div><div class="phrase-meaning" data-en="Hello" data-pt="Olá">Hello</div></div><button class="speak-btn" onclick="speak('Zdravo','sr-RS')"><svg viewBox="0 0 10 10"><polygon points="2,1 9,5 2,9"/></svg></button></div>
+    <div class="phrase-row"><div class="phrase-texts"><div class="phrase-orig">Dobro jutro</div><div class="phrase-pronoun">DOB-ro YOO-tro</div><div class="phrase-meaning" data-en="Good morning" data-pt="Bom dia">Good morning</div></div><button class="speak-btn" onclick="speak('Dobro jutro','sr-RS')"><svg viewBox="0 0 10 10"><polygon points="2,1 9,5 2,9"/></svg></button></div>
+    <div class="phrase-row"><div class="phrase-texts"><div class="phrase-orig">Hvala lijepo</div><div class="phrase-pronoun">HVA-la LEE-yeh-po</div><div class="phrase-meaning" data-en="Thank you very much" data-pt="Muito obrigado/a">Thank you very much</div></div><button class="speak-btn" onclick="speak('Hvala lijepo','sr-RS')"><svg viewBox="0 0 10 10"><polygon points="2,1 9,5 2,9"/></svg></button></div>
+    <div class="phrase-row"><div class="phrase-texts"><div class="phrase-orig">Molim</div><div class="phrase-pronoun">MO-leem</div><div class="phrase-meaning" data-en="Please / You're welcome" data-pt="Por favor / De nada">Please / You're welcome</div></div><button class="speak-btn" onclick="speak('Molim','sr-RS')"><svg viewBox="0 0 10 10"><polygon points="2,1 9,5 2,9"/></svg></button></div>
+    <div class="phrase-row"><div class="phrase-texts"><div class="phrase-orig">Izvinite</div><div class="phrase-pronoun">eez-VEE-nee-teh</div><div class="phrase-meaning" data-en="Excuse me / Sorry" data-pt="Com licença / Desculpe">Excuse me / Sorry</div></div><button class="speak-btn" onclick="speak('Izvinite','sr-RS')"><svg viewBox="0 0 10 10"><polygon points="2,1 9,5 2,9"/></svg></button></div>
+    <div class="phrase-row"><div class="phrase-texts"><div class="phrase-orig">Dobar dan</div><div class="phrase-pronoun">DOH-bar dan</div><div class="phrase-meaning" data-en="Good afternoon" data-pt="Boa tarde">Good afternoon</div></div><button class="speak-btn" onclick="speak('Dobar dan','sr-RS')"><svg viewBox="0 0 10 10"><polygon points="2,1 9,5 2,9"/></svg></button></div>
+    <div class="phrase-row"><div class="phrase-texts"><div class="phrase-orig">Laku noć</div><div class="phrase-pronoun">LAH-koo noch</div><div class="phrase-meaning" data-en="Good night" data-pt="Boa noite">Good night</div></div><button class="speak-btn" onclick="speak('Laku noć','sr-RS')"><svg viewBox="0 0 10 10"><polygon points="2,1 9,5 2,9"/></svg></button></div>
+  </div>
+
+  <div class="phrase-group">
+    <div class="phrase-group-title" data-en="Food &amp; Restaurants" data-pt="Comida e Restaurantes">Food &amp; Restaurants</div>
+    <div class="phrase-row"><div class="phrase-texts"><div class="phrase-orig">Živjeli!</div><div class="phrase-pronoun">ZHIV-yeh-lee</div><div class="phrase-meaning" data-en="Cheers!" data-pt="Saúde!">Cheers!</div></div><button class="speak-btn" onclick="speak('Živjeli','sr-RS')"><svg viewBox="0 0 10 10"><polygon points="2,1 9,5 2,9"/></svg></button></div>
+    <div class="phrase-row"><div class="phrase-texts"><div class="phrase-orig">Jedno pivo, molim</div><div class="phrase-pronoun">YED-no PEE-vo MO-leem</div><div class="phrase-meaning" data-en="One beer, please" data-pt="Uma cerveja, por favor">One beer, please</div></div><button class="speak-btn" onclick="speak('Jedno pivo, molim','sr-RS')"><svg viewBox="0 0 10 10"><polygon points="2,1 9,5 2,9"/></svg></button></div>
+    <div class="phrase-row"><div class="phrase-texts"><div class="phrase-orig">Ukusno!</div><div class="phrase-pronoun">oo-KOOS-no</div><div class="phrase-meaning" data-en="Delicious!" data-pt="Delicioso!">Delicious!</div></div><button class="speak-btn" onclick="speak('Ukusno','sr-RS')"><svg viewBox="0 0 10 10"><polygon points="2,1 9,5 2,9"/></svg></button></div>
+    <div class="phrase-row"><div class="phrase-texts"><div class="phrase-orig">Koliko košta?</div><div class="phrase-pronoun">KO-lee-ko KOSH-ta</div><div class="phrase-meaning" data-en="How much does it cost?" data-pt="Quanto custa?">How much does it cost?</div></div><button class="speak-btn" onclick="speak('Koliko košta','sr-RS')"><svg viewBox="0 0 10 10"><polygon points="2,1 9,5 2,9"/></svg></button></div>
+  </div>
+
+  <div class="phrase-group">
+    <div class="phrase-group-title" data-en="Getting Around" data-pt="Se Virar">Getting Around</div>
+    <div class="phrase-row"><div class="phrase-texts"><div class="phrase-orig">Gdje je...?</div><div class="phrase-pronoun">GDYEH yeh</div><div class="phrase-meaning" data-en="Where is...?" data-pt="Onde fica...?">Where is...?</div></div><button class="speak-btn" onclick="speak('Gdje je','sr-RS')"><svg viewBox="0 0 10 10"><polygon points="2,1 9,5 2,9"/></svg></button></div>
+    <div class="phrase-row"><div class="phrase-texts"><div class="phrase-orig">Govorite li engleski?</div><div class="phrase-pronoun">go-VOR-ee-teh lee en-GLES-kee</div><div class="phrase-meaning" data-en="Do you speak English?" data-pt="Você fala inglês?">Do you speak English?</div></div><button class="speak-btn" onclick="speak('Govorite li engleski','sr-RS')"><svg viewBox="0 0 10 10"><polygon points="2,1 9,5 2,9"/></svg></button></div>
+    <div class="phrase-row"><div class="phrase-texts"><div class="phrase-orig">Ne jedem morske plodove</div><div class="phrase-pronoun">neh YEH-dem MOR-skeh plo-DOH-veh</div><div class="phrase-meaning" data-en="I do not eat seafood" data-pt="Não como frutos do mar">I do not eat seafood</div></div><button class="speak-btn" onclick="speak('Ne jedem morske plodove','sr-RS')"><svg viewBox="0 0 10 10"><polygon points="2,1 9,5 2,9"/></svg></button></div>
+  </div>
+</div>
+
+</main>
+
+<footer>
+  <p data-en="Montenegro: A Field Guide &nbsp;·&nbsp; by Claudio SAROLDI &nbsp;·&nbsp; <em>Dobro jutro, Crna Goro.</em>" data-pt="Montenegro: Um Guia de Campo &nbsp;·&nbsp; por Claudio SAROLDI &nbsp;·&nbsp; <em>Bom dia, Montenegro.</em>">Montenegro: A Field Guide &nbsp;·&nbsp; by Claudio SAROLDI &nbsp;·&nbsp; <em>Dobro jutro, Crna Goro.</em></p>
+</footer>
+
+<script>
+// TOGGLE
+function toggleCard(id){document.getElementById(id).classList.toggle('open')}
+function toggleBlock(id){document.getElementById(id).classList.toggle('open')}
+function toggleFood(id){document.getElementById(id).classList.toggle('open')}
+function toggleLF(id){document.getElementById(id).classList.toggle('open')}
+
+// VISITED
+const VISITED_KEY='mne_visited_v2';
+function toggleVisited(id){
+  const el=document.getElementById(id);
+  el.classList.toggle('visited');
+  const v=getVisited();
+  el.classList.contains('visited')?v.add(id):v.delete(id);
+  saveVisited(v);
+}
+function getVisited(){try{return new Set(JSON.parse(localStorage.getItem(VISITED_KEY)||'[]'))}catch(e){return new Set()}}
+function saveVisited(s){try{localStorage.setItem(VISITED_KEY,JSON.stringify([...s]))}catch(e){}}
+function restoreVisited(){getVisited().forEach(id=>{const el=document.getElementById(id);if(el)el.classList.add('visited')})}
+
+// NOTES
+function saveNote(ta){try{localStorage.setItem('mne_note_'+ta.dataset.notesId,ta.value)}catch(e){}}
+function restoreNotes(){document.querySelectorAll('.notes-area').forEach(ta=>{try{const s=localStorage.getItem('mne_note_'+ta.dataset.notesId);if(s)ta.value=s}catch(e){}})}
+
+// LANGUAGE
+let currentLang=localStorage.getItem('mne_lang')||'en';
+function applyLang(lang){
+  document.querySelectorAll('[data-en]').forEach(el=>{
+    const t=el.getAttribute('data-'+lang);
+    if(t!==null&&el.tagName!=='TEXTAREA')el.innerHTML=t;
+  });
+  document.getElementById('btnEN').classList.toggle('active',lang==='en');
+  document.getElementById('btnPT').classList.toggle('active',lang==='pt');
+  document.documentElement.lang=lang==='pt'?'pt-BR':'en';
+}
+function setLang(lang){
+  currentLang=lang;
+  localStorage.setItem('mne_lang',lang);
+  applyLang(lang);
+}
+
+// THEME
+function toggleTheme(){
+  const l=document.body.classList.toggle('light');
+  document.getElementById('themeBtn').textContent=l?'🌙':'☀️';
+  localStorage.setItem('mne_theme',l?'light':'dark');
+}
+
+// SPEAK
+let activeSpeak=null;
+function speak(text,lang){
+  if(!window.speechSynthesis)return;
+  if(window.speechSynthesis.speaking){window.speechSynthesis.cancel();if(activeSpeak===text){activeSpeak=null;return;}}
+  const u=new SpeechSynthesisUtterance(text);
+  u.lang=lang||'sr-RS';u.rate=0.85;
+  const voices=window.speechSynthesis.getVoices();
+  const v=voices.find(v=>v.lang.startsWith('sr')||v.lang.startsWith('hr')||v.lang.startsWith('bs'));
+  if(v)u.voice=v;
+  u.onend=()=>{activeSpeak=null};
+  activeSpeak=text;
+  window.speechSynthesis.speak(u);
+}
+window.speechSynthesis.onvoiceschanged=()=>{};
+
+// OFFLINE
+function updateOnline(){document.getElementById('offlineBanner').style.display=navigator.onLine?'none':'block'}
+window.addEventListener('online',updateOnline);
+window.addEventListener('offline',updateOnline);
+updateOnline();
+
+// SERVICE WORKER
+if('serviceWorker' in navigator){
+  window.addEventListener('load',()=>{navigator.serviceWorker.register('sw.js').catch(()=>{})});
+}
+
+// INIT
+restoreVisited();
+restoreNotes();
+applyLang(currentLang);
+if(localStorage.getItem('mne_theme')==='light'){
+  document.body.classList.add('light');
+  document.getElementById('themeBtn').textContent='🌙';
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,22 @@
+{
+  "name": "Gdańsk: A Field Guide",
+  "short_name": "Gdańsk Guide",
+  "description": "Hanseatic gold, Solidarity's ghost, and the longest wooden pier in Europe.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#0c0c10",
+  "theme_color": "#0c0c10",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "https://via.placeholder.com/192x192/0c0c10/c79a52?text=G",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "https://via.placeholder.com/512x512/0c0c10/c79a52?text=G",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

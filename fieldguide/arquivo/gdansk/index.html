@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0c0c10">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Gdańsk Guide">
+<link rel="manifest" href="manifest.json">
+<title>Gdańsk: A Field Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --gold:#c79a52;--gold-l:#dfb879;--gold-d:#8a6734;
+  --sea:#2f6f87;--sea-l:rgba(47,111,135,0.15);
+  --ink:#0c0c10;--cream:#f5f0e8;--muted:#8a8172;
+  --border:rgba(255,255,255,0.07);--border-gold:rgba(223,184,121,0.2);
+  --card:rgba(255,255,255,0.025);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{font-size:16px;scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{font-family:'DM Sans',sans-serif;background:var(--ink);color:var(--cream);min-height:100vh;overflow-x:hidden;padding-bottom:80px}
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:9999;opacity:0.4}
+
+/* TOP CONTROLS */
+.top-controls{position:fixed;top:16px;right:16px;z-index:1000;display:flex;gap:8px}
+.lang-group{display:flex}
+.ctrl-btn{height:30px;padding:0 12px;border:1px solid rgba(199,154,82,0.35);background:transparent;color:rgba(199,154,82,0.5);font-size:0.62rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.2s;font-family:'DM Sans',sans-serif;-webkit-tap-highlight-color:transparent}
+.lang-btn:first-child{border-radius:3px 0 0 3px;border-right:none}
+.lang-btn:last-child{border-radius:0 3px 3px 0}
+.ctrl-btn.active{background:var(--gold);color:var(--ink);border-color:var(--gold)}
+
+/* COVER */
+.cover{position:relative;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;overflow:hidden;background:var(--ink)}
+.cover-bg{position:absolute;inset:0;background:
+  radial-gradient(ellipse 85% 60% at 25% 35%,rgba(199,154,82,0.15) 0%,transparent 58%),
+  radial-gradient(ellipse 60% 50% at 72% 60%,rgba(47,111,135,0.10) 0%,transparent 60%),
+  radial-gradient(ellipse 110% 80% at 50% 100%,rgba(199,154,82,0.07) 0%,transparent 62%),
+  linear-gradient(165deg,#090a0d 0%,#0c0c10 52%,#09090d 100%)}
+.cover-content{position:relative;z-index:2;padding:24px;animation:fadeUp 1.2s ease both}
+@keyframes fadeUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
+.cover-eyebrow{font-size:0.62rem;font-weight:500;letter-spacing:0.38em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:24px}
+.cover-title{font-family:'Cormorant Garamond',serif;font-size:clamp(5rem,20vw,9rem);font-weight:300;line-height:0.9;color:var(--cream);letter-spacing:-0.02em;margin-bottom:16px}
+.cover-title em{font-style:italic;color:var(--gold-l);font-weight:400}
+.cover-author{font-size:0.56rem;font-weight:600;letter-spacing:0.3em;text-transform:uppercase;color:var(--gold-d);margin-bottom:20px}
+.cover-rule{width:40px;height:1px;background:var(--gold-d);opacity:0.5;margin:16px auto}
+.cover-subtitle{font-family:'Cormorant Garamond',serif;font-size:clamp(1rem,2.8vw,1.3rem);font-style:italic;color:rgba(245,240,232,0.45)}
+.cover-scroll{position:absolute;bottom:32px;left:50%;transform:translateX(-50%);color:rgba(199,154,82,0.35);font-size:1.2rem;animation:bob 2s ease-in-out infinite;z-index:2}
+@keyframes bob{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(7px)}}
+
+/* SECTION */
+.section-wrap{max-width:820px;margin:0 auto;padding:0 20px}
+.section-header{padding:52px 0 8px;display:flex;align-items:center;gap:14px}
+.section-tag{font-size:0.58rem;font-weight:600;letter-spacing:0.3em;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;gap:10px;white-space:nowrap}
+.section-tag::before{content:'';width:20px;height:1px;background:var(--gold)}
+.section-title{font-family:'Cormorant Garamond',serif;font-size:2.2rem;font-weight:300;color:var(--cream);line-height:1.1;letter-spacing:-0.01em}
+.section-title em{font-style:italic;color:var(--gold-l)}
+.section-rule{flex:1;height:1px;background:linear-gradient(90deg,var(--border-gold),transparent)}
+.section-intro{font-family:'Cormorant Garamond',serif;font-size:1rem;font-style:italic;color:var(--muted);margin:8px 0 20px;line-height:1.7}
+.section-divider{height:1px;background:linear-gradient(90deg,transparent,var(--border-gold),transparent);margin:48px auto 0;max-width:820px;padding:0 20px}
+
+/* CARDS */
+.card{background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden;margin-bottom:10px;transition:border-color 0.3s;animation:fadeUp 0.5s ease-out both}
+.card.open{border-color:var(--border-gold)}
+.card-trigger{width:100%;background:none;border:none;padding:18px 20px;cursor:pointer;display:flex;align-items:center;gap:14px;text-align:left;-webkit-tap-highlight-color:transparent}
+.card-icon{width:36px;height:36px;border-radius:10px;background:rgba(199,154,82,0.08);border:1px solid var(--border-gold);display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0}
+.card-info{flex:1}
+.card-name{font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:600;color:var(--cream);line-height:1.2}
+.card-sub{font-size:0.7rem;color:var(--muted);font-style:italic;margin-top:2px}
+.card-arrow{width:22px;height:22px;border-radius:50%;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:0.6rem;transition:all 0.3s;flex-shrink:0}
+.card.open .card-arrow{background:var(--gold);border-color:var(--gold);color:var(--ink);transform:rotate(180deg)}
+.card-body{display:none;padding:0 20px 20px}
+.card.open .card-body{display:block}
+.card-rule{height:1px;background:linear-gradient(90deg,transparent,var(--border-gold),transparent);margin-bottom:16px}
+
+/* ESS / GTK ITEMS */
+.ess-item{display:flex;gap:12px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.04);align-items:flex-start}
+.ess-item:last-child{border-bottom:none;padding-bottom:0}
+.ess-dot{width:5px;height:5px;border-radius:50%;background:var(--gold);flex-shrink:0;margin-top:7px}
+.ess-text{font-size:0.86rem;line-height:1.65;color:rgba(245,240,232,0.72);font-weight:300}
+.ess-text strong{color:var(--cream);font-weight:500;display:block;margin-bottom:1px;font-size:0.88rem}
+
+/* BLOCKS */
+.block-card{background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden;margin-bottom:10px;transition:border-color 0.3s;animation:fadeUp 0.5s ease-out both}
+.block-card.open{border-color:var(--border-gold)}
+.block-trigger{width:100%;background:none;border:none;padding:18px 20px;cursor:pointer;display:flex;align-items:center;gap:14px;text-align:left;-webkit-tap-highlight-color:transparent}
+.block-num{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:600;color:rgba(199,154,82,0.2);line-height:1;min-width:44px;transition:color 0.3s}
+.block-card.open .block-num{color:var(--gold)}
+.block-info{flex:1}
+.block-name{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:600;color:var(--cream);line-height:1.2;margin-bottom:3px}
+.block-tagline{font-size:0.7rem;color:var(--muted);font-style:italic}
+.block-arrow{width:22px;height:22px;border-radius:50%;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:0.6rem;transition:all 0.3s;flex-shrink:0}
+.block-card.open .block-arrow{background:var(--gold);border-color:var(--gold);color:var(--ink);transform:rotate(180deg)}
+.block-body{display:none;padding:0 16px 20px}
+.block-card.open .block-body{display:block}
+.block-divider{height:1px;background:linear-gradient(90deg,transparent,var(--border-gold),transparent);margin-bottom:16px}
+
+/* STOPS */
+.stop{margin-bottom:7px;border-radius:11px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.05);overflow:hidden;transition:border-color 0.2s}
+.stop.checked{background:rgba(199,154,82,0.05);border-color:rgba(199,154,82,0.18)}
+.stop-header{display:flex;align-items:center;gap:13px;padding:13px 15px;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.stop-check{width:22px;height:22px;border-radius:50%;border:1.5px solid rgba(255,255,255,0.18);background:transparent;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all 0.25s;cursor:pointer}
+.stop-check::after{content:'✓';font-size:0.62rem;color:var(--ink);opacity:0;transition:opacity 0.2s;font-weight:700}
+.stop.checked .stop-check{background:var(--gold);border-color:var(--gold);box-shadow:0 0 12px rgba(199,154,82,0.35)}
+.stop.checked .stop-check::after{opacity:1}
+.stop-name{flex:1;font-family:'Cormorant Garamond',serif;font-size:1.08rem;font-weight:600;color:var(--cream);line-height:1.2;transition:color 0.2s}
+.stop.checked .stop-name{color:var(--muted);text-decoration:line-through;text-decoration-color:rgba(199,154,82,0.35)}
+.badge-must{font-size:0.58rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;padding:2px 7px;background:rgba(199,154,82,0.12);color:var(--gold);border:1px solid rgba(199,154,82,0.25);border-radius:3px;white-space:nowrap;flex-shrink:0}
+.badge-hidden{font-size:0.58rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;padding:2px 7px;background:rgba(47,111,135,0.12);color:#8cc2d4;border:1px solid rgba(47,111,135,0.35);border-radius:3px;white-space:nowrap;flex-shrink:0}
+.stop-expand{font-size:0.52rem;color:var(--muted);flex-shrink:0}
+.stop-details{display:none;padding:0 15px 15px 50px}
+.stop-details.open{display:block;animation:slideDown 0.2s ease-out}
+@keyframes slideDown{from{opacity:0;transform:translateY(-5px)}to{opacity:1;transform:translateY(0)}}
+.detail-rule{height:1px;background:rgba(255,255,255,0.05);margin-bottom:13px}
+.detail-hist{background:rgba(47,111,135,0.08);border-left:2px solid rgba(47,111,135,0.45);padding:8px 12px;border-radius:0 4px 4px 0;font-size:0.8rem;color:rgba(245,240,232,0.65);margin-bottom:8px}
+.detail-hist strong{font-size:0.65rem;text-transform:uppercase;letter-spacing:0.1em;display:block;margin-bottom:3px;color:rgba(140,194,209,0.8);font-style:normal}
+.detail-fact{background:rgba(199,154,82,0.06);border-left:2px solid var(--gold);padding:8px 12px;border-radius:0 4px 4px 0;font-size:0.8rem;color:rgba(245,240,232,0.65);font-style:italic;margin-bottom:10px}
+.detail-fact strong{font-style:normal;font-size:0.65rem;text-transform:uppercase;letter-spacing:0.1em;display:block;margin-bottom:3px;color:var(--gold)}
+.map-btn{display:inline-flex;align-items:center;gap:6px;margin-top:6px;padding:7px 14px;background:transparent;border:1px solid var(--border-gold);border-radius:8px;color:var(--gold-l);font-size:0.7rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;text-decoration:none;transition:all 0.2s;-webkit-tap-highlight-color:transparent}
+.map-btn:active{background:rgba(199,154,82,0.1)}
+
+/* FOOD BLOCK */
+.food-block{margin-top:14px;border-radius:11px;background:rgba(199,154,82,0.04);border:1px solid rgba(199,154,82,0.12);overflow:hidden}
+.food-header{padding:11px 15px;display:flex;align-items:center;gap:10px;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.food-title{font-size:0.58rem;font-weight:600;letter-spacing:0.22em;text-transform:uppercase;color:var(--gold);flex:1}
+.food-arrow{font-size:0.55rem;color:var(--muted);transition:transform 0.3s}
+.food-block.open .food-arrow{transform:rotate(180deg)}
+.food-body{display:none;padding:0 15px 13px}
+.food-block.open .food-body{display:block}
+.food-rule{height:1px;background:rgba(199,154,82,0.1);margin-bottom:11px}
+.food-item{display:flex;gap:10px;padding:7px 0;border-bottom:1px solid rgba(255,255,255,0.04);align-items:flex-start}
+.food-item:last-child{border-bottom:none;padding-bottom:0}
+.food-info{flex:1}
+.food-name{font-family:'Cormorant Garamond',serif;font-size:0.95rem;color:var(--cream);font-weight:600}
+.food-desc{font-size:0.79rem;color:rgba(245,240,232,0.55);line-height:1.5;margin-top:1px}
+.food-maps{display:inline-flex;align-items:center;gap:4px;font-size:0.68rem;color:var(--gold);text-decoration:none;margin-top:3px;opacity:0.75;transition:opacity 0.2s}
+.food-maps:hover{opacity:1}
+
+/* MATTERS */
+.matter-item{display:flex;gap:14px;padding:14px 0;border-bottom:1px solid rgba(255,255,255,0.04);align-items:flex-start}
+.matter-item:last-child{border-bottom:none}
+.matter-emoji{font-size:1.3rem;flex-shrink:0;line-height:1;margin-top:2px}
+.matter-headline{font-family:'Cormorant Garamond',serif;font-size:1.05rem;font-weight:600;color:var(--cream);margin-bottom:4px}
+.matter-copy{font-size:0.82rem;color:rgba(245,240,232,0.62);line-height:1.65;font-weight:300}
+
+/* PHRASES */
+.phrase-group{margin-bottom:20px}
+.phrase-group-title{font-size:0.6rem;font-weight:600;letter-spacing:0.28em;text-transform:uppercase;color:var(--gold);margin-bottom:8px;display:flex;align-items:center;gap:10px}
+.phrase-group-title::after{content:'';flex:1;height:1px;background:var(--border-gold)}
+.phrase-row{background:var(--card);border:1px solid var(--border);border-radius:8px;margin-bottom:4px;padding:12px 16px;display:flex;align-items:center;gap:12px}
+.phrase-texts{flex:1}
+.phrase-orig{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1rem;color:var(--cream);margin-bottom:2px}
+.phrase-note{font-size:0.68rem;color:var(--muted)}
+.phrase-meaning{font-size:0.8rem;font-weight:500;color:rgba(245,240,232,0.7)}
+.speak-btn{background:none;border:1px solid var(--border);border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;transition:all 0.2s;color:var(--gold)}
+.speak-btn:hover{background:rgba(199,154,82,0.1);border-color:var(--gold)}
+.speak-btn svg{width:13px;height:13px;fill:currentColor}
+
+/* FOOTER */
+footer{text-align:center;padding:52px 24px 32px;color:rgba(138,129,114,0.35);font-size:0.6rem;letter-spacing:0.18em;text-transform:uppercase;line-height:2;border-top:1px solid var(--border)}
+
+/* RESPONSIVE */
+@media(max-width:640px){
+  .section-wrap{padding:0 14px}
+  .cover-title{font-size:4.2rem}
+  .block-name,.card-name{font-size:1.1rem}
+  .block-trigger,.card-trigger{padding:16px}
+  .block-body,.card-body{padding:0 12px 16px}
+  .stop-details{padding:0 12px 14px 44px}
+  .section-header{padding:44px 0 8px;align-items:flex-end}
+  .section-title{font-size:1.95rem}
+  .top-controls{top:12px;right:12px}
+}
+</style>
+</head>
+<body>
+
+<div class="top-controls">
+  <div class="lang-group">
+    <button class="ctrl-btn lang-btn active" id="btnEN" onclick="setLang('en')">EN</button>
+    <button class="ctrl-btn lang-btn" id="btnPT" onclick="setLang('pt')">PT</button>
+  </div>
+</div>
+
+<div class="cover">
+  <div class="cover-bg"></div>
+  <div class="cover-content">
+    <span class="cover-eyebrow" data-en="A Field Guide to" data-pt="Um Guia de Campo para">A Field Guide to</span>
+    <h1 class="cover-title">Gdań<em>sk</em></h1>
+    <p class="cover-author">by Claudio SAROLDI</p>
+    <div class="cover-rule"></div>
+    <p class="cover-subtitle" data-en="Hanseatic gold, Solidarity's ghost, and the longest wooden pier in Europe." data-pt="Ouro hanseático, o fantasma de Solidarność e o maior cais de madeira da Europa.">Hanseatic gold, Solidarity's ghost, and the longest wooden pier in Europe.</p>
+  </div>
+  <div class="cover-scroll">↓</div>
+</div>
+
+<main>
+
+<!-- THE ESSENTIALS -->
+<div class="section-wrap">
+  <div class="section-header">
+    <div class="section-tag" data-en="Before You Go" data-pt="Antes de Ir">Before You Go</div>
+    <h2 class="section-title" data-en="The <em>Essentials</em>" data-pt="O <em>Essencial</em>">The <em>Essentials</em></h2>
+    <div class="section-rule"></div>
+  </div>
+  <p class="section-intro" data-en="The practical layer. Read this before anything else." data-pt="A camada prática. Leia isso antes de qualquer outra coisa.">The practical layer. Read this before anything else.</p>
+
+  <div class="card" id="ess1" style="animation-delay:0.05s">
+    <button class="card-trigger" onclick="toggleCard('ess1')">
+      <div class="card-icon">🚆</div>
+      <div class="card-info"><div class="card-name" data-en="Getting around" data-pt="Como se locomover">Getting around</div><div class="card-sub" data-en="Transit, trams, and the train to Sopot" data-pt="Transporte, bondes e o trem para Sopot">Transit, trams, and the train to Sopot</div></div>
+      <div class="card-arrow">▼</div>
+    </button>
+    <div class="card-body"><div class="card-rule"></div>
+      <div class="ess-item"><div class="ess-dot"></div><div class="ess-text"><strong data-en="Jakdojade app" data-pt="App Jakdojade">Jakdojade app</strong><span data-en="Download before you arrive. Real-time trams and buses. Payment is fully contactless — tap your card or phone on the yellow validators inside the tram." data-pt="Baixe antes de chegar. Bondes e ônibus em tempo real. Pagamento totalmente por aproximação — encoste o cartão ou celular nos validadores amarelos dentro do bonde.">Download before you arrive. Real-time trams and buses. Payment is fully contactless — tap your card or phone on the yellow validators inside the tram.</span></div></div>
+      <div class="ess-item"><div class="ess-dot"></div><div class="ess-text"><strong data-en="SKM rail to Sopot" data-pt="Trem SKM para Sopot">SKM rail to Sopot</strong><span data-en="Runs every 10–15 minutes from Gdańsk Główny. Journey time around 20 minutes. Buy a paper ticket at the machine or use the app. Do not board without a valid ticket — inspectors are active." data-pt="Sai a cada 10–15 minutos de Gdańsk Główny. Percurso de cerca de 20 minutos. Compre o bilhete de papel na máquina ou use o app. Não embarque sem bilhete válido — os fiscais são ativos.">Runs every 10–15 minutes from Gdańsk Główny. Journey time around 20 minutes. Buy a paper ticket at the machine or use the app. Do not board without a valid ticket — inspectors are active.</span></div></div>
+      <div class="ess-item"><div class="ess-dot"></div><div class="ess-text"><strong data-en="Water Tram F1 to Westerplatte" data-pt="Bonde Aquático F1 para Westerplatte">Water Tram F1 to Westerplatte</strong><span data-en="Seasonal. Departs from the Fish Market near the Green Gate. Slower than the bus but the approach to the memorial by water is worth the extra time." data-pt="Sazonal. Parte do Mercado de Peixes perto do Portão Verde. Mais lento que o ônibus mas a chegada ao memorial pela água vale o tempo extra.">Seasonal. Departs from the Fish Market near the Green Gate. Slower than the bus but the approach to the memorial by water is worth the extra time.</span></div></div>
+      <div class="ess-item"><div class="ess-dot"></div><div class="ess-text"><strong data-en="Old Town on foot" data-pt="Centro Histórico a pé">Old Town on foot</strong><span data-en="Entirely walkable. Cobblestones on Długi Targ and side streets are uneven and hard on feet — wear proper trainers, not fashion shoes." data-pt="Totalmente a pé. As pedras de calçamento em Długi Targ são irregulares — use tênis adequados, não sapatos de moda.">Entirely walkable. Cobblestones on Długi Targ and side streets are uneven and hard on feet — wear proper trainers, not fashion shoes.</span></div></div>
+    </div>
+  </div>
+
+  <div class="card" id="ess2" style="animation-delay:0.1s">
+    <button class="card-trigger" onclick="toggleCard('ess2')">
+      <div class="card-icon">💶</div>
+      <div class="card-info"><div class="card-name" data-en="Money and tipping" data-pt="Dinheiro e gorjetas">Money and tipping</div><div class="card-sub" data-en="Złoty, cards, and the tipping ritual" data-pt="Złoty, cartões e o ritual da gorjeta">Złoty, cards, and the tipping ritual</div></div>
+      <div class="card-arrow">▼</div>
+    </button>
+    <div class="card-body"><div class="card-rule"></div>
+      <div class="ess-item"><div class="ess-dot"></div><div class="ess-text"><strong data-en="Polish Złoty (PLN)" data-pt="Złoty polonês (PLN)">Polish Złoty (PLN)</strong><span data-en="Cards accepted almost everywhere. Keep a few coins for public restrooms. ATMs attached to banks are safer than isolated street machines." data-pt="Cartões aceitos em quase todos os lugares. Guarde algumas moedas para banheiros públicos. Caixas eletrônicos de bancos são mais seguros.">Cards accepted almost everywhere. Keep a few coins for public restrooms. ATMs attached to banks are safer than isolated street machines.</span></div></div>
+      <div class="ess-item"><div class="ess-dot"></div><div class="ess-text"><strong data-en="Tipping" data-pt="Gorjeta">Tipping</strong><span data-en="Not mandatory but 10% is standard for good service. If paying by card, tell the server the total including the tip before they process it — adding it afterwards is usually not possible." data-pt="Não obrigatória, mas 10% é o padrão para um bom serviço. Ao pagar com cartão, diga o total incluindo a gorjeta antes de processar — adicionar depois geralmente não é possível.">Not mandatory but 10% is standard for good service. If paying by card, tell the server the total including the tip before they process it — adding it afterwards is usually not possible.</span></div></div>
+      <div class="ess-item"><div class="ess-dot"></div><div class="ess-text"><strong data-en="Daily budget" data-pt="Orçamento diário">Daily budget</strong><span data-en="PLN 150–250 covers transport, main entry fees and two decent meals. Gdańsk is good value by Western European standards." data-pt="PLN 150–250 cobre transporte, principais entradas e duas refeições decentes. Gdańsk tem bom custo-benefício pelos padrões da Europa Ocidental.">PLN 150–250 covers transport, main entry fees and two decent meals. Gdańsk is good value by Western European standards.</span></div></div>
+    </div>
+  </div>
+
+  <div class="card" id="ess3" style="animation-delay:0.15s">
+    <button class="card-trigger" onclick="toggleCard('ess3')">
+      <div class="card-icon">⚠️</div>
+      <div class="card-info"><div class="card-name" data-en="Scams and small disasters" data-pt="Golpes e pequenos desastres">Scams and small disasters</div><div class="card-sub" data-en="Two specific ones and a rule" data-pt="Dois específicos e uma regra">Two specific ones and a rule</div></div>
+      <div class="card-arrow">▼</div>
+    </button>
+    <div class="card-body"><div class="card-rule"></div>
+      <div class="ess-item"><div class="ess-dot"></div><div class="ess-text"><strong data-en="The 'free drink' trap" data-pt="A armadilha da 'bebida grátis'"">The 'free drink' trap</strong><span data-en="Avoid anyone on Długi Targ in Gdańsk or Monte Cassino in Sopot inviting you for a free drink at a nearby club. These are notorious credit card traps — charges appear long after you leave." data-pt="Evite qualquer pessoa em Długi Targ em Gdańsk ou em Monte Cassino em Sopot convidando para uma bebida grátis. São armadilhas notórias de cartão de crédito — as cobranças aparecem muito depois de você sair.">Avoid anyone on Długi Targ in Gdańsk or Monte Cassino in Sopot inviting you for a free drink at a nearby club. These are notorious credit card traps — charges appear long after you leave.</span></div></div>
+      <div class="ess-item"><div class="ess-dot"></div><div class="ess-text"><strong data-en="The fake petition" data-pt="A petição falsa">The fake petition</strong><span data-en="Near St. Mary's Church, people may approach with a clipboard for a 'deaf charity' and demand money after you sign. Just keep walking." data-pt="Perto da Igreja de Santa Maria, pessoas podem se aproximar com uma prancheta para uma 'instituição de surdos'. Continue andando.">Near St. Mary's Church, people may approach with a clipboard for a 'deaf charity' and demand money after you sign. Just keep walking.</span></div></div>
+      <div class="ess-item"><div class="ess-dot"></div><div class="ess-text"><strong data-en="Weather and gear" data-pt="Clima e equipamento">Weather and gear</strong><span data-en="Summer is 18–24°C but the Baltic wind on the seafront and pier is noticeably colder. Bring a light layer. September has the best light for photography and far fewer crowds than August." data-pt="O verão tem 18–24°C mas o vento do Báltico na orla e no píer é visivelmente mais frio. Leve uma camada leve. Setembro tem a melhor luz para fotografia e muito menos multidões.">Summer is 18–24°C but the Baltic wind on the seafront and pier is noticeably colder. Bring a light layer. September has the best light for photography and far fewer crowds than August.</span></div></div>
+    </div>
+  </div>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- THE ITINERARY -->
+<div class="section-wrap">
+  <div class="section-header">
+    <div class="section-tag" data-en="Day by Day" data-pt="Dia a Dia">Day by Day</div>
+    <h2 class="section-title" data-en="The <em>Itinerary</em>" data-pt="O <em>Roteiro</em>">The <em>Itinerary</em></h2>
+    <div class="section-rule"></div>
+  </div>
+  <p class="section-intro" data-en="Four days structured so each one has a different energy. Two in the city, one in Sopot, one slower day for the outliers." data-pt="Quatro dias estruturados para que cada um tenha uma energia diferente. Dois na cidade, um em Sopot, um dia mais lento para as atrações fora do centro.">Four days structured so each one has a different energy. Two in the city, one in Sopot, one slower day for the outliers.</p>
+
+  <!-- DAY 1 -->
+  <div class="block-card" id="day1" style="animation-delay:0.05s">
+    <button class="block-trigger" onclick="toggleBlock('day1')">
+      <span class="block-num">01</span>
+      <div class="block-info">
+        <div class="block-name" data-en="The Soul of Gdańsk" data-pt="A Alma de Gdańsk">The Soul of Gdańsk</div>
+        <div class="block-tagline" data-en="St. Mary's → Neptune's Fountain → Mariacka Street → Motława waterfront" data-pt="Santa Maria → Fonte de Netuno → Rua Mariacka → Orla do Motława">St. Mary's → Neptune's Fountain → Mariacka Street → Motława waterfront</div>
+      </div>
+      <div class="block-arrow">▼</div>
+    </button>
+    <div class="block-body"><div class="block-divider"></div>
+
+      <div class="stop" id="d1_stmary"><div class="stop-header" onclick="toggleStop('d1_stmary')"><div class="stop-check" onclick="checkStop(event,'d1_stmary')"></div><div class="stop-name" data-en="St. Mary's Church" data-pt="Igreja de Santa Maria">St. Mary's Church</div><span class="badge-must" data-en="Must-see" data-pt="Imperdível">Must-see</span><span class="stop-expand">▾</span></div><div class="stop-details" id="sd_d1_stmary"><div class="detail-rule"></div><div class="detail-hist"><strong data-en="History" data-pt="História">History</strong><span data-en="The largest brick church in the world, built over 150 years. Nearly destroyed in 1945 and painstakingly rebuilt over decades. The scale of the interior — white, Gothic, cavernous — is genuinely disorienting." data-pt="A maior igreja de tijolo do mundo, construída ao longo de 150 anos. Quase destruída em 1945 e meticulosamente reconstruída ao longo de décadas. A escala do interior — branco, gótico, cavernoso — é genuinamente desorientadora.">The largest brick church in the world, built over 150 years. Nearly destroyed in 1945 and painstakingly rebuilt over decades. The scale of the interior — white, Gothic, cavernous — is genuinely disorienting.</span></div><div class="detail-fact"><strong data-en="Did you know" data-pt="Você sabia">Did you know</strong><span data-en="Inside sits a 15th-century astronomical clock so complex that its creator was allegedly blinded so he could never replicate it for anyone else." data-pt="Dentro dela há um relógio astronômico do século XV tão complexo que seu criador teria sido cegado para que nunca pudesse replicá-lo para mais ninguém.">Inside sits a 15th-century astronomical clock so complex that its creator was allegedly blinded so he could never replicate it for anyone else.</span></div><div class="detail-fact"><strong data-en="Photo tip" data-pt="Dica de foto">Photo tip</strong><span data-en="Climb the 400+ steps to the tower. Best at sunset for a panoramic shot of the red-roofed city stretching to the waterfront." data-pt="Suba os mais de 400 degraus até a torre. Melhor ao pôr do sol para uma foto panorâmica da cidade de telhados vermelhos até a orla.">Climb the 400+ steps to the tower. Best at sunset for a panoramic shot of the red-roofed city stretching to the waterfront.</span></div><a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=St+Mary%27s+Church+Gdansk" target="_blank">📍 <span data-en="Take me there" data-pt="Me leve lá">Take me there</span></a></div></div>
+
+      <div class="stop" id="d1_neptune"><div class="stop-header" onclick="toggleStop('d1_neptune')"><div class="stop-check" onclick="checkStop(event,'d1_neptune')"></div><div class="stop-name" data-en="Neptune's Fountain" data-pt="Fonte de Netuno">Neptune's Fountain</div><span class="badge-must" data-en="Must-see" data-pt="Imperdível">Must-see</span><span class="stop-expand">▾</span></div><div class="stop-details" id="sd_d1_neptune"><div class="detail-rule"></div><div class="detail-hist"><strong data-en="History" data-pt="História">History</strong><span data-en="Erected in 1633, this bronze deity symbolises Gdańsk's bond with the sea. It stood witness to the city's wealthiest era as a Hanseatic trading powerhouse." data-pt="Erguida em 1633, esta divindade de bronze simboliza o vínculo de Gdańsk com o mar. Ela testemunhou a era mais próspera da cidade como potência comercial hanseática.">Erected in 1633, this bronze deity symbolises Gdańsk's bond with the sea. It stood witness to the city's wealthiest era as a Hanseatic trading powerhouse.</span></div><div class="detail-fact"><strong data-en="Did you know" data-pt="Você sabia">Did you know</strong><span data-en="Legend says Neptune struck his fountain with his trident in fury at people throwing coins, turning the gold into the glittering flakes found in Goldwasser — the local herbal liqueur." data-pt="A lenda diz que Netuno golpeou sua fonte com o tridente furioso com quem jogava moedas, transformando o ouro nos flocos brilhantes do Goldwasser — o licor de ervas local.">Legend says Neptune struck his fountain with his trident in fury at people throwing coins, turning the gold into the glittering flakes found in Goldwasser — the local herbal liqueur.</span></div><div class="detail-fact"><strong data-en="Photo tip" data-pt="Dica de foto">Photo tip</strong><span data-en="Golden hour. Shoot the fountain with sunlight hitting the ornate façades of Artus Court directly behind it." data-pt="Hora dourada. Fotografe a fonte com a luz do sol batendo nas fachadas ornamentadas do Artus Court logo atrás.">Golden hour. Shoot the fountain with sunlight hitting the ornate façades of Artus Court directly behind it.</span></div><a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=Neptune+Fountain+Gdansk" target="_blank">📍 <span data-en="Take me there" data-pt="Me leve lá">Take me there</span></a></div></div>
+
+      <div class="stop" id="d1_motlawa"><div class="stop-header" onclick="toggleStop('d1_motlawa')"><div class="stop-check" onclick="checkStop(event,'d1_motlawa')"></div><div class="stop-name" data-en="Motława riverside (evening)" data-pt="Orla do Motława (noite)">Motława riverside (evening)</div><span class="badge-hidden" data-en="Blue hour" data-pt="Hora azul">Blue hour</span><span class="stop-expand">▾</span></div><div class="stop-details" id="sd_d1_motlawa"><div class="detail-rule"></div><div class="detail-hist"><strong data-en="Context" data-pt="Contexto">Context</strong><span data-en="The Motława quayside (Długie Pobrzeże) was Gdańsk's medieval commercial artery. The cranes, granaries and merchant houses lining it are some of the best-preserved Hanseatic architecture on the Baltic." data-pt="O cais do Motława (Długie Pobrzeże) foi a artéria comercial medieval de Gdańsk. As gruas, celeiros e casarões de mercadores que o margeiam são parte da arquitetura hanseática mais bem preservada do Báltico.">The Motława quayside (Długie Pobrzeże) was Gdańsk's medieval commercial artery. The cranes, granaries and merchant houses lining it are some of the best-preserved Hanseatic architecture on the Baltic.</span></div><div class="detail-fact"><strong data-en="Photo tip" data-pt="Dica de foto">Photo tip</strong><span data-en="Blue hour from the Ołowianka Island footbridge. The reflection of the Żuraw crane in the water is one of the defining images of Gdańsk." data-pt="Hora azul da passarela da Ilha Ołowianka. O reflexo da grua Żuraw na água é uma das imagens mais emblemáticas de Gdańsk.">Blue hour from the Ołowianka Island footbridge. The reflection of the Żuraw crane in the water is one of the defining images of Gdańsk.</span></div><a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=Dluge+Pobrzeze+Gdansk" target="_blank">📍 <span data-en="Take me there" data-pt="Me leve lá">Take me there</span></a></div></div>
+
+      <div class="food-block" id="food_d1"><div class="food-header" onclick="toggleFood('food_d1')"><span class="food-title" data-en="🍴 Where to Eat — Day 1" data-pt="🍴 Onde Comer — Dia 1">🍴 Where to Eat — Day 1</span><span class="food-arrow">▼</span></div><div class="food-body"><div class="food-rule"></div>
+        <div class="food-item"><div class="food-info"><div class="food-name">Pierogarnia Mandu</div><div class="food-desc" data-en="Old Town · Lunch. Gold standard for pierogi. Order meat or cheese varieties — clear ingredients, large portions. PLN 40–60." data-pt="Centro Histórico · Almoço. Padrão ouro de pierogi. Peça os de carne ou queijo — ingredientes claros, porções generosas. PLN 40–60.">Old Town · Lunch. Gold standard for pierogi. Order meat or cheese varieties — clear ingredients, large portions. PLN 40–60.</div><a class="food-maps" href="https://www.google.com/maps/search/?api=1&query=Pierogarnia+Mandu+Gdansk" target="_blank">Maps ↗</a></div></div>
+        <div class="food-item"><div class="food-info"><div class="food-name">Restauracja Kubicki</div><div class="food-desc" data-en="Stągiewna 1 · Dinner. Gdańsk's oldest restaurant, open since 1918. Vaulted cellar on the waterfront. Order the żurek (sour rye soup) and roast pork knuckle. PLN 60–100." data-pt="Stągiewna 1 · Jantar. O restaurante mais antigo de Gdańsk, aberto desde 1918. Porão abobadado à beira do cais. Peça o żurek e o joelho de porco assado. PLN 60–100.">Stągiewna 1 · Dinner. Gdańsk's oldest restaurant, open since 1918. Vaulted cellar on the waterfront. Order the żurek (sour rye soup) and roast pork knuckle. PLN 60–100.</div><a class="food-maps" href="https://www.google.com/maps/search/?api=1&query=Restauracja+Kubicki+Gdansk" target="_blank">Maps ↗</a></div></div>
+      </div></div>
+
+    </div>
+  </div>
+
+  <!-- DAY 2 -->
+  <div class="block-card" id="day2" style="animation-delay:0.1s">
+    <button class="block-trigger" onclick="toggleBlock('day2')">
+      <span class="block-num">02</span>
+      <div class="block-info">
+        <div class="block-name" data-en="Revolution and heights" data-pt="Revolução e altitude">Revolution and heights</div>
+        <div class="block-tagline" data-en="European Solidarity Centre → Oliwa Cathedral → Olivia Star" data-pt="Centro Europeu de Solidariedade → Catedral de Oliwa → Olivia Star">European Solidarity Centre → Oliwa Cathedral → Olivia Star</div>
+      </div>
+      <div class="block-arrow">▼</div>
+    </button>
+    <div class="block-body"><div class="block-divider"></div>
+
+      <div class="stop" id="d2_solidarity"><div class="stop-header" onclick="toggleStop('d2_solidarity')"><div class="stop-check" onclick="checkStop(event,'d2_solidarity')"></div><div class="stop-name" data-en="European Solidarity Centre" data-pt="Centro Europeu de Solidariedade">European Solidarity Centre</div><span class="badge-must" data-en="Must-see" data-pt="Imperdível">Must-see</span><span class="stop-expand">▾</span></div><div class="stop-details" id="sd_d2_solidarity"><div class="detail-rule"></div><div class="detail-hist"><strong data-en="History" data-pt="História">History</strong><span data-en="Located on the grounds of the Lenin Shipyard, where the Solidarity trade union movement began in August 1980. It became the catalyst for the collapse of communism across Central Europe. The strikes started 200 metres from the museum entrance." data-pt="Localizado nos terrenos do Estaleiro Lenin, onde o movimento sindical Solidarność começou em agosto de 1980. Tornou-se o catalisador para o colapso do comunismo na Europa Central. As greves começaram a 200 metros da entrada do museu.">Located on the grounds of the Lenin Shipyard, where the Solidarity trade union movement began in August 1980. It became the catalyst for the collapse of communism across Central Europe. The strikes started 200 metres from the museum entrance.</span></div><div class="detail-fact"><strong data-en="Did you know" data-pt="Você sabia">Did you know</strong><span data-en="The building's rust-coloured steel exterior deliberately references the hulls of the ships once built here. It earned the architectural nickname 'the ship that never left the yard.'" data-pt="O exterior de aço enferrujado do edifício referencia deliberadamente os cascos dos navios construídos ali. Ganhou o apelido de 'o navio que nunca deixou o estaleiro.'">The building's rust-coloured steel exterior deliberately references the hulls of the ships once built here. It earned the architectural nickname 'the ship that never left the yard.'</span></div><div class="detail-fact"><strong data-en="Best move" data-pt="Melhor estratégia">Best move</strong><span data-en="Block out a full morning — most people plan 45 minutes and walk out two hours later. The rooftop terrace gives an industrial-chic view of the iconic 'giraffe' cranes. Do not skip it." data-pt="Reserve a manhã inteira — a maioria planeja 45 minutos e sai duas horas depois. O terraço no telhado tem uma vista das icônicas gruas 'girafa'. Não pule.">Block out a full morning — most people plan 45 minutes and walk out two hours later. The rooftop terrace gives an industrial-chic view of the iconic 'giraffe' cranes. Do not skip it.</span></div><a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=European+Solidarity+Centre+Gdansk" target="_blank">📍 <span data-en="Take me there" data-pt="Me leve lá">Take me there</span></a></div></div>
+
+      <div class="stop" id="d2_oliwa"><div class="stop-header" onclick="toggleStop('d2_oliwa')"><div class="stop-check" onclick="checkStop(event,'d2_oliwa')"></div><div class="stop-name" data-en="Oliwa Cathedral and Park" data-pt="Catedral e Parque de Oliwa">Oliwa Cathedral and Park</div><span class="badge-hidden" data-en="Hidden gem" data-pt="Joia escondida">Hidden gem</span><span class="stop-expand">▾</span></div><div class="stop-details" id="sd_d2_oliwa"><div class="detail-rule"></div><div class="detail-hist"><strong data-en="History" data-pt="História">History</strong><span data-en="A Cistercian abbey complex founded in the 12th century. The cathedral contains one of the most celebrated Baroque pipe organs in Europe — a working instrument with moving angels, a sun, and a star mechanism that activates during performances." data-pt="Um complexo de abadia cisterciense fundado no século XII. A catedral abriga um dos órgãos barrocos mais celebrados da Europa — um instrumento funcional com anjos móveis, um sol e um mecanismo de estrela que se ativa nas apresentações.">A Cistercian abbey complex founded in the 12th century. The cathedral contains one of the most celebrated Baroque pipe organs in Europe — a working instrument with moving angels, a sun, and a star mechanism that activates during performances.</span></div><div class="detail-fact"><strong data-en="Did you know" data-pt="Você sabia">Did you know</strong><span data-en="Free short organ recitals run several times daily in peak season. Arrive 15 minutes early — they fill up fast. Check the schedule posted at the entrance on the day." data-pt="Recitais curtos e gratuitos acontecem várias vezes ao dia na alta temporada. Chegue 15 minutos antes — lotam rápido. Verifique o horário na entrada no dia.">Free short organ recitals run several times daily in peak season. Arrive 15 minutes early — they fill up fast. Check the schedule posted at the entrance on the day.</span></div><div class="detail-fact"><strong data-en="Photo tip" data-pt="Dica de foto">Photo tip</strong><span data-en="The park behind the cathedral has a narrow formal garden corridor framed by tall hornbeam hedges — a clean, graphic composition even on an overcast day." data-pt="O parque atrás da catedral tem um corredor de jardim formal estreito emoldurado por altas sebes de carpino — uma composição limpa mesmo em dias nublados.">The park behind the cathedral has a narrow formal garden corridor framed by tall hornbeam hedges — a clean, graphic composition even on an overcast day.</span></div><a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=Oliwa+Cathedral+Gdansk" target="_blank">📍 <span data-en="Take me there" data-pt="Me leve lá">Take me there</span></a></div></div>
+
+      <div class="stop" id="d2_oliviastar"><div class="stop-header" onclick="toggleStop('d2_oliviastar')"><div class="stop-check" onclick="checkStop(event,'d2_oliviastar')"></div><div class="stop-name" data-en="Olivia Star — observation deck" data-pt="Olivia Star — deck de observação">Olivia Star — observation deck</div><span class="badge-hidden" data-en="Blue hour" data-pt="Hora azul">Blue hour</span><span class="stop-expand">▾</span></div><div class="stop-details" id="sd_d2_oliviastar"><div class="detail-rule"></div><div class="detail-hist"><strong data-en="Context" data-pt="Contexto">Context</strong><span data-en="The tallest building in northern Poland. The deck is exactly 130 metres high — a deliberate reference to the mast height of the Dar Młodzieży, Poland's famous sail training ship." data-pt="O edifício mais alto do norte da Polônia. O deck fica exatamente a 130 metros — uma referência deliberada à altura do mastro do Dar Młodzieży, o famoso navio-escola à vela da Polônia.">The tallest building in northern Poland. The deck is exactly 130 metres high — a deliberate reference to the mast height of the Dar Młodzieży, Poland's famous sail training ship.</span></div><div class="detail-fact"><strong data-en="Best move" data-pt="Melhor estratégia">Best move</strong><span data-en="Time this for blue hour. On a clear evening you can see all the way to Sopot and the Hel Peninsula." data-pt="Reserve para a hora azul. Em uma noite limpa dá para ver até Sopot e a Península de Hel.">Time this for blue hour. On a clear evening you can see all the way to Sopot and the Hel Peninsula.</span></div><a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=Olivia+Star+observation+Gdansk" target="_blank">📍 <span data-en="Take me there" data-pt="Me leve lá">Take me there</span></a></div></div>
+
+      <div class="food-block" id="food_d2"><div class="food-header" onclick="toggleFood('food_d2')"><span class="food-title" data-en="🍴 Where to Eat — Day 2" data-pt="🍴 Onde Comer — Dia 2">🍴 Where to Eat — Day 2</span><span class="food-arrow">▼</span></div><div class="food-body"><div class="food-rule"></div>
+        <div class="food-item"><div class="food-info"><div class="food-name">Pyra Bar</div><div class="food-desc" data-en="Old Town · Lunch. Dedicated entirely to the potato. The Pyra z gzikiem — baked potato with cottage cheese and herbs — is the one to order. No pretension. PLN 20–40." data-pt="Centro Histórico · Almoço. Dedicado inteiramente à batata. O Pyra z gzikiem — batata assada com queijo cottage e ervas — é o prato a pedir. Sem pretensão. PLN 20–40.">Old Town · Lunch. Dedicated entirely to the potato. The Pyra z gzikiem — baked potato with cottage cheese and herbs — is the one to order. No pretension. PLN 20–40.</div><a class="food-maps" href="https://www.google.com/maps/search/?api=1&query=Pyra+Bar+Gdansk" target="_blank">Maps ↗</a></div></div>
+        <div class="food-item"><div class="food-info"><div class="food-name">SASSY Rooftop Bar</div><div class="food-desc" data-en="Evening drinks. Upscale, vibrant enough to have energy but quiet enough for conversation. Good cocktails, good views. Not a club. PLN 30–55 per cocktail." data-pt="Drinks à noite. Sofisticado, animado o suficiente mas tranquilo o suficiente para conversa. Bons coquetéis, boa vista. Não é uma boate. PLN 30–55.">Evening drinks. Upscale, vibrant enough to have energy but quiet enough for conversation. Good cocktails, good views. Not a club. PLN 30–55 per cocktail.</div><a class="food-maps" href="https://www.google.com/maps/search/?api=1&query=SASSY+Rooftop+Bar+Gdansk" target="_blank">Maps ↗</a></div></div>
+      </div></div>
+
+    </div>
+  </div>
+
+  <!-- DAY 3 -->
+  <div class="block-card" id="day3" style="animation-delay:0.15s">
+    <button class="block-trigger" onclick="toggleBlock('day3')">
+      <span class="block-num">03</span>
+      <div class="block-info">
+        <div class="block-name" data-en="The Baltic Riviera" data-pt="A Riviera do Báltico">The Baltic Riviera</div>
+        <div class="block-tagline" data-en="Sopot day trip — 20 minutes by SKM train" data-pt="Passeio de um dia a Sopot — 20 minutos de trem SKM">Sopot day trip — 20 minutes by SKM train</div>
+      </div>
+      <div class="block-arrow">▼</div>
+    </button>
+    <div class="block-body"><div class="block-divider"></div>
+
+      <div class="stop" id="d3_pier"><div class="stop-header" onclick="toggleStop('d3_pier')"><div class="stop-check" onclick="checkStop(event,'d3_pier')"></div><div class="stop-name" data-en="Sopot Pier (Molo)" data-pt="Píer de Sopot (Molo)">Sopot Pier (Molo)</div><span class="badge-must" data-en="Must-see" data-pt="Imperdível">Must-see</span><span class="stop-expand">▾</span></div><div class="stop-details" id="sd_d3_pier"><div class="detail-rule"></div><div class="detail-hist"><strong data-en="History" data-pt="História">History</strong><span data-en="First built in 1827 as a small jetty for a local spa. Now the longest wooden pier in Europe at 511 metres, extending straight into the Gulf of Gdańsk." data-pt="Construído pela primeira vez em 1827 como um pequeno cais para um spa local. Hoje o maior píer de madeira da Europa com 511 metros, avançando diretamente sobre o Golfo de Gdańsk.">First built in 1827 as a small jetty for a local spa. Now the longest wooden pier in Europe at 511 metres, extending straight into the Gulf of Gdańsk.</span></div><div class="detail-fact"><strong data-en="Did you know" data-pt="Você sabia">Did you know</strong><span data-en="Walking to the end gives you a measurably higher concentration of iodine than standing on the beach — the Baltic's version of a natural spa treatment." data-pt="Andar até o fim oferece uma concentração de iodo visivelmente maior do que ficar na praia — a versão báltica de um tratamento spa natural.">Walking to the end gives you a measurably higher concentration of iodine than standing on the beach — the Baltic's version of a natural spa treatment.</span></div><div class="detail-fact"><strong data-en="Best move" data-pt="Melhor estratégia">Best move</strong><span data-en="Best at sunrise — quiet, soft light, sun rising directly over the Gulf. By 10am it is busy." data-pt="Melhor ao nascer do sol — silêncio, luz suave, sol nascendo diretamente sobre o Golfo. Às 10h já está movimentado.">Best at sunrise — quiet, soft light, sun rising directly over the Gulf. By 10am it is busy.</span></div><a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=Sopot+Pier+Poland" target="_blank">📍 <span data-en="Take me there" data-pt="Me leve lá">Take me there</span></a></div></div>
+
+      <div class="stop" id="d3_monte"><div class="stop-header" onclick="toggleStop('d3_monte')"><div class="stop-check" onclick="checkStop(event,'d3_monte')"></div><div class="stop-name" data-en="Monte Cassino Street" data-pt="Rua Monte Cassino">Monte Cassino Street</div><span class="stop-expand">▾</span></div><div class="stop-details" id="sd_d3_monte"><div class="detail-rule"></div><div class="detail-hist"><strong data-en="Context" data-pt="Contexto">Context</strong><span data-en="Sopot's main pedestrian artery. Car-free, lined with restaurants, bars and boutiques. Connects the SKM station to the pier — you will walk it both ways regardless." data-pt="A principal artéria de pedestres de Sopot. Sem carros, repleta de restaurantes, bares e boutiques. Conecta a estação SKM ao píer — você vai andar por ela nos dois sentidos de qualquer forma.">Sopot's main pedestrian artery. Car-free, lined with restaurants, bars and boutiques. Connects the SKM station to the pier — you will walk it both ways regardless.</span></div><div class="detail-fact"><strong data-en="Warning" data-pt="Atenção">Warning</strong><span data-en="This is where the 'free drink' club touts operate. Anyone approaching with a laminated menu or a suspiciously good offer — keep walking." data-pt="É aqui que operam os abordadores das boates com 'bebida grátis'. Qualquer pessoa se aproximando com um menu plastificado — continue andando.">This is where the 'free drink' club touts operate. Anyone approaching with a laminated menu or a suspiciously good offer — keep walking.</span></div><div class="detail-fact"><strong data-en="Photo tip" data-pt="Dica de foto">Photo tip</strong><span data-en="Most photogenic in the late afternoon when side light hits the Art Nouveau and interwar façades." data-pt="Mais fotogênica no fim da tarde quando a luz lateral bate nas fachadas Art Nouveau.">Most photogenic in the late afternoon when side light hits the Art Nouveau and interwar façades.</span></div><a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=Monte+Cassino+Street+Sopot" target="_blank">📍 <span data-en="Take me there" data-pt="Me leve lá">Take me there</span></a></div></div>
+
+      <div class="food-block" id="food_d3"><div class="food-header" onclick="toggleFood('food_d3')"><span class="food-title" data-en="🍴 Where to Eat — Day 3 (Sopot)" data-pt="🍴 Onde Comer — Dia 3 (Sopot)">🍴 Where to Eat — Day 3 (Sopot)</span><span class="food-arrow">▼</span></div><div class="food-body"><div class="food-rule"></div>
+        <div class="food-item"><div class="food-info"><div class="food-name">Bulaj</div><div class="food-desc" data-en="Monte Cassino area · Lunch. Relaxed café-bar where locals actually eat. Soups, pierogi, sandwiches. Check daily specials — some may include Baltic fish. PLN 35–55." data-pt="Área de Monte Cassino · Almoço. Café-bar relaxado onde os locais comem. Sopas, pierogi, sanduíches. Verifique os especiais — alguns podem incluir peixe do Báltico. PLN 35–55.">Monte Cassino area · Lunch. Relaxed café-bar where locals actually eat. Soups, pierogi, sandwiches. Check daily specials — some may include Baltic fish. PLN 35–55.</div><a class="food-maps" href="https://www.google.com/maps/search/?api=1&query=Bulaj+Sopot" target="_blank">Maps ↗</a></div></div>
+      </div></div>
+
+    </div>
+  </div>
+
+  <!-- DAY 4 -->
+  <div class="block-card" id="day4" style="animation-delay:0.2s">
+    <button class="block-trigger" onclick="toggleBlock('day4')">
+      <span class="block-num">04</span>
+      <div class="block-info">
+        <div class="block-name" data-en="The fortress and the hill" data-pt="A fortaleza e a colina">The fortress and the hill</div>
+        <div class="block-tagline" data-en="Slow day, off the tourist trail, big payoff after dark" data-pt="Dia tranquilo, fora do circuito turístico, grande recompensa à noite">Slow day, off the tourist trail, big payoff after dark</div>
+      </div>
+      <div class="block-arrow">▼</div>
+    </button>
+    <div class="block-body"><div class="block-divider"></div>
+
+      <div class="stop" id="d4_fortress"><div class="stop-header" onclick="toggleStop('d4_fortress')"><div class="stop-check" onclick="checkStop(event,'d4_fortress')"></div><div class="stop-name" data-en="Wisłoujście Fortress" data-pt="Fortaleza de Wisłoujście">Wisłoujście Fortress</div><span class="badge-hidden" data-en="Off the trail" data-pt="Fora do circuito">Off the trail</span><span class="stop-expand">▾</span></div><div class="stop-details" id="sd_d4_fortress"><div class="detail-rule"></div><div class="detail-hist"><strong data-en="History" data-pt="História">History</strong><span data-en="A 14th-century river-mouth fortress that controlled all maritime access to Gdańsk for centuries. Every ship entering the port paid a toll here. The earthworks and moats are largely intact — it looks almost exactly as it did in 17th-century engravings." data-pt="Uma fortaleza do século XIV na foz do rio que controlou todo o acesso marítimo a Gdańsk por séculos. Cada navio que entrava pagava pedágio aqui. As muralhas de terra e fossos estão em grande parte intactos — tem quase a mesma aparência das gravuras do século XVII.">A 14th-century river-mouth fortress that controlled all maritime access to Gdańsk for centuries. Every ship entering the port paid a toll here. The earthworks and moats are largely intact — it looks almost exactly as it did in 17th-century engravings.</span></div><div class="detail-fact"><strong data-en="Did you know" data-pt="Você sabia">Did you know</strong><span data-en="The tower is one of the oldest lighthouse structures on the Baltic. Most visitors to Gdańsk never come out this far — which is exactly why it is worth it." data-pt="A torre é uma das estruturas de farol mais antigas do Báltico. A maioria dos visitantes de Gdańsk nunca chega tão longe — o que é exatamente o motivo pelo qual vale a pena.">The tower is one of the oldest lighthouse structures on the Baltic. Most visitors to Gdańsk never come out this far — which is exactly why it is worth it.</span></div><div class="detail-fact"><strong data-en="Photo tip" data-pt="Dica de foto">Photo tip</strong><span data-en="Shoot from the outer earthwork berm back toward the tower for a composition with no modern buildings in frame." data-pt="Fotografe a partir da borda exterior das muralhas de volta para a torre — nenhum edifício moderno no enquadramento.">Shoot from the outer earthwork berm back toward the tower for a composition with no modern buildings in frame.</span></div><a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=Wisloujescie+Fortress+Gdansk" target="_blank">📍 <span data-en="Take me there" data-pt="Me leve lá">Take me there</span></a></div></div>
+
+      <div class="stop" id="d4_gora"><div class="stop-header" onclick="toggleStop('d4_gora')"><div class="stop-check" onclick="checkStop(event,'d4_gora')"></div><div class="stop-name" data-en="Góra Gradowa (after dark)" data-pt="Góra Gradowa (após o anoitecer)">Góra Gradowa (after dark)</div><span class="badge-hidden" data-en="Insider secret" data-pt="Segredo local">Insider secret</span><span class="stop-expand">▾</span></div><div class="stop-details" id="sd_d4_gora"><div class="detail-rule"></div><div class="detail-hist"><strong data-en="Context" data-pt="Contexto">Context</strong><span data-en="A small hill directly behind the main train station, topped with 19th-century Prussian fortifications. Takes 10 minutes to walk up. Almost completely ignored by tourists." data-pt="Uma pequena colina diretamente atrás da estação ferroviária principal, coroada com fortificações prussianas do século XIX. Leva 10 minutos para subir. Quase completamente ignorada pelos turistas.">A small hill directly behind the main train station, topped with 19th-century Prussian fortifications. Takes 10 minutes to walk up. Almost completely ignored by tourists.</span></div><div class="detail-fact"><strong data-en="Why it matters" data-pt="Por que importa">Why it matters</strong><span data-en="The best viewpoint in Gdańsk for the shipyard cranes at night. The glowing 'giraffes' on one side, Old Town spires on the other — no other spot gives you both." data-pt="O melhor ponto de observação de Gdańsk para as gruas à noite. As 'girafas' brilhantes de um lado, as torres do Centro Histórico do outro — nenhum lugar oferece os dois.">The best viewpoint in Gdańsk for the shipyard cranes at night. The glowing 'giraffes' on one side, Old Town spires on the other — no other spot gives you both.</span></div><div class="detail-fact"><strong data-en="Photo tip" data-pt="Dica de foto">Photo tip</strong><span data-en="Bring a tripod. 20–30 second exposures capture the crane lights and port glow. Zero tourists blocking your frame." data-pt="Leve um tripé. Exposições de 20–30 segundos capturam as luzes das gruas e o brilho do porto. Zero turistas bloqueando seu enquadramento.">Bring a tripod. 20–30 second exposures capture the crane lights and port glow. Zero tourists blocking your frame.</span></div><a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=Gora+Gradowa+Gdansk" target="_blank">📍 <span data-en="Take me there" data-pt="Me leve lá">Take me there</span></a></div></div>
+
+    </div>
+  </div>
+
+</div>
+
+<div class="section-divider"></div>
+
+<!-- LOCAL FOOD -->
+<div class="section-wrap">
+  <div class="section-header">
+    <div class="section-tag" data-en="Eat Well" data-pt="Coma Bem">Eat Well</div>
+    <h2 class="section-title" data-en="Local <em>Food</em>" data-pt="Comida <em>Local</em>">Local <em>Food</em></h2>
+    <div class="section-rule"></div>
+  </div>
+  <p class="section-intro" data-en="What is worth ordering and where. Polish food is underrated — do not default to whatever the tourist menu is pushing." data-pt="O que vale pedir e onde. A comida polonesa é subestimada — não caia no que o menu turístico está empurrando.">What is worth ordering and where. Polish food is underrated — do not default to whatever the tourist menu is pushing.</p>
+
+  <div class="card" id="food_dishes" style="animation-delay:0.05s">
+    <button class="card-trigger" onclick="toggleCard('food_dishes')">
+      <div class="card-icon">🍽️</div>
+      <div class="card-info"><div class="card-name" data-en="Dishes worth ordering" data-pt="Pratos que valem a pena pedir">Dishes worth ordering</div><div class="card-sub" data-en="The honest shortlist — what is actually Polish, not tourist filler" data-pt="A lista honesta — o que é realmente polonês, não recheio de menu turístico">The honest shortlist — what is actually Polish, not tourist filler</div></div>
+      <div class="card-arrow">▼</div>
+    </button>
+    <div class="card-body"><div class="card-rule"></div>
+      <div class="ess-item"><div class="ess-dot"></div><div class="ess-text"><strong>Żurek</strong><span data-en="Sour rye soup served in a bread bowl with hard-boiled egg and sausage. The defining comfort dish of the region. Order it everywhere until you find the best version." data-pt="Sopa de centeio azedo servida em um pão com ovo cozido e linguiça. O prato de conforto definidor da região. Peça em todos os lugares até encontrar a melhor versão.">Sour rye soup served in a bread bowl with hard-boiled egg and sausage. The defining comfort dish of the region. Order it everywhere until you find the best version.</span></div></div>
+      <div class="ess-item"><div class="ess-dot"></div><div class="ess-text"><strong>Pierogi ruskie</strong><span data-en="Dumplings filled with potato and cottage cheese. The benchmark version of Poland's most famous dish — simple is better than the overloaded tourist varieties." data-pt="Bolinhos recheados com batata e queijo cottage. A versão de referência do prato mais famoso da Polônia — o simples é melhor do que as variedades turísticas sobrecarregadas.">Dumplings filled with potato and cottage cheese. The benchmark version of Poland's most famous dish — simple is better than the overloaded tourist varieties.</span></div></div>
+      <div class="ess-item"><div class="ess-dot"></div><div class="ess-text"><strong data-en="Golonka (roast pork knuckle)" data-pt="Golonka (joelho de porco assado)">Golonka (roast pork knuckle)</strong><span data-en="Slow-roasted, with skin on. A serious dish. Order it at a proper restaurant — Kubicki does the definitive version in Gdańsk." data-pt="Assado lentamente com a pele. Um prato sério. Peça em um restaurante de verdade — o Kubicki faz a versão definitiva em Gdańsk.">Slow-roasted, with skin on. A serious dish. Order it at a proper restaurant — Kubicki does the definitive version in Gdańsk.</span></div></div>
+      <div class="ess-item"><div class="ess-dot"></div><div class="ess-text"><strong>Bigos</strong><span data-en="Hunter's stew — sauerkraut, fresh cabbage, mushrooms, and whatever meat is going. Tastes better the longer it sits. A good version is genuinely excellent." data-pt="Ensopado do caçador — chucrute, repolho fresco, cogumelos e a carne que tiver. Fica melhor quanto mais tempo descansa. Uma boa versão é genuinamente excelente.">Hunter's stew — sauerkraut, fresh cabbage, mushrooms, and whatever meat is going. Tastes better the longer it sits. A good version is genuinely excellent.</span></div></div>
+      <div class="ess-item"><div class="ess-dot"></div><div class="ess-text"><strong>Goldwasser</strong><span data-en="The Gdańsk herbal liqueur with floating gold flakes. Not a food, but mandatory at least once. Order it as a digestif. The Neptune legend makes it taste better." data-pt="O licor de ervas de Gdańsk com flocos de ouro flutuantes. Não é comida, mas obrigatório pelo menos uma vez. Peça como digestivo. A lenda de Netuno o torna mais saboroso.">The Gdańsk herbal liqueur with floating gold flakes. Not a food, but mandatory at least once. Order it as a digestif. The Neptune legend makes it taste better.</span></div></div>
+    </div>
+  </div>
+
+  <div class="card" id="food_rest" style="animation-delay:0.1s">
+    <button class="card-trigger" onclick="toggleCard('food_rest')">
+      <div class="card-icon">📍</div>
+      <div class="card-info"><div class="card-name" data-en="Where to eat — the full list" data-pt="Onde comer — a lista completa">Where to eat — the full list</div><div class="card-sub" data-en="Ranked by reliability, not hype" data-pt="Classificados por confiabilidade, não hype">Ranked by reliability, not hype</div></div>
+      <div class="card-arrow">▼</div>
+    </button>
+    <div class="card-body"><div class="card-rule"></div>
+      <div class="ess-item"><div class="ess-dot"></div><div class="ess-text"><strong>Restauracja Kubicki</strong><span data-en="Stągiewna 1 · Open since 1918. Vaulted cellar on the waterfront. The serious dinner option. Book ahead for evenings." data-pt="Stągiewna 1 · Aberto desde 1918. Porão abobadado à beira do cais. A opção de jantar sério. Reserve com antecedência para as noites.">Stągiewna 1 · Open since 1918. Vaulted cellar on the waterfront. The serious dinner option. Book ahead for evenings.</span>&nbsp;<a class="food-maps" href="https://www.google.com/maps/search/?api=1&query=Restauracja+Kubicki+Gdansk" target="_blank">Maps ↗</a></div></div>
+      <div class="ess-item"><div class="ess-dot"></div><div class="ess-text"><strong>Pierogarnia Mandu</strong><span data-en="Old Town · Gold standard for pierogi. Clear ingredients, honest prices. Ask about fillings if uncertain." data-pt="Centro Histórico · Padrão ouro de pierogi. Ingredientes claros, preços honestos. Pergunte sobre os recheios se não tiver certeza.">Old Town · Gold standard for pierogi. Clear ingredients, honest prices. Ask about fillings if uncertain.</span>&nbsp;<a class="food-maps" href="https://www.google.com/maps/search/?api=1&query=Pierogarnia+Mandu+Gdansk" target="_blank">Maps ↗</a></div></div>
+      <div class="ess-item"><div class="ess-dot"></div><div class="ess-text"><strong>Pyra Bar</strong><span data-en="Old Town · Entirely potato-focused. No pretension, very cheap, surprisingly good. The Pyra z gzikiem is the dish." data-pt="Centro Histórico · Totalmente focado em batatas. Sem pretensão, muito barato, surpreendentemente bom. O Pyra z gzikiem é o prato.">Old Town · Entirely potato-focused. No pretension, very cheap, surprisingly good. The Pyra z gzikiem is the dish.</span>&nbsp;<a class="food-maps" href="https://www.google.com/maps/search/?api=1&query=Pyra+Bar+Gdansk" target="_blank">Maps ↗</a></div></div>
+      <div class="ess-item"><div class="ess-dot"></div><div class="ess-text"><strong>Bulaj (Sopot)</strong><span data-en="Monte Cassino area · Relaxed café-bar where locals eat on the Sopot day. Check specials for fish before ordering." data-pt="Área de Monte Cassino · Café-bar relaxado onde os locais comem no dia de Sopot. Verifique os especiais para peixe antes de pedir.">Monte Cassino area · Relaxed café-bar where locals eat on the Sopot day. Check specials for fish before ordering.</span>&nbsp;<a class="food-maps" href="https://www.google.com/maps/search/?api=1&query=Bulaj+Sopot" target="_blank">Maps ↗</a></div></div>
+      <div class="ess-item"><div class="ess-dot"></div><div class="ess-text"><strong data-en="Waterfront terraces on Długie Pobrzeże" data-pt="Terraços à beira do Długie Pobrzeże">Waterfront terraces on Długie Pobrzeże</strong><span data-en="You are paying for the view. The food is fine but not the point. Good for a Goldwasser after the evening walk." data-pt="Você está pagando pela vista. A comida é aceitável mas não é o ponto. Bom para um Goldwasser após o passeio noturno.">You are paying for the view. The food is fine but not the point. Good for a Goldwasser after the evening walk.</span></div></div>
+    </div>
+  </div>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- GOOD TO KNOW -->
+<div class="section-wrap">
+  <div class="section-header">
+    <div class="section-tag" data-en="Practical" data-pt="Prático">Practical</div>
+    <h2 class="section-title" data-en="Good to <em>Know</em>" data-pt="Bom <em>Saber</em>">Good to <em>Know</em></h2>
+    <div class="section-rule"></div>
+  </div>
+  <p class="section-intro" data-en="The things that save time and prevent small disasters." data-pt="As coisas que economizam tempo e previnem pequenos desastres.">The things that save time and prevent small disasters.</p>
+
+  <div class="card" id="gtk1" style="animation-delay:0.05s">
+    <button class="card-trigger" onclick="toggleCard('gtk1')">
+      <div class="card-icon">🏅</div>
+      <div class="card-info"><div class="card-name" data-en="Amber — buy it, but buy it right" data-pt="Âmbar — compre, mas compre certo">Amber — buy it, but buy it right</div><div class="card-sub" data-en="80–90% of the world's amber comes from this coast" data-pt="80–90% do âmbar mundial vem desta costa">80–90% of the world's amber comes from this coast</div></div>
+      <div class="card-arrow">▼</div>
+    </button>
+    <div class="card-body"><div class="card-rule"></div>
+      <div class="ess-item"><div class="ess-dot"></div><div class="ess-text"><strong data-en="It is not a tourist trap" data-pt="Não é uma armadilha turística">It is not a tourist trap</strong><span data-en="Amber has been traded in Gdańsk for 2,000 years. Street stalls frequently sell plastic imitations. Reputable shops on Mariacka Street carry certification — that is the right place to buy." data-pt="O âmbar é comercializado em Gdańsk há 2.000 anos. Barracas de rua frequentemente vendem imitações de plástico. As lojas de confiança na Rua Mariacka têm certificação — esse é o lugar certo.">Amber has been traded in Gdańsk for 2,000 years. Street stalls frequently sell plastic imitations. Reputable shops on Mariacka Street carry certification — that is the right place to buy.</span></div></div>
+      <div class="ess-item"><div class="ess-dot"></div><div class="ess-text"><strong data-en="How to test it" data-pt="Como testá-lo">How to test it</strong><span data-en="Rub it vigorously and smell — real amber smells of pine resin. Under UV light (most phone torch apps have this mode), genuine amber glows blue-green. Plastic does not." data-pt="Esfregue vigorosamente e cheire — o âmbar real cheira a resina de pinho. Sob luz UV (maioria dos apps de lanterna tem esse modo), o âmbar genuíno brilha em azul-verde. Plástico não.">Rub it vigorously and smell — real amber smells of pine resin. Under UV light (most phone torch apps have this mode), genuine amber glows blue-green. Plastic does not.</span></div></div>
+    </div>
+  </div>
+
+  <div class="card" id="gtk2" style="animation-delay:0.1s">
+    <button class="card-trigger" onclick="toggleCard('gtk2')">
+      <div class="card-icon">🌊</div>
+      <div class="card-info"><div class="card-name" data-en="Practical logistics" data-pt="Logística prática">Practical logistics</div><div class="card-sub" data-en="Small things that save time on the ground" data-pt="Pequenas coisas que economizam tempo no local">Small things that save time on the ground</div></div>
+      <div class="card-arrow">▼</div>
+    </button>
+    <div class="card-body"><div class="card-rule"></div>
+      <div class="ess-item"><div class="ess-dot"></div><div class="ess-text"><strong data-en="Tap water" data-pt="Água da torneira">Tap water</strong><span data-en="Safe to drink throughout Poland. Carry a refillable bottle — the Old Town has public drinking fountains near the Green Gate." data-pt="Segura para beber em toda a Polônia. Leve uma garrafa reutilizável — o Centro Histórico tem bebedouros públicos perto do Portão Verde.">Safe to drink throughout Poland. Carry a refillable bottle — the Old Town has public drinking fountains near the Green Gate.</span></div></div>
+      <div class="ess-item"><div class="ess-dot"></div><div class="ess-text"><strong data-en="Baltic wind" data-pt="Vento do Báltico">Baltic wind</strong><span data-en="Even on warm summer days, the seafront, the Sopot pier, and Westerplatte are noticeably colder than the city centre. A light layer in your bag is not optional." data-pt="Mesmo em dias quentes, a orla, o píer de Sopot e Westerplatte são visivelmente mais frios que o centro da cidade. Uma camada leve na mochila não é opcional.">Even on warm summer days, the seafront, the Sopot pier, and Westerplatte are noticeably colder than the city centre. A light layer in your bag is not optional.</span></div></div>
+      <div class="ess-item"><div class="ess-dot"></div><div class="ess-text"><strong data-en="Best base" data-pt="Melhor base">Best base</strong><span data-en="Old Town or Granary Island (Wyspa Spichrzów). You can walk Days 1 and 4 from either. Sopot accommodation adds time and complexity without the beach being the main draw." data-pt="Centro Histórico ou Ilha dos Celeiros (Wyspa Spichrzów). Você pode fazer os Dias 1 e 4 a pé. Hospedar-se em Sopot adiciona tempo e complexidade sem a praia ser o principal atrativo.">Old Town or Granary Island (Wyspa Spichrzów). You can walk Days 1 and 4 from either. Sopot accommodation adds time and complexity without the beach being the main draw.</span></div></div>
+      <div class="ess-item"><div class="ess-dot"></div><div class="ess-text"><strong data-en="Parking" data-pt="Estacionamento">Parking</strong><span data-en="If you have a car, park at the edge of the Old Town at a paid P+R lot and walk in. Driving into Długi Targ is not permitted and surrounding streets are badly congested in summer." data-pt="Se vier de carro, estacione na borda do Centro Histórico num P+R pago e vá a pé. Entrar de carro em Długi Targ não é permitido e as ruas ao redor ficam muito congestionadas.">If you have a car, park at the edge of the Old Town at a paid P+R lot and walk in. Driving into Długi Targ is not permitted and surrounding streets are badly congested in summer.</span></div></div>
+    </div>
+  </div>
+
+  <div class="card" id="gtk3" style="animation-delay:0.15s">
+    <button class="card-trigger" onclick="toggleCard('gtk3')">
+      <div class="card-icon">🏛️</div>
+      <div class="card-info"><div class="card-name" data-en="Things that will catch you off guard" data-pt="Coisas que vão te pegar de surpresa">Things that will catch you off guard</div><div class="card-sub" data-en="The honest list" data-pt="A lista honesta">The honest list</div></div>
+      <div class="card-arrow">▼</div>
+    </button>
+    <div class="card-body"><div class="card-rule"></div>
+      <div class="ess-item"><div class="ess-dot"></div><div class="ess-text"><strong data-en="The Solidarity Centre takes longer than you expect" data-pt="O Centro de Solidariedade leva mais tempo do que você espera">The Solidarity Centre takes longer than you expect</strong><span data-en="Most people plan 45 minutes and walk out two hours later. The exhibition is that good. Build the whole morning around it." data-pt="A maioria das pessoas planeja 45 minutos e sai duas horas depois. A exposição é assim tão boa. Construa a manhã inteira em torno disso.">Most people plan 45 minutes and walk out two hours later. The exhibition is that good. Build the whole morning around it.</span></div></div>
+      <div class="ess-item"><div class="ess-dot"></div><div class="ess-text"><strong data-en="Sopot in August is very busy" data-pt="Sopot em agosto fica muito movimentada">Sopot in August is very busy</strong><span data-en="The pier and beach get genuinely crowded in peak summer. September is dramatically better for atmosphere and photography." data-pt="O píer e a praia ficam genuinamente cheios no pico do verão. Setembro é dramaticamente melhor para atmosfera e fotografia.">The pier and beach get genuinely crowded in peak summer. September is dramatically better for atmosphere and photography.</span></div></div>
+      <div class="ess-item"><div class="ess-dot"></div><div class="ess-text"><strong data-en="The Old Town is not the city" data-pt="O Centro Histórico não é a cidade">The Old Town is not the city</strong><span data-en="Most of what you see was rebuilt after 1945. The real Gdańsk extends into Oliwa, Wrzeszcz, and the Shipyard district — none of which look like a postcard, all of which are worth understanding." data-pt="A maior parte do que você vê foi reconstruída depois de 1945. A Gdańsk real se estende por Oliwa, Wrzeszcz e o distrito do Estaleiro — nada disso parece um cartão postal, mas tudo vale entender.">Most of what you see was rebuilt after 1945. The real Gdańsk extends into Oliwa, Wrzeszcz, and the Shipyard district — none of which look like a postcard, all of which are worth understanding.</span></div></div>
+    </div>
+  </div>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- THE THINGS THAT ACTUALLY MATTER -->
+<div class="section-wrap">
+  <div class="section-header">
+    <div class="section-tag" data-en="Honest Advice" data-pt="Conselho Honesto">Honest Advice</div>
+    <h2 class="section-title" data-en="The Things That <em>Actually Matter</em>" data-pt="As Coisas Que <em>Realmente Importam</em>">The Things That <em>Actually Matter</em></h2>
+    <div class="section-rule"></div>
+  </div>
+  <p class="section-intro" data-en="Opinionated. Specific to Gdańsk. Not on most travel guides." data-pt="Com opiniões. Específico para Gdańsk. Não está na maioria dos guias de viagem.">Opinionated. Specific to Gdańsk. Not on most travel guides.</p>
+
+  <div class="card" id="matters1" style="animation-delay:0.05s">
+    <button class="card-trigger" onclick="toggleCard('matters1')">
+      <div class="card-icon">💡</div>
+      <div class="card-info"><div class="card-name" data-en="What most people miss" data-pt="O que a maioria das pessoas perde">What most people miss</div><div class="card-sub" data-en="Five things worth knowing before you go" data-pt="Cinco coisas que valem saber antes de ir">Five things worth knowing before you go</div></div>
+      <div class="card-arrow">▼</div>
+    </button>
+    <div class="card-body"><div class="card-rule"></div>
+      <div class="ess-item"><div class="ess-dot"></div><div class="ess-text"><strong>🏙️ <span data-en="Gdańsk is not Warsaw. Do not treat it like Warsaw." data-pt="Gdańsk não é Varsóvia. Não a trate como Varsóvia.">Gdańsk is not Warsaw. Do not treat it like Warsaw.</span></strong><span data-en="Most first-time visitors to Poland assume the whole country follows the same rhythm. Gdańsk is a Hanseatic port city with a completely different identity — German, Dutch and Polish influences layered over centuries of sea trade. The Old Town looks Flemish because it was partly designed by Flemish architects. Context makes everything richer." data-pt="A maioria dos viajantes que visita a Polônia pela primeira vez assume que o país inteiro segue o mesmo ritmo. Gdańsk é uma cidade portuária hanseática com identidade completamente diferente — influências alemãs, holandesas e polonesas sobrepostas em séculos de comércio marítimo. O Centro Histórico parece flamengo porque foi parcialmente projetado por arquitetos flamengos. O contexto enriquece tudo.">Most first-time visitors to Poland assume the whole country follows the same rhythm. Gdańsk is a Hanseatic port city with a completely different identity — German, Dutch and Polish influences layered over centuries of sea trade. The Old Town looks Flemish because it was partly designed by Flemish architects. Context makes everything richer.</span></div></div>
+      <div class="ess-item"><div class="ess-dot"></div><div class="ess-text"><strong>✊ <span data-en="The Solidarity Centre will hit differently than you expect." data-pt="O Centro de Solidariedade vai te impactar de um jeito inesperado.">The Solidarity Centre will hit differently than you expect.</span></strong><span data-en="Most people treat it as a history museum. It is, but it is also one of the best-designed museum experiences in Europe — the kind that leaves you standing in front of a photograph for ten minutes without noticing. The 1980 shipyard strike started 200 metres from where you will be standing. Block out a full morning. Do not rush it." data-pt="A maioria das pessoas trata como um museu de história. É, mas também é uma das experiências museológicas mais bem projetadas da Europa — o tipo que te deixa parado na frente de uma fotografia por dez minutos sem perceber. A greve de 1980 começou a 200 metros de onde você vai estar. Reserve uma manhã inteira.">Most people treat it as a history museum. It is, but it is also one of the best-designed museum experiences in Europe — the kind that leaves you standing in front of a photograph for ten minutes without noticing. The 1980 shipyard strike started 200 metres from where you will be standing. Block out a full morning. Do not rush it.</span></div></div>
+      <div class="ess-item"><div class="ess-dot"></div><div class="ess-text"><strong>🏗️ <span data-en="The cranes are the skyline. Learn to see them." data-pt="As gruas são a linha do horizonte. Aprenda a vê-las.">The cranes are the skyline. Learn to see them.</span></strong><span data-en="The yellow 'giraffe' cranes of the Lenin Shipyard visible from all over northern Gdańsk are not industrial clutter — they are the physical monument to where modern European history turned. Once you understand what happened beneath them in August 1980, they become the most emotionally significant thing you can see from any rooftop in the city." data-pt="As gruas 'girafa' amarelas do Estaleiro Lenin não são entulho industrial — são o monumento físico do ponto em que a história europeia moderna virou. Quando você entende o que aconteceu embaixo delas em agosto de 1980, elas se tornam a coisa mais emocionalmente significativa que você pode ver de qualquer telhado na cidade.">The yellow 'giraffe' cranes of the Lenin Shipyard visible from all over northern Gdańsk are not industrial clutter — they are the physical monument to where modern European history turned. Once you understand what happened beneath them in August 1980, they become the most emotionally significant thing you can see from any rooftop in the city.</span></div></div>
+      <div class="ess-item"><div class="ess-dot"></div><div class="ess-text"><strong>🏖️ <span data-en="Sopot is one afternoon, not a separate trip." data-pt="Sopot é uma tarde, não uma viagem separada.">Sopot is one afternoon, not a separate trip.</span></strong><span data-en="Beautiful beach resort, nice pier, pleasant street. But it is a day-trip satellite of Gdańsk, not a destination in its own right for a 4-day visit. Take the SKM over, walk the pier, have lunch, walk Monte Cassino, and be back in Gdańsk for dinner. Do not plan to overnight there unless the beach is genuinely the main reason you came." data-pt="Resort de praia bonito, píer agradável, rua simpática. Mas é um satélite de passeio de dia de Gdańsk, não um destino por si só para 4 dias. Pegue o SKM, caminhe pelo píer, almoce, caminhe em Monte Cassino e volte para Gdańsk para o jantar.">Beautiful beach resort, nice pier, pleasant street. But it is a day-trip satellite of Gdańsk, not a destination in its own right for a 4-day visit. Take the SKM over, walk the pier, have lunch, walk Monte Cassino, and be back in Gdańsk for dinner. Do not plan to overnight there unless the beach is genuinely the main reason you came.</span></div></div>
+      <div class="ess-item"><div class="ess-dot"></div><div class="ess-text"><strong>🌙 <span data-en="Plan at least one evening with no destination." data-pt="Planeje pelo menos uma noite sem destino.">Plan at least one evening with no destination.</span></strong><span data-en="Once the day-trippers leave, the Old Town becomes a genuinely different place. The light on the merchant house façades, the Motława reflections, the emptied cobblestone streets — this is when Gdańsk earns it. Walk without a plan. You will end up somewhere worth being." data-pt="Quando os turistas de dia partem, o Centro Histórico se torna um lugar genuinamente diferente. A luz nas fachadas dos casarões, os reflexos no Motława, as ruas esvaziadas — é quando Gdańsk se justifica. Caminhe sem plano.">Once the day-trippers leave, the Old Town becomes a genuinely different place. The light on the merchant house façades, the Motława reflections, the emptied cobblestone streets — this is when Gdańsk earns it. Walk without a plan. You will end up somewhere worth being.</span></div></div>
+    </div>
+  </div>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- USEFUL PHRASES -->
+<div class="section-wrap">
+  <div class="section-header">
+    <div class="section-tag" data-en="Speak Like a Local" data-pt="Fale Como um Local">Speak Like a Local</div>
+    <h2 class="section-title" data-en="A Few Words of <em>Polish</em>" data-pt="Algumas Palavras de <em>Polonês</em>">A Few Words of <em>Polish</em></h2>
+    <div class="section-rule"></div>
+  </div>
+  <p class="section-intro" data-en="People appreciate the effort. Even one phrase changes the whole interaction. Press play to hear each one." data-pt="As pessoas apreciam o esforço. Mesmo uma frase muda toda a interação. Pressione play para ouvir cada uma.">People appreciate the effort. Even one phrase changes the whole interaction. Press play to hear each one.</p>
+
+  <div class="phrase-group">
+    <div class="phrase-group-title" data-en="Everyday" data-pt="Cotidiano">Everyday</div>
+    <div class="phrase-row"><div class="phrase-texts"><div class="phrase-orig">Dzień dobry</div><div class="phrase-note" data-en="good morning / hello — use it on entering any shop" data-pt="bom dia / olá — use ao entrar em qualquer loja">good morning / hello — use it on entering any shop</div><div class="phrase-meaning">Jeyn DO-bri</div></div><button class="speak-btn" onclick="speak('Dzień dobry','pl-PL')"><svg viewBox="0 0 10 10"><polygon points="2,1 9,5 2,9"/></svg></button></div>
+    <div class="phrase-row"><div class="phrase-texts"><div class="phrase-orig">Dziękuję</div><div class="phrase-note" data-en="thank you — use it constantly" data-pt="obrigado/a — use constantemente">thank you — use it constantly</div><div class="phrase-meaning">Jen-KOO-yeh</div></div><button class="speak-btn" onclick="speak('Dziękuję','pl-PL')"><svg viewBox="0 0 10 10"><polygon points="2,1 9,5 2,9"/></svg></button></div>
+    <div class="phrase-row"><div class="phrase-texts"><div class="phrase-orig">Przepraszam</div><div class="phrase-note" data-en="excuse me / sorry" data-pt="com licença / desculpe">excuse me / sorry</div><div class="phrase-meaning">Pshe-PRA-sham</div></div><button class="speak-btn" onclick="speak('Przepraszam','pl-PL')"><svg viewBox="0 0 10 10"><polygon points="2,1 9,5 2,9"/></svg></button></div>
+    <div class="phrase-row"><div class="phrase-texts"><div class="phrase-orig">Na zdrowie!</div><div class="phrase-note" data-en="cheers!" data-pt="saúde!">cheers!</div><div class="phrase-meaning">Na ZDRO-vyeh</div></div><button class="speak-btn" onclick="speak('Na zdrowie','pl-PL')"><svg viewBox="0 0 10 10"><polygon points="2,1 9,5 2,9"/></svg></button></div>
+  </div>
+
+  <div class="phrase-group">
+    <div class="phrase-group-title" data-en="At the Restaurant" data-pt="No Restaurante">At the Restaurant</div>
+    <div class="phrase-row"><div class="phrase-texts"><div class="phrase-orig">Rachunek, proszę</div><div class="phrase-note" data-en="the bill, please" data-pt="a conta, por favor">the bill, please</div><div class="phrase-meaning">Ra-HOO-nek PRO-sheh</div></div><button class="speak-btn" onclick="speak('Rachunek proszę','pl-PL')"><svg viewBox="0 0 10 10"><polygon points="2,1 9,5 2,9"/></svg></button></div>
+    <div class="phrase-row"><div class="phrase-texts"><div class="phrase-orig">Ile to kosztuje?</div><div class="phrase-note" data-en="how much is this?" data-pt="quanto custa?">how much is this?</div><div class="phrase-meaning">EE-leh to kosh-TOO-yeh</div></div><button class="speak-btn" onclick="speak('Ile to kosztuje','pl-PL')"><svg viewBox="0 0 10 10"><polygon points="2,1 9,5 2,9"/></svg></button></div>
+    <div class="phrase-row"><div class="phrase-texts"><div class="phrase-orig">Mam alergię na skorupiaki</div><div class="phrase-note" data-en="I have a shellfish allergy" data-pt="tenho alergia a marisco">I have a shellfish allergy</div><div class="phrase-meaning">Mam a-LER-gyeh na sko-roo-PYA-kee</div></div><button class="speak-btn" onclick="speak('Mam alergię na skorupiaki','pl-PL')"><svg viewBox="0 0 10 10"><polygon points="2,1 9,5 2,9"/></svg></button></div>
+    <div class="phrase-row"><div class="phrase-texts"><div class="phrase-orig">Bez krewetek, proszę</div><div class="phrase-note" data-en="no shrimp, please" data-pt="sem camarão, por favor">no shrimp, please</div><div class="phrase-meaning">Bez kre-VE-tek PRO-sheh</div></div><button class="speak-btn" onclick="speak('Bez krewetek proszę','pl-PL')"><svg viewBox="0 0 10 10"><polygon points="2,1 9,5 2,9"/></svg></button></div>
+  </div>
+
+  <div class="phrase-group">
+    <div class="phrase-group-title" data-en="Getting Around" data-pt="Se Locomovendo">Getting Around</div>
+    <div class="phrase-row"><div class="phrase-texts"><div class="phrase-orig">Gdzie jest…?</div><div class="phrase-note" data-en="where is…?" data-pt="onde fica…?">where is…?</div><div class="phrase-meaning">Gjeh yest…?</div></div><button class="speak-btn" onclick="speak('Gdzie jest','pl-PL')"><svg viewBox="0 0 10 10"><polygon points="2,1 9,5 2,9"/></svg></button></div>
+    <div class="phrase-row"><div class="phrase-texts"><div class="phrase-orig">Super!</div><div class="phrase-note" data-en="great! — Poles use this constantly" data-pt="ótimo! — os poloneses usam constantemente">great! — Poles use this constantly</div><div class="phrase-meaning">SOO-per</div></div><button class="speak-btn" onclick="speak('Super','pl-PL')"><svg viewBox="0 0 10 10"><polygon points="2,1 9,5 2,9"/></svg></button></div>
+  </div>
+
+</div>
+
+<footer>
+  <p data-en="Gdańsk: A Field Guide &nbsp;·&nbsp; by Claudio SAROLDI" data-pt="Gdańsk: Um Guia de Campo &nbsp;·&nbsp; por Claudio SAROLDI">Gdańsk: A Field Guide &nbsp;·&nbsp; by Claudio SAROLDI</p>
+</footer>
+
+</main>
+
+<script>
+// LANGUAGE
+let currentLang=localStorage.getItem('gdansk_lang')||'en';
+function applyLang(lang){
+  document.querySelectorAll('[data-en]').forEach(el=>{
+    const t=el.getAttribute('data-'+lang);
+    if(t!==null&&el.tagName!=='TEXTAREA')el.innerHTML=t;
+  });
+  document.getElementById('btnEN').classList.toggle('active',lang==='en');
+  document.getElementById('btnPT').classList.toggle('active',lang==='pt');
+  document.documentElement.lang=lang==='pt'?'pt-BR':'en-GB';
+}
+function setLang(lang){
+  currentLang=lang;
+  localStorage.setItem('gdansk_lang',lang);
+  applyLang(lang);
+}
+
+// TOGGLES
+function toggleCard(id){document.getElementById(id).classList.toggle('open')}
+function toggleBlock(id){document.getElementById(id).classList.toggle('open')}
+function toggleFood(id){document.getElementById(id).classList.toggle('open')}
+function toggleStop(id){
+  const el=document.getElementById('sd_'+id);
+  if(el)el.classList.toggle('open');
+}
+
+// VISITED
+const VISITED_KEY='gdansk_v1';
+function checkStop(e,id){
+  e.stopPropagation();
+  document.getElementById(id).classList.toggle('checked');
+  const v=getVisited();
+  document.getElementById(id).classList.contains('checked')?v.add(id):v.delete(id);
+  saveVisited(v);
+}
+function getVisited(){try{return new Set(JSON.parse(localStorage.getItem(VISITED_KEY)||'[]'))}catch(e){return new Set()}}
+function saveVisited(s){try{localStorage.setItem(VISITED_KEY,JSON.stringify([...s]))}catch(e){}}
+function restoreVisited(){getVisited().forEach(id=>{const el=document.getElementById(id);if(el)el.classList.add('checked')})}
+
+// SPEAK
+let activeSpeak=null;
+function speak(text,lang){
+  if(!window.speechSynthesis)return;
+  if(window.speechSynthesis.speaking){window.speechSynthesis.cancel();if(activeSpeak===text){activeSpeak=null;return;}}
+  const u=new SpeechSynthesisUtterance(text);
+  u.lang=lang||'pl-PL';u.rate=0.85;
+  u.onend=()=>{activeSpeak=null};
+  activeSpeak=text;
+  window.speechSynthesis.speak(u);
+}
+window.speechSynthesis.onvoiceschanged=()=>{};
+
+// INIT
+restoreVisited();
+applyLang(currentLang);
+</script>
+</body>
+</html>

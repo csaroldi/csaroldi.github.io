@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0c0c10">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Dubrovnik Guide">
+<link rel="manifest" href="manifest.json">
+<title>Dubrovnik: A Field Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --gold:#c79a52;--gold-l:#dfb879;--gold-d:#8a6734;
+  --sea:#2f6f87;--sea-l:rgba(47,111,135,0.15);
+  --ink:#0c0c10;--cream:#f5f0e8;--muted:#8a8172;
+  --border:rgba(255,255,255,0.07);--border-gold:rgba(223,184,121,0.2);
+  --card:rgba(255,255,255,0.025);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{font-size:16px;scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{font-family:'DM Sans',sans-serif;background:var(--ink);color:var(--cream);min-height:100vh;overflow-x:hidden;padding-bottom:80px}
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:9999;opacity:0.4}
+
+/* TOP CONTROLS */
+.top-controls{position:fixed;top:16px;right:16px;z-index:1000;display:flex;gap:8px}
+.lang-group{display:flex}
+.ctrl-btn{height:30px;padding:0 12px;border:1px solid rgba(199,154,82,0.35);background:transparent;color:rgba(199,154,82,0.5);font-size:0.62rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.2s;font-family:'DM Sans',sans-serif;-webkit-tap-highlight-color:transparent}
+.lang-btn:first-child{border-radius:3px 0 0 3px;border-right:none}
+.lang-btn:last-child{border-radius:0 3px 3px 0}
+.ctrl-btn.active{background:var(--gold);color:var(--ink);border-color:var(--gold)}
+
+/* COVER */
+.cover{position:relative;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;overflow:hidden;background:var(--ink)}
+.cover-bg{position:absolute;inset:0;background:
+  radial-gradient(ellipse 85% 60% at 25% 35%,rgba(47,111,135,0.2) 0%,transparent 58%),
+  radial-gradient(ellipse 60% 50% at 72% 60%,rgba(199,154,82,0.12) 0%,transparent 60%),
+  radial-gradient(ellipse 110% 80% at 50% 100%,rgba(47,111,135,0.09) 0%,transparent 62%),
+  linear-gradient(165deg,#090a0d 0%,#0c0c10 52%,#09090d 100%)}
+.cover-content{position:relative;z-index:2;padding:24px;animation:fadeUp 1.2s ease both}
+@keyframes fadeUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
+.cover-eyebrow{font-size:0.62rem;font-weight:500;letter-spacing:0.38em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:24px}
+.cover-title{font-family:'Cormorant Garamond',serif;font-size:clamp(5rem,20vw,9rem);font-weight:300;line-height:0.9;color:var(--cream);letter-spacing:-0.02em;margin-bottom:16px}
+.cover-title em{font-style:italic;color:var(--gold-l);font-weight:400}
+.cover-author{font-size:0.56rem;font-weight:600;letter-spacing:0.3em;text-transform:uppercase;color:var(--gold-d);margin-bottom:20px}
+.cover-rule{width:40px;height:1px;background:var(--gold-d);opacity:0.5;margin:16px auto}
+.cover-subtitle{font-family:'Cormorant Garamond',serif;font-size:clamp(1rem,2.8vw,1.3rem);font-style:italic;color:rgba(245,240,232,0.45)}
+.cover-scroll{position:absolute;bottom:32px;left:50%;transform:translateX(-50%);color:rgba(199,154,82,0.35);font-size:1.2rem;animation:bob 2s ease-in-out infinite;z-index:2}
+@keyframes bob{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(7px)}}
+
+/* SECTION */
+.section-wrap{max-width:820px;margin:0 auto;padding:0 20px}
+.section-header{padding:52px 0 8px;display:flex;align-items:center;gap:14px}
+.section-tag{font-size:0.58rem;font-weight:600;letter-spacing:0.3em;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;gap:10px;white-space:nowrap}
+.section-tag::before{content:'';width:20px;height:1px;background:var(--gold)}
+.section-title{font-family:'Cormorant Garamond',serif;font-size:2.2rem;font-weight:300;color:var(--cream);line-height:1.1;letter-spacing:-0.01em}
+.section-title em{font-style:italic;color:var(--gold-l)}
+.section-rule{flex:1;height:1px;background:linear-gradient(90deg,var(--border-gold),transparent)}
+.section-intro{font-family:'Cormorant Garamond',serif;font-size:1rem;font-style:italic;color:var(--muted);margin:8px 0 20px;line-height:1.7}
+.section-divider{height:1px;background:linear-gradient(90deg,transparent,var(--border-gold),transparent);margin:48px auto 0;max-width:820px;padding:0 20px}
+
+/* CARDS */
+.card{background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden;margin-bottom:10px;transition:border-color 0.3s;animation:fadeUp 0.5s ease-out both}
+.card.open{border-color:var(--border-gold)}
+.card-trigger{width:100%;background:none;border:none;padding:18px 20px;cursor:pointer;display:flex;align-items:center;gap:14px;text-align:left;-webkit-tap-highlight-color:transparent}
+.card-icon{width:36px;height:36px;border-radius:10px;background:rgba(199,154,82,0.08);border:1px solid var(--border-gold);display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0}
+.card-info{flex:1}
+.card-name{font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:600;color:var(--cream);line-height:1.2}
+.card-sub{font-size:0.7rem;color:var(--muted);font-style:italic;margin-top:2px}
+.card-arrow{width:22px;height:22px;border-radius:50%;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:0.6rem;transition:all 0.3s;flex-shrink:0}
+.card.open .card-arrow{background:var(--gold);border-color:var(--gold);color:var(--ink);transform:rotate(180deg)}
+.card-body{display:none;padding:0 20px 20px}
+.card.open .card-body{display:block}
+.card-rule{height:1px;background:linear-gradient(90deg,transparent,var(--border-gold),transparent);margin-bottom:16px}
+
+/* ESS / GTK ITEMS */
+.ess-item{display:flex;gap:12px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.04);align-items:flex-start}
+.ess-item:last-child{border-bottom:none;padding-bottom:0}
+.ess-dot{width:5px;height:5px;border-radius:50%;background:var(--gold);flex-shrink:0;margin-top:7px}
+.ess-text{font-size:0.86rem;line-height:1.65;color:rgba(245,240,232,0.72);font-weight:300}
+.ess-text strong{color:var(--cream);font-weight:500;display:block;margin-bottom:1px;font-size:0.88rem}
+
+/* BLOCKS */
+.block-card{background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden;margin-bottom:10px;transition:border-color 0.3s;animation:fadeUp 0.5s ease-out both}
+.block-card.open{border-color:var(--border-gold)}
+.block-trigger{width:100%;background:none;border:none;padding:18px 20px;cursor:pointer;display:flex;align-items:center;gap:14px;text-align:left;-webkit-tap-highlight-color:transparent}
+.block-num{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:600;color:rgba(199,154,82,0.2);line-height:1;min-width:44px;transition:color 0.3s}
+.block-card.open .block-num{color:var(--gold)}
+.block-info{flex:1}
+.block-name{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:600;color:var(--cream);line-height:1.2;margin-bottom:3px}
+.block-tagline{font-size:0.7rem;color:var(--muted);font-style:italic}
+.block-arrow{width:22px;height:22px;border-radius:50%;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:0.6rem;transition:all 0.3s;flex-shrink:0}
+.block-card.open .block-arrow{background:var(--gold);border-color:var(--gold);color:var(--ink);transform:rotate(180deg)}
+.block-body{display:none;padding:0 16px 20px}
+.block-card.open .block-body{display:block}
+.block-divider{height:1px;background:linear-gradient(90deg,transparent,var(--border-gold),transparent);margin-bottom:16px}
+
+/* STOPS */
+.stop{margin-bottom:7px;border-radius:11px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.05);overflow:hidden;transition:border-color 0.2s}
+.stop.checked{background:rgba(199,154,82,0.05);border-color:rgba(199,154,82,0.18)}
+.stop-header{display:flex;align-items:center;gap:13px;padding:13px 15px;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.stop-check{width:22px;height:22px;border-radius:50%;border:1.5px solid rgba(255,255,255,0.18);background:transparent;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all 0.25s;cursor:pointer}
+.stop-check::after{content:'✓';font-size:0.62rem;color:var(--ink);opacity:0;transition:opacity 0.2s;font-weight:700}
+.stop.checked .stop-check{background:var(--gold);border-color:var(--gold);box-shadow:0 0 12px rgba(199,154,82,0.35)}
+.stop.checked .stop-check::after{opacity:1}
+.stop-name{flex:1;font-family:'Cormorant Garamond',serif;font-size:1.08rem;font-weight:600;color:var(--cream);line-height:1.2;transition:color 0.2s}
+.stop.checked .stop-name{color:var(--muted);text-decoration:line-through;text-decoration-color:rgba(199,154,82,0.35)}
+.badge-must{font-size:0.58rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;padding:2px 7px;background:rgba(199,154,82,0.12);color:var(--gold);border:1px solid rgba(199,154,82,0.25);border-radius:3px;white-space:nowrap;flex-shrink:0}
+.badge-hidden{font-size:0.58rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;padding:2px 7px;background:rgba(47,111,135,0.12);color:#8cc2d4;border:1px solid rgba(47,111,135,0.35);border-radius:3px;white-space:nowrap;flex-shrink:0}
+.stop-expand{font-size:0.52rem;color:var(--muted);flex-shrink:0}
+.stop-details{display:none;padding:0 15px 15px 50px}
+.stop-details.open{display:block;animation:slideDown 0.2s ease-out}
+@keyframes slideDown{from{opacity:0;transform:translateY(-5px)}to{opacity:1;transform:translateY(0)}}
+.detail-rule{height:1px;background:rgba(255,255,255,0.05);margin-bottom:13px}
+.detail-hist{background:rgba(47,111,135,0.08);border-left:2px solid rgba(47,111,135,0.45);padding:8px 12px;border-radius:0 4px 4px 0;font-size:0.8rem;color:rgba(245,240,232,0.65);margin-bottom:8px}
+.detail-hist strong{font-size:0.65rem;text-transform:uppercase;letter-spacing:0.1em;display:block;margin-bottom:3px;color:rgba(140,194,209,0.8);font-style:normal}
+.detail-fact{background:rgba(199,154,82,0.06);border-left:2px solid var(--gold);padding:8px 12px;border-radius:0 4px 4px 0;font-size:0.8rem;color:rgba(245,240,232,0.65);font-style:italic;margin-bottom:10px}
+.detail-fact strong{font-style:normal;font-size:0.65rem;text-transform:uppercase;letter-spacing:0.1em;display:block;margin-bottom:3px;color:var(--gold)}
+.map-btn{display:inline-flex;align-items:center;gap:6px;margin-top:6px;padding:7px 14px;background:transparent;border:1px solid var(--border-gold);border-radius:8px;color:var(--gold-l);font-size:0.7rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;text-decoration:none;transition:all 0.2s;-webkit-tap-highlight-color:transparent}
+.map-btn:active{background:rgba(199,154,82,0.1)}
+
+/* FOOD BLOCK (collapsible, inside day blocks) */
+.food-block{margin-top:14px;border-radius:11px;background:rgba(199,154,82,0.04);border:1px solid rgba(199,154,82,0.12);overflow:hidden}
+.food-header{padding:11px 15px;display:flex;align-items:center;gap:10px;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.food-title{font-size:0.58rem;font-weight:600;letter-spacing:0.22em;text-transform:uppercase;color:var(--gold);flex:1}
+.food-arrow{font-size:0.55rem;color:var(--muted);transition:transform 0.3s}
+.food-block.open .food-arrow{transform:rotate(180deg)}
+.food-body{display:none;padding:0 15px 13px}
+.food-block.open .food-body{display:block}
+.food-rule{height:1px;background:rgba(199,154,82,0.1);margin-bottom:11px}
+.food-item{display:flex;gap:10px;padding:7px 0;border-bottom:1px solid rgba(255,255,255,0.04);align-items:flex-start}
+.food-item:last-child{border-bottom:none;padding-bottom:0}
+.food-info{flex:1}
+.food-name{font-family:'Cormorant Garamond',serif;font-size:0.95rem;color:var(--cream);font-weight:600}
+.food-desc{font-size:0.79rem;color:rgba(245,240,232,0.55);line-height:1.5;margin-top:1px}
+.food-maps{display:inline-flex;align-items:center;gap:4px;font-size:0.68rem;color:var(--gold);text-decoration:none;margin-top:3px;opacity:0.75;transition:opacity 0.2s}
+.food-maps:hover{opacity:1}
+
+/* MATTERS */
+.matter-item{display:flex;gap:14px;padding:14px 0;border-bottom:1px solid rgba(255,255,255,0.04);align-items:flex-start}
+.matter-item:last-child{border-bottom:none}
+.matter-emoji{font-size:1.3rem;flex-shrink:0;line-height:1;margin-top:2px}
+.matter-headline{font-family:'Cormorant Garamond',serif;font-size:1.05rem;font-weight:600;color:var(--cream);margin-bottom:4px}
+.matter-copy{font-size:0.82rem;color:rgba(245,240,232,0.62);line-height:1.65;font-weight:300}
+
+/* PHRASES */
+.phrase-group{margin-bottom:20px}
+.phrase-group-title{font-size:0.6rem;font-weight:600;letter-spacing:0.28em;text-transform:uppercase;color:var(--gold);margin-bottom:8px;display:flex;align-items:center;gap:10px}
+.phrase-group-title::after{content:'';flex:1;height:1px;background:var(--border-gold)}
+.phrase-row{background:var(--card);border:1px solid var(--border);border-radius:8px;margin-bottom:4px;padding:12px 16px;display:flex;align-items:center;gap:12px}
+.phrase-texts{flex:1}
+.phrase-orig{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1rem;color:var(--cream);margin-bottom:2px}
+.phrase-note{font-size:0.68rem;color:var(--muted)}
+.phrase-meaning{font-size:0.8rem;font-weight:500;color:rgba(245,240,232,0.7)}
+.speak-btn{background:none;border:1px solid var(--border);border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;transition:all 0.2s;color:var(--gold)}
+.speak-btn:hover{background:rgba(199,154,82,0.1);border-color:var(--gold)}
+.speak-btn svg{width:13px;height:13px;fill:currentColor}
+
+/* FOOTER */
+footer{text-align:center;padding:52px 24px 32px;color:rgba(138,129,114,0.35);font-size:0.6rem;letter-spacing:0.18em;text-transform:uppercase;line-height:2;border-top:1px solid var(--border)}
+
+/* RESPONSIVE */
+@media(max-width:640px){
+  .section-wrap{padding:0 14px}
+  .cover-title{font-size:4.2rem}
+  .block-name,.card-name{font-size:1.1rem}
+  .block-trigger,.card-trigger{padding:16px}
+  .block-body,.card-body{padding:0 12px 16px}
+  .stop-details{padding:0 12px 14px 44px}
+  .section-header{padding:44px 0 8px;align-items:flex-end}
+  .section-title{font-size:1.95rem}
+  .top-controls{top:12px;right:12px}
+}
+</style>
+</head>
+<body>
+
+<div class="top-controls">
+  <div class="lang-group">
+    <button class="ctrl-btn lang-btn active" id="btnEN" onclick="setLang('en')">EN</button>
+    <button class="ctrl-btn lang-btn" id="btnPT" onclick="setLang('pt')">PT</button>
+  </div>
+</div>
+
+<div class="cover">
+  <div class="cover-bg"></div>
+  <div class="cover-content">
+    <span class="cover-eyebrow" data-en="A Field Guide to" data-pt="Um Guia de Campo para">A Field Guide to</span>
+    <h1 class="cover-title">Dubro<em>vnik</em></h1>
+    <p class="cover-author">by Claudio SAROLDI</p>
+    <div class="cover-rule"></div>
+    <p class="cover-subtitle" data-en="Beautiful, overcrowded, and completely unapologetic about both." data-pt="Bonita, superlotada, e completamente sem remorso pelos dois.">Beautiful, overcrowded, and completely unapologetic about both.</p>
+  </div>
+  <div class="cover-scroll">↓</div>
+</div>
+
+<main>
+
+<!-- THE ESSENTIALS -->
+<div class="section-wrap">
+  <div class="section-header">
+    <div class="section-tag" data-en="Before You Go" data-pt="Antes de Ir">Before You Go</div>
+    <h2 class="section-title" data-en="The <em>Essentials</em>" data-pt="O <em>Essencial</em>">The <em>Essentials</em></h2>
+    <div class="section-rule"></div>
+  </div>
+  <p class="section-intro" data-en="The practical layer. Read this before anything else." data-pt="A camada prática. Leia isso antes de qualquer outra coisa.">The practical layer. Read this before anything else.</p>
+
+  <div class="card" id="ess1" style="animation-delay:0.05s">
+    <button class="card-trigger" onclick="toggleCard('ess1')">
+      <div class="card-icon">⏰</div>
+      <div class="card-info"><div class="card-name" data-en="When to go and how long" data-pt="Quando ir e por quanto tempo">When to go and how long</div><div class="card-sub" data-en="The decisions that shape the whole trip" data-pt="As decisões que moldam toda a viagem">The decisions that shape the whole trip</div></div>
+      <div class="card-arrow">▼</div>
+    </button>
+    <div class="card-body"><div class="card-rule"></div>
+      <div class="ess-item"><div class="ess-dot"></div><div class="ess-text"><strong data-en="Best length" data-pt="Duração ideal">Best length</strong><span data-en="4 days works. 5 days feels much better and less rushed. Anything under 3 days and you are just skimming." data-pt="4 dias funciona. 5 dias é bem melhor e menos corrido. Menos de 3 dias é só passar por cima.">4 days works. 5 days feels much better and less rushed. Anything under 3 days and you are just skimming.</span></div></div>
+      <div class="ess-item"><div class="ess-dot"></div><div class="ess-text"><strong data-en="Best months" data-pt="Melhores meses">Best months</strong><span data-en="May, early June, September, early October. July and August are genuinely brutal — heat, crowds, and cruise ships all peak at once." data-pt="Maio, início de junho, setembro, início de outubro. Julho e agosto são brutalmente quentes e cheios — calor, multidões e navios de cruzeiro atingem o pico ao mesmo tempo.">May, early June, September, early October. July and August are genuinely brutal — heat, crowds, and cruise ships all peak at once.</span></div></div>
+      <div class="ess-item"><div class="ess-dot"></div><div class="ess-text"><strong data-en="Golden rule" data-pt="Regra de ouro">Golden rule</strong><span data-en="Do the City Walls and heavy walking early morning or after 5pm. Midday Dubrovnik is a stone oven with no shade and a crowd problem." data-pt="Faça as Muralhas e caminhadas pesadas de manhã cedo ou depois das 17h. Ao meio-dia, Dubrovnik é um forno de pedra sem sombra e com superlotação.">Do the City Walls and heavy walking early morning or after 5pm. Midday Dubrovnik is a stone oven with no shade and a crowd problem.</span></div></div>
+      <div class="ess-item"><div class="ess-dot"></div><div class="ess-text"><strong data-en="Cruise ship days" data-pt="Dias de cruzeiro">Cruise ship days</strong><span data-en="On a bad day, three ships dock and 12,000 passengers flood the Old Town before 10am. Google 'Dubrovnik port schedule', check your dates, and plan around the heavy days." data-pt="Num dia ruim, três navios atracam e 12.000 passageiros invadem a Cidade Velha antes das 10h. Pesquise 'Dubrovnik port schedule' e planeje em torno dos dias pesados.">On a bad day, three ships dock and 12,000 passengers flood the Old Town before 10am. Google 'Dubrovnik port schedule', check your dates, and plan around the heavy days.</span></div></div>
+    </div>
+  </div>
+
+  <div class="card" id="ess2" style="animation-delay:0.1s">
+    <button class="card-trigger" onclick="toggleCard('ess2')">
+      <div class="card-icon">🚌</div>
+      <div class="card-info"><div class="card-name" data-en="Getting around" data-pt="Como se locomover">Getting around</div><div class="card-sub" data-en="The Old Town has no cars. The rest does." data-pt="A Cidade Velha não tem carros. O resto tem.">The Old Town has no cars. The rest does.</div></div>
+      <div class="card-arrow">▼</div>
+    </button>
+    <div class="card-body"><div class="card-rule"></div>
+      <div class="ess-item"><div class="ess-dot"></div><div class="ess-text"><strong data-en="Old Town" data-pt="Cidade Velha">Old Town</strong><span data-en="Entirely on foot. Limestone streets get slippery when wet, especially on steps. Wear proper shoes — not flip flops." data-pt="Inteiramente a pé. As ruas de calcário ficam escorregadias quando molhadas, especialmente nas escadas. Use sapatos adequados — não chinelos.">Entirely on foot. Limestone streets get slippery when wet, especially on steps. Wear proper shoes — not flip flops.</span></div></div>
+      <div class="ess-item"><div class="ess-dot"></div><div class="ess-text"><strong data-en="City bus" data-pt="Ônibus urbano">City bus</strong><span data-en="Line 6 runs between Pile Gate and Lapad / Babin Kuk. Cheap, reliable, and how locals actually move." data-pt="A linha 6 circula entre o Portão Pile e Lapad / Babin Kuk. Barata, confiável, e como os locais se movem de verdade.">Line 6 runs between Pile Gate and Lapad / Babin Kuk. Cheap, reliable, and how locals actually move.</span></div></div>
+      <div class="ess-item"><div class="ess-dot"></div><div class="ess-text"><strong data-en="Taxis and Uber" data-pt="Táxis e Uber">Taxis and Uber</strong><span data-en="Uber works well in Dubrovnik. Taxis are fine but agree on the price before you get in for longer runs." data-pt="Uber funciona bem em Dubrovnik. Táxis são ok mas combine o preço antes de entrar para percursos mais longos.">Uber works well in Dubrovnik. Taxis are fine but agree on the price before you get in for longer runs.</span></div></div>
+      <div class="ess-item"><div class="ess-dot"></div><div class="ess-text"><strong data-en="Currency" data-pt="Moeda">Currency</strong><span data-en="Euro since January 2023. Cards accepted everywhere. Still worth carrying some cash for smaller restaurants and markets." data-pt="Euro desde janeiro de 2023. Cartões aceitos em todos os lugares. Vale carregar algum dinheiro em espécie para restaurantes menores e mercados.">Euro since January 2023. Cards accepted everywhere. Still worth carrying some cash for smaller restaurants and markets.</span></div></div>
+    </div>
+  </div>
+
+  <div class="card" id="ess3" style="animation-delay:0.15s">
+    <button class="card-trigger" onclick="toggleCard('ess3')">
+      <div class="card-icon">🎫</div>
+      <div class="card-info"><div class="card-name" data-en="What to sort before you arrive" data-pt="O que resolver antes de chegar">What to sort before you arrive</div><div class="card-sub" data-en="Small things that save time and frustration" data-pt="Pequenas coisas que economizam tempo e frustração">Small things that save time and frustration</div></div>
+      <div class="card-arrow">▼</div>
+    </button>
+    <div class="card-body"><div class="card-rule"></div>
+      <div class="ess-item"><div class="ess-dot"></div><div class="ess-text"><strong data-en="City Walls ticket" data-pt="Ingresso das Muralhas">City Walls ticket</strong><span data-en="Buy online in advance to skip the queue. The entrance price increases every year — check the current rate before you go." data-pt="Compre online com antecedência para pular a fila. O preço de entrada aumenta a cada ano — verifique a tarifa atual antes de ir.">Buy online in advance to skip the queue. The entrance price increases every year — check the current rate before you go.</span></div></div>
+      <div class="ess-item"><div class="ess-dot"></div><div class="ess-text"><strong data-en="Dress code" data-pt="Código de vestimenta">Dress code</strong><span data-en="Shoulders and knees covered for churches and the Franciscan Monastery. The city is relaxed on the street but the sites will turn you away at the door." data-pt="Ombros e joelhos cobertos para igrejas e o Mosteiro Franciscano. A cidade é relaxada nas ruas mas os locais vão te barrar na porta.">Shoulders and knees covered for churches and the Franciscan Monastery. The city is relaxed on the street but the sites will turn you away at the door.</span></div></div>
+      <div class="ess-item"><div class="ess-dot"></div><div class="ess-text"><strong data-en="Accommodation" data-pt="Acomodação">Accommodation</strong><span data-en="Inside the Old Town walls is atmospheric but expensive and loud at night. Lapad and Babin Kuk give better value — bus ride in is 10 minutes." data-pt="Dentro das muralhas é atmosférico mas caro e barulhento à noite. Lapad e Babin Kuk oferecem melhor custo-benefício — 10 minutos de ônibus.">Inside the Old Town walls is atmospheric but expensive and loud at night. Lapad and Babin Kuk give better value — bus ride in is 10 minutes.</span></div></div>
+      <div class="ess-item"><div class="ess-dot"></div><div class="ess-text"><strong data-en="Photography" data-pt="Fotografia">Photography</strong><span data-en="Early morning and golden hour. The Stradun at 7am is one of the best shots in Europe. At noon it is just a crowd." data-pt="Manhã cedo e hora dourada. O Stradun às 7h é uma das melhores fotos da Europa. Ao meio-dia é só multidão.">Early morning and golden hour. The Stradun at 7am is one of the best shots in Europe. At noon it is just a crowd.</span></div></div>
+    </div>
+  </div>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- THE ITINERARY -->
+<div class="section-wrap">
+  <div class="section-header">
+    <div class="section-tag" data-en="Day by Day" data-pt="Dia a Dia">Day by Day</div>
+    <h2 class="section-title" data-en="The <em>Itinerary</em>" data-pt="O <em>Itinerário</em>">The <em>Itinerary</em></h2>
+    <div class="section-rule"></div>
+  </div>
+  <p class="section-intro" data-en="Five days structured so each one has a different energy. Skip Day 5 if you only have four." data-pt="Cinco dias estruturados para que cada um tenha uma energia diferente. Pule o Dia 5 se você só tiver quatro.">Five days structured so each one has a different energy. Skip Day 5 if you only have four.</p>
+
+  <!-- DAY 1 -->
+  <div class="block-card" id="day1" style="animation-delay:0.05s">
+    <button class="block-trigger" onclick="toggleBlock('day1')">
+      <span class="block-num">01</span>
+      <div class="block-info">
+        <div class="block-name" data-en="Old Town properly" data-pt="Cidade Velha de verdade">Old Town properly</div>
+        <div class="block-tagline" data-en="Pile Gate → Stradun → Franciscan Monastery → Rector's Palace → Jesuit Stairs → Porporela → City Walls" data-pt="Portão Pile → Stradun → Mosteiro Franciscano → Palácio do Reitor → Escadaria Jesuíta → Porporela → Muralhas">Pile Gate → Stradun → Franciscan Monastery → Rector's Palace → Jesuit Stairs → Porporela → City Walls</div>
+      </div>
+      <div class="block-arrow">▼</div>
+    </button>
+    <div class="block-body"><div class="block-divider"></div>
+
+      <div class="stop" id="d1_pile"><div class="stop-header" onclick="toggleStop('d1_pile')"><div class="stop-check" onclick="checkStop(event,'d1_pile')"></div><div class="stop-name" data-en="Pile Gate" data-pt="Portão Pile">Pile Gate</div><span class="badge-must" data-en="Start here" data-pt="Comece aqui">Start here</span><span class="stop-expand">▾</span></div><div class="stop-details" id="sd_d1_pile"><div class="detail-rule"></div><div class="detail-hist"><strong data-en="History" data-pt="História">History</strong><span data-en="The main western entrance to the Old Town. The outer gate dates to 1537, the inner Gothic gate to the 14th century. The moat between them was never filled with water — Dubrovnik dug it dry to slow attackers, not flood them." data-pt="A principal entrada ocidental da Cidade Velha. O portão externo data de 1537, o portão gótico interno do século XIV. O fosso entre eles nunca foi preenchido com água — Dubrovnik o cavou seco para retardar atacantes.">The main western entrance to the Old Town. The outer gate dates to 1537, the inner Gothic gate to the 14th century. The moat between them was never filled with water — Dubrovnik dug it dry to slow attackers, not flood them.</span></div><div class="detail-fact"><strong data-en="Why it matters" data-pt="Por que importa">Why it matters</strong><span data-en="Best clean starting point before the streets fill up. The statue above the inner gate is St Blaise, the city's patron — you will see him on nearly every building." data-pt="Melhor ponto de partida antes das ruas encherem. A estátua acima do portão interno é São Brás, o padroeiro da cidade — você vai vê-lo em quase todos os edifícios.">Best clean starting point before the streets fill up. The statue above the inner gate is St Blaise, the city's patron — you will see him on nearly every building.</span></div><a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=Pile+Gate+Dubrovnik" target="_blank">📍 <span data-en="Take me there" data-pt="Me leve lá">Take me there</span></a></div></div>
+
+      <div class="stop" id="d1_stradun"><div class="stop-header" onclick="toggleStop('d1_stradun')"><div class="stop-check" onclick="checkStop(event,'d1_stradun')"></div><div class="stop-name" data-en="Stradun" data-pt="Stradun">Stradun</div><span class="badge-must" data-en="The main act" data-pt="O ato principal">The main act</span><span class="stop-expand">▾</span></div><div class="stop-details" id="sd_d1_stradun"><div class="detail-rule"></div><div class="detail-hist"><strong data-en="History" data-pt="História">History</strong><span data-en="Originally a shallow sea channel separating two settlements, filled in during the 11th or 12th century. The uniform baroque appearance came after the catastrophic 1667 earthquake that killed around 5,000 people. The Republic rebuilt deliberately — standardising facades so no family could display wealth through their building." data-pt="Originalmente um raso canal marítimo separando dois assentamentos, aterrado nos séculos XI ou XII. A aparência barroca uniforme veio após o catastrófico terremoto de 1667 que matou cerca de 5.000 pessoas. A República reconstruiu deliberadamente — padronizando fachadas para que nenhuma família pudesse exibir riqueza.">Originally a shallow sea channel separating two settlements, filled in during the 11th or 12th century. The uniform baroque appearance came after the catastrophic 1667 earthquake that killed around 5,000 people. The Republic rebuilt deliberately — standardising facades so no family could display wealth through their building.</span></div><div class="detail-fact"><strong data-en="Did you know" data-pt="Você sabia">Did you know</strong><span data-en="The limestone has been polished to a mirror shine by centuries of feet. Genuinely slippery when wet. Early morning, with no one on it, it is one of the best streets in Europe." data-pt="O calcário foi polido por séculos de passagem. Genuinamente escorregadio quando molhado. De manhã cedo, sem ninguém, é uma das melhores ruas da Europa.">The limestone has been polished to a mirror shine by centuries of feet. Genuinely slippery when wet. Early morning, with no one on it, it is one of the best streets in Europe.</span></div><a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=Stradun+Dubrovnik" target="_blank">📍 <span data-en="Take me there" data-pt="Me leve lá">Take me there</span></a></div></div>
+
+      <div class="stop" id="d1_franciscan"><div class="stop-header" onclick="toggleStop('d1_franciscan')"><div class="stop-check" onclick="checkStop(event,'d1_franciscan')"></div><div class="stop-name" data-en="Franciscan Monastery" data-pt="Mosteiro Franciscano">Franciscan Monastery</div><span class="badge-must" data-en="Do not miss" data-pt="Não perca">Do not miss</span><span class="stop-expand">▾</span></div><div class="stop-details" id="sd_d1_franciscan"><div class="detail-rule"></div><div class="detail-hist"><strong data-en="History" data-pt="História">History</strong><span data-en="The monastery pharmacy was founded in 1317 and has been operating continuously ever since — one of the oldest working pharmacies in the world. The Romanesque-Gothic cloister survived the 1667 earthquake largely intact, which is remarkable given how much of the city did not." data-pt="A farmácia do mosteiro foi fundada em 1317 e funciona continuamente desde então — uma das farmácias mais antigas do mundo em operação. O claustro sobreviveu ao terremoto de 1667 praticamente intacto.">The monastery pharmacy was founded in 1317 and has been operating continuously ever since — one of the oldest working pharmacies in the world. The Romanesque-Gothic cloister survived the 1667 earthquake largely intact, which is remarkable given how much of the city did not.</span></div><div class="detail-fact"><strong data-en="Did you know" data-pt="Você sabia">Did you know</strong><span data-en="The pharmacy still sells its own cosmetic products based on old recipes. You can buy face cream from a medieval dispensary. Not many places can claim that." data-pt="A farmácia ainda vende cosméticos baseados em receitas antigas. Você pode comprar creme facial numa farmácia medieval. Poucos lugares podem reivindicar isso.">The pharmacy still sells its own cosmetic products based on old recipes. You can buy face cream from a medieval dispensary. Not many places can claim that.</span></div><a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=Franciscan+Monastery+Dubrovnik" target="_blank">📍 <span data-en="Take me there" data-pt="Me leve lá">Take me there</span></a></div></div>
+
+      <div class="stop" id="d1_rector"><div class="stop-header" onclick="toggleStop('d1_rector')"><div class="stop-check" onclick="checkStop(event,'d1_rector')"></div><div class="stop-name" data-en="Rector's Palace" data-pt="Palácio do Reitor">Rector's Palace</div><span class="stop-expand">▾</span></div><div class="stop-details" id="sd_d1_rector"><div class="detail-rule"></div><div class="detail-hist"><strong data-en="History" data-pt="História">History</strong><span data-en="The seat of the Rector of the Republic of Ragusa — an independent city-state from the 7th century to 1806. The Rector served a one-month term, lived in the Palace during that month, and could not leave without permission. His own family could not visit him. It was a deliberate system to stop any one person accumulating power." data-pt="A sede do Reitor da República de Ragusa — uma cidade-estado independente do século VII até 1806. O Reitor servia por um mês, vivia no Palácio durante esse mês e não podia sair sem permissão. Sua própria família não podia visitá-lo. Era um sistema deliberado para impedir que qualquer pessoa acumulasse poder.">The seat of the Rector of the Republic of Ragusa — an independent city-state from the 7th century to 1806. The Rector served a one-month term, lived in the Palace during that month, and could not leave without permission. His own family could not visit him. It was a deliberate system to stop any one person accumulating power.</span></div><div class="detail-fact"><strong data-en="Why stop" data-pt="Por que parar">Why stop</strong><span data-en="This is where Dubrovnik stops being a pretty film set and becomes a serious old republic. The system they built to control their own leaders was more sophisticated than most modern democracies." data-pt="É aqui que Dubrovnik deixa de ser um belo cenário e se torna uma séria república antiga. O sistema que construíram para controlar seus líderes era mais sofisticado do que a maioria das democracias modernas.">This is where Dubrovnik stops being a pretty film set and becomes a serious old republic. The system they built to control their own leaders was more sophisticated than most modern democracies.</span></div><a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=Rectors+Palace+Dubrovnik" target="_blank">📍 <span data-en="Take me there" data-pt="Me leve lá">Take me there</span></a></div></div>
+
+      <div class="stop" id="d1_jesuit"><div class="stop-header" onclick="toggleStop('d1_jesuit')"><div class="stop-check" onclick="checkStop(event,'d1_jesuit')"></div><div class="stop-name" data-en="Jesuit Stairs" data-pt="Escadaria Jesuíta">Jesuit Stairs</div><span class="badge-must" data-en="Photo stop" data-pt="Parada fotográfica">Photo stop</span><span class="stop-expand">▾</span></div><div class="stop-details" id="sd_d1_jesuit"><div class="detail-rule"></div><div class="detail-hist"><strong data-en="History" data-pt="História">History</strong><span data-en="Built in the early 18th century to connect Gundulić Square with the Jesuit Church of St Ignatius. Designed by Pietro Passalacqua — the same architect later involved in Rome's Spanish Steps, which explains why the two look related." data-pt="Construída no início do século XVIII para conectar a Praça Gundulić com a Igreja Jesuíta de Santo Inácio. Projetada por Pietro Passalacqua — o mesmo arquiteto posteriormente envolvido na Escadaria de Espanha em Roma, o que explica por que as duas se parecem.">Built in the early 18th century to connect Gundulić Square with the Jesuit Church of St Ignatius. Designed by Pietro Passalacqua — the same architect later involved in Rome's Spanish Steps, which explains why the two look related.</span></div><div class="detail-fact"><strong data-en="Reality" data-pt="Realidade">Reality</strong><span data-en="Yes, people will pose dramatically here. You will too. That is fine. Late afternoon light from the top is genuinely good." data-pt="Sim, as pessoas vão posar dramaticamente aqui. Você também vai. Não tem problema. A luz do final da tarde do topo é genuinamente boa.">Yes, people will pose dramatically here. You will too. That is fine. Late afternoon light from the top is genuinely good.</span></div><a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=Jesuit+Stairs+Dubrovnik" target="_blank">📍 <span data-en="Take me there" data-pt="Me leve lá">Take me there</span></a></div></div>
+
+      <div class="stop" id="d1_walls"><div class="stop-header" onclick="toggleStop('d1_walls')"><div class="stop-check" onclick="checkStop(event,'d1_walls')"></div><div class="stop-name" data-en="City Walls" data-pt="Muralhas da Cidade">City Walls</div><span class="badge-must" data-en="Critical" data-pt="Essencial">Critical</span><span class="stop-expand">▾</span></div><div class="stop-details" id="sd_d1_walls"><div class="detail-rule"></div><div class="detail-hist"><strong data-en="History" data-pt="História">History</strong><span data-en="Among the most complete medieval city walls in Europe: 1,940 metres long, up to 6 metres thick on the landward side, 3 circular and 12 rectangular towers. Built mostly in the 14th and 15th centuries, significantly reinforced as the Ottoman threat grew. They were never breached by a foreign army." data-pt="Entre as muralhas medievais mais completas da Europa: 1.940 metros de comprimento, até 6 metros de espessura no lado terrestre, 3 torres circulares e 12 retangulares. Construídas principalmente nos séculos XIV e XV, significativamente reforçadas com o crescimento da ameaça otomana. Nunca foram violadas por um exército estrangeiro.">Among the most complete medieval city walls in Europe: 1,940 metres long, up to 6 metres thick on the landward side, 3 circular and 12 rectangular towers. Built mostly in the 14th and 15th centuries, significantly reinforced as the Ottoman threat grew. They were never breached by a foreign army.</span></div><div class="detail-fact"><strong data-en="Best move" data-pt="Melhor estratégia">Best move</strong><span data-en="Early (gates open at 8am) or after 5pm only. Midday on an exposed limestone walkway with no shade is miserable. Go anticlockwise — you get the better sea views first." data-pt="Cedo (portões abrem às 8h) ou depois das 17h apenas. Ao meio-dia numa passarela de calcário exposta sem sombra é horrível. Vá no sentido anti-horário — você tem as melhores vistas do mar primeiro.">Early (gates open at 8am) or after 5pm only. Midday on an exposed limestone walkway with no shade is miserable. Go anticlockwise — you get the better sea views first.</span></div><a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=Dubrovnik+City+Walls" target="_blank">📍 <span data-en="Take me there" data-pt="Me leve lá">Take me there</span></a></div></div>
+
+      <div class="stop" id="d1_porporela"><div class="stop-header" onclick="toggleStop('d1_porporela')"><div class="stop-check" onclick="checkStop(event,'d1_porporela')"></div><div class="stop-name" data-en="Porporela" data-pt="Porporela">Porporela</div><span class="badge-hidden" data-en="Sunset" data-pt="Pôr do sol">Sunset</span><span class="stop-expand">▾</span></div><div class="stop-details" id="sd_d1_porporela"><div class="detail-rule"></div><div class="detail-hist"><strong data-en="History" data-pt="História">History</strong><span data-en="The old harbour breakwater on the eastern side of the Old Town. In the Republic of Ragusa era it was a working port structure. Today it is where locals sit in the evening while tourists are busy photographing the Stradun." data-pt="O antigo quebra-mar do porto no lado leste da Cidade Velha. Na era da República de Ragusa era uma estrutura portuária. Hoje é onde os locais sentam à noite enquanto os turistas fotografam o Stradun.">The old harbour breakwater on the eastern side of the Old Town. In the Republic of Ragusa era it was a working port structure. Today it is where locals sit in the evening while tourists are busy photographing the Stradun.</span></div><div class="detail-fact"><strong data-en="Why it matters" data-pt="Por que importa">Why it matters</strong><span data-en="Less formal, more genuine, and the right way to end Day 1 watching the light drop over the Adriatic." data-pt="Menos formal, mais genuíno, e a forma certa de terminar o Dia 1 vendo a luz cair sobre o Adriático.">Less formal, more genuine, and the right way to end Day 1 watching the light drop over the Adriatic.</span></div><a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=Porporela+Dubrovnik" target="_blank">📍 <span data-en="Take me there" data-pt="Me leve lá">Take me there</span></a></div></div>
+
+      <div class="food-block" id="food_d1"><div class="food-header" onclick="toggleFood('food_d1')"><span class="food-title" data-en="🍴 Where to Eat — Day 1" data-pt="🍴 Onde Comer — Dia 1">🍴 Where to Eat — Day 1</span><span class="food-arrow">▼</span></div><div class="food-body"><div class="food-rule"></div>
+        <div class="food-item"><div class="food-info"><div class="food-name">Kopun</div><div class="food-desc" data-en="Poljana R. Boškovića 7 · Traditional Dubrovnik cooking done properly. The capon is the signature dish." data-pt="Poljana R. Boškovića 7 · Culinária tradicional de Dubrovnik feita corretamente. O capão é o prato assinatura.">Poljana R. Boškovića 7 · Traditional Dubrovnik cooking done properly. The capon is the signature dish.</div><a class="food-maps" href="https://www.google.com/maps/search/?api=1&query=Kopun+restaurant+Dubrovnik" target="_blank">Maps ↗</a></div></div>
+        <div class="food-item"><div class="food-info"><div class="food-name">Bistro Tavulin</div><div class="food-desc" data-en="Cvijete Zuzorić 1 · Classic local style in the Old Town. Honest, consistent, no pretension." data-pt="Cvijete Zuzorić 1 · Estilo local clássico na Cidade Velha. Honesto, consistente, sem pretensão.">Cvijete Zuzorić 1 · Classic local style in the Old Town. Honest, consistent, no pretension.</div><a class="food-maps" href="https://www.google.com/maps/search/?api=1&query=Bistro+Tavulin+Dubrovnik" target="_blank">Maps ↗</a></div></div>
+        <div class="food-item"><div class="food-info"><div class="food-name">Taj Mahal</div><div class="food-desc" data-en="Nikole Gučetića 2 · Bosnian food — grilled meats, burek, robust portions. One of the safest bets in town." data-pt="Nikole Gučetića 2 · Comida bósnia — carnes grelhadas, burek, porções robustas. Uma das apostas mais seguras da cidade.">Nikole Gučetića 2 · Bosnian food — grilled meats, burek, robust portions. One of the safest bets in town.</div><a class="food-maps" href="https://www.google.com/maps/search/?api=1&query=Taj+Mahal+restaurant+Dubrovnik" target="_blank">Maps ↗</a></div></div>
+      </div></div>
+
+    </div>
+  </div>
+
+  <!-- DAY 2 -->
+  <div class="block-card" id="day2" style="animation-delay:0.1s">
+    <button class="block-trigger" onclick="toggleBlock('day2')">
+      <span class="block-num">02</span>
+      <div class="block-info">
+        <div class="block-name" data-en="Views and fortresses" data-pt="Vistas e fortalezas">Views and fortresses</div>
+        <div class="block-tagline" data-en="Mount Srđ → Fort Lovrijenac → Buža side → Lazareti" data-pt="Monte Srđ → Forte Lovrijenac → Lado Buža → Lazareti">Mount Srđ → Fort Lovrijenac → Buža side → Lazareti</div>
+      </div>
+      <div class="block-arrow">▼</div>
+    </button>
+    <div class="block-body"><div class="block-divider"></div>
+
+      <div class="stop" id="d2_srd"><div class="stop-header" onclick="toggleStop('d2_srd')"><div class="stop-check" onclick="checkStop(event,'d2_srd')"></div><div class="stop-name" data-en="Mount Srđ" data-pt="Monte Srđ">Mount Srđ</div><span class="badge-must" data-en="Big view" data-pt="Grande vista">Big view</span><span class="stop-expand">▾</span></div><div class="stop-details" id="sd_d2_srd"><div class="detail-rule"></div><div class="detail-hist"><strong data-en="History" data-pt="História">History</strong><span data-en="The 412-metre peak directly behind the Old Town. The French-built Fort Imperial at the summit saw fierce fighting during the 1991–92 siege of Dubrovnik, when Yugoslav and Montenegrin forces shelled the city from the surrounding hills. It is now a Homeland War Museum — a conflict most visitors walk past without knowing about." data-pt="O pico de 412 metros diretamente atrás da Cidade Velha. O Forte Imperial foi palco de combates intensos durante o cerco de Dubrovnik em 1991–92, quando forças iugoslavas e montenegrinas bombardearam a cidade das colinas. É agora um Museu da Guerra da Independência — um conflito que a maioria dos visitantes não sabe que aconteceu.">The 412-metre peak directly behind the Old Town. The French-built Fort Imperial at the summit saw fierce fighting during the 1991–92 siege of Dubrovnik, when Yugoslav and Montenegrin forces shelled the city from the surrounding hills. It is now a Homeland War Museum — a conflict most visitors walk past without knowing about.</span></div><div class="detail-fact"><strong data-en="Best move" data-pt="Melhor estratégia">Best move</strong><span data-en="Cable car is fast and worth it for the view. Hike up if you want to earn it. Do not skip the war museum — it completely changes how you read the city." data-pt="O teleférico é rápido e vale pela vista. Suba caminhando se quiser merecer. Não pule o museu de guerra — muda completamente como você lê a cidade.">Cable car is fast and worth it for the view. Hike up if you want to earn it. Do not skip the war museum — it completely changes how you read the city.</span></div><a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=Mount+Srd+Dubrovnik" target="_blank">📍 <span data-en="Take me there" data-pt="Me leve lá">Take me there</span></a></div></div>
+
+      <div class="stop" id="d2_lovrijenac"><div class="stop-header" onclick="toggleStop('d2_lovrijenac')"><div class="stop-check" onclick="checkStop(event,'d2_lovrijenac')"></div><div class="stop-name" data-en="Fort Lovrijenac" data-pt="Forte Lovrijenac">Fort Lovrijenac</div><span class="badge-must" data-en="Must see" data-pt="Imperdível">Must see</span><span class="stop-expand">▾</span></div><div class="stop-details" id="sd_d2_lovrijenac"><div class="detail-rule"></div><div class="detail-hist"><strong data-en="History" data-pt="História">History</strong><span data-en="Built in the 11th century on a 37-metre cliff outside the western walls — specifically to stop the Venetians from building a fort there first. The Republic reportedly built it in three months. Above the entrance gate is inscribed: Non bene pro toto libertas venditur auro — 'Freedom is not sold for all the gold in the world.'" data-pt="Construído no século XI num penhasco de 37 metros fora das muralhas — especificamente para impedir que os venezianos construíssem um forte lá primeiro. A República supostamente o construiu em três meses. Acima do portão de entrada está inscrito: Non bene pro toto libertas venditur auro — 'A liberdade não se vende por todo o ouro do mundo.'">Built in the 11th century on a 37-metre cliff outside the western walls — specifically to stop the Venetians from building a fort there first. The Republic reportedly built it in three months. Above the entrance gate is inscribed: Non bene pro toto libertas venditur auro — 'Freedom is not sold for all the gold in the world.'</span></div><div class="detail-fact"><strong data-en="Why it matters" data-pt="Por que importa">Why it matters</strong><span data-en="The opposite angle on the city from the sea side. From here Dubrovnik looks militarily serious, not just photogenic. The view from the top terrace is one of the best in the city." data-pt="O ângulo oposto da cidade pelo lado do mar. Daqui Dubrovnik parece militarmente séria, não apenas fotogênica. A vista do terraço superior é uma das melhores da cidade.">The opposite angle on the city from the sea side. From here Dubrovnik looks militarily serious, not just photogenic. The view from the top terrace is one of the best in the city.</span></div><a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=Fort+Lovrijenac+Dubrovnik" target="_blank">📍 <span data-en="Take me there" data-pt="Me leve lá">Take me there</span></a></div></div>
+
+      <div class="stop" id="d2_buza"><div class="stop-header" onclick="toggleStop('d2_buza')"><div class="stop-check" onclick="checkStop(event,'d2_buza')"></div><div class="stop-name" data-en="Buža side passages" data-pt="Passagens do lado Buža">Buža side passages</div><span class="badge-hidden" data-en="Quieter" data-pt="Mais tranquilo">Quieter</span><span class="stop-expand">▾</span></div><div class="stop-details" id="sd_d2_buza"><div class="detail-rule"></div><div class="detail-hist"><strong data-en="History" data-pt="História">History</strong><span data-en="The southern edge of the Old Town, where the walls meet the cliff above the sea. Buža means 'hole in the wall' — a small gate cut through the city walls gives access to rocky platforms below, and to the famous cliff bar of the same name." data-pt="A borda sul da Cidade Velha, onde as muralhas encontram a falésia acima do mar. Buža significa 'buraco na parede' — um pequeno portão dá acesso às plataformas rochosas abaixo e ao famoso bar de falésia de mesmo nome.">The southern edge of the Old Town, where the walls meet the cliff above the sea. Buža means 'hole in the wall' — a small gate cut through the city walls gives access to rocky platforms below, and to the famous cliff bar of the same name.</span></div><div class="detail-fact"><strong data-en="Why stop" data-pt="Por que parar">Why stop</strong><span data-en="Better sea air, more genuine atmosphere. The passages behind the main wall are markedly quieter than the Stradun side. Good drink with a view if you time it right." data-pt="Melhor ar marinho, atmosfera mais genuína. As passagens atrás da muralha são marcadamente mais tranquilas do que o lado do Stradun. Boa bebida com vista se você escolher o momento certo.">Better sea air, more genuine atmosphere. The passages behind the main wall are markedly quieter than the Stradun side. Good drink with a view if you time it right.</span></div><a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=Buza+Gate+Dubrovnik" target="_blank">📍 <span data-en="Take me there" data-pt="Me leve lá">Take me there</span></a></div></div>
+
+      <div class="stop" id="d2_lazareti"><div class="stop-header" onclick="toggleStop('d2_lazareti')"><div class="stop-check" onclick="checkStop(event,'d2_lazareti')"></div><div class="stop-name" data-en="Lazareti" data-pt="Lazareti">Lazareti</div><span class="badge-hidden" data-en="Hidden gem" data-pt="Joia escondida">Hidden gem</span><span class="stop-expand">▾</span></div><div class="stop-details" id="sd_d2_lazareti"><div class="detail-rule"></div><div class="detail-hist"><strong data-en="History" data-pt="História">History</strong><span data-en="In 1377, the Republic of Ragusa introduced the world's first formal quarantine law. Arrivals from plague-affected areas waited 30 days before entering — later extended to 40, quarantina in Italian, which is where the word 'quarantine' comes from. The Lazareti complex, built in the early 17th century outside the Ploče Gate, was the physical infrastructure for this system." data-pt="Em 1377, a República de Ragusa introduziu a primeira lei de quarentena formal do mundo. Chegantes de áreas afetadas pela peste esperavam 30 dias — mais tarde estendido para 40, quarantina em italiano, de onde vem a palavra 'quarentena'. O complexo Lazareti foi a infraestrutura física desse sistema.">In 1377, the Republic of Ragusa introduced the world's first formal quarantine law. Arrivals from plague-affected areas waited 30 days before entering — later extended to 40, quarantina in Italian, which is where the word 'quarantine' comes from. The Lazareti complex, built in the early 17th century outside the Ploče Gate, was the physical infrastructure for this system.</span></div><div class="detail-fact"><strong data-en="Did you know" data-pt="Você sabia">Did you know</strong><span data-en="Ragusa got rich partly by isolating disease without shutting down trade. Merchants and goods were held separately so commerce could continue. A 14th-century public health solution that still makes sense." data-pt="Ragusa enriqueceu em parte por isolar doenças sem interromper o comércio. Comerciantes e mercadorias eram mantidos separados para que o comércio continuasse. Uma solução de saúde pública do século XIV que ainda faz sentido.">Ragusa got rich partly by isolating disease without shutting down trade. Merchants and goods were held separately so commerce could continue. A 14th-century public health solution that still makes sense.</span></div><a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=Lazareti+Dubrovnik" target="_blank">📍 <span data-en="Take me there" data-pt="Me leve lá">Take me there</span></a></div></div>
+
+      <div class="food-block" id="food_d2"><div class="food-header" onclick="toggleFood('food_d2')"><span class="food-title" data-en="🍴 Where to Eat — Day 2" data-pt="🍴 Onde Comer — Dia 2">🍴 Where to Eat — Day 2</span><span class="food-arrow">▼</span></div><div class="food-body"><div class="food-rule"></div>
+        <div class="food-item"><div class="food-info"><div class="food-name">Pantarul</div><div class="food-desc" data-en="Kralja Tomislava 1, Lapad · Relaxed, clever cooking outside the tourist core. One of the best overall." data-pt="Kralja Tomislava 1, Lapad · Culinária relaxada e inteligente fora do núcleo turístico. Um dos melhores no geral.">Kralja Tomislava 1, Lapad · Relaxed, clever cooking outside the tourist core. One of the best overall.</div><a class="food-maps" href="https://www.google.com/maps/search/?api=1&query=Pantarul+restaurant+Dubrovnik" target="_blank">Maps ↗</a></div></div>
+        <div class="food-item"><div class="food-info"><div class="food-name">Nautika</div><div class="food-desc" data-en="Brsalje 3 · The splurge option. Views of Fort Lovrijenac, proper occasion feel. Budget accordingly." data-pt="Brsalje 3 · A opção luxuosa. Vistas do Forte Lovrijenac, ambiente de ocasião especial. Planeje o orçamento.">Brsalje 3 · The splurge option. Views of Fort Lovrijenac, proper occasion feel. Budget accordingly.</div><a class="food-maps" href="https://www.google.com/maps/search/?api=1&query=Nautika+restaurant+Dubrovnik" target="_blank">Maps ↗</a></div></div>
+      </div></div>
+
+    </div>
+  </div>
+
+  <!-- DAY 3 -->
+  <div class="block-card" id="day3" style="animation-delay:0.15s">
+    <button class="block-trigger" onclick="toggleBlock('day3')">
+      <span class="block-num">03</span>
+      <div class="block-info">
+        <div class="block-name" data-en="Lokrum day" data-pt="Dia em Lokrum">Lokrum day</div>
+        <div class="block-tagline" data-en="Old Port boat → Benedictine ruins → Botanical garden → Fort Royal → Dead Sea" data-pt="Barco do Porto Velho → Ruínas Beneditinas → Jardim Botânico → Forte Real → Mar Morto">Old Port boat → Benedictine ruins → Botanical garden → Fort Royal → Dead Sea</div>
+      </div>
+      <div class="block-arrow">▼</div>
+    </button>
+    <div class="block-body"><div class="block-divider"></div>
+
+      <div class="stop" id="d3_boat"><div class="stop-header" onclick="toggleStop('d3_boat')"><div class="stop-check" onclick="checkStop(event,'d3_boat')"></div><div class="stop-name" data-en="Boat from the Old Port" data-pt="Barco do Porto Velho">Boat from the Old Port</div><span class="badge-must" data-en="Easy win" data-pt="Vitória fácil">Easy win</span><span class="stop-expand">▾</span></div><div class="stop-details" id="sd_d3_boat"><div class="detail-rule"></div><div class="detail-hist"><strong data-en="Getting there" data-pt="Como chegar">Getting there</strong><span data-en="Small ferries run every 30–45 minutes from the Old Port. Crossing takes about 15 minutes. Check the last return time before you lose track of the hours — boats stop in the evening." data-pt="Pequenas balsas partem a cada 30–45 minutos do Porto Velho. A travessia leva cerca de 15 minutos. Verifique o horário do último retorno — os barcos param à noite.">Small ferries run every 30–45 minutes from the Old Port. Crossing takes about 15 minutes. Check the last return time before you lose track of the hours — boats stop in the evening.</span></div><div class="detail-fact"><strong data-en="Why it works" data-pt="Por que funciona">Why it works</strong><span data-en="In 15 minutes you go from the most photographed city in Europe to a nature reserve with peacocks. Minimum logistics, maximum reset." data-pt="Em 15 minutos você vai da cidade mais fotografada da Europa para uma reserva natural com pavões. Logística mínima, reinicialização máxima.">In 15 minutes you go from the most photographed city in Europe to a nature reserve with peacocks. Minimum logistics, maximum reset.</span></div><a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=Old+Port+Dubrovnik" target="_blank">📍 <span data-en="Take me there" data-pt="Me leve lá">Take me there</span></a></div></div>
+
+      <div class="stop" id="d3_monastery"><div class="stop-header" onclick="toggleStop('d3_monastery')"><div class="stop-check" onclick="checkStop(event,'d3_monastery')"></div><div class="stop-name" data-en="Benedictine Monastery ruins" data-pt="Ruínas do Mosteiro Beneditino">Benedictine Monastery ruins</div><span class="stop-expand">▾</span></div><div class="stop-details" id="sd_d3_monastery"><div class="detail-rule"></div><div class="detail-hist"><strong data-en="History" data-pt="História">History</strong><span data-en="Founded in 1023. Richard the Lionheart reportedly sheltered here in 1192 after being shipwrecked on his way back from the Third Crusade, and vowed to build a church — the city of Ragusa redirected the funds to the Cathedral instead. The monastery was dissolved by Napoleon's administration in 1798 and has been a romantic ruin ever since." data-pt="Fundado em 1023. Ricardo Coração de Leão supostamente se abrigou aqui em 1192 após naufragiar voltando da Terceira Cruzada, e prometeu construir uma igreja — Ragusa redirecionou os fundos para a Catedral. O mosteiro foi dissolvido em 1798 e desde então é uma ruína romântica.">Founded in 1023. Richard the Lionheart reportedly sheltered here in 1192 after being shipwrecked on his way back from the Third Crusade, and vowed to build a church — the city of Ragusa redirected the funds to the Cathedral instead. The monastery was dissolved by Napoleon's administration in 1798 and has been a romantic ruin ever since.</span></div><div class="detail-fact"><strong data-en="Why stop" data-pt="Por que parar">Why stop</strong><span data-en="It makes Lokrum feel like more than a swim break. The cloister garden in the ruins is unexpectedly beautiful." data-pt="Faz Lokrum parecer mais do que uma pausa para nadar. O jardim do claustro nas ruínas é inesperadamente bonito.">It makes Lokrum feel like more than a swim break. The cloister garden in the ruins is unexpectedly beautiful.</span></div><a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=Lokrum+Monastery" target="_blank">📍 <span data-en="Take me there" data-pt="Me leve lá">Take me there</span></a></div></div>
+
+      <div class="stop" id="d3_fort"><div class="stop-header" onclick="toggleStop('d3_fort')"><div class="stop-check" onclick="checkStop(event,'d3_fort')"></div><div class="stop-name" data-en="Fort Royal" data-pt="Forte Real">Fort Royal</div><span class="badge-must" data-en="Best view" data-pt="Melhor vista">Best view</span><span class="stop-expand">▾</span></div><div class="stop-details" id="sd_d3_fort"><div class="detail-rule"></div><div class="detail-hist"><strong data-en="History" data-pt="História">History</strong><span data-en="Built by the French during Napoleon's occupation of Dubrovnik (1806–1813) as a lookout over the Adriatic approaches. The French period was brief but left several military structures on the islands and hills around the city." data-pt="Construído pelos franceses durante a ocupação napoleônica (1806–1813) como posto de observação sobre o Adriático. O período francês foi breve mas deixou várias estruturas militares nas ilhas e colinas ao redor da cidade.">Built by the French during Napoleon's occupation of Dubrovnik (1806–1813) as a lookout over the Adriatic approaches. The French period was brief but left several military structures on the islands and hills around the city.</span></div><div class="detail-fact"><strong data-en="Best move" data-pt="Melhor estratégia">Best move</strong><span data-en="Do this before the swim stop while your legs still cooperate. The view back to the Old Town and across the Elaphiti Islands is the best on Lokrum." data-pt="Faça isso antes da parada para nadar enquanto suas pernas ainda cooperam. A vista de volta para a Cidade Velha e pelas Ilhas Elaphiti é a melhor em Lokrum.">Do this before the swim stop while your legs still cooperate. The view back to the Old Town and across the Elaphiti Islands is the best on Lokrum.</span></div><a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=Fort+Royal+Lokrum" target="_blank">📍 <span data-en="Take me there" data-pt="Me leve lá">Take me there</span></a></div></div>
+
+      <div class="stop" id="d3_deadsea"><div class="stop-header" onclick="toggleStop('d3_deadsea')"><div class="stop-check" onclick="checkStop(event,'d3_deadsea')"></div><div class="stop-name" data-en="The Dead Sea" data-pt="O Mar Morto">The Dead Sea</div><span class="stop-expand">▾</span></div><div class="stop-details" id="sd_d3_deadsea"><div class="detail-rule"></div><div class="detail-hist"><strong data-en="What it is" data-pt="O que é">What it is</strong><span data-en="A small saltwater lake connected to the Adriatic by an underground passage. Similar salinity to the sea but noticeably warmer, surrounded by pine trees, completely calm. Unlike anything else on the island." data-pt="Um pequeno lago de água salgada conectado ao Adriático por uma passagem subterrânea. Salinidade semelhante ao mar mas visivelmente mais quente, rodeado por pinheiros, completamente calmo. Não se parece com nada mais na ilha.">A small saltwater lake connected to the Adriatic by an underground passage. Similar salinity to the sea but noticeably warmer, surrounded by pine trees, completely calm. Unlike anything else on the island.</span></div><div class="detail-fact"><strong data-en="Reality" data-pt="Realidade">Reality</strong><span data-en="It is the kind of place where people lose track of time very easily. Factor that into your last boat calculation." data-pt="É o tipo de lugar onde as pessoas perdem a noção do tempo muito facilmente. Leve isso em conta no cálculo do último barco.">It is the kind of place where people lose track of time very easily. Factor that into your last boat calculation.</span></div><a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=Dead+Sea+Lokrum" target="_blank">📍 <span data-en="Take me there" data-pt="Me leve lá">Take me there</span></a></div></div>
+
+      <div class="food-block" id="food_d3"><div class="food-header" onclick="toggleFood('food_d3')"><span class="food-title" data-en="🍴 Where to Eat — Day 3" data-pt="🍴 Onde Comer — Dia 3">🍴 Where to Eat — Day 3</span><span class="food-arrow">▼</span></div><div class="food-body"><div class="food-rule"></div>
+        <div class="food-item"><div class="food-info"><div class="food-name" data-en="On Lokrum" data-pt="Em Lokrum">On Lokrum</div><div class="food-desc" data-en="Basic bar and snack kiosk on the island. Fine for lunch. Do not expect a restaurant." data-pt="Bar básico e quiosque na ilha. Bom para almoço. Não espere um restaurante.">Basic bar and snack kiosk on the island. Fine for lunch. Do not expect a restaurant.</div></div></div>
+        <div class="food-item"><div class="food-info"><div class="food-name">Kopun</div><div class="food-desc" data-en="Poljana R. Boškovića 7 · After a day on the island a proper sit-down dinner is earned." data-pt="Poljana R. Boškovića 7 · Após um dia na ilha, um jantar adequado é merecido.">Poljana R. Boškovića 7 · After a day on the island a proper sit-down dinner is earned.</div><a class="food-maps" href="https://www.google.com/maps/search/?api=1&query=Kopun+restaurant+Dubrovnik" target="_blank">Maps ↗</a></div></div>
+        <div class="food-item"><div class="food-info"><div class="food-name">Pantarul</div><div class="food-desc" data-en="Kralja Tomislava 1, Lapad · If you want something more relaxed outside the Old Town." data-pt="Kralja Tomislava 1, Lapad · Se você quiser algo mais relaxado fora da Cidade Velha.">Kralja Tomislava 1, Lapad · If you want something more relaxed outside the Old Town.</div><a class="food-maps" href="https://www.google.com/maps/search/?api=1&query=Pantarul+restaurant+Dubrovnik" target="_blank">Maps ↗</a></div></div>
+      </div></div>
+
+    </div>
+  </div>
+
+  <!-- DAY 4 -->
+  <div class="block-card" id="day4" style="animation-delay:0.2s">
+    <button class="block-trigger" onclick="toggleBlock('day4')">
+      <span class="block-num">04</span>
+      <div class="block-info">
+        <div class="block-name" data-en="Elaphiti Islands" data-pt="Ilhas Elaphiti">Elaphiti Islands</div>
+        <div class="block-tagline" data-en="Best full-day trip from Dubrovnik. Koločep, Lopud, or Šipan — pick your pace." data-pt="Melhor passeio de dia inteiro de Dubrovnik. Koločep, Lopud ou Šipan — escolha seu ritmo.">Best full-day trip from Dubrovnik. Koločep, Lopud, or Šipan — pick your pace.</div>
+      </div>
+      <div class="block-arrow">▼</div>
+    </button>
+    <div class="block-body"><div class="block-divider"></div>
+
+      <div class="stop" id="d4_elaphiti"><div class="stop-header" onclick="toggleStop('d4_elaphiti')"><div class="stop-check" onclick="checkStop(event,'d4_elaphiti')"></div><div class="stop-name" data-en="Elaphiti Islands — overview" data-pt="Ilhas Elaphiti — visão geral">Elaphiti Islands — overview</div><span class="badge-must" data-en="Best day trip" data-pt="Melhor passeio">Best day trip</span><span class="stop-expand">▾</span></div><div class="stop-details" id="sd_d4_elaphiti"><div class="detail-rule"></div><div class="detail-hist"><strong data-en="History" data-pt="História">History</strong><span data-en="An archipelago of 13 islands (only 3 inhabited) northwest of Dubrovnik. The name comes from the Greek elaphos, meaning deer — though the deer are long gone. In the Republic of Ragusa era, the islands supplied timber and agricultural goods to the city." data-pt="Um arquipélago de 13 ilhas (apenas 3 habitadas) a noroeste de Dubrovnik. O nome vem do grego elaphos, que significa veado — embora os veados tenham desaparecido há muito. Na era da República de Ragusa, as ilhas forneciam madeira e produtos agrícolas à cidade.">An archipelago of 13 islands (only 3 inhabited) northwest of Dubrovnik. The name comes from the Greek elaphos, meaning deer — though the deer are long gone. In the Republic of Ragusa era, the islands supplied timber and agricultural goods to the city.</span></div><div class="detail-fact"><strong data-en="Why it wins" data-pt="Por que é a melhor opção">Why it wins</strong><span data-en="Best reward-to-hassle ratio of any full day out of Dubrovnik. No border crossings, no long drives, very good swimming, completely different pace." data-pt="Melhor relação recompensa-dificuldade de qualquer dia inteiro fora de Dubrovnik. Sem fronteiras, sem longas viagens, boa natação, ritmo completamente diferente.">Best reward-to-hassle ratio of any full day out of Dubrovnik. No border crossings, no long drives, very good swimming, completely different pace.</span></div><a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=Elaphiti+Islands+Croatia" target="_blank">📍 <span data-en="Take me there" data-pt="Me leve lá">Take me there</span></a></div></div>
+
+      <div class="stop" id="d4_lopud"><div class="stop-header" onclick="toggleStop('d4_lopud')"><div class="stop-check" onclick="checkStop(event,'d4_lopud')"></div><div class="stop-name" data-en="Lopud — the classic choice" data-pt="Lopud — a escolha clássica">Lopud — the classic choice</div><span class="badge-must" data-en="Crowd pleaser" data-pt="Agrada a todos">Crowd pleaser</span><span class="stop-expand">▾</span></div><div class="stop-details" id="sd_d4_lopud"><div class="detail-rule"></div><div class="detail-hist"><strong data-en="Character" data-pt="Caráter">Character</strong><span data-en="The most visited of the three islands and with good reason. Šunj beach on the south side is one of the few sandy beaches near Dubrovnik — a 20-minute walk or short buggy ride from the village. The village has some of the best-preserved Renaissance summer residences of the old Ragusan nobility." data-pt="A mais visitada das três ilhas e com razão. A praia de Šunj no lado sul é uma das poucas praias de areia perto de Dubrovnik — 20 minutos a pé ou curta viagem de buggy da aldeia. A aldeia tem residências de verão renascentistas bem preservadas da antiga nobreza ragusana.">The most visited of the three islands and with good reason. Šunj beach on the south side is one of the few sandy beaches near Dubrovnik — a 20-minute walk or short buggy ride from the village. The village has some of the best-preserved Renaissance summer residences of the old Ragusan nobility.</span></div><div class="detail-fact"><strong data-en="Best for" data-pt="Melhor para">Best for</strong><span data-en="The classic full island day. Easy, rewarding, good swimming, proper holiday feel." data-pt="O clássico dia completo de ilha. Fácil, gratificante, boa natação, sensação de férias de verdade.">The classic full island day. Easy, rewarding, good swimming, proper holiday feel.</span></div></div></div>
+
+      <div class="stop" id="d4_kolocep"><div class="stop-header" onclick="toggleStop('d4_kolocep')"><div class="stop-check" onclick="checkStop(event,'d4_kolocep')"></div><div class="stop-name" data-en="Koločep — the quieter option" data-pt="Koločep — a opção mais tranquila">Koločep — the quieter option</div><span class="badge-hidden" data-en="Calmer" data-pt="Mais tranquilo">Calmer</span><span class="stop-expand">▾</span></div><div class="stop-details" id="sd_d4_kolocep"><div class="detail-rule"></div><div class="detail-hist"><strong data-en="Character" data-pt="Caráter">Character</strong><span data-en="Smallest and nearest of the three inhabited islands — 30 minutes from Dubrovnik. No cars allowed. Two small villages connected by a pine forest path. Good for a gentle swim morning before continuing." data-pt="A menor e mais próxima das três ilhas habitadas — 30 minutos de Dubrovnik. Sem carros. Duas pequenas aldeias conectadas por caminho de floresta de pinheiros. Boa para uma manhã de natação tranquila antes de continuar.">Smallest and nearest of the three inhabited islands — 30 minutes from Dubrovnik. No cars allowed. Two small villages connected by a pine forest path. Good for a gentle swim morning before continuing.</span></div><div class="detail-fact"><strong data-en="Best for" data-pt="Melhor para">Best for</strong><span data-en="A lighter, slower island leg with clear water and no crowds." data-pt="Uma pausa de ilha mais leve e tranquila com água limpa e sem multidões.">A lighter, slower island leg with clear water and no crowds.</span></div></div></div>
+
+      <div class="stop" id="d4_sipan"><div class="stop-header" onclick="toggleStop('d4_sipan')"><div class="stop-check" onclick="checkStop(event,'d4_sipan')"></div><div class="stop-name" data-en="Šipan — the hidden choice" data-pt="Šipan — a escolha escondida">Šipan — the hidden choice</div><span class="badge-hidden" data-en="Least touristed" data-pt="Menos turística">Least touristed</span><span class="stop-expand">▾</span></div><div class="stop-details" id="sd_d4_sipan"><div class="detail-rule"></div><div class="detail-hist"><strong data-en="Character" data-pt="Caráter">Character</strong><span data-en="The largest of the three islands and the least touristed. Two villages connected by a fertile valley unusual for this part of the Adriatic. Several abandoned Ragusan noble villas in various states of romantic decay." data-pt="A maior das três ilhas e a menos turística. Duas aldeias conectadas por um vale fértil incomum para esta parte do Adriático. Várias vilas nobres ragusanas abandonadas em estados de deterioração romântica.">The largest of the three islands and the least touristed. Two villages connected by a fertile valley unusual for this part of the Adriatic. Several abandoned Ragusan noble villas in various states of romantic decay.</span></div><div class="detail-fact"><strong data-en="Best for" data-pt="Melhor para">Best for</strong><span data-en="Genuine island atmosphere without chasing the obvious option. You will likely share the ferry with locals, not just tourists." data-pt="Atmosfera genuína de ilha sem perseguir a opção óbvia. Você provavelmente compartilhará a balsa com moradores locais, não apenas turistas.">Genuine island atmosphere without chasing the obvious option. You will likely share the ferry with locals, not just tourists.</span></div></div></div>
+
+      <div class="food-block" id="food_d4"><div class="food-header" onclick="toggleFood('food_d4')"><span class="food-title" data-en="🍴 Where to Eat — Day 4" data-pt="🍴 Onde Comer — Dia 4">🍴 Where to Eat — Day 4</span><span class="food-arrow">▼</span></div><div class="food-body"><div class="food-rule"></div>
+        <div class="food-item"><div class="food-info"><div class="food-name" data-en="On Lopud" data-pt="Em Lopud">On Lopud</div><div class="food-desc" data-en="The village has proper restaurants. Obala bb has good grilled meats overlooking the harbour." data-pt="A aldeia tem restaurantes de verdade. Obala bb tem boas carnes grelhadas com vista para o porto.">The village has proper restaurants. Obala bb has good grilled meats overlooking the harbour.</div></div></div>
+        <div class="food-item"><div class="food-info"><div class="food-name" data-en="Back in Dubrovnik" data-pt="De volta em Dubrovnik">Back in Dubrovnik</div><div class="food-desc" data-en="Go with a proven winner. Bistro Tavulin or Kopun — not a random waterfront gamble." data-pt="Vá com um vencedor comprovado. Bistro Tavulin ou Kopun — não uma aposta aleatória à beira-mar.">Go with a proven winner. Bistro Tavulin or Kopun — not a random waterfront gamble.</div></div></div>
+      </div></div>
+
+    </div>
+  </div>
+
+  <!-- DAY 5 -->
+  <div class="block-card" id="day5" style="animation-delay:0.25s">
+    <button class="block-trigger" onclick="toggleBlock('day5')">
+      <span class="block-num">05</span>
+      <div class="block-info">
+        <div class="block-name" data-en="Your extra day" data-pt="Seu dia extra">Your extra day</div>
+        <div class="block-tagline" data-en="Cavtat, Trsteno, or Ston — coast, greenery, or raw history. Pick one." data-pt="Cavtat, Trsteno ou Ston — costa, verde ou história crua. Escolha um.">Cavtat, Trsteno, or Ston — coast, greenery, or raw history. Pick one.</div>
+      </div>
+      <div class="block-arrow">▼</div>
+    </button>
+    <div class="block-body"><div class="block-divider"></div>
+      <div class="ess-item"><div class="ess-dot"></div><div class="ess-text"><strong data-en="Option A — Cavtat" data-pt="Opção A — Cavtat">Option A — Cavtat</strong><span data-en="20km south. Pretty, easy, lower stress. Built on the site of Epidaurum, the ancient city whose survivors fled to found Ragusa. The Račić Mausoleum by Ivan Meštrović on the hill is unexpectedly excellent." data-pt="20km ao sul. Bonita, fácil, menos estressante. Construída no local de Epidaurum, a cidade antiga cujos sobreviventes fugiram para fundar Ragusa. O Mausoléu Račić de Ivan Meštrović na colina é inesperadamente excelente.">20km south. Pretty, easy, lower stress. Built on the site of Epidaurum, the ancient city whose survivors fled to found Ragusa. The Račić Mausoleum by Ivan Meštrović on the hill is unexpectedly excellent.</span></div></div>
+      <div class="ess-item"><div class="ess-dot"></div><div class="ess-text"><strong data-en="Option B — Trsteno" data-pt="Opção B — Trsteno">Option B — Trsteno</strong><span data-en="20km northwest. A Renaissance arboretum established in 1492 by a Ragusan noble family — one of the oldest in Europe. Very good antidote to stone and crowd overload. Game of Thrones filmed here too." data-pt="20km a noroeste. Um arboreto renascentista estabelecido em 1492 por uma família nobre ragusana — um dos mais antigos da Europa. Ótimo antídoto para o excesso de pedras e multidões. Game of Thrones também filmou aqui.">20km northwest. A Renaissance arboretum established in 1492 by a Ragusan noble family — one of the oldest in Europe. Very good antidote to stone and crowd overload. Game of Thrones filmed here too.</span></div></div>
+      <div class="ess-item"><div class="ess-dot"></div><div class="ess-text"><strong data-en="Option C — Ston" data-pt="Opção C — Ston">Option C — Ston</strong><span data-en="60km northwest. Medieval walls stretching 5.5km across the Pelješac Peninsula — among the longest in Europe. Built by the Republic of Ragusa in the 14th century to protect its salt pans. Raw, less polished, historically serious." data-pt="60km a noroeste. Muralhas medievais estendendo-se por 5,5km pela Península de Pelješac — entre as mais longas da Europa. Construídas pela República de Ragusa no século XIV para proteger suas salinas. Crua, menos refinada, historicamente séria.">60km northwest. Medieval walls stretching 5.5km across the Pelješac Peninsula — among the longest in Europe. Built by the Republic of Ragusa in the 14th century to protect its salt pans. Raw, less polished, historically serious.</span></div></div>
+    </div>
+  </div>
+
+</div>
+
+<div class="section-divider"></div>
+
+<!-- LOCAL FOOD -->
+<div class="section-wrap">
+  <div class="section-header">
+    <div class="section-tag" data-en="Eat Well" data-pt="Coma Bem">Eat Well</div>
+    <h2 class="section-title" data-en="Local <em>Food</em>" data-pt="Comida <em>Local</em>">Local <em>Food</em></h2>
+    <div class="section-rule"></div>
+  </div>
+  <p class="section-intro" data-en="What is worth ordering and where. Not a giant spreadsheet of regret." data-pt="O que vale pedir e onde. Não uma gigante planilha de arrependimento.">What is worth ordering and where. Not a giant spreadsheet of regret.</p>
+
+  <div class="card" id="food_dishes" style="animation-delay:0.05s">
+    <button class="card-trigger" onclick="toggleCard('food_dishes')">
+      <div class="card-icon">🍽️</div>
+      <div class="card-info"><div class="card-name" data-en="Dishes worth ordering" data-pt="Pratos que valem a pena pedir">Dishes worth ordering</div><div class="card-sub" data-en="The honest shortlist — what is actually Dubrovnik, not tourist menu filler" data-pt="A lista honesta — o que é realmente de Dubrovnik, não recheio de menu turístico">The honest shortlist — what is actually Dubrovnik, not tourist menu filler</div></div>
+      <div class="card-arrow">▼</div>
+    </button>
+    <div class="card-body"><div class="card-rule"></div>
+      <div class="ess-item"><div class="ess-dot"></div><div class="ess-text"><strong>Rozata</strong><span data-en="Dubrovnik's version of crème caramel, made with rose liqueur. The signature dessert of the city. Order it without hesitation." data-pt="A versão dubrovnikiana do crème caramel, feita com licor de rosa. A sobremesa assinatura da cidade. Peça sem hesitar.">Dubrovnik's version of crème caramel, made with rose liqueur. The signature dessert of the city. Order it without hesitation.</span></div></div>
+      <div class="ess-item"><div class="ess-dot"></div><div class="ess-text"><strong data-en="Kopun (capon)" data-pt="Kopun (capão)">Kopun (capon)</strong><span data-en="Castrated rooster slow-cooked with vegetables and herbs. The traditional centrepiece of a Dubrovnik meal. Richer and more flavourful than regular chicken." data-pt="Galo castrado cozido lentamente com legumes e ervas. O prato central tradicional de uma refeição de Dubrovnik. Mais rico e saboroso que frango comum.">Castrated rooster slow-cooked with vegetables and herbs. The traditional centrepiece of a Dubrovnik meal. Richer and more flavourful than regular chicken.</span></div></div>
+      <div class="ess-item"><div class="ess-dot"></div><div class="ess-text"><strong>Zelena menestra</strong><span data-en="A hearty green stew with smoked pork and kale. A very old Dalmatian dish that does not photograph well but tastes exactly right." data-pt="Um ensopado farto de verduras com carne de porco defumada e couve. Um prato dalmatino muito antigo que não fotografa bem mas tem um gosto certo.">A hearty green stew with smoked pork and kale. A very old Dalmatian dish that does not photograph well but tastes exactly right.</span></div></div>
+      <div class="ess-item"><div class="ess-dot"></div><div class="ess-text"><strong>Sporchi makaruli</strong><span data-en="'Dirty macaroni' — pasta with a rich meat ragù. The name is worse than the dish. A Dubrovnik staple worth trying." data-pt="'Macarrão sujo' — macarrão com um ragù de carne rico. O nome é pior do que o prato. Um clássico de Dubrovnik que vale provar.">Pasta with a rich meat ragù. The name is worse than the dish. A Dubrovnik staple worth trying.</span></div></div>
+      <div class="ess-item"><div class="ess-dot"></div><div class="ess-text"><strong>Peka</strong><span data-en="Meat and vegetables slow-cooked under a bell-shaped lid buried in embers. Needs to be ordered hours in advance. Worth planning for." data-pt="Carne e legumes cozidos lentamente sob uma tampa em forma de sino enterrada em brasas. Precisa ser encomendado horas com antecedência. Vale planejar.">Meat and vegetables slow-cooked under a bell-shaped lid buried in embers. Needs to be ordered hours in advance. Worth planning for.</span></div></div>
+    </div>
+  </div>
+
+  <div class="card" id="food_wines" style="animation-delay:0.1s">
+    <button class="card-trigger" onclick="toggleCard('food_wines')">
+      <div class="card-icon">🍷</div>
+      <div class="card-info"><div class="card-name" data-en="Local wines" data-pt="Vinhos locais">Local wines</div><div class="card-sub" data-en="This region produces seriously good wine — do not default to beer" data-pt="Esta região produz vinhos muito bons — não vá de cerveja por padrão">This region produces seriously good wine — do not default to beer</div></div>
+      <div class="card-arrow">▼</div>
+    </button>
+    <div class="card-body"><div class="card-rule"></div>
+      <div class="ess-item"><div class="ess-dot"></div><div class="ess-text"><strong>Dingač</strong><span data-en="Croatia's first protected designation of origin wine. A powerful, full-bodied red from Plavac Mali grapes grown on steep slopes of the Pelješac Peninsula. The benchmark red of the region." data-pt="O primeiro vinho de denominação de origem protegida da Croácia. Um tinto potente e encorpado das uvas Plavac Mali cultivadas em encostas íngremes da Península de Pelješac. O tinto de referência da região.">Croatia's first protected designation of origin wine. A powerful, full-bodied red from Plavac Mali grapes grown on steep slopes of the Pelješac Peninsula. The benchmark red of the region.</span></div></div>
+      <div class="ess-item"><div class="ess-dot"></div><div class="ess-text"><strong>Pošip</strong><span data-en="The best white of the region. Dry, aromatic, medium-bodied — from the island of Korčula. Very good in warm weather." data-pt="O melhor branco da região. Seco, aromático, de corpo médio — da ilha de Korčula. Muito bom no tempo quente.">The best white of the region. Dry, aromatic, medium-bodied — from the island of Korčula. Very good in warm weather.</span></div></div>
+      <div class="ess-item"><div class="ess-dot"></div><div class="ess-text"><strong>Postup</strong><span data-en="Another Pelješac red from Plavac Mali. Slightly softer than Dingač but still bold. Worth trying alongside it." data-pt="Outro tinto de Pelješac da Plavac Mali. Ligeiramente mais suave que o Dingač mas ainda encorpado. Vale experimentar ao lado dele.">Another Pelješac red from Plavac Mali. Slightly softer than Dingač but still bold. Worth trying alongside it.</span></div></div>
+      <div class="ess-item"><div class="ess-dot"></div><div class="ess-text"><strong data-en="Dubrovnik Malvasia" data-pt="Malvasia de Dubrovnik">Dubrovnik Malvasia</strong><span data-en="A local white with a long history in the region. Light, crisp, very easy to drink. Good house white if they serve it." data-pt="Um branco local com longa história na região. Leve, fresco, muito fácil de beber. Bom vinho da casa se servirem.">A local white with a long history in the region. Light, crisp, very easy to drink. Good house white if they serve it.</span></div></div>
+    </div>
+  </div>
+
+  <div class="card" id="food_rest" style="animation-delay:0.15s">
+    <button class="card-trigger" onclick="toggleCard('food_rest')">
+      <div class="card-icon">📍</div>
+      <div class="card-info"><div class="card-name" data-en="Where to eat — the full list" data-pt="Onde comer — a lista completa">Where to eat — the full list</div><div class="card-sub" data-en="Ranked by reliability, not hype" data-pt="Classificados por confiabilidade, não hype">Ranked by reliability, not hype</div></div>
+      <div class="card-arrow">▼</div>
+    </button>
+    <div class="card-body"><div class="card-rule"></div>
+      <div class="ess-item"><div class="ess-dot"></div><div class="ess-text"><strong>Kopun</strong><span data-en="Poljana R. Boškovića 7 · Traditional Dubrovnik cooking done properly. Book ahead." data-pt="Poljana R. Boškovića 7 · Culinária tradicional de Dubrovnik feita corretamente. Reserve com antecedência.">Poljana R. Boškovića 7 · Traditional Dubrovnik cooking done properly. Book ahead.</span>&nbsp;<a class="food-maps" href="https://www.google.com/maps/search/?api=1&query=Kopun+restaurant+Dubrovnik" target="_blank">Maps ↗</a></div></div>
+      <div class="ess-item"><div class="ess-dot"></div><div class="ess-text"><strong>Bistro Tavulin</strong><span data-en="Cvijete Zuzorić 1 · Classic local style. Honest and consistent." data-pt="Cvijete Zuzorić 1 · Estilo local clássico. Honesto e consistente.">Cvijete Zuzorić 1 · Classic local style. Honest and consistent.</span>&nbsp;<a class="food-maps" href="https://www.google.com/maps/search/?api=1&query=Bistro+Tavulin+Dubrovnik" target="_blank">Maps ↗</a></div></div>
+      <div class="ess-item"><div class="ess-dot"></div><div class="ess-text"><strong>Pantarul</strong><span data-en="Kralja Tomislava 1, Lapad · Outside the Old Town. Relaxed, clever cooking. One of the best overall." data-pt="Kralja Tomislava 1, Lapad · Fora da Cidade Velha. Culinária relaxada e inteligente. Um dos melhores no geral.">Kralja Tomislava 1, Lapad · Outside the Old Town. Relaxed, clever cooking. One of the best overall.</span>&nbsp;<a class="food-maps" href="https://www.google.com/maps/search/?api=1&query=Pantarul+restaurant+Dubrovnik" target="_blank">Maps ↗</a></div></div>
+      <div class="ess-item"><div class="ess-dot"></div><div class="ess-text"><strong>Taj Mahal</strong><span data-en="Nikole Gučetića 2 · Bosnian food — grilled meats, burek, robust portions. Dependable and good value." data-pt="Nikole Gučetića 2 · Comida bósnia — carnes grelhadas, burek, porções robustas. Confiável e bom custo-benefício.">Nikole Gučetića 2 · Bosnian food — grilled meats, burek, robust portions. Dependable and good value.</span>&nbsp;<a class="food-maps" href="https://www.google.com/maps/search/?api=1&query=Taj+Mahal+restaurant+Dubrovnik" target="_blank">Maps ↗</a></div></div>
+      <div class="ess-item"><div class="ess-dot"></div><div class="ess-text"><strong>Nautika</strong><span data-en="Brsalje 3 · The splurge option. Views of Fort Lovrijenac. Expensive. Worth it once if the budget allows." data-pt="Brsalje 3 · A opção luxuosa. Vistas do Forte Lovrijenac. Caro. Vale uma vez se o orçamento permitir.">Brsalje 3 · The splurge option. Views of Fort Lovrijenac. Expensive. Worth it once if the budget allows.</span>&nbsp;<a class="food-maps" href="https://www.google.com/maps/search/?api=1&query=Nautika+restaurant+Dubrovnik" target="_blank">Maps ↗</a></div></div>
+      <div class="ess-item"><div class="ess-dot"></div><div class="ess-text"><strong data-en="Stradun-facing terraces" data-pt="Terraços voltados para o Stradun">Stradun-facing terraces</strong><span data-en="You are paying for the view. The food rarely justifies the price. Good for a coffee, not dinner." data-pt="Você está pagando pela vista. A comida raramente justifica o preço. Bom para um café, não para jantar.">You are paying for the view. The food rarely justifies the price. Good for a coffee, not dinner.</span></div></div>
+    </div>
+  </div>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- GOOD TO KNOW -->
+<div class="section-wrap">
+  <div class="section-header">
+    <div class="section-tag" data-en="Practical" data-pt="Prático">Practical</div>
+    <h2 class="section-title" data-en="Good to <em>Know</em>" data-pt="Bom <em>Saber</em>">Good to <em>Know</em></h2>
+    <div class="section-rule"></div>
+  </div>
+  <p class="section-intro" data-en="The things that save time and prevent small disasters." data-pt="As coisas que economizam tempo e previnem pequenos desastres.">The things that save time and prevent small disasters.</p>
+
+  <div class="card" id="gtk1" style="animation-delay:0.05s">
+    <button class="card-trigger" onclick="toggleCard('gtk1')">
+      <div class="card-icon">🌊</div>
+      <div class="card-info"><div class="card-name" data-en="The Crowd Problem" data-pt="O Problema das Multidões">The Crowd Problem</div><div class="card-sub" data-en="The single biggest factor in whether you enjoy Dubrovnik" data-pt="O único maior fator para saber se você vai curtir Dubrovnik">The single biggest factor in whether you enjoy Dubrovnik</div></div>
+      <div class="card-arrow">▼</div>
+    </button>
+    <div class="card-body"><div class="card-rule"></div>
+      <div class="ess-item"><div class="ess-dot"></div><div class="ess-text"><strong data-en="Check the port schedule" data-pt="Verifique o horário do porto">Check the port schedule</strong><span data-en="Google 'Dubrovnik port schedule' before you go. On days with three large ships, the Old Town is overwhelmed before 10am. Plan your heavy sightseeing around the quiet days." data-pt="Pesquise 'Dubrovnik port schedule' antes de ir. Nos dias com três grandes navios, a Cidade Velha fica sobrecarregada antes das 10h. Planeje seu passeio intenso nos dias calmos.">Google 'Dubrovnik port schedule' before you go. On days with three large ships, the Old Town is overwhelmed before 10am. Plan your heavy sightseeing around the quiet days.</span></div></div>
+      <div class="ess-item"><div class="ess-dot"></div><div class="ess-text"><strong data-en="City Walls timing" data-pt="Horário das Muralhas">City Walls timing</strong><span data-en="Gates open at 8am. Being first in is not a small advantage — it is the difference between a beautiful walk and a miserable shuffle. Book online to skip the entrance queue." data-pt="Os portões abrem às 8h. Ser o primeiro não é uma pequena vantagem — é a diferença entre uma bela caminhada e um embaralhamento miserável. Reserve online para pular a fila de entrada.">Gates open at 8am. Being first in is not a small advantage — it is the difference between a beautiful walk and a miserable shuffle. Book online to skip the entrance queue.</span></div></div>
+      <div class="ess-item"><div class="ess-dot"></div><div class="ess-text"><strong data-en="Old Town early and late" data-pt="Cidade Velha cedo e tarde">Old Town early and late</strong><span data-en="Before 9am or after 9pm the Stradun is a different place. The evening light on the limestone is extraordinary. The midday version of Dubrovnik is not the real one." data-pt="Antes das 9h ou depois das 21h o Stradun é um lugar diferente. A luz noturna no calcário é extraordinária. A versão do meio-dia de Dubrovnik não é a real.">Before 9am or after 9pm the Stradun is a different place. The evening light on the limestone is extraordinary. The midday version of Dubrovnik is not the real one.</span></div></div>
+    </div>
+  </div>
+
+  <div class="card" id="gtk2" style="animation-delay:0.1s">
+    <button class="card-trigger" onclick="toggleCard('gtk2')">
+      <div class="card-icon">💶</div>
+      <div class="card-info"><div class="card-name" data-en="Money and Practicalities" data-pt="Dinheiro e Praticidades">Money and Practicalities</div><div class="card-sub" data-en="Budgeting and the small things worth knowing" data-pt="Orçamento e as pequenas coisas que valem saber">Budgeting and the small things worth knowing</div></div>
+      <div class="card-arrow">▼</div>
+    </button>
+    <div class="card-body"><div class="card-rule"></div>
+      <div class="ess-item"><div class="ess-dot"></div><div class="ess-text"><strong data-en="Dubrovnik is expensive" data-pt="Dubrovnik é cara">Dubrovnik is expensive</strong><span data-en="One of the most expensive destinations in Croatia — and increasingly in Europe. Prices have risen dramatically since the Game of Thrones tourism wave. Budget generously and do not compare it to Split or Zagreb." data-pt="Um dos destinos mais caros da Croácia — e cada vez mais da Europa. Os preços subiram dramaticamente com a onda de turismo do Game of Thrones. Planeje um orçamento generoso e não compare com Split ou Zagreb.">One of the most expensive destinations in Croatia — and increasingly in Europe. Prices have risen dramatically since the Game of Thrones tourism wave. Budget generously and do not compare it to Split or Zagreb.</span></div></div>
+      <div class="ess-item"><div class="ess-dot"></div><div class="ess-text"><strong data-en="Currency" data-pt="Moeda">Currency</strong><span data-en="Euro since January 2023. Cards accepted everywhere. Still worth carrying some cash for smaller restaurants and boats." data-pt="Euro desde janeiro de 2023. Cartões aceitos em todos os lugares. Vale carregar algum dinheiro em espécie para restaurantes menores e barcos.">Euro since January 2023. Cards accepted everywhere. Still worth carrying some cash for smaller restaurants and boats.</span></div></div>
+      <div class="ess-item"><div class="ess-dot"></div><div class="ess-text"><strong data-en="Dress code" data-pt="Código de vestimenta">Dress code</strong><span data-en="Shoulders and knees covered for churches and the Franciscan Monastery. The city will not stop you on the street but the sites will turn you away at the door." data-pt="Ombros e joelhos cobertos para igrejas e o Mosteiro Franciscano. A cidade não vai te parar na rua mas os locais vão te barrar na porta.">Shoulders and knees covered for churches and the Franciscan Monastery. The city will not stop you on the street but the sites will turn you away at the door.</span></div></div>
+    </div>
+  </div>
+
+  <div class="card" id="gtk3" style="animation-delay:0.15s">
+    <button class="card-trigger" onclick="toggleCard('gtk3')">
+      <div class="card-icon">🏛️</div>
+      <div class="card-info"><div class="card-name" data-en="Things That Will Catch You Off Guard" data-pt="Coisas Que Vão te Pegar de Surpresa">Things That Will Catch You Off Guard</div><div class="card-sub" data-en="The honest list" data-pt="A lista honesta">The honest list</div></div>
+      <div class="card-arrow">▼</div>
+    </button>
+    <div class="card-body"><div class="card-rule"></div>
+      <div class="ess-item"><div class="ess-dot"></div><div class="ess-text"><strong data-en="The limestone is genuinely slippery" data-pt="O calcário é genuinamente escorregadio">The limestone is genuinely slippery</strong><span data-en="Especially when wet. Sandals and smooth-soled shoes are a bad idea. People fall every day in peak season. Wear proper footwear." data-pt="Especialmente quando molhado. Sandálias e sapatos de sola lisa são má ideia. Pessoas caem todos os dias na alta temporada. Use calçado adequado.">Especially when wet. Sandals and smooth-soled shoes are a bad idea. People fall every day in peak season. Wear proper footwear.</span></div></div>
+      <div class="ess-item"><div class="ess-dot"></div><div class="ess-text"><strong data-en="There are a lot of stairs" data-pt="Há muitas escadas">There are a lot of stairs</strong><span data-en="The Old Town is built on a hillside. Walking it properly involves significant elevation change. Factor this in if you have mobility concerns or are travelling with young children and a buggy." data-pt="A Cidade Velha é construída numa encosta. Percorrê-la adequadamente envolve mudanças significativas de elevação. Considere isso se tiver preocupações de mobilidade ou viajar com crianças pequenas e carrinho.">The Old Town is built on a hillside. Walking it properly involves significant elevation change. Factor this in if you have mobility concerns or are travelling with young children and a buggy.</span></div></div>
+      <div class="ess-item"><div class="ess-dot"></div><div class="ess-text"><strong data-en="Waterfront restaurants are almost always a trap" data-pt="Restaurantes à beira-mar são quase sempre uma armadilha">Waterfront restaurants are almost always a trap</strong><span data-en="The view is real. The food and value rarely are. The good restaurants in Dubrovnik are not the ones with the best spots on the harbour — they are the ones locals go back to." data-pt="A vista é real. A comida e o custo-benefício raramente são. Os bons restaurantes em Dubrovnik não são os que têm os melhores lugares no porto — são os que os locais frequentam.">The view is real. The food and value rarely are. The good restaurants in Dubrovnik are not the ones with the best spots on the harbour — they are the ones locals go back to.</span></div></div>
+      <div class="ess-item"><div class="ess-dot"></div><div class="ess-text"><strong data-en="1991 happened here" data-pt="1991 aconteceu aqui">1991 happened here</strong><span data-en="Most visitors walk the Old Town with no idea that 30 years ago it was shelled during the Croatian War of Independence. The war museum on Mount Srđ takes an hour and changes your whole reading of the place." data-pt="A maioria dos visitantes caminha pela Cidade Velha sem saber que há 30 anos foi bombardeada durante a Guerra da Independência Croata. O museu de guerra no Monte Srđ leva uma hora e muda toda a sua leitura do lugar.">Most visitors walk the Old Town with no idea that 30 years ago it was shelled during the Croatian War of Independence. The war museum on Mount Srđ takes an hour and changes your whole reading of the place.</span></div></div>
+    </div>
+  </div>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- THE THINGS THAT ACTUALLY MATTER -->
+<div class="section-wrap">
+  <div class="section-header">
+    <div class="section-tag" data-en="Honest Advice" data-pt="Conselho Honesto">Honest Advice</div>
+    <h2 class="section-title" data-en="The Things That <em>Actually Matter</em>" data-pt="As Coisas Que <em>Realmente Importam</em>">The Things That <em>Actually Matter</em></h2>
+    <div class="section-rule"></div>
+  </div>
+  <p class="section-intro" data-en="Opinionated. Specific to Dubrovnik. Not on most travel guides." data-pt="Com opiniões. Específico para Dubrovnik. Não está na maioria dos guias de viagem.">Opinionated. Specific to Dubrovnik. Not on most travel guides.</p>
+
+  <div class="card" id="matters1" style="animation-delay:0.05s">
+    <button class="card-trigger" onclick="toggleCard('matters1')">
+      <div class="card-icon">💡</div>
+      <div class="card-info"><div class="card-name" data-en="What most people miss" data-pt="O que a maioria das pessoas perde">What most people miss</div><div class="card-sub" data-en="Six things worth knowing before you go" data-pt="Seis coisas que valem saber antes de ir">Six things worth knowing before you go</div></div>
+      <div class="card-arrow">▼</div>
+    </button>
+    <div class="card-body"><div class="card-rule"></div>
+      <div class="ess-item"><div class="ess-dot"></div><div class="ess-text"><strong>🌊 <span data-en="The cruise ships are the actual problem" data-pt="Os navios de cruzeiro são o problema real">The cruise ships are the actual problem</span></strong><span data-en="On a bad day, 12,000 cruise passengers arrive before 10am. The Old Town has around 1,500 residents. Google the port schedule before you finalise your days — it is the most useful thing you can do in advance." data-pt="Num dia ruim, 12.000 passageiros de cruzeiro chegam antes das 10h. A Cidade Velha tem cerca de 1.500 moradores. Pesquise o horário do porto antes de finalizar seus dias — é a coisa mais útil que você pode fazer com antecedência.">On a bad day, 12,000 cruise passengers arrive before 10am. The Old Town has around 1,500 residents. Google the port schedule before you finalise your days — it is the most useful thing you can do in advance.</span></div></div>
+      <div class="ess-item"><div class="ess-dot"></div><div class="ess-text"><strong>🏰 <span data-en="Dubrovnik was a real independent republic for over a thousand years" data-pt="Dubrovnik foi uma república independente real por mais de mil anos">Dubrovnik was a real independent republic for over a thousand years</span></strong><span data-en="The Republic of Ragusa survived from around the 7th century to 1806 — longer than the United States has existed. It outlasted empires and built one of the most sophisticated diplomatic systems in European history. The city you are walking around is not a medieval theme park." data-pt="A República de Ragusa sobreviveu desde o século VII até 1806 — mais tempo do que os Estados Unidos existem. Sobreviveu a impérios e construiu um dos sistemas diplomáticos mais sofisticados da história europeia. A cidade pela qual você está andando não é um parque temático medieval.">The Republic of Ragusa survived from around the 7th century to 1806 — longer than the United States has existed. It outlasted empires and built one of the most sophisticated diplomatic systems in European history. The city you are walking around is not a medieval theme park.</span></div></div>
+      <div class="ess-item"><div class="ess-dot"></div><div class="ess-text"><strong>📺 <span data-en="Game of Thrones is both the best and worst thing that happened here" data-pt="Game of Thrones é tanto a melhor quanto a pior coisa que aconteceu aqui">Game of Thrones is both the best and worst thing that happened here</span></strong><span data-en="It brought enormous money and enormous crowds. The filming locations are interesting if you know the show. But the 'King's Landing' branding has flattened the city's actual identity. Dubrovnik was extraordinary before HBO arrived." data-pt="Trouxe dinheiro enorme e multidões enormes. Os locais de filmagem são interessantes se você conhece a série. Mas a marca 'King's Landing' achatou a identidade real da cidade. Dubrovnik era extraordinária antes da HBO chegar.">It brought enormous money and enormous crowds. The filming locations are interesting if you know the show. But the 'King's Landing' branding has flattened the city's actual identity. Dubrovnik was extraordinary before HBO arrived.</span></div></div>
+      <div class="ess-item"><div class="ess-dot"></div><div class="ess-text"><strong>⚔️ <span data-en="Go to the war museum on Mount Srđ" data-pt="Vá ao museu da guerra no Monte Srđ">Go to the war museum on Mount Srđ</span></strong><span data-en="In 1991 and 1992 Dubrovnik was shelled during the Croatian War of Independence. A UNESCO World Heritage Site was bombarded. The Homeland War Museum at Fort Imperial takes an hour and completely changes how you read the city." data-pt="Em 1991 e 1992 Dubrovnik foi bombardeada durante a Guerra da Independência Croata. Um Patrimônio Mundial da UNESCO foi bombardeado. O Museu da Guerra da Independência leva uma hora e muda completamente como você lê a cidade.">In 1991 and 1992 Dubrovnik was shelled during the Croatian War of Independence. A UNESCO World Heritage Site was bombarded. The Homeland War Museum at Fort Imperial takes an hour and completely changes how you read the city.</span></div></div>
+      <div class="ess-item"><div class="ess-dot"></div><div class="ess-text"><strong>💶 <span data-en="Budget for more than you think" data-pt="Planeje um orçamento maior do que você pensa">Budget for more than you think</span></strong><span data-en="Dubrovnik is one of the most in-demand destinations in Europe with a physically limited Old Town that cannot expand. Prices keep going up. Do not compare it to other Croatian cities — it is its own category." data-pt="Dubrovnik é um dos destinos mais procurados da Europa com uma Cidade Velha fisicamente limitada que não pode expandir. Os preços continuam subindo. Não compare com outras cidades croatas — é uma categoria própria.">Dubrovnik is one of the most in-demand destinations in Europe with a physically limited Old Town that cannot expand. Prices keep going up. Do not compare it to other Croatian cities — it is its own category.</span></div></div>
+      <div class="ess-item"><div class="ess-dot"></div><div class="ess-text"><strong>🌙 <span data-en="The Old Town after 9pm is a completely different city" data-pt="A Cidade Velha depois das 21h é uma cidade completamente diferente">The Old Town after 9pm is a completely different city</span></strong><span data-en="Once the cruise passengers are back on their ships, the Stradun quiets down dramatically. The evening light on the stone is extraordinary. Plan at least one evening where you are just walking with no destination." data-pt="Quando os passageiros de cruzeiro estão de volta nos navios, o Stradun fica dramaticamente mais tranquilo. A luz noturna na pedra é extraordinária. Planeje pelo menos uma noite em que você esteja apenas caminhando sem destino.">Once the cruise passengers are back on their ships, the Stradun quiets down dramatically. The evening light on the stone is extraordinary. Plan at least one evening where you are just walking with no destination.</span></div></div>
+    </div>
+  </div>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- USEFUL PHRASES -->
+<div class="section-wrap">
+  <div class="section-header">
+    <div class="section-tag" data-en="Speak Like a Local" data-pt="Fale Como um Local">Speak Like a Local</div>
+    <h2 class="section-title" data-en="A Few Words of <em>Croatian</em>" data-pt="Algumas Palavras de <em>Croata</em>">A Few Words of <em>Croatian</em></h2>
+    <div class="section-rule"></div>
+  </div>
+  <p class="section-intro" data-en="People appreciate the effort. Even one phrase changes the whole interaction. Press play to hear each one." data-pt="As pessoas apreciam o esforço. Mesmo uma frase muda toda a interação. Pressione play para ouvir cada uma.">People appreciate the effort. Even one phrase changes the whole interaction. Press play to hear each one.</p>
+
+  <div class="phrase-group">
+    <div class="phrase-group-title" data-en="Everyday" data-pt="Cotidiano">Everyday</div>
+    <div class="phrase-row"><div class="phrase-texts"><div class="phrase-orig">Hvala</div><div class="phrase-note" data-en="thank you — use it constantly" data-pt="obrigado/a — use constantemente">thank you — use it constantly</div><div class="phrase-meaning">HVAH-lah</div></div><button class="speak-btn" onclick="speak('Hvala','hr-HR')"><svg viewBox="0 0 10 10"><polygon points="2,1 9,5 2,9"/></svg></button></div>
+    <div class="phrase-row"><div class="phrase-texts"><div class="phrase-orig">Molim</div><div class="phrase-note" data-en="please / you're welcome" data-pt="por favor / de nada">please / you're welcome</div><div class="phrase-meaning">MOH-leem</div></div><button class="speak-btn" onclick="speak('Molim','hr-HR')"><svg viewBox="0 0 10 10"><polygon points="2,1 9,5 2,9"/></svg></button></div>
+    <div class="phrase-row"><div class="phrase-texts"><div class="phrase-orig">Dobar dan</div><div class="phrase-note" data-en="good day / hello" data-pt="bom dia / olá">good day / hello</div><div class="phrase-meaning">DOH-bar dahn</div></div><button class="speak-btn" onclick="speak('Dobar dan','hr-HR')"><svg viewBox="0 0 10 10"><polygon points="2,1 9,5 2,9"/></svg></button></div>
+    <div class="phrase-row"><div class="phrase-texts"><div class="phrase-orig">Oprostite</div><div class="phrase-note" data-en="excuse me / sorry" data-pt="com licença / desculpe">excuse me / sorry</div><div class="phrase-meaning">oh-PROH-stee-teh</div></div><button class="speak-btn" onclick="speak('Oprostite','hr-HR')"><svg viewBox="0 0 10 10"><polygon points="2,1 9,5 2,9"/></svg></button></div>
+  </div>
+
+  <div class="phrase-group">
+    <div class="phrase-group-title" data-en="At the Restaurant" data-pt="No Restaurante">At the Restaurant</div>
+    <div class="phrase-row"><div class="phrase-texts"><div class="phrase-orig">Jedan račun, molim</div><div class="phrase-note" data-en="the bill, please" data-pt="a conta, por favor">the bill, please</div><div class="phrase-meaning">YEH-dan RAH-choon MOH-leem</div></div><button class="speak-btn" onclick="speak('Jedan račun molim','hr-HR')"><svg viewBox="0 0 10 10"><polygon points="2,1 9,5 2,9"/></svg></button></div>
+    <div class="phrase-row"><div class="phrase-texts"><div class="phrase-orig">Živjeli!</div><div class="phrase-note" data-en="cheers!" data-pt="saúde!">cheers!</div><div class="phrase-meaning">ZHIV-yeh-lee</div></div><button class="speak-btn" onclick="speak('Živjeli','hr-HR')"><svg viewBox="0 0 10 10"><polygon points="2,1 9,5 2,9"/></svg></button></div>
+    <div class="phrase-row"><div class="phrase-texts"><div class="phrase-orig">Koliko košta?</div><div class="phrase-note" data-en="how much does it cost?" data-pt="quanto custa?">how much does it cost?</div><div class="phrase-meaning">KOH-lee-koh KOSH-tah</div></div><button class="speak-btn" onclick="speak('Koliko košta','hr-HR')"><svg viewBox="0 0 10 10"><polygon points="2,1 9,5 2,9"/></svg></button></div>
+  </div>
+
+  <div class="phrase-group">
+    <div class="phrase-group-title" data-en="Getting Around" data-pt="Se Locomovendo">Getting Around</div>
+    <div class="phrase-row"><div class="phrase-texts"><div class="phrase-orig">Gdje je...?</div><div class="phrase-note" data-en="where is...?" data-pt="onde fica...?">where is...?</div><div class="phrase-meaning">GD-yeh yeh</div></div><button class="speak-btn" onclick="speak('Gdje je','hr-HR')"><svg viewBox="0 0 10 10"><polygon points="2,1 9,5 2,9"/></svg></button></div>
+    <div class="phrase-row"><div class="phrase-texts"><div class="phrase-orig">Ne razumijem</div><div class="phrase-note" data-en="I don't understand" data-pt="não entendo">I don't understand</div><div class="phrase-meaning">neh rah-ZOO-mee-yem</div></div><button class="speak-btn" onclick="speak('Ne razumijem','hr-HR')"><svg viewBox="0 0 10 10"><polygon points="2,1 9,5 2,9"/></svg></button></div>
+  </div>
+
+</div>
+
+<footer>
+  <p data-en="Dubrovnik: A Field Guide &nbsp;·&nbsp; by Claudio SAROLDI" data-pt="Dubrovnik: Um Guia de Campo &nbsp;·&nbsp; por Claudio SAROLDI">Dubrovnik: A Field Guide &nbsp;·&nbsp; by Claudio SAROLDI</p>
+</footer>
+
+</main>
+
+<script>
+// LANGUAGE
+let currentLang=localStorage.getItem('dubrovnik_lang')||'en';
+function applyLang(lang){
+  document.querySelectorAll('[data-en]').forEach(el=>{
+    const t=el.getAttribute('data-'+lang);
+    if(t!==null&&el.tagName!=='TEXTAREA')el.innerHTML=t;
+  });
+  document.getElementById('btnEN').classList.toggle('active',lang==='en');
+  document.getElementById('btnPT').classList.toggle('active',lang==='pt');
+  document.documentElement.lang=lang==='pt'?'pt-BR':'en-GB';
+}
+function setLang(lang){
+  currentLang=lang;
+  localStorage.setItem('dubrovnik_lang',lang);
+  applyLang(lang);
+}
+
+// TOGGLES
+function toggleCard(id){document.getElementById(id).classList.toggle('open')}
+function toggleBlock(id){document.getElementById(id).classList.toggle('open')}
+function toggleFood(id){document.getElementById(id).classList.toggle('open')}
+function toggleStop(id){
+  const el=document.getElementById('sd_'+id);
+  if(el)el.classList.toggle('open');
+}
+
+// VISITED
+const VISITED_KEY='dubrovnik_v3';
+function checkStop(e,id){
+  e.stopPropagation();
+  document.getElementById(id).classList.toggle('checked');
+  const v=getVisited();
+  document.getElementById(id).classList.contains('checked')?v.add(id):v.delete(id);
+  saveVisited(v);
+}
+function getVisited(){try{return new Set(JSON.parse(localStorage.getItem(VISITED_KEY)||'[]'))}catch(e){return new Set()}}
+function saveVisited(s){try{localStorage.setItem(VISITED_KEY,JSON.stringify([...s]))}catch(e){}}
+function restoreVisited(){getVisited().forEach(id=>{const el=document.getElementById(id);if(el)el.classList.add('checked')})}
+
+// SPEAK
+let activeSpeak=null;
+function speak(text,lang){
+  if(!window.speechSynthesis)return;
+  if(window.speechSynthesis.speaking){window.speechSynthesis.cancel();if(activeSpeak===text){activeSpeak=null;return;}}
+  const u=new SpeechSynthesisUtterance(text);
+  u.lang=lang||'hr-HR';u.rate=0.85;
+  u.onend=()=>{activeSpeak=null};
+  activeSpeak=text;
+  window.speechSynthesis.speak(u);
+}
+window.speechSynthesis.onvoiceschanged=()=>{};
+
+// INIT
+restoreVisited();
+applyLang(currentLang);
+</script>
+</body>
+</html>

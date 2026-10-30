@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mudou de endereço</title>
+<script>
+/* Endereços antigos (um repo por guia) levados para a estrutura nova. */
+(function(){
+  var M={
+    'mona':'/fieldguide/mona/','budapest':'/fieldguide/mona/','bp2026':'/fieldguide/mona/',
+    'main':'/fieldguide/arquivo/','belgrade':'/fieldguide/arquivo/',
+    'libonplanner/guia':'/fieldguide/lisboa/','libonplanner':'/planner/lisboa/',
+    'orlandoplanner':'/planner/orlando/','buziosplanner':'/planner/buzios/'
+  };
+  'paris london dubrovnik gdansk montenegro madeira sacrevivi royalvivi'.split(' ').forEach(function(c){M[c]='/fieldguide/arquivo/'+c+'/'});
+  var p=location.pathname.replace(/^\/+/,'').replace(/index\.html$/,'').replace(/\/+$/,'').toLowerCase();
+  var keys=Object.keys(M).sort(function(a,b){return b.length-a.length});
+  for(var i=0;i<keys.length;i++){var k=keys[i];
+    if(p===k||p.indexOf(k+'/')===0){location.replace(M[k]+location.hash);return}}
+  window.NOTFOUND=true;
+})();
+</script>
+<style>body{font-family:system-ui,sans-serif;padding:56px 16px;text-align:center;background:#f5f1e8;color:#1b2a44}a{color:#2f5da8}@media(prefers-color-scheme:dark){body{background:#121318;color:#f1ece2}a{color:#7fa3dd}}</style>
+</head><body>
+<p id="msg">Abrindo o endereço novo…</p>
+<p><a href="/">Ir para a página inicial</a></p>
+<script>if(window.NOTFOUND)document.getElementById('msg').textContent='Esta página não existe.'</script>
+</body></html>
