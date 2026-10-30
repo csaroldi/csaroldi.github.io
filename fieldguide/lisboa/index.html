@@ -1,0 +1,1757 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#f5f0e8">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Lisboa 26">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="icon" href="icon-192.png">
+<title>Lisboa 26</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   DESIGN TOKENS
+   Change --accent (primary) and --accent2 (secondary) per
+   destination. Everything else stays locked.
+   Dark is default. body.light swaps to light theme.
+
+   Suggested per-destination palettes:
+     Gdansk      --accent:#c79a52  --accent2:#2f6f87
+     Belgrade    --accent:#c46a3e  --accent2:#3a5a6a
+     Lisbon      --accent:#3a7a8f  --accent2:#c79a52
+     Kyoto       --accent:#7a8b4e  --accent2:#8a4a3e
+     Reykjavik   --accent:#6a8fa8  --accent2:#b89a6a
+   ============================================================ */
+:root{
+  --accent:#2f5da8;
+  --accent-l:#7fa3dd;
+  --accent-d:#1f4380;
+
+  --accent2:#b8913f;
+  --accent2-l:#d9b56a;
+
+  --ink:#0c0c10;
+  --ink-2:#141419;
+  --cream:#f5f0e8;
+  --muted:#8a8172;
+  --border:rgba(255,255,255,0.07);
+  --border-accent:rgba(127,163,221,0.2);
+  --card:rgba(255,255,255,0.025);
+
+  --dock-h:64px;
+}
+
+body.light{
+  --ink:#f5f0e8;
+  --ink-2:#ece5db;
+  --cream:#1a1714;
+  --muted:#7a7169;
+  --border:rgba(26,23,20,0.08);
+  --border-accent:rgba(47,93,168,0.28);
+  --card:rgba(255,255,255,0.6);
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{font-size:18px;scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{font-family:'DM Sans',sans-serif;background:var(--ink);color:var(--cream);min-height:100vh;overflow-x:hidden;padding-bottom:calc(var(--dock-h) + 40px);transition:background 0.4s,color 0.4s}
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:9999;opacity:0.4}
+body.light::before{opacity:0.25}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;background:none;border:none;cursor:pointer;color:inherit;padding:0}
+
+/* ============================================================
+   TOP CONTROLS
+   ============================================================ */
+.top-controls{position:fixed;top:16px;right:16px;z-index:1000;display:flex;gap:8px;align-items:center}
+.lang-group{display:flex}
+.ctrl-btn{height:30px;padding:0 12px;border:1px solid rgba(47,93,168,0.35);background:transparent;color:rgba(47,93,168,0.75);font-size:0.62rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.2s;font-family:'DM Sans',sans-serif;-webkit-tap-highlight-color:transparent}
+.lang-btn:first-child{border-radius:3px 0 0 3px;border-right:none}
+.lang-btn:last-child{border-radius:0 3px 3px 0}
+.ctrl-btn.active{background:var(--accent);color:var(--ink);border-color:var(--accent)}
+.theme-btn{border-radius:3px;width:30px;padding:0;margin-left:4px}
+
+/* ============================================================
+   COVER
+   ============================================================ */
+.cover{position:relative;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;overflow:hidden;background:var(--ink)}
+.cover-bg{position:absolute;inset:0;background:
+  radial-gradient(ellipse 85% 60% at 25% 35%,rgba(47,93,168,0.15) 0%,transparent 58%),
+  radial-gradient(ellipse 60% 50% at 72% 60%,rgba(184,145,63,0.10) 0%,transparent 60%),
+  radial-gradient(ellipse 110% 80% at 50% 100%,rgba(47,93,168,0.07) 0%,transparent 62%),
+  linear-gradient(165deg,#090a0d 0%,#0c0c10 52%,#09090d 100%)}
+body.light .cover-bg{background:
+  radial-gradient(ellipse 85% 60% at 25% 35%,rgba(47,93,168,0.22) 0%,transparent 58%),
+  radial-gradient(ellipse 60% 50% at 72% 60%,rgba(184,145,63,0.12) 0%,transparent 60%),
+  radial-gradient(ellipse 110% 80% at 50% 100%,rgba(47,93,168,0.10) 0%,transparent 62%),
+  linear-gradient(165deg,#f7f2ea 0%,#f5f0e8 52%,#ece5db 100%)}
+.cover-content{position:relative;z-index:2;padding:24px;animation:fadeUp 1.2s ease both}
+@keyframes fadeUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
+.cover-eyebrow{font-size:0.62rem;font-weight:500;letter-spacing:0.38em;text-transform:uppercase;color:var(--accent);display:block;margin-bottom:24px}
+.cover-title{font-family:'Cormorant Garamond',serif;font-size:clamp(5rem,20vw,9rem);font-weight:300;line-height:0.9;color:var(--cream);letter-spacing:-0.02em;margin-bottom:16px}
+.cover-title em{font-style:italic;color:var(--accent-l);font-weight:400}
+.cover-author{font-size:0.56rem;font-weight:600;letter-spacing:0.3em;text-transform:uppercase;color:var(--accent-d);margin-bottom:20px}
+.cover-rule{width:40px;height:1px;background:var(--accent-d);opacity:0.5;margin:16px auto}
+.cover-dates{font-size:0.7rem;font-weight:600;letter-spacing:0.25em;color:var(--accent-l);opacity:0.7;margin-top:10px}
+.cover-subtitle{font-family:'Cormorant Garamond',serif;font-size:clamp(1rem,2.8vw,1.3rem);font-style:italic;color:rgba(245,240,232,0.45);margin-top:14px;max-width:28ch;margin-left:auto;margin-right:auto}
+body.light .cover-subtitle{color:rgba(26,23,20,0.55)}
+.cover-scroll{position:absolute;bottom:32px;left:50%;transform:translateX(-50%);color:rgba(47,93,168,0.45);font-size:1.2rem;animation:bob 2s ease-in-out infinite;z-index:2}
+@keyframes bob{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(7px)}}
+
+/* ============================================================
+   COMMAND DECK
+   ============================================================ */
+.deck-shell{padding:32px 16px 0;position:relative;z-index:6;max-width:820px;margin-left:auto;margin-right:auto}
+.deck{background:rgba(20,20,25,0.72);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border:1px solid rgba(255,255,255,0.08);border-radius:22px;padding:20px 18px;overflow:hidden;position:relative;box-shadow:0 16px 40px rgba(0,0,0,0.35)}
+body.light .deck{background:rgba(255,255,255,0.78);border-color:rgba(26,23,20,0.08);box-shadow:0 16px 40px rgba(58,46,46,0.1)}
+.deck::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 0% 0%,rgba(47,93,168,0.08) 0%,transparent 60%),radial-gradient(ellipse at 100% 100%,rgba(184,145,63,0.06) 0%,transparent 60%);pointer-events:none;border-radius:22px}
+.deck-title{font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:400;line-height:1.1;color:var(--cream);margin-bottom:6px;position:relative;z-index:1}
+.deck-title em{font-style:italic;color:var(--accent-l)}
+.deck-sub{font-size:0.78rem;color:rgba(245,240,232,0.55);max-width:40ch;position:relative;z-index:1;font-style:italic;font-family:'Cormorant Garamond',serif}
+body.light .deck-sub{color:rgba(26,23,20,0.55)}
+
+.deck-grid{display:grid;grid-template-columns:1.4fr 1fr;gap:10px;margin-top:16px;position:relative;z-index:1}
+.deck-card{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:14px;padding:14px 14px}
+body.light .deck-card{background:rgba(255,255,255,0.5);border-color:rgba(26,23,20,0.06)}
+.deck-today{display:flex;flex-direction:column;justify-content:space-between;min-height:140px}
+.deck-label{font-size:0.56rem;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
+.deck-value{font-family:'Cormorant Garamond',serif;font-size:1.25rem;font-weight:500;line-height:1.15;color:var(--cream);margin-bottom:4px}
+.deck-note{font-size:0.74rem;line-height:1.5;color:rgba(245,240,232,0.55);font-style:italic}
+body.light .deck-note{color:rgba(26,23,20,0.55)}
+.deck-cta{display:inline-flex;align-items:center;justify-content:center;gap:6px;margin-top:10px;padding:8px 12px;background:var(--accent);color:var(--ink);border-radius:10px;font-size:0.66rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;transition:background 0.2s}
+.deck-cta:active{background:var(--accent-d)}
+.micro-stack{display:flex;flex-direction:column;gap:10px}
+.micro-card{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:14px;padding:10px 12px;flex:1;display:flex;flex-direction:column;justify-content:center}
+body.light .micro-card{background:rgba(255,255,255,0.5);border-color:rgba(26,23,20,0.06)}
+.micro-label{font-size:0.54rem;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;color:var(--accent);margin-bottom:4px}
+.micro-value{font-family:'Cormorant Garamond',serif;font-size:1.35rem;font-weight:500;color:var(--cream);line-height:1}
+.micro-sub{font-size:0.66rem;color:rgba(245,240,232,0.5);margin-top:2px;font-style:italic;font-family:'Cormorant Garamond',serif}
+body.light .micro-sub{color:rgba(26,23,20,0.5)}
+
+/* TRIP PROGRESS, single bar, fills with must-see stops checked across the whole trip */
+.trip-progress{margin-top:14px;position:relative;z-index:1}
+.trip-progress-bar{height:8px;border-radius:999px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.06);overflow:hidden}
+body.light .trip-progress-bar{background:rgba(26,23,20,0.05);border-color:rgba(26,23,20,0.06)}
+.trip-progress-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--accent-d),var(--accent),var(--accent-l));border-radius:999px;transition:width 0.45s cubic-bezier(0.2,0.8,0.2,1)}
+.trip-progress-label{font-size:0.58rem;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:rgba(245,240,232,0.5);margin-top:8px;text-align:right}
+body.light .trip-progress-label{color:rgba(26,23,20,0.55)}
+
+/* SUN ROW, for the Light Today micro-card */
+.sun-row{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:500;color:var(--cream);line-height:1;display:flex;align-items:center;gap:5px;flex-wrap:wrap}
+.sun-ico{color:var(--accent);font-size:0.9rem}
+.sun-sep{color:var(--muted);opacity:0.6;font-size:0.85rem}
+
+/* JUMP CARDS, 4 entry points to the main sections */
+.jump-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:14px;position:relative;z-index:1}
+.jump-card{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:12px 6px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;color:rgba(245,240,232,0.65);font-size:0.56rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;min-height:58px;transition:all 0.15s;text-align:center}
+body.light .jump-card{background:rgba(255,255,255,0.5);border-color:rgba(26,23,20,0.06);color:rgba(26,23,20,0.65)}
+.jump-card:active{transform:scale(0.97);border-color:var(--border-accent)}
+.jump-icon{font-size:1rem;color:var(--accent)}
+
+/* ============================================================
+   SECTION
+   ============================================================ */
+main{margin-top:8px}
+.section-wrap{max-width:820px;margin:0 auto;padding:0 20px}
+.section-header{padding:52px 0 8px;display:flex;align-items:center;gap:14px}
+.section-tag{font-size:0.58rem;font-weight:600;letter-spacing:0.3em;text-transform:uppercase;color:var(--accent);display:flex;align-items:center;gap:10px;white-space:nowrap}
+.section-tag::before{content:'';width:20px;height:1px;background:var(--accent)}
+.section-title{font-family:'Cormorant Garamond',serif;font-size:2.2rem;font-weight:300;color:var(--cream);line-height:1.1;letter-spacing:-0.01em}
+.section-title em{font-style:italic;color:var(--accent-l)}
+.section-rule{flex:1;height:1px;background:linear-gradient(90deg,var(--border-accent),transparent)}
+.section-intro{font-family:'Cormorant Garamond',serif;font-size:1rem;font-style:italic;color:var(--muted);margin:8px 0 20px;line-height:1.7}
+.section-divider{height:1px;background:linear-gradient(90deg,transparent,var(--border-accent),transparent);margin:48px auto 0;max-width:820px}
+
+/* ============================================================
+   CARDS (Essentials, Good to Know)
+   ============================================================ */
+.card{background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden;margin-bottom:10px;transition:border-color 0.3s;animation:fadeUp 0.5s ease-out both}
+.card.open{border-color:var(--border-accent)}
+.card-trigger{width:100%;padding:18px 20px;cursor:pointer;display:flex;align-items:center;gap:14px;text-align:left;-webkit-tap-highlight-color:transparent}
+.card-icon{width:36px;height:36px;border-radius:10px;background:rgba(47,93,168,0.08);border:1px solid var(--border-accent);display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0}
+.card-info{flex:1}
+.card-name{font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:600;color:var(--cream);line-height:1.2}
+.card-sub{font-size:0.7rem;color:var(--muted);font-style:italic;margin-top:2px}
+.card-arrow{width:22px;height:22px;border-radius:50%;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:0.6rem;transition:all 0.3s;flex-shrink:0}
+.card.open .card-arrow{background:var(--accent);border-color:var(--accent);color:var(--ink);transform:rotate(180deg)}
+.card-body{display:none;padding:0 20px 20px}
+.card.open .card-body{display:block}
+.card-rule{height:1px;background:linear-gradient(90deg,transparent,var(--border-accent),transparent);margin-bottom:16px}
+
+.item-row{display:flex;gap:12px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.04);align-items:flex-start}
+body.light .item-row{border-bottom-color:rgba(26,23,20,0.05)}
+.item-row:last-child{border-bottom:none;padding-bottom:0}
+.item-dot{width:5px;height:5px;border-radius:50%;background:var(--accent);flex-shrink:0;margin-top:7px}
+.item-text{font-size:0.86rem;line-height:1.65;color:rgba(245,240,232,0.72);font-weight:300;flex:1}
+body.light .item-text{color:rgba(26,23,20,0.75)}
+.item-text strong{color:var(--cream);font-weight:500;display:block;margin-bottom:1px;font-size:0.88rem}
+.item-text a{color:var(--accent-l);border-bottom:1px solid var(--accent-l);padding-bottom:1px}
+
+/* ============================================================
+   ITINERARY, day blocks
+   ============================================================ */
+.day{background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden;margin-bottom:10px;transition:border-color 0.3s;animation:fadeUp 0.5s ease-out both}
+.day.open{border-color:var(--border-accent)}
+.day-trigger{width:100%;padding:18px 20px;cursor:pointer;display:flex;align-items:center;gap:14px;text-align:left;-webkit-tap-highlight-color:transparent}
+.day-num{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:600;color:rgba(47,93,168,0.2);line-height:1;min-width:44px;transition:color 0.3s}
+.day.open .day-num{color:var(--accent)}
+.day-info{flex:1}
+.day-name{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:600;color:var(--cream);line-height:1.2;margin-bottom:3px}
+.day-tagline{font-size:0.7rem;color:var(--muted);font-style:italic}
+.day-date{font-size:0.58rem;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:rgba(47,93,168,0.55);margin-top:4px}
+.day-arrow{width:22px;height:22px;border-radius:50%;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:0.6rem;transition:all 0.3s;flex-shrink:0}
+.day.open .day-arrow{background:var(--accent);border-color:var(--accent);color:var(--ink);transform:rotate(180deg)}
+.day-body{display:none;padding:0 16px 20px}
+.day.open .day-body{display:block}
+.day-divider{height:1px;background:linear-gradient(90deg,transparent,var(--border-accent),transparent);margin-bottom:16px}
+.day-intro{font-family:'Cormorant Garamond',serif;font-size:0.95rem;color:rgba(245,240,232,0.6);font-style:italic;line-height:1.7;padding:4px 4px 14px}
+body.light .day-intro{color:rgba(26,23,20,0.65)}
+
+/* ============================================================
+   STOPS
+   ============================================================ */
+.stop{margin-bottom:7px;border-radius:11px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.05);overflow:hidden;transition:border-color 0.2s}
+body.light .stop{background:rgba(26,23,20,0.02);border-color:rgba(26,23,20,0.05)}
+.stop.checked{background:rgba(47,93,168,0.05);border-color:rgba(47,93,168,0.18)}
+.stop-header{display:flex;align-items:center;gap:13px;padding:13px 15px;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.stop-check{width:22px;height:22px;border-radius:50%;border:1.5px solid rgba(255,255,255,0.18);background:transparent;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all 0.25s;cursor:pointer}
+body.light .stop-check{border-color:rgba(26,23,20,0.2)}
+.stop-check::after{content:'\2713';font-size:0.62rem;color:var(--ink);opacity:0;transition:opacity 0.2s;font-weight:700}
+.stop.checked .stop-check{background:var(--accent);border-color:var(--accent);box-shadow:0 0 12px rgba(47,93,168,0.35)}
+.stop.checked .stop-check::after{opacity:1}
+.stop-name{flex:1;font-family:'Cormorant Garamond',serif;font-size:1.08rem;font-weight:600;color:var(--cream);line-height:1.2;transition:color 0.2s}
+.stop.checked .stop-name{color:var(--muted);text-decoration:line-through;text-decoration-color:rgba(47,93,168,0.4)}
+.badge{font-size:0.56rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;padding:2px 7px;border-radius:3px;white-space:nowrap;flex-shrink:0}
+.badge-must{background:rgba(47,93,168,0.12);color:var(--accent);border:1px solid rgba(47,93,168,0.3)}
+.badge-hidden{background:rgba(184,145,63,0.12);color:var(--accent2-l);border:1px solid rgba(184,145,63,0.4)}
+.stop-expand{font-size:0.52rem;color:var(--muted);flex-shrink:0}
+.stop-details{display:none;padding:0 15px 15px 50px}
+.stop.open .stop-details{display:block;animation:slideDown 0.25s ease-out}
+@keyframes slideDown{from{opacity:0;transform:translateY(-5px)}to{opacity:1;transform:translateY(0)}}
+.detail-rule{height:1px;background:rgba(255,255,255,0.05);margin-bottom:13px}
+body.light .detail-rule{background:rgba(26,23,20,0.06)}
+
+.detail-hist{background:rgba(184,145,63,0.08);border-left:2px solid rgba(184,145,63,0.5);padding:10px 13px;border-radius:0 4px 4px 0;font-size:0.82rem;color:rgba(245,240,232,0.68);margin-bottom:8px;line-height:1.6}
+.detail-fact{background:rgba(47,93,168,0.06);border-left:2px solid var(--accent);padding:10px 13px;border-radius:0 4px 4px 0;font-size:0.82rem;color:rgba(245,240,232,0.68);font-style:italic;margin-bottom:10px;line-height:1.6}
+body.light .detail-hist{color:rgba(26,23,20,0.75)}
+body.light .detail-fact{color:rgba(26,23,20,0.75)}
+.detail-label{font-size:0.58rem;text-transform:uppercase;letter-spacing:0.14em;display:block;margin-bottom:4px;font-style:normal;font-weight:600}
+.detail-hist .detail-label{color:var(--accent2-l)}
+.detail-fact .detail-label{color:var(--accent)}
+.map-btn{display:inline-flex;align-items:center;gap:6px;margin-top:6px;padding:7px 14px;background:transparent;border:1px solid var(--border-accent);border-radius:8px;color:var(--accent-l);font-size:0.68rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;transition:all 0.2s}
+.map-btn:active{background:rgba(47,93,168,0.1)}
+
+/* ============================================================
+   FOOD BLOCK (per day)
+   ============================================================ */
+.food{margin-top:14px;border-radius:11px;background:rgba(47,93,168,0.04);border:1px solid rgba(47,93,168,0.12);overflow:hidden}
+.food-header{padding:11px 15px;display:flex;align-items:center;gap:10px;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.food-title{font-size:0.58rem;font-weight:600;letter-spacing:0.22em;text-transform:uppercase;color:var(--accent);flex:1}
+.food-arrow{font-size:0.55rem;color:var(--muted);transition:transform 0.3s}
+.food.open .food-arrow{transform:rotate(180deg)}
+.food-body{display:none;padding:0 15px 13px}
+.food.open .food-body{display:block}
+.food-rule{height:1px;background:rgba(47,93,168,0.12);margin-bottom:11px}
+.food-item{display:flex;gap:10px;padding:7px 0;border-bottom:1px solid rgba(255,255,255,0.04);align-items:flex-start}
+body.light .food-item{border-bottom-color:rgba(26,23,20,0.05)}
+.food-item:last-child{border-bottom:none;padding-bottom:0}
+.food-info{flex:1}
+.food-name{font-family:'Cormorant Garamond',serif;font-size:0.95rem;color:var(--cream);font-weight:600}
+.food-desc{font-size:0.78rem;color:rgba(245,240,232,0.58);line-height:1.55;margin-top:1px}
+body.light .food-desc{color:rgba(26,23,20,0.65)}
+.food-maps{display:inline-flex;align-items:center;gap:4px;font-size:0.66rem;color:var(--accent);margin-top:3px;opacity:0.75}
+
+/* ============================================================
+   NOTES (per day)
+   ============================================================ */
+.notes-wrap{margin-top:14px}
+.notes-label{font-size:0.56rem;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);margin-bottom:7px;display:block}
+.notes-area{width:100%;background:rgba(255,255,255,0.025);border:1px solid rgba(255,255,255,0.07);border-radius:9px;padding:12px;color:var(--cream);font-family:'DM Sans',sans-serif;font-size:0.86rem;font-weight:300;line-height:1.6;resize:vertical;outline:none;min-height:76px;transition:border-color 0.2s}
+body.light .notes-area{background:rgba(255,255,255,0.5);border-color:rgba(26,23,20,0.08)}
+.notes-area::placeholder{color:rgba(138,129,114,0.5)}
+.notes-area:focus{border-color:var(--accent)}
+
+/* ============================================================
+   PHRASES
+   ============================================================ */
+.phrase-group{margin-bottom:20px}
+.phrase-group-title{font-size:0.6rem;font-weight:600;letter-spacing:0.28em;text-transform:uppercase;color:var(--accent);margin-bottom:8px;display:flex;align-items:center;gap:10px}
+.phrase-group-title::after{content:'';flex:1;height:1px;background:var(--border-accent)}
+.phrase-row{background:var(--card);border:1px solid var(--border);border-radius:8px;margin-bottom:4px;padding:12px 16px;display:flex;align-items:center;gap:12px}
+.phrase-texts{flex:1}
+.phrase-orig{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1rem;color:var(--cream);margin-bottom:2px}
+.phrase-note{font-size:0.68rem;color:var(--muted)}
+.phrase-meaning{font-size:0.78rem;font-weight:500;color:rgba(245,240,232,0.7);font-family:'DM Sans',sans-serif}
+body.light .phrase-meaning{color:rgba(26,23,20,0.7)}
+.speak-btn{background:none;border:1px solid var(--border);border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;transition:all 0.2s;color:var(--accent)}
+.speak-btn:active{background:rgba(47,93,168,0.1);border-color:var(--accent)}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+footer{text-align:center;padding:52px 24px 32px;color:rgba(138,129,114,0.45);font-size:0.6rem;letter-spacing:0.18em;text-transform:uppercase;line-height:2;border-top:1px solid var(--border);margin-top:48px}
+
+/* ============================================================
+   DOCK (hidden until command deck scrolls past midscreen)
+   ============================================================ */
+.dock{position:fixed;left:12px;right:12px;bottom:12px;z-index:1200;background:rgba(20,20,25,0.86);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border:1px solid rgba(255,255,255,0.08);border-radius:20px;box-shadow:0 16px 36px rgba(0,0,0,0.45);padding:6px;display:grid;grid-template-columns:repeat(5,1fr);gap:4px;max-width:820px;margin-left:auto;margin-right:auto;transform:translateY(calc(100% + 20px));opacity:0;transition:transform 0.35s cubic-bezier(0.2,0.8,0.2,1),opacity 0.25s}
+body.dock-visible .dock{transform:translateY(0);opacity:1}
+body.light .dock{background:rgba(255,255,255,0.88);border-color:rgba(26,23,20,0.08);box-shadow:0 16px 36px rgba(58,46,46,0.15)}
+.dock a{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;border-radius:14px;padding:7px 4px;color:rgba(245,240,232,0.6);font-size:0.56rem;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;min-height:48px;transition:all 0.15s;-webkit-tap-highlight-color:transparent}
+body.light .dock a{color:rgba(26,23,20,0.6)}
+.dock a:active{transform:scale(0.95)}
+.dock-icon{font-size:0.92rem;color:var(--accent)}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media(max-width:640px){
+  .section-wrap{padding:0 14px}
+  .cover-title{font-size:4.2rem}
+  .card-name,.day-name{font-size:1.1rem}
+  .card-trigger,.day-trigger{padding:16px}
+  .card-body,.day-body{padding:0 12px 16px}
+  .stop-details{padding:0 12px 14px 44px}
+  .section-header{padding:44px 0 8px;align-items:flex-end}
+  .section-title{font-size:1.95rem}
+  .top-controls{top:12px;right:12px}
+  .deck-grid{grid-template-columns:1fr}
+  .deck-today{min-height:auto}
+}
+
+/* ===== Ajustes do guia de Lisboa (tema claro padrão, leitura fácil) ===== */
+body.light{--accent-l:#2a55a0;--accent-d:#1f4380;--muted:#6f675c}
+body.light .cover-title em{color:var(--accent)}
+.cover-line{font-family:'Cormorant Garamond',serif;font-size:clamp(1.8rem,7vw,2.8rem);font-weight:600;color:var(--cream);margin:-4px 0 18px;line-height:1.1}
+.cover-line em{font-weight:400;font-size:.8em;color:var(--muted)}
+.cover-rule{background:var(--accent2);opacity:.9;height:2px;width:44px}
+.cover-author{color:var(--accent)}
+body.light .cover-author{color:var(--accent-d)}
+.cover-dates{color:var(--accent)}
+body.light .cover-subtitle{color:rgba(26,23,20,0.62)}
+
+/* textos mais legíveis no tema claro */
+body.light .item-text,body.light .food-desc,body.light .day-intro,body.light .detail-hist,body.light .detail-fact{color:rgba(26,23,20,0.82)}
+.item-text{font-size:.9rem}
+.stop-name{font-size:1.12rem}
+
+/* Hoje */
+.today-list{list-style:none;margin-top:8px}
+.today-list li{font-size:.8rem;line-height:1.45;padding:2px 0;color:var(--cream)}
+.today-list b{font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-right:6px}
+
+/* Barra divertida */
+.fun{margin-top:16px;position:relative;z-index:1;background:rgba(47,93,168,0.05);border:1px solid var(--border-accent);border-radius:14px;padding:12px 14px 14px}
+.fun-head{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.fun-level{font-family:'Cormorant Garamond',serif;font-size:1.15rem;font-weight:600;color:var(--cream);line-height:1.15}
+.fun-count{font-size:.66rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);white-space:nowrap}
+.fun-track{position:relative;height:16px;border-radius:999px;margin:22px 10px 6px;background:repeating-linear-gradient(90deg,rgba(47,93,168,.10) 0 12px,rgba(47,93,168,.04) 12px 24px);border:1px solid var(--border-accent)}
+.fun-fill{position:absolute;left:0;top:0;bottom:0;width:0;border-radius:999px;background:linear-gradient(90deg,#1f4380,#2f5da8 60%,#b8913f);transition:width .9s cubic-bezier(.2,.8,.2,1)}
+.fun-mile{position:absolute;top:50%;transform:translate(-50%,-50%);font-size:.95rem;filter:grayscale(1);opacity:.45;transition:all .4s}
+.fun-mile.on{filter:none;opacity:1;transform:translate(-50%,-50%) scale(1.15)}
+.fun-tram{position:absolute;top:-21px;left:0;transform:translateX(-50%);font-size:1.25rem;transition:left .9s cubic-bezier(.2,.8,.2,1)}
+.fun-tram.bump{animation:bump .6s ease}
+@keyframes bump{0%,100%{transform:translateX(-50%) translateY(0)}30%{transform:translateX(-50%) translateY(-7px) rotate(-6deg)}60%{transform:translateX(-50%) translateY(0) rotate(4deg)}}
+.fun-sub{font-size:.72rem;color:var(--muted);font-style:italic;margin-top:6px}
+
+/* Faixa dos dias */
+.strip{display:flex;gap:6px;overflow-x:auto;padding:4px 2px 12px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.strip::-webkit-scrollbar{display:none}
+.strip a{flex:none;min-width:46px;padding:6px 4px;border-radius:10px;border:1px solid var(--border);background:var(--card);text-align:center;font-size:.6rem;color:var(--muted);line-height:1.2}
+.strip a b{display:block;font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--cream)}
+.strip a.withc{box-shadow:inset 0 -3px 0 var(--accent2)}
+.strip a.today{border-color:var(--accent);background:rgba(47,93,168,.1)}
+.strip a.done b{color:var(--accent)}
+
+/* Dias */
+.day.withc{border-left:3px solid var(--accent2)}
+.day-tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.dtag{font-size:.56rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:2px 8px;border-radius:999px;background:rgba(184,145,63,.15);color:#7a5c1c}
+.dtag.blue{background:rgba(47,93,168,.12);color:var(--accent-d)}
+.day-count{font-size:.62rem;color:var(--muted);margin-left:auto;white-space:nowrap;align-self:center}
+.period{font-size:.6rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);margin:14px 2px 7px;display:flex;align-items:center;gap:10px}
+.period::after{content:'';flex:1;height:1px;background:var(--border-accent)}
+.fixed{display:flex;gap:8px;align-items:flex-start;background:rgba(184,145,63,.12);border:1px solid rgba(184,145,63,.3);border-radius:10px;padding:9px 12px;margin-bottom:7px;font-size:.82rem;color:#6b4f12;font-weight:500}
+body:not(.light) .fixed{color:#e6c98e}
+.stop.food .stop-name::before{content:'🍴 ';font-size:.8em}
+.stop.food{border-left:3px solid #b5552f}
+.stop.livre{border-style:dashed}
+.stop-eff{font-size:.56rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;white-space:nowrap;display:flex;align-items:center;gap:4px;color:var(--muted)}
+.stop-eff::before{content:'';width:8px;height:8px;border-radius:50%;background:var(--dot)}
+.stop-eff.e1{--dot:#3e8e5a}.stop-eff.e2{--dot:#c98a1b}.stop-eff.e3{--dot:#a32d2d}
+.stop-time{font-size:.6rem;color:var(--accent);font-weight:600;white-space:nowrap}
+.detail-desc{font-size:.86rem;line-height:1.6;margin-bottom:9px;color:var(--cream)}
+body.light .detail-desc{color:rgba(26,23,20,.85)}
+.detail-how{font-size:.8rem;line-height:1.55;margin-bottom:9px;color:var(--muted)}
+.detail-how b{color:var(--accent)}
+.detail-warn{background:rgba(201,138,27,.12);border-left:3px solid #c98a1b;padding:10px 13px;border-radius:0 6px 6px 0;font-size:.82rem;line-height:1.55;margin-bottom:10px;color:#6e4706}
+body:not(.light) .detail-warn{color:#f0cf93}
+.stop.has-warn .stop-name::after{content:' ⚠️';font-size:.8em}
+.saved{margin-top:22px}
+.saved h3{font-family:'Cormorant Garamond',serif;font-size:1.35rem;font-weight:600;color:var(--cream);margin-bottom:4px}
+.saved p{font-size:.8rem;color:var(--muted);font-style:italic;margin-bottom:10px}
+
+/* Diário */
+.print-btn{font-size:.72rem;padding:11px 16px}
+.jday .day-body{padding-top:4px}
+.jseen{list-style:none;margin:4px 0 6px}
+.jseen li{font-size:.84rem;padding:4px 0;border-bottom:1px solid var(--border);display:flex;gap:8px}
+.jseen li span{color:var(--accent);font-weight:600;font-size:.72rem;min-width:42px}
+.jempty{font-size:.8rem;color:var(--muted);font-style:italic;padding:4px 0}
+.jnote-label{font-size:.6rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);display:block;margin:12px 0 5px}
+.jnote{min-height:58px}
+.photos{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
+.photo{aspect-ratio:4/3;border-radius:10px;border:1.5px dashed var(--border-accent);display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:.72rem;position:relative;overflow:hidden;cursor:pointer;background:var(--card);text-align:center;padding:6px}
+.photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.photo .rm{position:absolute;top:6px;right:6px;width:28px;height:28px;border-radius:50%;background:rgba(0,0,0,.6);color:#fff;font-size:1rem;z-index:2}
+.photo input{display:none}
+
+/* Frases */
+.phrase-br{font-size:.74rem;color:var(--muted);margin-top:2px}
+.phrase-br b{color:var(--accent-d);font-weight:600}
+body:not(.light) .phrase-br b{color:var(--accent-l)}
+
+/* Casa */
+.taxi-card{background:var(--accent);color:#fff;border-radius:12px;padding:14px 16px;margin-bottom:12px}
+.taxi-label{font-size:.58rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;opacity:.85;margin-bottom:6px}
+.taxi-addr{font-family:'Cormorant Garamond',serif;font-size:1.35rem;font-weight:600;line-height:1.25}
+
+/* Toast e confete */
+.toast{position:fixed;left:50%;bottom:92px;transform:translate(-50%,20px);background:#1a1714;color:#fff;border-radius:14px;padding:12px 18px;font-size:.84rem;opacity:0;pointer-events:none;transition:all .3s;z-index:1500;max-width:90vw;text-align:center}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+.confetti{position:fixed;inset:0;pointer-events:none;z-index:1400;overflow:hidden}
+.confetti span{position:absolute;top:-40px;font-size:1.4rem;animation:fall 2.4s ease-in forwards}
+@keyframes fall{to{transform:translateY(110vh) rotate(360deg);opacity:.7}}
+
+@media(max-width:380px){.fun-level{font-size:1rem}.jump-card{font-size:.5rem}}
+
+.stop-main{flex:1;min-width:0}
+.stop-meta{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;margin-top:5px}
+.section-header{flex-wrap:wrap;row-gap:6px}
+.section-title{min-width:0}
+body.light .detail-hist .detail-label{color:#8a6a24}
+body.light .badge-hidden{color:#7a5c1c}
+@media(max-width:400px){.section-title{font-size:1.7rem}}
+
+.print-msg{font-size:.8rem;line-height:1.5;color:var(--muted);font-style:italic;margin-top:10px;background:rgba(47,93,168,.06);border-radius:10px;padding:10px 12px}
+
+.journal-print-action{display:flex;align-items:center;gap:16px;margin:0 0 22px}.journal-print-action span{color:var(--muted);font-size:.74rem;font-style:italic}.dashboard-print{margin-top:12px;width:100%}
+#printTripDialog{width:100vw;max-width:none;height:100dvh;max-height:none;margin:0;padding:0;border:0;border-radius:0;background:#e6e9ee;color:#262521;overflow:auto}
+#printTripDialog .print-toolbar{position:sticky;top:0;z-index:3;background:#faf7f0;border-bottom:1px solid #d6dbe3;padding:15px 24px;display:flex;align-items:center;justify-content:space-between;gap:18px}
+#printTripTitle{font:400 28px/1.1 'Cormorant Garamond',serif;margin:0 0 5px;color:#262521}#printStatus{font-size:12px;color:#5f6673;margin:0}
+#printTripDialog .print-toolbar-actions{display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+#printTripDialog select{color:#262521;background:#fffdf9;border:1px solid #b9c2d0;color-scheme:light;border-radius:8px;font-size:16px;padding:10px;min-height:44px}
+#printTripDialog .primary-btn,#printTripDialog .secondary-btn{min-height:44px;padding:10px 14px;border-radius:8px;font-size:13px;font-weight:600;border:1px solid}
+#printTripDialog .primary-btn{background:#2f5da8;color:#fff;border-color:#2f5da8}#printTripDialog .secondary-btn{border-color:#b9c2d0;color:#2a4f8f;background:transparent}
+#printTripDialog button:disabled{opacity:.5;cursor:wait}
+.print-photo-options{padding:14px 24px;background:#faf7f0;border-bottom:1px solid #d6dbe3}.print-photo-options summary{cursor:pointer;font-size:13px;min-height:28px;color:#2a4f8f}
+.print-photo-options p,.print-help{font-size:12px;line-height:1.5;color:#5f6673}.print-help{margin:12px 24px}
+.print-photo-controls{display:flex;gap:12px;align-items:center;flex-wrap:wrap}.photo-file-label{cursor:pointer;display:inline-flex;align-items:center}.photo-file-label input{display:none}
+#tripPrintFrame{display:block;width:100%;height:calc(100dvh - 190px);min-height:500px;border:0;background:#e6e9ee}
+.sr-only{position:absolute!important;width:1px!important;height:1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important}
+@media(max-width:680px){#printTripDialog .print-toolbar{padding:12px 16px;display:block}#printTripDialog .print-toolbar-actions{margin-top:12px;gap:7px}.journal-print-action{flex-direction:column;align-items:flex-start;gap:8px}.print-photo-options{padding:12px 16px}.print-help{margin:12px 16px}#tripPrintFrame{height:calc(100dvh - 280px)}}
+
+/* ===== alvo do visto maior, separado da área que abre ===== */
+.stop-header{gap:6px;padding:8px 12px 8px 4px}
+.check-hit{width:48px;height:48px;min-width:48px;display:flex;align-items:center;justify-content:center;border-radius:50%;-webkit-tap-highlight-color:transparent}
+.check-hit .stop-check{width:28px;height:28px;pointer-events:none}
+.check-hit .stop-check::after{font-size:.8rem}
+.check-hit:active .stop-check{transform:scale(.9)}
+.stop.checked .check-hit .stop-check{background:var(--accent);border-color:var(--accent)}
+.stop.checked .check-hit .stop-check::after{opacity:1}
+.stop-time{display:inline-flex;align-items:center;gap:4px;font-size:.66rem;font-weight:700;color:var(--accent);background:rgba(47,93,168,.1);border-radius:999px;padding:5px 10px;min-height:30px}
+.stop-time .pen{opacity:.7}
+.stop-details{padding:0 15px 15px 58px}
+@media(max-width:640px){.stop-details{padding:0 12px 14px 52px}}
+/* ===== rótulos um pouco maiores ===== */
+.badge,.stop-eff{font-size:.64rem}
+.day-date{font-size:.64rem}
+.deck-label,.micro-label{font-size:.62rem}
+.dtag{font-size:.62rem}
+.period,.jnote-label{font-size:.66rem}
+.jump-card{font-size:.6rem}
+.dock a{font-size:.6rem}
+/* ===== seções dobráveis ===== */
+.section-header[role=button]{cursor:pointer;-webkit-tap-highlight-color:transparent}
+.fold-arrow{font-size:.9rem;color:var(--accent);transition:transform .25s;margin-left:4px}
+.section-wrap.folded .fold-arrow{transform:rotate(-90deg)}
+.section-wrap.folded > :not(.section-header){display:none!important}
+.section-wrap.folded .section-header{padding-bottom:0}
+/* ===== semanas ===== */
+.week{margin-bottom:12px}
+.week-head{width:100%;display:flex;align-items:center;gap:10px;padding:12px 4px;border-bottom:1px solid var(--border-accent);font-family:'Cormorant Garamond',serif;font-size:1.25rem;font-weight:600;color:var(--cream);text-align:left}
+.week-count{margin-left:auto;font-family:'DM Sans',sans-serif;font-size:.66rem;font-weight:700;letter-spacing:.1em;color:var(--accent)}
+.week-arrow{color:var(--accent);font-size:.85rem;transition:transform .25s;transform:rotate(-90deg)}
+.week.open .week-arrow,.fold-group.open .week-arrow{transform:none}
+.week-body{display:none;padding-top:10px}
+.week.open .week-body{display:block}
+/* ===== frases em grupos ===== */
+.fold-group .phrase-group-title{width:100%;cursor:pointer;padding:10px 0;margin:0}
+.fold-group .phrase-group-title::after{display:none}
+.pg-count{font-size:.6rem;color:var(--muted);letter-spacing:.05em}
+.fold-group .week-arrow{margin-left:auto}
+.pg-body{display:none;padding-top:6px}
+.fold-group.open .pg-body{display:block}
+/* ===== diário ===== */
+.jwait{font-size:.86rem;color:var(--muted);font-style:italic;line-height:1.6;background:rgba(47,93,168,.06);border-radius:12px;padding:12px 14px}
+.jmore{display:block;margin:10px auto 0;font-size:.72rem;color:var(--accent);text-decoration:underline;padding:10px}
+.copy-box{margin-top:22px;border-top:1px dashed var(--border-accent);padding-top:14px}
+.copy-box p{font-size:.78rem;color:var(--muted);line-height:1.55;margin-bottom:10px}
+.copy-box b{color:var(--cream)}
+.copy-actions{display:flex;gap:8px;flex-wrap:wrap}
+.copy-actions input{display:none}
+.secondary-btn,.primary-btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:9px 14px;border-radius:10px;font-size:.74rem;font-weight:600;border:1px solid var(--border-accent);color:var(--accent);background:transparent;cursor:pointer}
+.primary-btn{background:var(--accent);color:#fff;border-color:var(--accent)}
+.link-btn{font-size:.74rem;color:#a32d2d;text-decoration:underline;min-height:44px}
+/* ===== janelinhas ===== */
+.mini-dialog{border:0;border-radius:18px;padding:20px;max-width:360px;width:calc(100% - 32px);background:var(--ink);color:var(--cream);box-shadow:0 20px 50px rgba(0,0,0,.3)}
+.mini-dialog::backdrop{background:rgba(20,24,34,.45)}
+.mini-dialog h3{font-family:'Cormorant Garamond',serif;font-size:1.45rem;font-weight:600;margin-bottom:10px;line-height:1.15}
+.mini-dialog p{font-size:.84rem;line-height:1.55;color:var(--muted);margin-bottom:12px}
+.mini-eyebrow{font-size:.6rem!important;letter-spacing:.2em;text-transform:uppercase;color:var(--accent)!important;margin-bottom:4px!important;font-weight:700}
+.mini-dialog label{display:block;font-size:.62rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin:12px 0 5px}
+.mini-dialog select,.mini-dialog input{width:100%;font-size:16px;padding:10px;border-radius:10px;border:1px solid var(--border-accent);background:var(--paper,#fff);color:#1a1714;min-height:44px}
+.mini-actions{display:flex;align-items:center;gap:8px;margin-top:18px}
+.mini-actions span{flex:1}
+/* ===== toast com desfazer ===== */
+.toast.canundo{pointer-events:auto;display:flex;align-items:center;gap:12px;padding:8px 8px 8px 16px;text-align:left}
+.toast .undo{background:#fff;color:#1a1714;font-weight:700;border-radius:10px;padding:8px 14px;min-height:40px;font-size:.8rem;white-space:nowrap}
+.mini-dialog{margin:auto}
+.toast.canundo{width:min(92vw,440px)}
+.toast.canundo span{flex:1}
+</style>
+</head>
+<body class="light">
+
+<div class="top-controls">
+  <button class="ctrl-btn theme-btn" id="btnTheme" onclick="toggleTheme()" aria-label="Trocar tema">☾</button>
+</div>
+
+<!-- CAPA -->
+<div class="cover" id="top">
+  <div class="cover-bg"></div>
+  <div class="cover-content">
+    <span class="cover-eyebrow">Um Guia de Campo para</span>
+    <h1 class="cover-title">Lis<em>boa</em></h1>
+    <p class="cover-line"><em>sem pressa,</em> outra vez.</p>
+    <p class="cover-author">por Claudio SAROLDI</p>
+    <div class="cover-rule"></div>
+    <p class="cover-dates">14 NOV A 13 DEZ 2026</p>
+    <p class="cover-subtitle">Trinta dias, nenhuma ladeira a pé e um pastel de nata por dia.</p>
+  </div>
+  <div class="cover-scroll">↓</div>
+</div>
+
+<!-- COMMAND DECK -->
+<div class="deck-shell">
+  <div class="deck" id="deck">
+    <div class="deck-title">Lisboa, <em>num olhar</em>.</div>
+    <p class="deck-sub">O plano de hoje, a luz e a contagem.</p>
+
+    <div class="deck-grid">
+      <div class="deck-card deck-today">
+        <div>
+          <div class="deck-label" id="todayLabel">Comece aqui</div>
+          <div class="deck-value" id="todayName">Dia 1</div>
+          <div class="deck-note" id="todayNote">O plano de hoje.</div>
+          <ul class="today-list" id="todayList"></ul>
+        </div>
+        <a href="#dias" class="deck-cta" id="todayCta">Abrir o dia</a>
+      </div>
+      <div class="micro-stack">
+        <div class="micro-card">
+          <div class="micro-label">Luz hoje em Lisboa</div>
+          <div class="sun-row">
+            <span class="sun-ico">☀</span><span id="sunriseVal">--:--</span>
+            <span class="sun-sep">·</span>
+            <span class="sun-ico">☾</span><span id="sunsetVal">--:--</span>
+          </div>
+          <div class="micro-sub" id="goldenVal">Hora dourada</div>
+        </div>
+        <div class="micro-card">
+          <div class="micro-label">Contagem</div>
+          <div class="micro-value" id="countValue">--</div>
+          <div class="micro-sub" id="countSub">Até o embarque.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BARRA DIVERTIDA DE PROGRESSO -->
+    <div class="fun" id="fun">
+      <div class="fun-head">
+        <span class="fun-level" id="funLevel">Ainda com cheiro de avião</span>
+        <span class="fun-count" id="funCount">0 de 0</span>
+      </div>
+      <div class="fun-track" id="funTrack">
+        <div class="fun-fill" id="funFill"></div>
+        <span class="fun-mile" style="left:25%" title="25%">🥐</span>
+        <span class="fun-mile" style="left:50%" title="50%">🏰</span>
+        <span class="fun-mile" style="left:75%" title="75%">🎶</span>
+        <span class="fun-mile fun-end" style="left:100%" title="100%">🏆</span>
+        <span class="fun-tram" id="funTram">🚋</span>
+      </div>
+      <div class="fun-sub" id="funSub">Marquem "visto" em cada lugar, e o elétrico anda.</div>
+      <button class="deck-cta dashboard-print" id="dashPrint" onclick="openPrintTrip()" hidden>Imprimir a viagem ↗</button>
+    </div>
+
+    <div class="jump-grid">
+      <a class="jump-card" href="#essencial"><span class="jump-icon">◆</span><span>Essencial</span></a>
+      <a class="jump-card" href="#dias"><span class="jump-icon">◐</span><span>Os dias</span></a>
+      <a class="jump-card" href="#diario"><span class="jump-icon">✎</span><span>Diário</span></a>
+      <a class="jump-card" href="#bomsaber"><span class="jump-icon">✦</span><span>Bom saber</span></a>
+    </div>
+  </div>
+</div>
+
+<main>
+
+<!-- 1. ESSENCIAL -->
+<div class="section-wrap" id="essencial">
+  <div class="section-header">
+    <div class="section-tag">Antes de sair</div>
+    <h2 class="section-title">O <em>Essencial</em></h2>
+    <div class="section-rule"></div>
+  </div>
+  <p class="section-intro">A parte prática. Leiam antes de tudo, e voltem aqui quando der dúvida.</p>
+
+  <div class="card open" id="ess_home">
+    <button class="card-trigger" onclick="toggleCard('ess_home')">
+      <div class="card-icon">🏠</div>
+      <div class="card-info"><div class="card-name">A casa</div><div class="card-sub">Airbnb no Parque das Nações</div></div>
+      <div class="card-arrow">▼</div>
+    </button>
+    <div class="card-body"><div class="card-rule"></div>
+      <div class="taxi-card">
+        <div class="taxi-label">Mostrem isto ao motorista</div>
+        <div class="taxi-addr">Rua dos Argonautas, 5<br>Edifício Fernando Pessoa<br>Parque das Nações, 1990-090 Lisboa</div>
+      </div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text"><strong>Check-in e check-out</strong>Entrada no sábado, 14/11, às 15h. Saída no domingo, 13/12, até as 11h. Anfitrião: Carlos.</div></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text"><strong>Reserva do Airbnb</strong>Os detalhes e o contato do Carlos estão no app do Airbnb da mãe.</div></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text"><strong>O bairro</strong>Plano, com calçada larga e a orla do Tejo na porta. O Centro Vasco da Gama (supermercado, farmácia, restaurantes) e a estação do Oriente ficam a uns 5 minutos a pé.</div></div>
+      <a href="https://www.google.com/maps/search/?api=1&query=Rua%20dos%20Argonautas%205%201990-090%20Lisboa" target="_blank" class="map-btn">📍 Ver no mapa</a>
+    </div>
+  </div>
+
+  <div class="card" id="ess_flights">
+    <button class="card-trigger" onclick="toggleCard('ess_flights')">
+      <div class="card-icon">✈️</div>
+      <div class="card-info"><div class="card-name">Voos</div><div class="card-sub">Ida, volta e o Claudio</div></div>
+      <div class="card-arrow">▼</div>
+    </button>
+    <div class="card-body"><div class="card-rule"></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text"><strong>Ida: TP72, sex 13/11</strong>Sai do Galeão às 22:05 e pousa em Lisboa no sábado, 14/11, às 10:45. Terminal 1. O código da reserva está no e-mail e no app da TAP.</div></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text"><strong>Volta: TP73, dom 13/12</strong>Sai de Lisboa às 12:55 e chega no Galeão às 20:05. Check-in fecha às 11:55. Saiam de casa por volta das 9:45: o aeroporto fica a uns 10 minutos de carro.</div></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text"><strong>O Claudio</strong>Chega no domingo, 15/11, às 09:50, e volta para Londres na quarta, 25/11, às 18:35.</div></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text"><strong>Bagagem</strong>Uma mala despachada de até 23 kg por pessoa.</div></div>
+    </div>
+  </div>
+
+  <div class="card" id="ess_transit">
+    <button class="card-trigger" onclick="toggleCard('ess_transit')">
+      <div class="card-icon">🚕</div>
+      <div class="card-info"><div class="card-name">Como se locomover</div><div class="card-sub">A versão sem ladeira</div></div>
+      <div class="card-arrow">▼</div>
+    </button>
+    <div class="card-body"><div class="card-rule"></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text"><strong>Bolt e Uber, sempre</strong>Instalem os dois no celular antes de viajar. Em Lisboa, carro de aplicativo é barato e deixa vocês na porta, sem ladeira. É o jeito padrão deste guia.</div></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text"><strong>Trem para Sintra, Cascais e Porto</strong>Sintra sai do Rossio, Cascais sai do Cais do Sodré, e o Porto sai do Oriente, do lado de casa. Para o Porto, comprem antes no site ou no app da CP.</div></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text"><strong>Metrô</strong>A estação Oriente fica na linha vermelha. Para usar, comprem o cartão Navegante ocasional na máquina e carreguem com o valor das viagens. Tem elevador na maioria das estações.</div></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text"><strong>Tuk-tuk</strong>Bom para Alfama e o Castelo. Combinem o preço e a duração antes de subir.</div></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text"><strong>A calçada portuguesa escorrega</strong>Aquele chão de pedrinhas brancas fica um sabão quando chove. Sapato de sola de borracha, sempre, e cuidado nas descidas.</div></div>
+    </div>
+  </div>
+
+  <div class="card" id="ess_money">
+    <button class="card-trigger" onclick="toggleCard('ess_money')">
+      <div class="card-icon">💶</div>
+      <div class="card-info"><div class="card-name">Dinheiro</div><div class="card-sub">Euro, cartão e gorjeta</div></div>
+      <div class="card-arrow">▼</div>
+    </button>
+    <div class="card-body"><div class="card-rule"></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text"><strong>Cartão por aproximação em quase tudo</strong>Restaurante, táxi, supermercado e museu aceitam. Tenham uns 20 euros em notas pequenas para tasca, quiosque e banheiro pago.</div></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text"><strong>Caixa eletrônico: só Multibanco</strong>Usem os caixas Multibanco dos bancos. Fujam dos caixas azuis e amarelos da Euronet, que cobram taxas altas. Se a máquina perguntar, escolham pagar em euros, nunca em reais.</div></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text"><strong>O couvert não é de graça</strong>Pão, azeitona e manteiga que chegam na mesa sem vocês pedirem entram na conta. Não querem? É só dizer "não, obrigado" e devolver.</div></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text"><strong>Gorjeta</strong>Não é obrigatória e não vem na conta. Arredondar ou deixar uns 5 a 10% num lugar bom já está ótimo.</div></div>
+    </div>
+  </div>
+
+  <div class="card" id="ess_weather">
+    <button class="card-trigger" onclick="toggleCard('ess_weather')">
+      <div class="card-icon">🌦️</div>
+      <div class="card-info"><div class="card-name">Clima e o que vestir</div><div class="card-sub">Meados de novembro a meados de dezembro</div></div>
+      <div class="card-arrow">▼</div>
+    </button>
+    <div class="card-body"><div class="card-rule"></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text"><strong>Entre 9 e 17 °C</strong>Novembro fica por volta de 11 a 17 °C. Dezembro esfria, com mínimas de 8 a 9 °C de manhã cedo e à noite. Para carioca, é frio de verdade.</div></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text"><strong>Chove uma semana por mês</strong>Contem com uns 8 a 10 dias de chuva no período. Guarda-chuva pequeno na bolsa e casaco impermeável.</div></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text"><strong>O vento de Sintra, Cascais e Cabo</strong>Na serra e na beira-mar a sensação é bem mais fria. Levem um casaco a mais nesses dias.</div></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text"><strong>Sol se põe cedo</strong>Por volta das 17h10 em dezembro. Planejem os passeios de fora para voltar antes de escurecer.</div></div>
+    </div>
+  </div>
+
+  <div class="card" id="ess_health">
+    <button class="card-trigger" onclick="toggleCard('ess_health')">
+      <div class="card-icon">🩺</div>
+      <div class="card-info"><div class="card-name">Saúde e emergência</div><div class="card-sub">Os números que importam</div></div>
+      <div class="card-arrow">▼</div>
+    </button>
+    <div class="card-body"><div class="card-rule"></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text"><strong>112</strong>Emergência para tudo: ambulância, polícia e bombeiros.</div></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text"><strong>SNS 24: 808 24 24 24</strong>Linha de saúde do governo, com enfermeiro ao telefone. Ajuda a decidir se precisa ir ao hospital.</div></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text"><strong>Farmácia</strong>Cruz verde acesa na porta. Tem uma dentro do Centro Vasco da Gama. Remédio de uso contínuo: levem da viagem com a receita, em quantidade para os 30 dias.</div></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text"><strong>Seguro viagem</strong>Levem o número do seguro anotado em papel e no celular.</div></div>
+    </div>
+  </div>
+
+  <div class="card" id="ess_power">
+    <button class="card-trigger" onclick="toggleCard('ess_power')">
+      <div class="card-icon">🔌</div>
+      <div class="card-info"><div class="card-name">Tomada e internet</div><div class="card-sub">Carregador e chip</div></div>
+      <div class="card-arrow">▼</div>
+    </button>
+    <div class="card-body"><div class="card-rule"></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text"><strong>Tomada de dois pinos redondos, 230 V</strong>O plugue brasileiro fino de dois pinos costuma entrar. O de pinos grossos e o de três pinos não entram: levem um adaptador universal. Celular e carregador de celular aguentam os 230 V.</div></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text"><strong>Internet</strong>Um chip ou eSIM europeu resolve o mês todo. Wi-Fi tem no apartamento, nos cafés e no shopping.</div></div>
+    </div>
+  </div>
+
+  <div class="card" id="ess_book">
+    <button class="card-trigger" onclick="toggleCard('ess_book')">
+      <div class="card-icon">🎟️</div>
+      <div class="card-info"><div class="card-name">Reservar antes</div><div class="card-sub">As poucas coisas que pedem</div></div>
+      <div class="card-arrow">▼</div>
+    </button>
+    <div class="card-body"><div class="card-rule"></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text"><strong>Porto, 7 a 9/12</strong>Trem do Oriente até Porto Campanhã, ida e volta, e hotel por duas noites. É a única coisa grande para reservar com antecedência.</div></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text"><strong>Palácio da Pena, 4/12</strong>Bilhete com hora marcada no site da Parques de Sintra. Escolham o horário do fim da manhã.</div></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text"><strong>Mosteiro dos Jerónimos, 19/11 e 10/12</strong>Comprem o bilhete pela internet para não pegar a fila de quem compra na hora.</div></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text"><strong>Óbidos de carro, 20/11</strong>Carro alugado ou motorista para esse dia.</div></div>
+    </div>
+  </div>
+
+  <div class="card" id="ess_scams">
+    <button class="card-trigger" onclick="toggleCard('ess_scams')">
+      <div class="card-icon">⚠️</div>
+      <div class="card-info"><div class="card-name">Golpes e pequenos desastres</div><div class="card-sub">O básico de cidade grande</div></div>
+      <div class="card-arrow">▼</div>
+    </button>
+    <div class="card-body"><div class="card-rule"></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text"><strong>Batedor de carteira</strong>Bondinho cheio, Baixa e Rossio são os lugares clássicos. Bolsa na frente do corpo e celular no bolso de dentro.</div></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text"><strong>"Haxixe? Cocaína?"</strong>Na Baixa e no Rossio, uns caras oferecem baixinho na rua. Vendem folha de louro amassada. Só ignorar e seguir andando.</div></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text"><strong>Táxi sem taxímetro</strong>Peçam sempre pelo app. Se pegarem táxi na rua, confiram se o taxímetro está ligado.</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- 2. OS DIAS -->
+<div class="section-wrap" id="dias">
+  <div class="section-header">
+    <div class="section-tag">Dia a dia</div>
+    <h2 class="section-title">Os <em>dias</em></h2>
+    <div class="section-rule"></div>
+  </div>
+  <p class="section-intro">O plano que vocês montaram, com o que eu conferi. Toquem na bolinha para marcar "visto", e no nome para ver os detalhes.</p>
+  <div class="strip" id="strip"></div>
+  <div id="days"></div>
+
+  <div class="saved" id="saved"></div>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- 3. DIÁRIO -->
+<div class="section-wrap" id="diario">
+  <div class="section-header">
+    <div class="section-tag">Para lembrar</div>
+    <h2 class="section-title">O <em>Diário</em></h2>
+    <div class="section-rule"></div>
+  </div>
+  <p class="section-intro">O que vocês marcam como visto entra aqui sozinho, com a hora. Escrevam uma linha por período, coloquem até duas fotos por dia e, no fim, imprimam a viagem.</p>
+  <div class="journal-print-action"><button class="deck-cta print-btn" onclick="openPrintTrip()">Imprimir a viagem ↗</button><span>Lugares, notas e fotos, prontos para guardar.</span></div>
+  <div id="journal"></div>
+  <div class="copy-box">
+    <p><b>Guardar uma cópia.</b> Se trocarem de celular ou algo der errado, a cópia traz de volta os vistos, as notas e as fotos. Façam uma de vez em quando.</p>
+    <div class="copy-actions"><button type="button" class="secondary-btn" onclick="saveCopy()">Guardar uma cópia</button><label class="secondary-btn">Recuperar uma cópia<input type="file" id="copyFile" accept="application/json,.json"></label></div>
+  </div>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- 4. BOM SABER -->
+<div class="section-wrap" id="bomsaber">
+  <div class="section-header">
+    <div class="section-tag">Na prática</div>
+    <h2 class="section-title">Bom <em>saber</em></h2>
+    <div class="section-rule"></div>
+  </div>
+  <p class="section-intro">O que os guias não contam.</p>
+
+  <div class="card" id="gtk_food">
+    <button class="card-trigger" onclick="toggleCard('gtk_food')">
+      <div class="card-icon">🍽️</div>
+      <div class="card-info"><div class="card-name">O que pedir</div><div class="card-sub">Comida portuguesa de verdade</div></div>
+      <div class="card-arrow">▼</div>
+    </button>
+    <div class="card-body"><div class="card-rule"></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text"><strong>Bitoque</strong>Bife com ovo frito por cima, batata frita e arroz. O prato feito português, e quase sempre o mais seguro do cardápio.</div></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text"><strong>Prato do dia</strong>No almoço de dia útil, quase toda tasca tem prato do dia, com bebida e café, por um preço bem abaixo do cardápio. Perguntem sempre.</div></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text"><strong>Bifana</strong>Sanduíche de carne de porco temperada, no pão. O lanche de rua de Lisboa.</div></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text"><strong>Frango assado no churrasco</strong>Frango de churrasqueira, com ou sem piri-piri, a pimenta portuguesa. Para levar para casa num dia de preguiça.</div></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text"><strong>Pastel de nata</strong>Comam ainda morno, com canela. Manteigaria e Pastéis de Belém são os melhores; o de padaria de esquina também é bom.</div></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text"><strong>Vinho da casa</strong>Em tasca, o vinho da casa costuma ser bom e barato. Peçam "meio jarro" para dois.</div></div>
+    </div>
+  </div>
+
+  <div class="card" id="gtk_rules">
+    <button class="card-trigger" onclick="toggleCard('gtk_rules')">
+      <div class="card-icon">🕰️</div>
+      <div class="card-info"><div class="card-name">Horários e regras</div><div class="card-sub">O ritmo de Lisboa</div></div>
+      <div class="card-arrow">▼</div>
+    </button>
+    <div class="card-body"><div class="card-rule"></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text"><strong>Almoço de 12h30 às 15h, jantar a partir das 19h30</strong>Muita tasca fecha a cozinha entre o almoço e o jantar. Fora desses horários, o caminho é café, pastelaria ou shopping.</div></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text"><strong>Segunda-feira: museus fechados</strong>Jerónimos, Torre de Belém e vários museus fecham às segundas. A Gulbenkian fecha às terças.</div></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text"><strong>Domingo: tasca fechada</strong>Muita tasca de bairro fecha no domingo, e algumas no sábado também. Shopping e restaurante de zona turística abrem.</div></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text"><strong>Feriados: 1 e 8 de dezembro</strong>Dia 1 é a Restauração da Independência, e dia 8 é Nossa Senhora da Conceição. Comércio de rua pode fechar.</div></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text"><strong>"Bom dia" ao entrar</strong>Na loja, no café e no táxi. Faz muita diferença no atendimento.</div></div>
+    </div>
+  </div>
+
+  <div class="card" id="gtk_miss">
+    <button class="card-trigger" onclick="toggleCard('gtk_miss')">
+      <div class="card-icon">💭</div>
+      <div class="card-info"><div class="card-name">O que a maioria perde</div><div class="card-sub">Opinião de filho</div></div>
+      <div class="card-arrow">▼</div>
+    </button>
+    <div class="card-body"><div class="card-rule"></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text"><strong>🌅 O melhor de Lisboa vocês já têm na porta</strong>A orla do Parque das Nações no fim da tarde, com a ponte acendendo, é das coisas mais bonitas da cidade, e é plana, sem turista e a cinco minutos de casa. Façam esse passeio mais de uma vez.</div></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text"><strong>☕ Café é bica, e bica é em pé</strong>No balcão, o café custa menos do que sentado na mesa. Pedir "uma bica" e tomar em dois goles no balcão é o jeito mais lisboeta de começar a manhã.</div></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text"><strong>🚕 Não economizem no Bolt</strong>O que cansa em Lisboa não é a distância, é a ladeira. Um Bolt de dez minutos poupa uma subida que acaba com o dia. Usem sem dó.</div></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text"><strong>🛋️ Dia sem nada também é passeio</strong>Trinta dias é muito. Os dias "livres" que vocês colocaram no plano são os mais importantes. Não deixem a culpa encher esses dias de programação.</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- 5. PORTUGUÊS DE LÁ X DE CÁ -->
+<div class="section-wrap" id="falar">
+  <div class="section-header">
+    <div class="section-tag">Fale como um local</div>
+    <h2 class="section-title">Português de <em>lá</em> x de cá</h2>
+    <div class="section-rule"></div>
+  </div>
+  <p class="section-intro">É a mesma língua, mas não é. Toquem no play para ouvir com sotaque de lá.</p>
+  <div id="phrases"></div>
+</div>
+
+</main>
+
+<footer>
+  Um guia de campo por Claudio SAROLDI<br>Para os coroas, com carinho · Lisboa 2026
+</footer>
+
+<!-- DOCK -->
+<nav class="dock" aria-label="Atalhos">
+  <a href="#deck"><span class="dock-icon">◎</span>Hoje</a>
+  <a href="#dias"><span class="dock-icon">◐</span>Dias</a>
+  <a href="#diario"><span class="dock-icon">✎</span>Diário</a>
+  <a href="#essencial"><span class="dock-icon">◆</span>Casa</a>
+  <a href="#falar"><span class="dock-icon">❦</span>Falar</a>
+</nav>
+
+<dialog id="seenEditor" class="mini-dialog" aria-labelledby="seenEditName">
+  <p class="mini-eyebrow">Quando vocês viram</p>
+  <h3 id="seenEditName"></h3>
+  <label for="seenEditDay">Dia</label><select id="seenEditDay"></select>
+  <label for="seenEditTime">Hora</label><input type="time" id="seenEditTime">
+  <div class="mini-actions"><button type="button" class="link-btn" onclick="unseeFromEditor()">Desmarcar</button><span></span><button type="button" class="secondary-btn" onclick="this.closest('dialog').close()">Cancelar</button><button type="button" class="primary-btn" onclick="saveSeenEdit()">Salvar</button></div>
+</dialog>
+<dialog id="copyAsk" class="mini-dialog" aria-labelledby="copyAskTitle">
+  <h3 id="copyAskTitle">Recuperar a cópia?</h3>
+  <p id="copyAskText"></p>
+  <div class="mini-actions"><span></span><button type="button" class="secondary-btn" onclick="pendingCopy=null;this.closest('dialog').close()">Cancelar</button><button type="button" class="primary-btn" onclick="restoreCopy()">Recuperar</button></div>
+</dialog>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+<div id="confetti" class="confetti" aria-hidden="true"></div>
+<dialog id="printTripDialog" aria-labelledby="printTripTitle"><div class="print-toolbar"><div><h2 id="printTripTitle">A viagem, no papel.</h2><p id="printStatus" role="status" aria-live="polite">Preparando o diário…</p></div><div class="print-toolbar-actions"><label class="sr-only" for="printMode">Nível de detalhe</label><select id="printMode"><option value="full">Diário completo</option><option value="short">Diário curto</option></select><button id="printNow" class="primary-btn" onclick="printTripNow()" disabled>Imprimir / Salvar PDF</button><button class="secondary-btn" onclick="closePrintTrip()">Voltar ao guia</button></div></div><details class="print-photo-options"><summary>Escolher a foto da capa</summary><p>As fotos de cada dia já vêm do diário (até duas por dia). Aqui dá para escolher uma foto só para a capa. Ela fica só nesta impressão.</p><div class="print-photo-controls"><label class="secondary-btn photo-file-label">Escolher foto da capa<input id="printCoverFile" type="file" accept="image/jpeg,image/png,image/webp"></label><button id="printCoverClear" class="secondary-btn" hidden>Tirar a foto da capa</button></div></details><p class="print-help">Só entra o que foi vivido. No iPhone, toquem em Imprimir e depois em Compartilhar, Salvar em Arquivos, para guardar em PDF. No computador, escolham A4, escala 100%, sem cabeçalho e rodapé, e com gráficos de fundo ligados.</p><iframe id="tripPrintFrame" title="Prévia do diário em A4"></iframe></dialog>
+
+<script>
+/* ============================================================
+   CONTEÚDO DO GUIA: lugares, comida e o plano dos dias
+   e = esforço (0 nenhum, 1 leve, 2 moderado, 3 puxado)
+   k = tipo: 'ver', 'comer' ou 'livre'
+   ============================================================ */
+const INFO = {
+/* Perto de casa */
+c01:{n:'Orla do Tejo a pé',k:'ver',e:1,d:'Calçadão plano à beira-rio, cheio de bancos. Dá para ir até a Torre Vasco da Gama e voltar sem perceber.',how:'A pé, saindo de casa.',q:'Passeio Ribeirinho Parque das Nações Lisboa'},
+c03:{n:'Teleférico sobre o rio',k:'ver',e:1,d:'Cabine fechada e sentada, uns 10 minutos voando por cima do Tejo, entre o Oceanário e a Torre Vasco da Gama.',how:'A pé. Tem estação nas duas pontas da orla.',hist:'Foi construído para a Expo 98, a exposição mundial que transformou esta antiga zona industrial no bairro onde vocês estão morando.',q:'Telecabine Lisboa Parque das Nações'},
+c05:{n:'Torre Vasco da Gama',k:'ver',e:1,d:'A torre em forma de vela, na ponta norte da orla. Hoje é hotel, mas a vista do rio e da ponte de baixo dela já vale.',how:'A pé pela orla, uns 20 minutos.',hist:'Com 145 metros, é o prédio mais alto de Portugal. Foi feita para a Expo 98 e imita a vela de uma caravela.',q:'Torre Vasco da Gama Lisboa'},
+c07:{n:'Centro Vasco da Gama',k:'ver',e:1,d:'O shopping colado na estação do Oriente. Supermercado Continente, farmácia, banheiro, cinema e praça de alimentação.',how:'A pé, uns 5 minutos de casa.',q:'Centro Vasco da Gama Lisboa'},
+c09:{n:'Parque Tejo e a ponte ao pôr do sol',k:'ver',e:1,d:'Gramado enorme no fim da orla, com a ponte Vasco da Gama atravessando o rio. Melhor no fim da tarde.',how:'A pé pela orla, ou Bolt até o parque.',fact:'A ponte Vasco da Gama tem 12 quilômetros só sobre a água, e mais de 17 no total. Já foi a ponte mais longa da Europa.',q:'Parque Tejo Lisboa'},
+c10:{n:'Estação do Oriente',k:'ver',e:1,d:'A estação de metrô, trem e ônibus ao lado de casa. Vale olhar para cima: a cobertura parece uma floresta de aço e vidro.',how:'A pé, uns 5 minutos.',hist:'Projeto do espanhol Santiago Calatrava, inaugurada em 1998 para a Expo. É daqui que saem os trens para o Porto.',q:'Gare do Oriente Lisboa'},
+/* Baixa e Chiado */
+b01:{n:'Praça do Comércio',k:'ver',e:1,d:'A grande praça amarela aberta para o rio. Plana, enorme, com o Cais das Colunas na beira da água.',how:'Bolt até a praça, uns 20 minutos de casa.',hist:'Ali ficava o palácio real, destruído pelo terremoto e pelo maremoto de 1755. A praça foi reconstruída pelo Marquês de Pombal como a porta de entrada de Lisboa pelo rio.',q:'Praça do Comércio Lisboa'},
+b02:{n:'Arco da Rua Augusta, vista',k:'ver',e:1,d:'Elevador até perto do topo e poucos degraus no final. Lá em cima, a Baixa inteira de um lado e o rio do outro.',how:'Fica na própria Praça do Comércio. A entrada é na base do arco.',fact:'Depois do terremoto, o arco levou mais de cem anos para ficar pronto, só em 1873. Lá em cima estão as estátuas de Vasco da Gama e do Marquês de Pombal.',q:'Arco da Rua Augusta Lisboa'},
+b03:{n:'Rua Augusta a pé',k:'ver',e:1,d:'Rua de pedestres plana, do Rossio até o arco. Lojas, cafés e gente na rua o tempo todo.',how:'Começa no Rossio ou na Praça do Comércio.',q:'Rua Augusta Lisboa'},
+b04:{n:'Rossio e Praça da Figueira',k:'ver',e:1,d:'As duas praças do centro, lado a lado, planas e cheias de vida.',how:'Bolt até o Rossio, ou metrô verde até a estação Rossio.',fact:'O desenho de ondas no chão do Rossio, chamado Mar Largo, é o avô do calçadão de Copacabana. Os portugueses levaram o padrão para o Rio.',q:'Praça Dom Pedro IV Rossio Lisboa'},
+b07:{n:'Elevador de Santa Justa',k:'ver',e:2,d:'Elevador de ferro de 1902, ligando a Baixa ao Carmo. A fila pode ser longa: melhor cedo ou no fim da tarde.',how:'Rua de Santa Justa, perto do Rossio. Dica: dá para chegar ao mirante de cima pelo Largo do Carmo, sem fila.',hist:'Tem 45 metros de altura e ainda funciona como transporte público. Ainda hoje, o bilhete faz parte da rede da Carris.',q:'Elevador de Santa Justa Lisboa'},
+b08:{n:'Chiado',k:'ver',e:2,d:'O bairro elegante das livrarias, teatros e cafés antigos. Fica no alto, então é melhor chegar de Bolt lá em cima e ir descendo.',how:'Bolt até o Largo do Chiado.',q:'Largo do Chiado Lisboa'},
+b09:{n:'Livraria Bertrand',k:'ver',e:1,d:'Na Rua Garrett, no Chiado. Plana, quentinha e com uma seção de livros em português do Brasil também.',how:'Rua Garrett 73, no Chiado.',fact:'Aberta desde 1732, é a livraria mais antiga do mundo ainda funcionando, com certificado do Guinness na parede.',q:'Livraria Bertrand Chiado Lisboa'},
+b13:{n:'Ribeira das Naus',k:'ver',e:1,d:'Beira-rio plana com degraus largos de pedra para sentar e ver o Tejo. Ao lado da Praça do Comércio.',how:'A pé, saindo da Praça do Comércio para o lado oeste.',q:'Ribeira das Naus Lisboa'},
+v10:{n:'Miradouro de Santa Catarina',k:'ver',e:2,d:'Mirante de frente para a ponte 25 de Abril e o rio. Tem ladeira em volta, então é melhor descer do Bolt na porta.',how:'Bolt até o Miradouro de Santa Catarina.',q:'Miradouro de Santa Catarina Lisboa'},
+/* Alfama e Castelo */
+a01:{n:'Castelo de São Jorge, de táxi',k:'ver',e:2,b:'must',d:'Táxi até o portão. Lá dentro o chão é de pedra irregular, mas tem banco por todo lado e a vista é a melhor da cidade.',how:'Bolt até a entrada do castelo. Ir de sapato fechado.',hist:'Os mouros ergueram as muralhas, e Dom Afonso Henriques tomou o castelo em 1147. Foi palácio dos reis até o século XVI.',fact:'Tem pavões soltos andando pelos jardins. Eles adoram aparecer na hora da foto.',q:'Castelo de São Jorge Lisboa'},
+a02:{n:'Miradouro de Santa Luzia',k:'ver',e:1,d:'Painéis de azulejo, buganvílias e os telhados de Alfama descendo até o rio.',how:'Bolt até o mirante. Do Castelo, são poucos minutos de carro.',q:'Miradouro de Santa Luzia Lisboa'},
+a03:{n:'Miradouro da Senhora do Monte',k:'ver',e:1,d:'O mirante mais alto da cidade, com o Castelo bem de frente. Sempre de carro: a ladeira é brava.',how:'Bolt até o mirante.',q:'Miradouro da Senhora do Monte Lisboa'},
+a04:{n:'Miradouro da Graça',k:'ver',e:1,d:'Mirante com quiosque de café e sombra de pinheiros. Bom para sentar e tomar uma bica.',how:'Bolt até o Largo da Graça. Fica perto da Senhora do Monte.',q:'Miradouro Sophia de Mello Breyner Andresen Graça Lisboa'},
+/* Belém */
+e01:{n:'Mosteiro dos Jerónimos',k:'ver',e:1,b:'must',d:'O claustro mais bonito de Portugal, todo rendado em pedra. Fecha às segundas. A fila é longa, então comprem o bilhete pela internet antes.',how:'Bolt até Belém, uns 30 minutos de casa.',hist:'Começou a ser construído em 1501, pago com o dinheiro do comércio de especiarias. Vasco da Gama está enterrado lá dentro.',fact:'Aguentou o terremoto de 1755 quase sem danos, quando metade de Lisboa caiu.',q:'Mosteiro dos Jerónimos Lisboa'},
+e02:{n:'Torre de Belém, vista de fora',k:'ver',e:1,d:'Melhor ver de fora, do jardim à beira-rio. Lá dentro é escada estreita em caracol.',how:'Uns 10 minutos a pé do Mosteiro, pela beira-rio.',hist:'Construída entre 1514 e 1519 para defender a entrada do rio. Na época ficava dentro da água.',fact:'Procurem na fachada a cabeça de um rinoceronte de pedra. Foi inspirada num rinoceronte de verdade que chegou da Índia em 1515.',q:'Torre de Belém Lisboa'},
+e03:{n:'Padrão dos Descobrimentos',k:'ver',e:1,d:'O monumento em forma de proa na beira-rio, com os navegadores enfileirados.',how:'Do outro lado da avenida, em frente aos Jerónimos. Tem passagem subterrânea.',fact:'No chão tem uma rosa dos ventos gigante com um mapa-múndi. Procurem o Brasil e o ano de 1500.',q:'Padrão dos Descobrimentos Lisboa'},
+e05:{n:'MAAT e beira-rio',k:'ver',e:1,d:'Museu de curvas brancas na beira do rio. Dá para subir no telhado pela rampa e ver o rio de cima.',how:'Uns 15 minutos a pé do Padrão pela orla, ou Bolt curto.',q:'MAAT Lisboa'},
+e07:{n:'Jardim Botânico Tropical',k:'ver',e:1,d:'Jardim calmo atrás dos Jerónimos, com lago, patos e árvores do mundo inteiro.',how:'A pé, saindo do Mosteiro.',q:'Jardim Botânico Tropical Belém Lisboa'},
+/* Centro */
+n01:{n:'Gulbenkian, museu e jardim',k:'ver',e:1,b:'must',d:'Uma das melhores coleções de arte da Europa e um jardim calmo com lago. Fecha às terças. Tem cafeteria lá dentro.',how:'Bolt até a Fundação Gulbenkian, uns 15 minutos de casa.',hist:'Calouste Gulbenkian, um magnata armênio do petróleo, passou os últimos anos de vida em Lisboa e deixou tudo para Portugal.',fact:'Não percam a sala das joias de René Lalique, no fim do percurso.',q:'Museu Calouste Gulbenkian Lisboa'},
+n02:{n:'Avenida da Liberdade, descendo',k:'ver',e:1,d:'Avenida larga e arborizada, com lojas de luxo e bancos no calçadão. Táxi até o Marquês de Pombal, lá em cima, e descer andando.',how:'Bolt até o Marquês de Pombal.',q:'Avenida da Liberdade Lisboa'},
+/* Natal */
+x02:{n:'Árvore de Natal na Praça do Comércio',k:'ver',e:1,d:'A grande árvore iluminada da Praça do Comércio.',how:'Bolt até a Praça do Comércio.',warn:'Em 2025, as luzes de Natal de Lisboa acenderam no dia 22 de novembro. Se nesse sábado ainda estiverem apagadas, a praça à noite vale do mesmo jeito. Confiram a data de 2026 mais perto.',q:'Praça do Comércio Lisboa'},
+/* Fora de Lisboa */
+o01:{n:'Cascais, centro e orla',k:'ver',e:1,d:'Vila à beira-mar, plana no centro, com praias pequenas, ruas de pedestres e a marina.',how:'Trem do Cais do Sodré até Cascais, uns 40 minutos, sai a cada 20 minutos. Ou Bolt direto.',hist:'A família real portuguesa passava os verões aqui desde a década de 1870, e a vila virou o balneário da elite.',q:'Cascais centro'},
+o03:{n:'Boca do Inferno',k:'ver',e:1,d:'Falésia onde o mar entra numa gruta e estoura. Mais bonito com mar agitado.',how:'Táxi curto saindo do centro de Cascais, ou 20 minutos a pé pela beira-mar.',fact:'Em 1930, o ocultista inglês Aleister Crowley fingiu o próprio suicídio aqui, deixando um bilhete numa pedra. Apareceu vivo semanas depois, em Berlim.',q:'Boca do Inferno Cascais'},
+o05:{n:'Sintra, centro e Palácio Nacional',k:'ver',e:2,d:'O centro histórico de Sintra e o palácio das duas chaminés brancas gigantes.',how:'Trem do Rossio até Sintra, uns 40 minutos. Da estação até o centro, táxi ou tuk-tuk.',hist:'Foi palácio dos reis por quase 600 anos, e é o mais bem conservado da época medieval em Portugal.',fact:'As duas chaminés de 33 metros são da cozinha. Cozinhavam ali banquetes inteiros para a corte.',q:'Palácio Nacional de Sintra'},
+o06:{n:'Palácio da Pena',k:'ver',e:3,b:'must',d:'O palácio colorido no alto da serra. Lá em cima tem subida, então peguem o ônibus interno ou o tuk-tuk da entrada até a porta do palácio. Comprem o bilhete com hora marcada pela internet.',how:'Do centro de Sintra, ônibus 434 ou táxi até a entrada do parque.',hist:'Mandado construir pelo rei Dom Fernando II nos anos 1840, sobre as ruínas de um mosteiro. Sintra é Patrimônio da Humanidade desde 1995.',warn:'É o passeio mais puxado da viagem. Juntar com o Palácio Nacional no mesmo dia dá, mas sem pressa e com pausa para almoçar.',q:'Palácio da Pena Sintra'},
+o11:{n:'Óbidos',k:'ver',e:2,b:'must',d:'Vila medieval inteira dentro das muralhas, branca com faixas azuis e amarelas. A rua principal é de pedra e tem uma subidinha.',how:'De carro, uma hora pela A8.',hist:'Em 1282, o rei Dom Dinis deu a vila de presente de casamento à rainha Isabel. Depois disso, foi presente de várias rainhas.',fact:'A ginjinha daqui é servida num copinho de chocolate. Bebam e comam o copo.',q:'Óbidos Portugal'},
+o21:{n:'Porto',k:'ver',e:2,b:'must',d:'A segunda cidade do país, de granito e azulejo, à beira do Douro.',how:'Trem Alfa Pendular saindo do Oriente, umas 3 horas até Porto Campanhã. Comprar no site da CP com antecedência.',hist:'O centro histórico e a Ribeira são Patrimônio da Humanidade desde 1996.',q:'Ribeira Porto'},
+/* Comida */
+k08:{n:'Casa do Alentejo',k:'comer',e:0,b:'hidden',d:'Por fora, uma porta comum. Lá dentro, um pátio mourisco lindo e salões de azulejo no andar de cima. Comida alentejana. Aberto a tarde toda.',how:'Rua das Portas de Santo Antão 58, atrás do Rossio.',hist:'É um palácio do século XVII. Desde 1932 funciona como a casa dos alentejanos em Lisboa.',q:'Casa do Alentejo Lisboa'},
+k09:{n:'Cantina das Freiras',k:'comer',e:0,d:'Almoço completo por menos de 10 euros, num terraço com vista para o rio.',how:'Travessa do Ferragial 1, no Chiado.',warn:'Só abre de segunda a sexta, no almoço. No sábado vai estar fechada. Troquem pela Casa do Alentejo ou pela Confeitaria Nacional, que ficam ali perto.',q:'Cantina das Freiras Lisboa'},
+k11:{n:'Confeitaria Nacional',k:'comer',e:0,d:'Confeitaria de 1829 na Praça da Figueira. Doces, chá e salgadinhos.',how:'Praça da Figueira 18B.',fact:'Foi ela que trouxe o bolo-rei para Portugal, no século XIX, com uma receita de Paris.',q:'Confeitaria Nacional Lisboa'},
+k12:{n:'Manteigaria',k:'comer',e:0,d:'Pastel de nata saindo do forno, com canela e açúcar por cima. Come em pé no balcão.',how:'Rua do Loreto 2, no Chiado.',q:'Manteigaria Chiado Lisboa'},
+k14:{n:'Time Out Market',k:'comer',e:0,d:'Mercado com dezenas de balcões de comida. Turístico, mas prático: tem de tudo e tem banheiro. Fica lotado no almoço, então cheguem antes das 12h30.',how:'Mercado da Ribeira, Cais do Sodré. Uns 10 minutos a pé da Ribeira das Naus.',q:'Time Out Market Lisboa'},
+k22:{n:'Pastéis de Belém',k:'comer',e:0,d:'O original, desde 1837. A fila de fora é para levar: entrem e sentem nos salões dos fundos, que a mesa sai rápido.',how:'Rua de Belém 84, ao lado do Mosteiro.',fact:'A receita veio dos monges dos Jerónimos e só meia dúzia de pessoas sabem fazer. Ela fica guardada numa sala fechada.',q:'Pastéis de Belém Lisboa'},
+k23:{n:'Tasca do Gordo',k:'comer',e:0,d:'Espetadas na brasa e um quintal grande e tranquilo.',how:'Em Belém.',q:'Tasca do Gordo Belém Lisboa'},
+k25:{n:'Linha 27',k:'comer',e:0,d:'Bochecha de porco com batata assada, desde 1981. Cheio de gente que trabalha por ali no almoço de dia útil.',how:'Em Alcântara, a caminho de Belém.',q:'Linha 27 Alcântara Lisboa'},
+k33:{n:'O Cantinho do Alfredo',k:'comer',e:0,d:'Tasca de Campolide com bitoque famoso e cozido às quintas.',how:'Rua General Taborda 44, Campolide.',warn:'Abre de segunda a sábado, então no domingo vai estar fechado. A Gulbenkian tem cafeteria e restaurante lá dentro, uma boa troca para esse dia.',q:'Cantinho do Alfredo Campolide Lisboa'},
+k40:{n:'Café Saudade',k:'comer',e:0,d:'Café aconchegante perto da estação de Sintra, com bolos, scones e queijadas.',how:'Perto da estação de trem de Sintra.',q:'Café Saudade Sintra'},
+k41:{n:'Cantinho de São Pedro',k:'comer',e:0,d:'Taberna antiga com grelhados, em São Pedro de Sintra.',how:'Táxi curto do centro de Sintra.',q:'Cantinho de São Pedro Sintra'},
+k42:{n:'Restaurante Pereira',k:'comer',e:0,d:'Comida portuguesa de todas as regiões, frequentado pelos locais.',how:'No centro de Cascais.',q:'Restaurante Pereira Cascais'},
+/* Especiais */
+s02:{n:'Livre, decidir na hora',k:'livre',e:0,d:'Espaço em aberto. Decidam no dia, ou só descansem.'},
+/* Ideias dos coroas */
+'ideia-2':{n:'Freeport, Alcochete',k:'ver',e:1,d:'Outlet enorme ao ar livre, do outro lado da ponte Vasco da Gama. Aberto todo dia das 10h às 22h.',how:'Bolt pela ponte Vasco da Gama, uns 25 minutos de casa. O outlet também tem um ônibus próprio saindo do centro de Lisboa.',q:'Freeport Lisboa Fashion Outlet Alcochete'},
+'ideia-4':{n:'Casa do Alentejo',k:'comer',e:0,d:'Mesma casa do outro cartão. O pátio mourisco vale a visita mesmo só para um café.',how:'Rua das Portas de Santo Antão 58.',q:'Casa do Alentejo Lisboa'},
+'ideia-5':{n:'Continente',k:'ver',e:1,d:'Supermercado grande dentro do Centro Vasco da Gama. Para abastecer a casa no primeiro dia.',how:'A pé, uns 5 minutos de casa.',q:'Continente Centro Vasco da Gama'},
+'ideia-6':{n:'Passeio de tuk-tuk',k:'ver',e:1,d:'O jeito mais confortável de ver as ladeiras de Alfama, Castelo e Graça sem subir nada a pé. Combinem o preço e a duração antes de sair.',how:'Os tuk-tuks ficam na Praça do Comércio e no Rossio. Também dá para reservar pela internet.',q:'Praça do Comércio Lisboa'},
+'ideia-7':{n:'Restaurante Laurentina',k:'comer',e:0,d:'O Rei do Bacalhau, aberto desde os anos 1970. Além do bacalhau, tem bife do lombo. Segunda a sábado, almoço e jantar.',how:'Avenida Conde Valbom 71A, Avenidas Novas.',q:'Restaurante Laurentina Lisboa'},
+'ideia-8':{n:'El Corte Inglés',k:'ver',e:1,d:'A grande loja de departamentos de Lisboa, com vários andares e um supermercado gourmet.',how:'Avenida António Augusto de Aguiar 31. Metrô São Sebastião, ou Bolt.',q:'El Corte Inglés Lisboa'},
+'ideia-9':{n:'Museu do Bonsai',k:'ver',e:1,d:'Museu do Bonsai e da Árvore, com árvores em miniatura: laranjeiras, macieiras, oliveiras. Aberto todo dia, das 10h às 19h.',how:'Estrada Chão de Meninos 12, Sintra. Táxi a partir da estação de Sintra.',fact:'Tem uma murraya chinesa de 112 anos e 1,60 metro de altura.',q:'Museu do Bonsai Sintra'},
+'ideia-11':{n:'Loja Moida',k:'ver',e:1,d:'Loja de skincare e maquiagem coreana, aberta em agosto de 2026.',how:'Rua do Carmo 47, no Chiado.',q:'MOIDA Rua do Carmo 47 Lisboa'},
+'ideia-12':{n:'Cervejaria Trindade',k:'comer',e:0,d:'Cervejaria histórica, de 1836, dentro do antigo refeitório de um convento, com as paredes cobertas de azulejos. Peçam o bife da casa.',how:'Rua Nova da Trindade 20C, entre o Chiado e o Bairro Alto.',q:'Cervejaria Trindade Lisboa'},
+'ideia-14':{n:'Quinta Real de Caxias',k:'ver',e:1,d:'Jardins de palácio inspirados em Versalhes, com cascata, lagos e esculturas. Entrada gratuita.',how:'Trem do Cais do Sodré até Caxias, na linha de Cascais, ou Bolt. Estrada da Gibalta, Oeiras.',warn:'Não achei o horário oficial. Liguem antes para +351 214 115 062, principalmente porque o dia escolhido é uma segunda-feira.',q:'Quinta Real de Caxias'},
+'ideia-15':{n:'Palácio Biester',k:'ver',e:2,d:'Palacete romântico em Sintra, com jardins e uma capela.',how:'Em Sintra, perto do centro histórico.',q:'Palácio Biester Sintra'},
+'ideia-16':{n:'Restaurante D\'Bacalhau',k:'comer',e:0,d:'Salão enorme no Parque das Nações, com cozinha portuguesa e opções de carne.',how:'A pé, pela orla.',q:'D\'Bacalhau Parque das Nações Lisboa'},
+'ideia-17':{n:'Poço, no hotel My Story Tejo',k:'comer',e:0,d:'Almoço no hotel My Story Tejo, onde fica o Poço do Borratém, um poço antigo com painel de azulejo, no bar do lobby. Aberto também para quem não é hóspede.',warn:'Só confirmei o bar do lobby, não o horário de almoço. Liguem para o hotel antes, ou reservem.',how:'Rua dos Condes de Monsanto 2, a um minuto do Rossio.',fact:'Acreditavam que a água do poço curava coceira e doenças do fígado.',q:'My Story Hotel Tejo Lisboa'},
+'ideia-18':{n:'Portugália, Vasco da Gama',k:'comer',e:0,d:'A cervejaria clássica, famosa pelo bife à Portugália com molho de mostarda e batata frita. Fica dentro do Centro Vasco da Gama.',how:'A pé, uns 5 minutos de casa.',q:'Portugália Centro Vasco da Gama Lisboa'}
+};
+
+/* O plano que os coroas montaram (recebido em 29/10/2026) */
+const PLAN = {
+'2026-11-14':{N:['c07','ideia-18']},
+'2026-11-15':{T:['ideia-5','ideia-18']},
+'2026-11-16':{},
+'2026-11-17':{M:['ideia-2'],T:['ideia-2']},
+'2026-11-18':{M:['c05','c10'],T:['c09','ideia-16']},
+'2026-11-19':{M:['e03','e02','e07','e01'],T:['k22','k25','k23']},
+'2026-11-20':{M:['o11'],T:['o11']},
+'2026-11-21':{M:['s02'],T:['s02'],N:['x02']},
+'2026-11-22':{M:['a02','a03','a04'],T:['ideia-17','a01']},
+'2026-11-23':{M:['ideia-8'],T:['ideia-7']},
+'2026-11-24':{M:['b08','b07','v10'],T:['b13','k14']},
+'2026-11-25':{},
+'2026-11-26':{M:['ideia-11'],T:['k08']},
+'2026-11-27':{M:['ideia-9','ideia-15'],T:['k40']},
+'2026-11-28':{M:['b03','b04','b01'],T:['k09']},
+'2026-11-29':{M:['n01'],T:['k33']},
+'2026-11-30':{M:['ideia-14']},
+'2026-12-01':{M:['s02'],T:['c07'],N:['c03']},
+'2026-12-02':{M:['n02'],T:['ideia-12']},
+'2026-12-03':{M:['ideia-6'],T:['c01'],N:['c07']},
+'2026-12-04':{M:['o05'],T:['o06','k41']},
+'2026-12-05':{M:['o01'],T:['o03','k42']},
+'2026-12-06':{M:['o11'],T:['o11']},
+'2026-12-07':{M:['o21']},
+'2026-12-08':{M:['o21']},
+'2026-12-09':{M:['o21'],T:['s02']},
+'2026-12-10':{M:['e02','e03'],T:['e01','e05','k22']},
+'2026-12-11':{M:['b01','b02','b08'],T:['b04','b07','b09','ideia-12']},
+'2026-12-12':{M:['s02','k11'],T:['s02','k12']},
+'2026-12-13':{}
+};
+
+/* Ideias que ficaram guardadas, sem dia */
+const SAVED = [];
+
+/* Título, frase e avisos de cada dia */
+const DAYINFO = {
+'2026-11-14':{t:'Chegou, chegou',s:'Chave na mão e jantar do lado de casa',i:'Dia de chegar, tomar um banho e não inventar moda. O voo pousa às 10:45 e o apartamento só libera às 15h: peçam para deixar as malas antes, se o Carlos deixar.',fx:{M:['Pousam em Lisboa às 10:45, voo TP72'],T:['Check-in no apartamento às 15h']}},
+'2026-11-15':{t:'O Claudio chegou',s:'Abastecer a casa e pegar o ritmo',i:'Eu pouso às 09:50. Tarde de supermercado e jantar de novo na Portugália, que ninguém é de ferro.',fx:{M:['Claudio pousa às 09:50']}},
+'2026-11-16':{t:'Dia em aberto',s:'Talvez o aniversário',i:'Talvez o aniversário da filha do Sergio. Se não rolar, é dia de descanso.',fx:{X:['Talvez: aniversário da filha do Sergio']}},
+'2026-11-17':{t:'Dia de compras',s:'Freeport, do outro lado da ponte',i:'O dia inteiro no outlet. Levem sapato confortável: é tudo ao ar livre e as distâncias entre as lojas são grandes.'},
+'2026-11-18':{t:'O quintal de casa',s:'Torre, estação e pôr do sol na ponte',i:'Tudo a pé, perto de casa. Deixem o Parque Tejo para o fim da tarde, que é quando a ponte fica bonita.'},
+'2026-11-19':{t:'Belém, o cartão-postal',s:'Mosteiro, torre e pastel de nata',i:'Dia mais cheio, mas plano. Na hora do almoço tem três opções: escolham uma e guardem o pastel para a sobremesa.'},
+'2026-11-20':{t:'Óbidos de carro',s:'A vila dentro das muralhas',i:'Uma hora de carro. A rua principal é de pedra e tem subida: vão sem pressa e sentem na primeira ginjinha.'},
+'2026-11-21':{t:'Sábado sem relógio',s:'Manhã livre, árvore à noite',i:'Dia para não ter plano. À noite, a árvore da Praça do Comércio.'},
+'2026-11-22':{t:'Lisboa lá de cima',s:'Três mirantes, almoço no Poço e o Castelo',i:'Tudo de Bolt, de mirante em mirante, sem subir ladeira a pé. Almoço no Poço, perto do Rossio, e o Castelo fica para a tarde.'},
+'2026-11-23':{t:'Corte Inglés e bacalhau',s:'Compras e almoço clássico',i:'Manhã de loja de departamentos e almoço no Laurentina, que fica a uns 10 minutos dali.'},
+'2026-11-24':{t:'Chiado de cima a baixo',s:'Do alto do Chiado até o rio',i:'Comecem lá em cima, no Chiado, e venham descendo até a beira-rio. O almoço é no Time Out.'},
+'2026-11-25':{t:'Tchau, Claudio',s:'Último dia comigo por aqui',i:'Eu volto para Londres no fim da tarde. Dia em aberto.',fx:{T:['Claudio volta para Londres às 18:35']}},
+'2026-11-26':{t:'Chiado e Alentejo',s:'Loja coreana e pátio mourisco',i:'Manhã no Chiado e almoço na Casa do Alentejo, atrás do Rossio.'},
+'2026-11-27':{t:'Sintra em miniatura',s:'Bonsai, Biester e café',i:'Trem do Rossio até Sintra. De manhã, o Museu do Bonsai e o Palácio Biester, de táxi entre um e outro. Café na volta, perto da estação.'},
+'2026-11-28':{t:'A Baixa, devagar',s:'Rua Augusta, Rossio e a praça',i:'Tudo plano, do Rossio até o rio.'},
+'2026-11-29':{t:'Domingo de museu',s:'Gulbenkian, jardim e lago',i:'O museu mais bonito da cidade e um jardim para sentar depois.'},
+'2026-11-30':{t:'Jardins de rei',s:'Quinta Real de Caxias',i:'Jardim de palácio em Oeiras, a caminho de Cascais.'},
+'2026-12-01':{t:'Feriado em casa',s:'Restauração da Independência',i:'É feriado nacional em Portugal. Dia tranquilo, perto de casa, e teleférico à noite.'},
+'2026-12-02':{t:'Avenida abaixo',s:'Liberdade e Trindade',i:'Desçam a Avenida da Liberdade sem pressa e terminem na Cervejaria Trindade.'},
+'2026-12-03':{t:'Tuk-tuk e orla',s:'As ladeiras sem esforço',i:'Manhã de tuk-tuk pelos bairros altos e tarde em casa, na orla.'},
+'2026-12-04':{t:'Sintra de palácio',s:'Palácio Nacional e Pena',i:'O dia mais puxado da viagem. Saiam cedo, almocem sentados e não tenham pressa na Pena.'},
+'2026-12-05':{t:'Cascais',s:'A vila de veraneio dos reis',i:'Trem pela beira-mar até Cascais. Almoço no Pereira.'},
+'2026-12-06':{t:'Óbidos de Natal',s:'A vila vestida de Natal',i:'Em dezembro, Óbidos costuma montar a Vila Natal, com luzes, feirinha e muita gente no fim de semana. A vila é de graça; o parque do evento costuma ter bilhete.'},
+'2026-12-07':{t:'Porto, dia 1',s:'Trem até o Porto',i:'Trem saindo do Oriente de manhã, check-in no hotel e primeira volta pela Ribeira.'},
+'2026-12-08':{t:'Porto, dia 2',s:'Feriado no Porto',i:'Dia 8 de dezembro é feriado em Portugal. Algumas lojas e museus podem fechar, mas a Ribeira, as caves de vinho do Porto e as ruas ficam cheias de vida.'},
+'2026-12-09':{t:'Porto, volta',s:'Trem de volta para Lisboa',i:'Manhã no Porto e trem de volta. A tarde é livre.'},
+'2026-12-10':{t:'Belém, segunda dose',s:'Torre, Padrão, Mosteiro e MAAT',i:'A segunda volta por Belém, agora com o MAAT na beira-rio.'},
+'2026-12-11':{t:'A Baixa inteira',s:'Praça, arco, Chiado e Trindade',i:'O dia da despedida do centro, terminando na Trindade.'},
+'2026-12-12':{t:'Último sábado',s:'Doces e malas',i:'Dia livre, para os últimos pastéis e para fazer as malas.'},
+'2026-12-13':{t:'Volta para o Rio',s:'Até a próxima, Lisboa',i:'Check-out até as 11h. Saiam de casa por volta das 9:45, o aeroporto fica a uns 10 minutos.',fx:{M:['Check-out até as 11h. Sair de casa por volta das 9:45','Voo TP73 às 12:55 para o Rio']}}
+};
+
+
+/* ============================================================
+   CONFIG
+   ============================================================ */
+const CONFIG = {
+  destination: 'Lisboa',
+  tripStart: '2026-11-14',
+  tripEnd:   '2026-12-13',
+  ttsLang:   'pt-PT',
+  timeZone:  'Europe/Lisbon',
+  coords:    { lat: 38.7223, lng: -9.1393 },
+  claudio:   ['2026-11-15','2026-11-25'],
+  storageKey:'lisboa-guia-pais-v2'
+};
+const PERIODS = [['M','Manhã'],['T','Tarde'],['N','Noite']];
+const WD = ['domingo','segunda','terça','quarta','quinta','sexta','sábado'];
+const WDS = ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'];
+const MO = ['janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'];
+const EFF = ['', 'Leve', 'Moderado', 'Puxado'];
+
+/* dias da viagem */
+const DAYS = [];
+(function(){
+  const [y,m,d] = CONFIG.tripStart.split('-').map(Number);
+  const end = CONFIG.tripEnd;
+  for (let i = 0; ; i++) {
+    const dt = new Date(Date.UTC(y, m-1, d+i));
+    const key = dt.toISOString().slice(0,10);
+    DAYS.push({key, n:i+1, wd:WD[dt.getUTCDay()], wds:WDS[dt.getUTCDay()], d:dt.getUTCDate(), m:MO[dt.getUTCMonth()], mi:dt.getUTCMonth(),
+      withC: key >= CONFIG.claudio[0] && key <= CONFIG.claudio[1]});
+    if (key === end) break;
+  }
+})();
+
+/* ============================================================
+   ESTADO (localStorage)
+   ============================================================ */
+let ST = {seen:{}, notes:{}, theme:'light', fold:{}};
+try { const o = JSON.parse(localStorage.getItem(CONFIG.storageKey) || 'null'); if (o) ST = Object.assign(ST, o); } catch(e) {}
+let saveWarned = false;
+function save(){
+  try { localStorage.setItem(CONFIG.storageKey, JSON.stringify(ST)); saveWarned = false; }
+  catch(e) { if (!saveWarned) { saveWarned = true; setTimeout(() => toast('Atenção: não deu para salvar neste celular. Abram o guia pelo ícone da tela de início e tentem de novo.', null, 7000), 50); } }
+}
+const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const $ = s => document.querySelector(s);
+
+/* instâncias do plano (cada lugar em cada dia/período) */
+const INST = [];
+DAYS.forEach(D => {
+  const p = PLAN[D.key] || {};
+  const rep = {};
+  PERIODS.forEach(([k]) => (p[k] || []).forEach(id => {
+    const info = INFO[id]; if (!info) return;
+    rep[id] = (rep[id] || 0) + 1;
+    INST.push({uid: D.key + '~' + id + (rep[id] > 1 ? '~' + rep[id] : ''), id, day: D.key, p: k, info});
+  }));
+});
+const COUNTABLE = INST.filter(x => x.info.k !== 'livre');
+const INST_BY = Object.fromEntries(INST.map(x => [x.uid, x]));
+/* um visto guarda a hora e o dia em que foi visto (pode ser outro dia do plano) */
+function seenRec(uid){ const v = ST.seen[uid]; if (!v) return null; if (typeof v === 'number') return {t: v, d: (INST_BY[uid] || {}).day}; return v; }
+const isSeen = x => !!ST.seen[x.uid];
+const seenTs = x => (seenRec(x.uid) || {}).t;
+const seenDay = x => (seenRec(x.uid) || {}).d || x.day;
+function seenOn(key){ return INST.filter(x => isSeen(x) && seenDay(x) === key).sort((a, b) => seenTs(a) - seenTs(b)); }
+
+/* ============================================================
+   TEMA
+   ============================================================ */
+function applyTheme(){ document.body.classList.toggle('light', ST.theme === 'light'); $('#btnTheme').textContent = ST.theme === 'light' ? '☾' : '☀'; }
+function toggleTheme(){ ST.theme = ST.theme === 'light' ? 'dark' : 'light'; save(); applyTheme(); }
+function toggleCard(id){ document.getElementById(id).classList.toggle('open'); }
+
+/* ============================================================
+   DIAS
+   ============================================================ */
+function dayTitle(D){ return D.wd.charAt(0).toUpperCase() + D.wd.slice(1) + ', ' + D.d + ' de ' + D.m; }
+function mapsUrl(q){ return 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(q); }
+function stopHTML(x){
+  const i = x.info, rec = seenRec(x.uid), seen = !!rec;
+  const cls = ['stop', i.k === 'comer' ? 'food' : '', i.k === 'livre' ? 'livre' : '', seen ? 'checked' : '', i.warn ? 'has-warn' : ''].join(' ');
+  const badge = i.b === 'must' ? '<span class="badge badge-must">Imperdível</span>' : i.b === 'hidden' ? '<span class="badge badge-hidden">Joia escondida</span>' : '';
+  const eff = i.e ? `<span class="stop-eff e${i.e}">${EFF[i.e]}</span>` : '';
+  const other = rec && rec.d && rec.d !== x.day ? dayShort(rec.d) + ', ' : '';
+  const time = seen ? `<button type="button" class="stop-time" onclick="editSeen(event,'${x.uid}')" aria-label="Mudar o dia ou a hora">✓ visto ${other}${fmtClock(rec.t)} <span class="pen">✎</span></button>` : '';
+  let det = `<div class="detail-rule"></div><div class="detail-desc">${esc(i.d)}</div>`;
+  if (i.warn) det += `<div class="detail-warn"><span class="detail-label">Atenção</span>${esc(i.warn)}</div>`;
+  if (i.how) det += `<div class="detail-how"><b>Como chegar:</b> ${esc(i.how)}</div>`;
+  if (i.hist) det += `<div class="detail-hist"><span class="detail-label">História</span>${esc(i.hist)}</div>`;
+  if (i.fact) det += `<div class="detail-fact"><span class="detail-label">Você sabia</span>${esc(i.fact)}</div>`;
+  if (i.q) det += `<a href="${mapsUrl(i.q)}" target="_blank" rel="noopener" class="map-btn">📍 Me leve lá</a>`;
+  const check = i.k === 'livre' ? '<span class="check-hit" aria-hidden="true"><span class="stop-check" style="visibility:hidden"></span></span>' : `<button type="button" class="check-hit" role="checkbox" aria-checked="${seen}" aria-label="Marcar ${esc(i.n)} como visto" onclick="checkStop(event,'${x.uid}')"><span class="stop-check"></span></button>`;
+  return `<div class="${cls}" id="st_${x.uid}">
+    <div class="stop-header" onclick="toggleStop('st_${x.uid}')">
+      ${check}<div class="stop-main"><div class="stop-name">${esc(i.n)}</div>${(badge || eff || time) ? `<div class="stop-meta">${badge}${eff}${time}</div>` : ''}</div><span class="stop-expand">▾</span>
+    </div>
+    <div class="stop-details">${det}</div>
+  </div>`;
+}
+function dayHTML(D){
+  const info = DAYINFO[D.key] || {}, fx = info.fx || {};
+  const items = INST.filter(x => x.day === D.key);
+  const cnt = items.filter(x => x.info.k !== 'livre');
+  const done = cnt.filter(isSeen).length;
+  const tags = [];
+  if (D.withC) tags.push('<span class="dtag">Com o Claudio</span>');
+  if (D.key === '2026-12-01' || D.key === '2026-12-08') tags.push('<span class="dtag blue">Feriado</span>');
+  let body = info.i ? `<p class="day-intro">${esc(info.i)}</p>` : '';
+  (fx.X || []).forEach(t => body += `<div class="fixed">📌 <span>${esc(t)}</span></div>`);
+  PERIODS.forEach(([k, lab]) => {
+    const list = items.filter(x => x.p === k);
+    const f = fx[k] || [];
+    if (!list.length && !f.length) return;
+    body += `<div class="period">${lab}</div>`;
+    f.forEach(t => body += `<div class="fixed">📌 <span>${esc(t)}</span></div>`);
+    body += list.map(stopHTML).join('');
+  });
+  if (!items.length && !(fx.M || fx.T || fx.N || fx.X)) body += '<div class="fixed">🛋️ <span>Dia em aberto. Descansem ou decidam na hora.</span></div>';
+  if (!items.length && (fx.M || fx.T || fx.N) && D.key !== '2026-12-13') body += '<div class="fixed">🛋️ <span>O resto do dia está em aberto.</span></div>';
+  return `<div class="day ${D.withC ? 'withc' : ''}" id="day_${D.key}" data-day="${D.n}">
+    <button class="day-trigger" onclick="toggleCard('day_${D.key}')">
+      <span class="day-num">${String(D.n).padStart(2,'0')}</span>
+      <div class="day-info">
+        <div class="day-name">${esc(info.t || 'Dia ' + D.n)}</div>
+        <div class="day-tagline">${esc(info.s || '')}</div>
+        <div class="day-date">${dayTitle(D)}</div>
+        ${tags.length ? `<div class="day-tags">${tags.join('')}</div>` : ''}
+      </div>
+      ${cnt.length ? `<span class="day-count" id="dc_${D.key}">${done}/${cnt.length}</span>` : ''}
+      <div class="day-arrow">▼</div>
+    </button>
+    <div class="day-body"><div class="day-divider"></div>${body}</div>
+  </div>`;
+}
+/* dias agrupados por semana */
+const WEEKS = [];
+for (let i = 0; i < DAYS.length; i += 7) WEEKS.push(DAYS.slice(i, i + 7));
+function weekLabel(w, n){ const a = w[0], b = w[w.length - 1]; return 'Semana ' + n + ' · ' + a.d + (a.mi !== b.mi ? ' ' + a.m.slice(0,3) : '') + ' a ' + b.d + ' ' + b.m.slice(0,3); }
+function currentWeekIndex(){ const t = todayKey(); const i = WEEKS.findIndex(w => w.some(D => D.key === t)); return i >= 0 ? i : (t > CONFIG.tripEnd ? WEEKS.length - 1 : 0); }
+function renderDays(){
+  const cw = currentWeekIndex();
+  $('#days').innerHTML = WEEKS.map((w, i) => {
+    const cnt = INST.filter(x => w.some(D => D.key === x.day) && x.info.k !== 'livre'), done = cnt.filter(isSeen).length;
+    return `<div class="week ${i === cw ? 'open' : ''}" id="wk_${i}">
+      <button type="button" class="week-head" onclick="this.parentNode.classList.toggle('open')"><span>${weekLabel(w, i + 1)}</span><span class="week-count">${done}/${cnt.length}</span><span class="week-arrow">▾</span></button>
+      <div class="week-body">${w.map(dayHTML).join('')}</div>
+    </div>`;
+  }).join('');
+  renderStrip();
+  $('#saved').innerHTML = '';
+}
+function renderStrip(){
+  const today = todayKey();
+  $('#strip').innerHTML = DAYS.map(D => {
+    const cnt = INST.filter(x => x.day === D.key && x.info.k !== 'livre');
+    const all = cnt.length && cnt.every(isSeen);
+    return `<a href="#day_${D.key}" onclick="openDay('${D.key}')" class="${D.withC ? 'withc' : ''} ${D.key === today ? 'today' : ''} ${all ? 'done' : ''}">${D.wds}<b>${D.d}</b></a>`;
+  }).join('');
+}
+/* seções dobráveis */
+const FOLDS = ['essencial','dias','diario','bomsaber','falar'];
+function applyFolds(){
+  FOLDS.forEach(id => {
+    const el = document.getElementById(id); if (!el) return;
+    const folded = id in ST.fold ? ST.fold[id] : id !== 'dias';
+    el.classList.toggle('folded', folded);
+    const h = el.querySelector('.section-header'); if (h) h.setAttribute('aria-expanded', String(!folded));
+  });
+}
+function unfold(id){ const el = document.getElementById(id); if (el && el.classList.contains('folded')) { ST.fold[id] = false; save(); applyFolds(); } }
+function initFolds(){
+  FOLDS.forEach(id => {
+    const el = document.getElementById(id); if (!el) return;
+    const h = el.querySelector('.section-header');
+    h.setAttribute('role', 'button'); h.tabIndex = 0;
+    h.insertAdjacentHTML('beforeend', '<span class="fold-arrow" aria-hidden="true">▾</span>');
+    const t = () => { ST.fold[id] = !el.classList.contains('folded'); save(); applyFolds(); };
+    h.addEventListener('click', t);
+    h.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); t(); } });
+  });
+  applyFolds();
+  document.addEventListener('click', e => {
+    const a = e.target.closest && e.target.closest('a[href^="#"]'); if (!a) return;
+    const target = document.getElementById(a.getAttribute('href').slice(1)); if (!target) return;
+    const sec = target.closest('.section-wrap'); if (sec) unfold(sec.id);
+  }, true);
+}
+function openDay(key){ const el = document.getElementById('day_' + key); if (!el) return; el.classList.add('open'); const w = el.closest('.week'); if (w) w.classList.add('open'); unfold('dias'); }
+function dayShort(key){ const D = DAYS.find(x => x.key === key); return D ? D.wds.toLowerCase() + ' ' + D.d : key; }
+function toggleStop(id){ document.getElementById(id).classList.toggle('open'); }
+
+/* ============================================================
+   VISTO
+   ============================================================ */
+function refreshStop(uid){
+  const x = INST_BY[uid]; if (!x) return;
+  const el = document.getElementById('st_' + uid);
+  if (el) { const open = el.classList.contains('open'); el.outerHTML = stopHTML(x); if (open) document.getElementById('st_' + uid).classList.add('open'); }
+  const cnt = INST.filter(i => i.day === x.day && i.info.k !== 'livre');
+  const dc = document.getElementById('dc_' + x.day); if (dc) dc.textContent = cnt.filter(isSeen).length + '/' + cnt.length;
+}
+function afterSeenChange(uid, before, daysTouched){
+  refreshStop(uid);
+  [...new Set(daysTouched.filter(Boolean))].forEach(renderJournalDay);
+  renderProgress(before);
+  updateTodayCard();
+  renderStrip();
+}
+function setSeen(uid, rec, before){
+  const old = seenRec(uid), x = INST_BY[uid];
+  if (rec) ST.seen[uid] = rec; else delete ST.seen[uid];
+  save();
+  afterSeenChange(uid, before, [x && x.day, old && old.d, rec && rec.d]);
+}
+function checkStop(ev, uid){
+  ev.stopPropagation();
+  const x = INST_BY[uid]; if (!x) return;
+  const before = progressPct(), old = seenRec(uid);
+  if (old) {
+    setSeen(uid, null, before);
+    toast(x.info.n + ' desmarcado', () => setSeen(uid, old, progressPct()));
+  } else {
+    const rec = {t: Date.now(), d: todayInTrip() || x.day};
+    setSeen(uid, rec, before);
+    toast('✓ ' + x.info.n + ' visto às ' + fmtClock(rec.t), () => setSeen(uid, null, progressPct()));
+  }
+}
+function todayInTrip(){ const t = todayKey(); return t >= CONFIG.tripStart && t <= CONFIG.tripEnd ? t : null; }
+/* editar o dia e a hora de um visto */
+let editingUid = null;
+function editSeen(ev, uid){
+  ev.stopPropagation();
+  const x = INST_BY[uid], rec = seenRec(uid); if (!x || !rec) return;
+  editingUid = uid;
+  $('#seenEditName').textContent = x.info.n;
+  $('#seenEditDay').innerHTML = DAYS.map(D => `<option value="${D.key}"${D.key === rec.d ? ' selected' : ''}>${D.wds} ${D.d} de ${D.m}${D.key === x.day ? ' (no plano)' : ''}</option>`).join('');
+  $('#seenEditTime').value = fmtClock(rec.t);
+  $('#seenEditor').showModal();
+}
+function lisbonTs(key, hhmm){
+  const [y, m, d] = key.split('-').map(Number), [hh, mm] = (hhmm || '12:00').split(':').map(Number);
+  const guess = Date.UTC(y, m - 1, d, hh, mm);
+  const p = Object.fromEntries(new Intl.DateTimeFormat('en-GB', {timeZone: CONFIG.timeZone, year:'numeric', month:'2-digit', day:'2-digit', hour:'2-digit', minute:'2-digit', hourCycle:'h23'}).formatToParts(new Date(guess)).map(o => [o.type, o.value]));
+  const wall = Date.UTC(+p.year, +p.month - 1, +p.day, +p.hour, +p.minute);
+  return guess - (wall - guess);
+}
+function saveSeenEdit(){
+  const uid = editingUid; if (!uid) return;
+  const old = seenRec(uid), rec = {t: lisbonTs($('#seenEditDay').value, $('#seenEditTime').value), d: $('#seenEditDay').value};
+  $('#seenEditor').close(); editingUid = null;
+  setSeen(uid, rec, progressPct());
+  toast('Visto atualizado para ' + dayShort(rec.d) + ', ' + fmtClock(rec.t), () => setSeen(uid, old, progressPct()));
+}
+function unseeFromEditor(){
+  const uid = editingUid; if (!uid) return;
+  const old = seenRec(uid), x = INST_BY[uid];
+  $('#seenEditor').close(); editingUid = null;
+  setSeen(uid, null, progressPct());
+  toast(x.info.n + ' desmarcado', () => setSeen(uid, old, progressPct()));
+}
+function fmtClock(ts){ return new Date(ts).toLocaleTimeString('pt-BR', {hour:'2-digit', minute:'2-digit', timeZone:CONFIG.timeZone}); }
+
+/* ============================================================
+   BARRA DIVERTIDA
+   ============================================================ */
+const LEVELS = [
+  [0,  'Ainda com cheiro de avião', 'Marquem "visto" em cada lugar, e o elétrico anda.'],
+  [1,  'Turista de primeira viagem', 'Começou! Já dá para pedir uma bica sem gaguejar.'],
+  [15, 'Já sabe o que é um galão', 'E já descobriu que couvert não é de graça.'],
+  [30, 'Freguês da pastelaria', 'O moço do balcão já sabe o pedido.'],
+  [50, 'Meio lisboeta', 'Metade da viagem vista. Chegou a hora de um jantar especial.'],
+  [70, 'Conhece o Rossio de olhos fechados', 'Já sabe que a ladeira se vence de Bolt.'],
+  [90, 'Quase lisboeta', 'Falta pouco. Guardem energia para o final.'],
+  [100,'Lisboeta honorário', 'Lisboa conquistada! Agora é contar tudo no Rio.']
+];
+const MILES = [[25,'🥐','25%! Já merecem um pastel de nata.'],[50,'🏰','Metade da viagem! O castelo é de vocês.'],[75,'🎶','75%! Isso pede um fado.'],[100,'🏆','100%! Lisboa conquistada!']];
+function progressPct(){ const t = COUNTABLE.length; return t ? COUNTABLE.filter(isSeen).length / t * 100 : 0; }
+function renderProgress(before){
+  const t = COUNTABLE.length, d = COUNTABLE.filter(isSeen).length, pct = t ? d / t * 100 : 0;
+  $('#funFill').style.width = pct + '%';
+  const tram = $('#funTram'); tram.style.left = pct + '%';
+  $('#funCount').textContent = d + ' de ' + t + ' lugares';
+  let lv = LEVELS[0];
+  LEVELS.forEach(L => { if ((L[0] === 0 && d === 0) || (L[0] > 0 && (L[0] === 1 ? d >= 1 : pct >= L[0]))) lv = L; });
+  $('#funLevel').textContent = lv[1];
+  $('#funSub').textContent = lv[2];
+  const dp = document.getElementById('dashPrint'); if (dp) dp.hidden = d === 0;
+  document.querySelectorAll('.fun-mile').forEach((m, i) => m.classList.toggle('on', pct >= MILES[i][0]));
+  if (typeof before === 'number' && pct > before) {
+    tram.classList.remove('bump'); void tram.offsetWidth; tram.classList.add('bump');
+    const crossed = MILES.filter(M => before < M[0] && pct >= M[0]).pop();
+    if (crossed) { confetti(crossed[1]); setTimeout(() => toast(crossed[2]), 300); }
+  }
+}
+function confetti(emoji){
+  const box = $('#confetti'); const set = [emoji, '🎉', '✨', '🥐', '🇵🇹', '🇧🇷'];
+  for (let i = 0; i < 26; i++) {
+    const s = document.createElement('span');
+    s.textContent = set[i % set.length];
+    s.style.left = Math.random() * 100 + 'vw';
+    s.style.animationDelay = (Math.random() * 0.6) + 's';
+    s.style.fontSize = (1 + Math.random() * 1.2) + 'rem';
+    box.appendChild(s);
+    setTimeout(() => s.remove(), 3200);
+  }
+}
+let toastT;
+let toastUndo = null;
+function toast(msg, undo, ms){
+  const t = $('#toast'); toastUndo = undo || null;
+  t.innerHTML = '<span>' + esc(msg) + '</span>' + (undo ? '<button type="button" class="undo">Desfazer</button>' : '');
+  t.classList.toggle('canundo', !!undo); t.classList.add('show');
+  clearTimeout(toastT); toastT = setTimeout(() => { t.classList.remove('show'); toastUndo = null; }, ms || (undo ? 7000 : 2800));
+}
+document.addEventListener('click', e => {
+  if (!e.target.closest || !e.target.closest('#toast .undo') || !toastUndo) return;
+  const f = toastUndo; toastUndo = null; $('#toast').classList.remove('show'); f();
+});
+
+/* ============================================================
+   HOJE E CONTAGEM (no horário de Lisboa)
+   ============================================================ */
+function todayKey(){ return new Intl.DateTimeFormat('en-CA', {timeZone: CONFIG.timeZone, year:'numeric', month:'2-digit', day:'2-digit'}).format(new Date()); }
+function daysBetween(a, b){ return Math.round((Date.parse(b + 'T00:00:00Z') - Date.parse(a + 'T00:00:00Z')) / 86400000); }
+function updateCountdown(){
+  const t = todayKey(), d = daysBetween(t, CONFIG.tripStart);
+  if (d > 0) { $('#countValue').textContent = d === 1 ? '1 dia' : d + ' dias'; $('#countSub').textContent = 'Até o pouso em Lisboa.'; }
+  else if (t <= CONFIG.tripEnd) { const n = daysBetween(CONFIG.tripStart, t) + 1; $('#countValue').textContent = 'Dia ' + n; $('#countSub').textContent = 'de ' + DAYS.length + '. Aproveitem.'; }
+  else { $('#countValue').textContent = 'Fim'; $('#countSub').textContent = 'Até a próxima, Lisboa.'; }
+}
+function updateTodayCard(){
+  const t = todayKey();
+  let D = DAYS.find(x => x.key === t), label = 'Hoje';
+  if (!D) { D = t < CONFIG.tripStart ? DAYS[0] : DAYS[DAYS.length - 1]; label = t < CONFIG.tripStart ? 'Primeiro dia' : 'Último dia'; }
+  const info = DAYINFO[D.key] || {};
+  $('#todayLabel').textContent = label + ' · ' + D.wds + ' ' + D.d;
+  $('#todayName').textContent = 'Dia ' + D.n + ' · ' + (info.t || '');
+  $('#todayNote').textContent = info.s || '';
+  const fx = info.fx || {}, lines = [];
+  PERIODS.forEach(([k, lab]) => {
+    const names = (fx[k] || []).concat(INST.filter(x => x.day === D.key && x.p === k).map(x => (isSeen(x) ? '✓ ' : '') + x.info.n));
+    if (names.length) lines.push(`<li><b>${lab}</b>${esc(names.join(' · '))}</li>`);
+  });
+  (fx.X || []).forEach(x => lines.push(`<li><b>📌</b>${esc(x)}</li>`));
+  $('#todayList').innerHTML = lines.join('') || '<li>Dia em aberto.</li>';
+  $('#todayCta').setAttribute('href', '#day_' + D.key);
+  $('#todayCta').onclick = () => openDay(D.key);
+  if (D.key === t) openDay(D.key);
+}
+
+/* ============================================================
+   LUZ DO DIA (horário de Lisboa em qualquer aparelho)
+   ============================================================ */
+function solarUT(lat, lng, y, m, d, rise){
+  const rad = Math.PI/180, deg = 180/Math.PI;
+  const N = Math.floor((Date.UTC(y, m, d) - Date.UTC(y, 0, 0)) / 86400000);
+  const lngHour = lng / 15, t = N + ((rise ? 6 : 18) - lngHour) / 24;
+  const M = 0.9856 * t - 3.289;
+  let L = (M + 1.916 * Math.sin(M*rad) + 0.020 * Math.sin(2*M*rad) + 282.634 + 360) % 360;
+  let RA = (Math.atan(0.91764 * Math.tan(L*rad)) * deg + 360) % 360;
+  RA = (RA + Math.floor(L/90)*90 - Math.floor(RA/90)*90) / 15;
+  const sinDec = 0.39782 * Math.sin(L*rad), cosDec = Math.cos(Math.asin(sinDec));
+  const cosH = (Math.cos(90.833*rad) - sinDec * Math.sin(lat*rad)) / (cosDec * Math.cos(lat*rad));
+  if (cosH > 1 || cosH < -1) return null;
+  const H = (rise ? 360 - Math.acos(cosH)*deg : Math.acos(cosH)*deg) / 15;
+  const UT = (H + RA - 0.06571 * t - 6.622 - lngHour + 48) % 24;
+  return new Date(Date.UTC(y, m, d) + UT * 3600000);
+}
+function fmtLis(dt){ return dt ? dt.toLocaleTimeString('pt-BR', {hour:'2-digit', minute:'2-digit', timeZone:CONFIG.timeZone}) : '--:--'; }
+function updateLightCard(){
+  const [y, m, d] = todayKey().split('-').map(Number);
+  const rise = solarUT(CONFIG.coords.lat, CONFIG.coords.lng, y, m-1, d, true);
+  const set = solarUT(CONFIG.coords.lat, CONFIG.coords.lng, y, m-1, d, false);
+  $('#sunriseVal').textContent = fmtLis(rise); $('#sunsetVal').textContent = fmtLis(set);
+  const g = $('#goldenVal');
+  if (!rise || !set) { g.textContent = 'Hora dourada'; return; }
+  const now = Date.now(), H = 3600000;
+  if ((now >= rise && now <= rise.getTime() + H) || (now >= set.getTime() - H && now <= set)) { g.textContent = 'Hora dourada agora'; return; }
+  const next = now < rise ? rise.getTime() : now < set.getTime() - H ? set.getTime() - H : null;
+  if (!next) { g.textContent = 'Hora dourada amanhã'; return; }
+  const mins = Math.round((next - now) / 60000), h = Math.floor(mins / 60), mm = mins % 60;
+  g.textContent = 'Próxima hora dourada em ' + (h ? h + 'h ' : '') + mm + 'min';
+}
+
+/* ============================================================
+   DIÁRIO (notas por período e fotos)
+   ============================================================ */
+function journalDayHTML(D){
+  const info = DAYINFO[D.key] || {};
+  const seen = seenOn(D.key);
+  const n = ST.notes[D.key] || {};
+  return `<div class="day-body" style="display:block">
+      ${seen.length ? '<ul class="jseen">' + seen.map(x => `<li><span>${fmtClock(seenTs(x))}</span>${esc(x.info.n)}</li>`).join('') + '</ul>' : '<div class="jempty">Nada marcado como visto ainda.</div>'}
+      ${PERIODS.map(([k, lab]) => `<label class="jnote-label" for="nt_${D.key}_${k}">${lab}</label><textarea class="notes-area jnote" id="nt_${D.key}_${k}" data-d="${D.key}" data-p="${k}" placeholder="Como foi a ${lab.toLowerCase()}?">${esc(n[k] || '')}</textarea>`).join('')}
+      <div class="photos">${[0,1].map(i => `<label class="photo" id="ph_${D.key}_${i}"><input type="file" accept="image/*" data-d="${D.key}" data-i="${i}"><span>📷 Foto ${i+1}</span></label>`).join('')}</div>
+    </div>`;
+}
+let journalAll = false;
+function journalDays(){ const t = todayKey(); return journalAll ? DAYS : DAYS.filter(D => D.key <= t || seenOn(D.key).length || Object.values(ST.notes[D.key] || {}).some(v => (v || '').trim())); }
+function renderJournal(){
+  const list = journalDays(), hidden = DAYS.length - list.length;
+  const intro = !list.length ? '<p class="jwait">O diário começa no dia 14 de novembro. Cada dia aparece aqui quando chegar, e o que vocês marcarem como visto entra sozinho.</p>' : '';
+  const more = hidden ? `<button type="button" class="jmore" onclick="journalAll=true;renderJournal()">Mostrar os ${hidden} dias que ainda não chegaram</button>` : (journalAll ? '<button type="button" class="jmore" onclick="journalAll=false;renderJournal()">Mostrar só até hoje</button>' : '');
+  $('#journal').innerHTML = intro + list.map(D => {
+    const info = DAYINFO[D.key] || {};
+    return `<div class="day jday" id="jd_${D.key}">
+      <button class="day-trigger" onclick="toggleCard('jd_${D.key}')">
+        <span class="day-num">${String(D.n).padStart(2,'0')}</span>
+        <div class="day-info"><div class="day-name">${esc(info.t || '')}</div><div class="day-date">${dayTitle(D)}</div></div>
+        <span class="day-count" id="jc_${D.key}"></span>
+        <div class="day-arrow">▼</div>
+      </button>
+      <div class="jbox" id="jb_${D.key}"></div>
+    </div>`;
+  }).join('') + more;
+  list.forEach(D => renderJournalDay(D.key));
+}
+function renderJournalDay(key){
+  const D = DAYS.find(x => x.key === key), box = document.getElementById('jb_' + key);
+  if (D && !box && journalDays().includes(D)) { renderJournal(); return; }
+  if (!D || !box) return;
+  box.innerHTML = journalDayHTML(D);
+  box.firstElementChild.classList.add('jinner');
+  box.firstElementChild.style.display = '';
+  box.firstElementChild.className = 'day-body';
+  const seen = seenOn(key).length;
+  const n = ST.notes[key] || {}, notes = PERIODS.filter(([k]) => (n[k] || '').trim()).length;
+  document.getElementById('jc_' + key).textContent = (seen || notes) ? (seen ? seen + (seen === 1 ? ' visto' : ' vistos') : '') + (seen && notes ? ' · ' : '') + (notes ? notes + (notes === 1 ? ' nota' : ' notas') : '') : '';
+  [0,1].forEach(i => showPhoto(key, i));
+}
+document.addEventListener('input', e => {
+  const t = e.target; if (!t.classList || !t.classList.contains('jnote')) return;
+  ST.notes[t.dataset.d] = ST.notes[t.dataset.d] || {};
+  ST.notes[t.dataset.d][t.dataset.p] = t.value; save();
+});
+document.addEventListener('change', e => {
+  const t = e.target; if (!(t.type === 'file' && t.dataset.d)) return;
+  const f = t.files && t.files[0]; if (!f) return;
+  shrink(f).then(blob => idbPut(t.dataset.d + '_' + t.dataset.i, blob)).then(() => { showPhoto(t.dataset.d, +t.dataset.i); toast('Foto guardada'); })
+    .catch(() => toast('Não deu para guardar a foto. Tentem uma menor.'));
+});
+document.addEventListener('click', e => {
+  const rm = e.target.closest && e.target.closest('.photo .rm'); if (!rm) return;
+  e.preventDefault(); e.stopPropagation();
+  const [d, i] = rm.dataset.k.split('|');
+  idbDel(d + '_' + i).then(() => showPhoto(d, +i));
+});
+function shrink(file){
+  return new Promise((res, rej) => {
+    const img = new Image(), url = URL.createObjectURL(file);
+    img.onload = () => {
+      const max = 1100, s = Math.min(1, max / Math.max(img.width, img.height));
+      const c = document.createElement('canvas'); c.width = Math.round(img.width * s); c.height = Math.round(img.height * s);
+      c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
+      URL.revokeObjectURL(url);
+      c.toBlob(b => b ? res(b) : rej(), 'image/jpeg', 0.72);
+    };
+    img.onerror = rej; img.src = url;
+  });
+}
+function showPhoto(d, i){
+  const el = document.getElementById('ph_' + d + '_' + i); if (!el) return;
+  idbGet(d + '_' + i).then(b => {
+    el.querySelectorAll('img,.rm').forEach(x => x.remove());
+    if (b) {
+      const img = new Image(); img.src = URL.createObjectURL(b); img.alt = 'Foto ' + (i+1);
+      const rm = document.createElement('button'); rm.className = 'rm'; rm.textContent = '×'; rm.dataset.k = d + '|' + i; rm.setAttribute('aria-label', 'Apagar foto');
+      el.appendChild(img); el.appendChild(rm);
+    }
+  }).catch(() => {});
+}
+/* IndexedDB para as fotos */
+let dbp;
+function db(){ if (!dbp) dbp = new Promise((res, rej) => { const r = indexedDB.open('lisboa26-fotos', 1); r.onupgradeneeded = () => r.result.createObjectStore('f'); r.onsuccess = () => res(r.result); r.onerror = () => rej(r.error); }); return dbp; }
+function idbOp(mode, fn){ return db().then(d => new Promise((res, rej) => { const tx = d.transaction('f', mode), st = tx.objectStore('f'), r = fn(st); tx.oncomplete = () => res(r && r.result); tx.onerror = () => rej(tx.error); })); }
+const idbPut = (k, v) => idbOp('readwrite', s => s.put(v, k));
+const idbGet = k => idbOp('readonly', s => s.get(k));
+const idbDel = k => idbOp('readwrite', s => s.delete(k));
+
+/* ============================================================
+   GUARDAR E RECUPERAR UMA CÓPIA DO DIÁRIO
+   ============================================================ */
+const blobToData = b => new Promise((res, rej) => { const r = new FileReader(); r.onload = () => res(r.result); r.onerror = rej; r.readAsDataURL(b); });
+async function saveCopy(){
+  try {
+    toast('Preparando a cópia…');
+    const photos = {};
+    for (const D of DAYS) for (const i of [0,1]) { try { const b = await idbGet(D.key + '_' + i); if (b) photos[D.key + '_' + i] = await blobToData(b); } catch(e) {} }
+    const data = {app:'lisboa26', v:2, criado: new Date().toISOString(), seen: ST.seen, notes: ST.notes, photos};
+    const d = new Date(), name = 'diario-lisboa-' + String(d.getDate()).padStart(2,'0') + '-' + String(d.getMonth()+1).padStart(2,'0') + '.json';
+    const file = new File([JSON.stringify(data)], name, {type:'application/json'});
+    if (navigator.canShare && navigator.canShare({files:[file]})) {
+      try { await navigator.share({files:[file], title:'Cópia do diário de Lisboa'}); toast('Cópia pronta. Guardem no iCloud ou mandem para o Claudio.'); return; }
+      catch(e) { if (e && e.name === 'AbortError') { toast('Cópia cancelada.'); return; } }
+    }
+    const a = document.createElement('a'); a.href = URL.createObjectURL(file); a.download = name; document.body.appendChild(a); a.click();
+    setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 1000);
+    toast('Cópia baixada: ' + name);
+  } catch(e) { toast('Não deu para fazer a cópia agora. Tentem de novo.'); }
+}
+let pendingCopy = null;
+document.addEventListener('change', async e => {
+  if (e.target.id !== 'copyFile') return;
+  const f = e.target.files && e.target.files[0]; e.target.value = ''; if (!f) return;
+  try {
+    const data = JSON.parse(await f.text());
+    if (!data || data.app !== 'lisboa26' || !data.seen) throw Error('formato');
+    pendingCopy = data;
+    const n = Object.keys(data.seen).length, when = data.criado ? new Date(data.criado).toLocaleDateString('pt-BR') : '';
+    $('#copyAskText').textContent = 'Cópia' + (when ? ' de ' + when : '') + ', com ' + n + (n === 1 ? ' lugar visto' : ' lugares vistos') + ' e ' + Object.keys(data.photos || {}).length + ' fotos. Ela substitui o diário que está neste celular agora.';
+    $('#copyAsk').showModal();
+  } catch(err) { toast('Esse arquivo não é uma cópia do diário de Lisboa.'); }
+});
+async function restoreCopy(){
+  const data = pendingCopy; pendingCopy = null; $('#copyAsk').close(); if (!data) return;
+  ST.seen = data.seen || {}; ST.notes = data.notes || {}; save();
+  for (const D of DAYS) for (const i of [0,1]) { try { await idbDel(D.key + '_' + i); } catch(e) {} }
+  for (const [k, url] of Object.entries(data.photos || {})) { try { await idbPut(k, await (await fetch(url)).blob()); } catch(e) {} }
+  renderDays(); renderJournal(); renderProgress(); updateTodayCard();
+  toast('Diário recuperado.');
+}
+
+/* ============================================================
+   PORTUGUÊS DE LÁ X DE CÁ
+   ============================================================ */
+const PHRASES = [
+  ['No dia a dia', [
+    ['Bom dia!','bom DI-a','Para entrar em loja, café e táxi. Funciona até umas 13h.'],
+    ['Obrigado / Obrigada','o-bri-GA-du','Homem diz obrigado, mulher diz obrigada. Usem sempre.'],
+    ['Se faz favor','se fash fa-VOR','O "por favor" deles. Também serve para chamar o garçom.'],
+    ['Com licença','com li-SEN-sa','Para passar no meio do povo.'],
+    ['Saúde!','sa-U-de','Antes de brindar.']
+  ]],
+  ['Na mesa', [
+    ['A conta, se faz favor','a CON-ta','Pedir a conta.'],
+    ['Uma bica','U-ma BI-ca','Cafezinho espresso. Aqui é "bica", não "cafezinho".'],
+    ['Um galão','um ga-LÃO','Café com leite servido no copo alto. O nosso pingado.'],
+    ['Água sem gás ou com gás?','sem GASH','Sempre perguntam. "Natural" quer dizer fora da geladeira.'],
+    ['Quanto custa?','QUAN-tu CUSH-ta','Na feira e na lojinha.'],
+    ['Sou alérgico a marisco','alér-gi-cu a ma-RISH-cu','Para avisar no restaurante. Marisco é o nosso "frutos do mar".'],
+    ['Sem marisco, se faz favor','sem ma-RISH-cu','Para pedir o prato sem frutos do mar.']
+  ]],
+  ['Para se virar', [
+    ['Onde fica a casa de banho?','CA-za de BA-nhu','"Casa de banho" é o banheiro. Se pedirem "banheiro", eles entendem, mas riem.'],
+    ['Estou perdido','shto per-DI-du','Quando o mapa não ajuda.'],
+    ['Ajuda!','a-JU-da','Emergência é 112.']
+  ]],
+  ['De lá x de cá', [
+    ['Autocarro','','É o <b>ônibus</b>.'],
+    ['Comboio','','É o <b>trem</b>.'],
+    ['Pequeno-almoço','','É o <b>café da manhã</b>.'],
+    ['Pastelaria','','É a <b>padaria com doces</b>, onde se toma café.'],
+    ['Fixe!','FI-she','É o nosso <b>maneiro</b>.'],
+    ['Giro','','É <b>bonito, fofo</b>. "Que giro!"'],
+    ['Rapariga','','Aqui é só <b>moça</b>, sem duplo sentido. Não estranhem.'],
+    ['Bicha','','É a <b>fila</b>. "Estar na bicha" é estar na fila.'],
+    ['Telemóvel','','É o <b>celular</b>.'],
+    ['Esplanada','','É a <b>mesinha na calçada</b> do café ou restaurante.'],
+    ['Fino ou imperial','','É o <b>chope</b>. Fino no Porto, imperial em Lisboa.'],
+    ['Está bem','shtá BEIN','É o <b>tá bom</b>. Vão ouvir umas cem vezes por dia.']
+  ]]
+];
+function renderPhrases(){
+  $('#phrases').innerHTML = PHRASES.map(([g, list]) => `<div class="phrase-group fold-group"><button type="button" class="phrase-group-title" onclick="this.parentNode.classList.toggle('open')">${g} <span class="pg-count">${list.length}</span><span class="week-arrow">▾</span></button><div class="pg-body">` + list.map(([o, pr, mean]) => `
+    <div class="phrase-row"><div class="phrase-texts">
+      <div class="phrase-orig">${esc(o)}</div>
+      ${pr ? `<div class="phrase-note">${esc(pr)}</div>` : ''}
+      <div class="phrase-br">${mean}</div>
+    </div><button class="speak-btn" onclick="speak(this.dataset.t)" data-t="${esc(o)}" aria-label="Ouvir ${esc(o)}"><svg viewBox="0 0 10 10" width="12" height="12" fill="currentColor"><polygon points="2,1 9,5 2,9"/></svg></button></div>`).join('') + '</div></div>').join('');
+}
+function speak(text){
+  const url = `https://translate.google.com/translate_tts?ie=UTF-8&q=${encodeURIComponent(text)}&tl=${CONFIG.ttsLang}&client=tw-ob`;
+  const a = new Audio(url);
+  a.play().catch(() => { if ('speechSynthesis' in window) { const u = new SpeechSynthesisUtterance(text); u.lang = CONFIG.ttsLang; u.rate = 0.9; speechSynthesis.speak(u); } });
+}
+
+/* ============================================================
+   DOCK
+   ============================================================ */
+function initDockScroll(){
+  const deck = $('#deck'); let ticking = false;
+  const update = () => { document.body.classList.toggle('dock-visible', deck.getBoundingClientRect().bottom < 8); ticking = false; };
+  window.addEventListener('scroll', () => { if (!ticking) { requestAnimationFrame(update); ticking = true; } }, {passive:true});
+  window.addEventListener('resize', update); update();
+}
+
+/* ============================================================
+   INÍCIO
+   ============================================================ */
+document.addEventListener('DOMContentLoaded', () => {
+  applyTheme();
+  initFolds();
+  renderDays();
+  renderJournal();
+  renderPhrases();
+  renderProgress();
+  updateCountdown();
+  updateTodayCard();
+  updateLightCard();
+  initDockScroll();
+  setInterval(() => { updateLightCard(); updateCountdown(); }, 60000);
+  if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(() => {});
+});
+window.__guia = {INST, COUNTABLE, ST: () => ST};
+
+/* ============================================================
+   IMPRIMIR A VIAGEM: um diário em A4, no mesmo estilo de Budapeste.
+   Só entra o que foi vivido: lugares vistos, notas e fotos.
+   ============================================================ */
+const NAMES = 'Alfredo & Ester';
+const DATES_TXT = '14 nov a 13 dez 2026';
+let printBusy = false, printReturn = null, printCover = null, printCSS = null;
+async function loadPrintCSS(){ if (!printCSS) printCSS = await (await fetch('print.css')).text(); return printCSS; }
+async function openPrintTrip(){ printReturn = document.activeElement; $('#printTripDialog').showModal(); await renderPrintTrip(); }
+function closePrintTrip(){ $('#printTripDialog').close(); if (printReturn) printReturn.focus({preventScroll:true}); }
+function visitWhen(D, ts){ return D.wds + ' ' + D.d + ' ' + D.m.slice(0,3) + ' · ' + fmtClock(ts); }
+function firstSentence(t){ const m = t.match(/^.*?[.!?](?:\s|$)/); return (m ? m[0] : t).trim(); }
+async function getDayPhotos(key){ const out = []; for (const i of [0,1]) { try { const b = await idbGet(key + '_' + i); if (b) out.push(URL.createObjectURL(b)); } catch(e) {} } return out; }
+
+async function renderPrintTrip(){
+  if (printBusy) return; printBusy = true;
+  const btn = $('#printNow'); btn.disabled = true; $('#printStatus').textContent = 'Montando o diário…';
+  try {
+    const full = $('#printMode').value === 'full', frame = $('#tripPrintFrame');
+    const css = await loadPrintCSS();
+    await new Promise(res => { frame.onload = res; frame.srcdoc = '<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Lisboa · ' + esc(NAMES) + ' · Diário da viagem</title><style>' + css + '</style></head><body><main class="page-stack" id="printedPages"></main></body></html>'; });
+    const doc = frame.contentDocument; await doc.fonts.ready; const stack = doc.getElementById('printedPages');
+    const make = (tag, cls, text) => { const e = doc.createElement(tag); if (cls) e.className = cls; if (text !== undefined) e.textContent = text; return e; };
+    let main, flow, chapter = '';
+    function newPage(title, cover){ const page = make('section', 'sheet' + (cover ? ' cover' : '')); main = make('div', 'page-main'); flow = make('div', 'page-flow'); main.append(flow); page.append(main); const foot = make('footer', 'page-foot'); foot.append(make('span', '', cover ? NAMES + ' · Nossa Lisboa' : title), make('span', 'folio')); page.append(foot); stack.append(page); if (!cover) { const top = make('div', 'topline'); top.append(make('span', '', title), make('span', 'rose', DATES_TXT)); flow.append(top); } }
+    const fits = () => flow.getBoundingClientRect().bottom <= main.getBoundingClientRect().bottom - 1;
+    const nextPage = () => newPage(chapter + ' · continuação');
+    function splitUnit(node){ const p0 = node.querySelector('p'); if (!p0) throw Error('Um trecho ficou grande demais para a página.'); let rest = p0.textContent, first = true;
+      while (rest.length) { const frag = first ? node.cloneNode(true) : make('div', node.className); const para = first ? frag.querySelector('p') : make('p', 'print-prose'); if (!first) frag.append(para); para.textContent = ''; flow.append(frag);
+        let lo = 0, hi = rest.length; while (lo < hi) { const mid = Math.ceil((lo + hi) / 2); para.textContent = rest.slice(0, mid); if (fits()) lo = mid; else hi = mid - 1; }
+        if (lo < 1) { frag.remove(); throw Error('Não coube. Tentem o diário curto.'); }
+        let cut = lo; if (lo < rest.length) { const sp = rest.lastIndexOf(' ', lo); if (sp > lo * .65) cut = sp + 1; }
+        para.textContent = rest.slice(0, cut); rest = rest.slice(cut); first = false; if (rest) nextPage(); } }
+    function add(node){ flow.append(node); if (fits()) return; node.remove(); if (flow.children.length > 1) nextPage(); flow.append(node); if (fits()) return; node.remove(); splitUnit(node); }
+    function heading(kicker, title, sub){ const n = make('div', 'journal-heading'); n.append(make('div', 'eyebrow', kicker), make('h2', 'page-title', title)); if (sub) n.append(make('p', 'lead', sub)); return n; }
+    function prose(label, text, cls){ const n = make('div', 'print-unit ' + (cls || '')); if (label) n.append(make('h4', 'note-label', label)); n.append(make('p', 'print-prose', text)); return n; }
+    async function photoFigure(url, cap){ const f = make('figure', 'photo actual-photo'), img = make('img'); img.src = url; img.alt = cap || 'Foto da viagem'; f.append(img); if (cap) f.append(make('figcaption', '', cap)); try { await img.decode(); } catch(e) {} return f; }
+
+    /* dados */
+    const days = [];
+    for (const D of DAYS) {
+      const rows = seenOn(D.key);
+      const n = ST.notes[D.key] || {}, notes = PERIODS.filter(([k]) => (n[k] || '').trim()).map(([k, lab]) => [lab, n[k].trim()]);
+      const photos = await getDayPhotos(D.key);
+      if (rows.length || notes.length || photos.length) days.push({D, info: DAYINFO[D.key] || {}, rows, notes, photos});
+    }
+    const total = days.reduce((s, d) => s + d.rows.length, 0);
+
+    /* capa */
+    newPage('Nossa Lisboa', true);
+    flow.innerHTML = '<div class="topline"><span>' + esc(NAMES) + '</span><span class="rose">A viagem que vivemos</span></div><div class="eyebrow">Um diário para guardar</div><h1>Lisboa</h1><div class="cover-lines"><div class="main-line">Sem pressa, outra vez.</div><div class="sub-line">Trinta dias, nós dois e um pastel de nata por dia.</div></div>';
+    if (printCover) { const fig = await photoFigure(printCover.url, ''); fig.classList.add('hero-art'); flow.append(fig); }
+    else { const art = make('figure', 'photo hero-art cover-art'), img = make('img'); img.src = new URL('capa.jpg', location.href).href; img.alt = 'Lisboa ao entardecer'; art.append(img, make('figcaption', '', 'Lisboa ao entardecer')); try { await img.decode(); } catch(e) {} flow.append(art); }
+    const bottom = make('div', 'cover-bottom'); bottom.innerHTML = '<div class="names">' + esc(NAMES) + '</div><div class="dates">' + DATES_TXT + '</div>'; flow.append(bottom);
+
+    /* num olhar */
+    chapter = 'A viagem num olhar'; newPage(chapter);
+    add(heading('Os dias, como foram', 'A viagem que vivemos.', total + (total === 1 ? ' lugar visitado' : ' lugares visitados') + '. Horários no fuso de Lisboa.'));
+    if (!days.length) add(prose('Uma história ainda em branco', 'Nada registrado ainda. Marquem lugares como vistos e escrevam no diário: este livrinho se preenche sozinho com a viagem que vocês viverem.'));
+    for (const d of days) {
+      const row = make('article', 'day-row'); row.innerHTML = '<div class="day-date">' + d.D.d + '<small>' + d.D.wds + ' · ' + d.D.m.slice(0,3) + '</small></div>';
+      const body = make('div'); body.append(make('h3', '', d.info.t || 'Dia ' + d.D.n), make('p', '', [d.rows.length ? d.rows.length + (d.rows.length === 1 ? ' lugar' : ' lugares') : '', d.notes.length ? 'notas do diário' : '', d.photos.length ? 'fotos' : ''].filter(Boolean).join(' · ')));
+      if (d.rows.length) body.append(make('p', 'glance-places', d.rows.map(r => r.info.n).join(' · ')));
+      row.append(body); add(row);
+    }
+
+    /* um capítulo por dia */
+    for (const d of days) {
+      chapter = 'Dia ' + d.D.n + ' · ' + d.D.d + ' de ' + d.D.m;
+      /* diário completo: cada dia abre página nova. Diário curto: os dias seguem um atrás do outro. */
+      if (full || d === days[0]) newPage(chapter); else { const sp = make('div', 'print-unit day-gap'); flow.append(sp); }
+      add(heading('Dia ' + d.D.n, (d.info.t || '') + '.', dayTitle(d.D) + (d.rows.length ? ' · ' + d.rows.length + (d.rows.length === 1 ? ' lugar' : ' lugares') : '')));
+      d.notes.forEach(([lab, text], i) => { const u = prose(lab, text, 'personal-note'); if (i === 0 && d.info.s) u.prepend(make('div', 'day-prompt', d.info.s)); add(u); });
+      if (d.photos.length === 1) add(await photoFigure(d.photos[0], ''));
+      else if (d.photos.length > 1) { const pair = make('div', 'photo-pair'); for (const u of d.photos) pair.append(await photoFigure(u, '')); add(pair); }
+      for (const r of d.rows) {
+        const i = r.info, entry = make('div', 'print-unit entry-lead'), head = make('div', 'visit-heading');
+        head.append(make('div', 'eyebrow', i.k === 'comer' ? 'Comemos aqui' : 'Lugar visitado'), make('h3', '', i.n), make('div', 'time', visitWhen(d.D, seenTs(r))));
+        entry.append(head);
+        if (!full) { entry.append(make('p', 'print-prose', firstSentence(i.d))); add(entry); continue; }
+        entry.append(make('p', 'print-prose', i.d)); add(entry);
+        if (i.hist) add(prose('História', i.hist));
+        if (i.fact) add(prose('Você sabia', i.fact));
+      }
+    }
+
+    /* última página */
+    if (days.length) {
+      chapter = 'Uma última página'; newPage(chapter);
+      add(heading(NAMES, 'O que ficou com a gente.', 'Trinta dias, sem pressa, outra vez.'));
+      add(prose('Nossa contagem', total + (total === 1 ? ' lugar visitado' : ' lugares visitados') + ' em ' + days.length + (days.length === 1 ? ' dia registrado.' : ' dias registrados.')));
+      add(prose('Até a próxima', 'Lisboa, obrigado por mais uma.'));
+    }
+    const sheets = [...doc.querySelectorAll('.sheet')];
+    sheets.forEach((s, i) => s.querySelector('.folio').textContent = String(i + 1).padStart(2, '0') + ' / ' + String(sheets.length).padStart(2, '0'));
+    $('#printStatus').textContent = sheets.length + ' páginas A4 · ' + (full ? 'Diário completo' : 'Diário curto') + ' · Pronto para imprimir ou salvar em PDF.';
+    btn.disabled = false;
+  } catch(e) { $('#printStatus').textContent = 'Não deu para montar a prévia. ' + e.message; }
+  finally { printBusy = false; }
+}
+async function printTripNow(){ if (printBusy || $('#printNow').disabled) return; const f = $('#tripPrintFrame'); await f.contentDocument.fonts.ready; f.contentWindow.focus(); f.contentWindow.print(); }
+document.addEventListener('DOMContentLoaded', () => {
+  $('#printMode').addEventListener('change', renderPrintTrip);
+  $('#printCoverFile').addEventListener('change', async e => {
+    const f = e.target.files && e.target.files[0]; e.target.value = ''; if (!f) return;
+    if (printCover) URL.revokeObjectURL(printCover.url);
+    printCover = {url: URL.createObjectURL(f)}; $('#printCoverClear').hidden = false; await renderPrintTrip();
+  });
+  $('#printCoverClear').addEventListener('click', async () => { if (printCover) URL.revokeObjectURL(printCover.url); printCover = null; $('#printCoverClear').hidden = true; await renderPrintTrip(); });
+  $('#printTripDialog').addEventListener('cancel', () => { if (printReturn) printReturn.focus({preventScroll:true}); });
+});
+
+</script>
+</body>
+</html>
