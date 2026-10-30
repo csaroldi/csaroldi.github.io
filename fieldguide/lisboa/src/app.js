@@ -10,6 +10,7 @@ const CONFIG = {
   timeZone:  'Europe/Lisbon',
   coords:    { lat: 38.7223, lng: -9.1393 },
   claudio:   ['2026-11-15','2026-11-25'],
+  adonis:    null,   // ['aaaa-mm-dd','aaaa-mm-dd'] quando tivermos as datas
   storageKey:'lisboa-guia-pais-v2'
 };
 const PERIODS = [['M','Manhã'],['T','Tarde'],['N','Noite']];
@@ -27,7 +28,8 @@ const DAYS = [];
     const dt = new Date(Date.UTC(y, m-1, d+i));
     const key = dt.toISOString().slice(0,10);
     DAYS.push({key, n:i+1, wd:WD[dt.getUTCDay()], wds:WDS[dt.getUTCDay()], d:dt.getUTCDate(), m:MO[dt.getUTCMonth()], mi:dt.getUTCMonth(),
-      withC: key >= CONFIG.claudio[0] && key <= CONFIG.claudio[1]});
+      withC: key >= CONFIG.claudio[0] && key <= CONFIG.claudio[1],
+      withA: !!CONFIG.adonis && key >= CONFIG.adonis[0] && key <= CONFIG.adonis[1]});
     if (key === end) break;
   }
 })();
@@ -105,6 +107,7 @@ function dayHTML(D){
   const done = cnt.filter(isSeen).length;
   const tags = [];
   if (D.withC) tags.push('<span class="dtag">Com o Claudio</span>');
+  if (D.withA) tags.push('<span class="dtag terra">Com o Adonis</span>');
   if (D.key === '2026-12-01' || D.key === '2026-12-08') tags.push('<span class="dtag blue">Feriado</span>');
   let body = info.i ? `<p class="day-intro">${esc(info.i)}</p>` : '';
   (fx.X || []).forEach(t => body += `<div class="fixed">📌 <span>${esc(t)}</span></div>`);
@@ -118,7 +121,7 @@ function dayHTML(D){
   });
   if (!items.length && !(fx.M || fx.T || fx.N || fx.X)) body += '<div class="fixed">🛋️ <span>Dia em aberto. Descansem ou decidam na hora.</span></div>';
   if (!items.length && (fx.M || fx.T || fx.N) && D.key !== '2026-12-13') body += '<div class="fixed">🛋️ <span>O resto do dia está em aberto.</span></div>';
-  return `<div class="day ${D.withC ? 'withc' : ''}" id="day_${D.key}" data-day="${D.n}">
+  return `<div class="day ${D.withC ? 'withc' : ''} ${D.withA ? 'witha' : ''}" id="day_${D.key}" data-day="${D.n}">
     <button class="day-trigger" onclick="toggleCard('day_${D.key}')">
       <span class="day-num">${String(D.n).padStart(2,'0')}</span>
       <div class="day-info">
@@ -155,7 +158,7 @@ function renderStrip(){
   $('#strip').innerHTML = DAYS.map(D => {
     const cnt = INST.filter(x => x.day === D.key && x.info.k !== 'livre');
     const all = cnt.length && cnt.every(isSeen);
-    return `<a href="#day_${D.key}" onclick="openDay('${D.key}')" class="${D.withC ? 'withc' : ''} ${D.key === today ? 'today' : ''} ${all ? 'done' : ''}">${D.wds}<b>${D.d}</b></a>`;
+    return `<a href="#day_${D.key}" onclick="openDay('${D.key}')" class="${D.withC ? 'withc' : ''} ${D.withA ? 'witha' : ''} ${D.key === today ? 'today' : ''} ${all ? 'done' : ''}">${D.wds}<b>${D.d}</b></a>`;
   }).join('');
 }
 /* seções dobráveis */

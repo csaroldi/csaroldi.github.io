@@ -116,7 +116,7 @@ const SAVED = [];
 /* Título, frase e avisos de cada dia */
 const DAYINFO = {
 '2026-11-14':{t:'Chegou, chegou',s:'Chave na mão e jantar do lado de casa',i:'Dia de chegar, tomar um banho e não inventar moda. O voo pousa às 10:45 e o apartamento só libera às 15h: peçam para deixar as malas antes, se o Carlos deixar.',fx:{M:['Pousam em Lisboa às 10:45, voo TP72'],T:['Check-in no apartamento às 15h']}},
-'2026-11-15':{t:'O Claudio chegou',s:'Abastecer a casa e pegar o ritmo',i:'Eu pouso às 09:50. Tarde de supermercado e jantar de novo na Portugália, que ninguém é de ferro.',fx:{M:['Claudio pousa às 09:50']}},
+'2026-11-15':{t:'O Claudio chegou',s:'Abastecer a casa e pegar o ritmo',i:'Eu pouso às 09:50. Tarde de supermercado e jantar de novo na Portugália, que ninguém é de ferro.',fx:{M:['Claudio pousa às 09:50, voo BA502']}},
 '2026-11-16':{t:'Dia em aberto',s:'Talvez o aniversário',i:'Talvez o aniversário da filha do Sergio. Se não rolar, é dia de descanso.',fx:{X:['Talvez: aniversário da filha do Sergio']}},
 '2026-11-17':{t:'Dia de compras',s:'Freeport, do outro lado da ponte',i:'O dia inteiro no outlet. Levem sapato confortável: é tudo ao ar livre e as distâncias entre as lojas são grandes.'},
 '2026-11-18':{t:'O quintal de casa',s:'Torre, estação e pôr do sol na ponte',i:'Tudo a pé, perto de casa. Deixem o Parque Tejo para o fim da tarde, que é quando a ponte fica bonita.'},
@@ -126,7 +126,7 @@ const DAYINFO = {
 '2026-11-22':{t:'Lisboa lá de cima',s:'Três mirantes, almoço no Poço e o Castelo',i:'Tudo de Bolt, de mirante em mirante, sem subir ladeira a pé. Almoço no Poço, perto do Rossio, e o Castelo fica para a tarde.'},
 '2026-11-23':{t:'Corte Inglés e bacalhau',s:'Compras e almoço clássico',i:'Manhã de loja de departamentos e almoço no Laurentina, que fica a uns 10 minutos dali.'},
 '2026-11-24':{t:'Chiado de cima a baixo',s:'Do alto do Chiado até o rio',i:'Comecem lá em cima, no Chiado, e venham descendo até a beira-rio. O almoço é no Time Out.'},
-'2026-11-25':{t:'Tchau, Claudio',s:'Último dia comigo por aqui',i:'Eu volto para Londres no fim da tarde. Dia em aberto.',fx:{T:['Claudio volta para Londres às 18:35']}},
+'2026-11-25':{t:'Tchau, Claudio',s:'Último dia comigo por aqui',i:'Eu volto para Londres no fim da tarde. Dia em aberto.',fx:{T:['Claudio volta para Londres às 18:35, voo BA511']}},
 '2026-11-26':{t:'Chiado e Alentejo',s:'Loja coreana e pátio mourisco',i:'Manhã no Chiado e almoço na Casa do Alentejo, atrás do Rossio.'},
 '2026-11-27':{t:'Sintra em miniatura',s:'Bonsai, Biester e café',i:'Trem do Rossio até Sintra. De manhã, o Museu do Bonsai e o Palácio Biester, de táxi entre um e outro. Café na volta, perto da estação.'},
 '2026-11-28':{t:'A Baixa, devagar',s:'Rua Augusta, Rossio e a praça',i:'Tudo plano, do Rossio até o rio.'},

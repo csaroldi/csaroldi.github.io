@@ -371,6 +371,14 @@ body.light .item-text,body.light .food-desc,body.light .day-intro,body.light .de
 
 /* Dias */
 .day.withc{border-left:3px solid var(--accent2)}
+.day.witha{border-left:3px solid var(--terra)}
+.strip a.witha{box-shadow:inset 0 -3px 0 var(--terra)}
+.dtag.terra{background:rgba(192,98,59,.14);color:#9a4a28}
+body:not(.light) .dtag.terra{color:#e09a78}
+:root{--terra:#c0623b}
+.flight-status{display:flex;width:fit-content;align-items:center;gap:6px;margin-top:8px;padding:9px 14px;min-height:40px;border-radius:999px;border:1px solid var(--accent);color:var(--accent);font-size:.78rem;font-weight:600;text-decoration:none}
+.flight-status:active{background:rgba(47,93,168,.1)}
+.flight-note{display:block;font-size:.72rem;color:var(--muted);margin-top:6px}
 .day-tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
 .dtag{font-size:.56rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:2px 8px;border-radius:999px;background:rgba(184,145,63,.15);color:#7a5c1c}
 .dtag.blue{background:rgba(47,93,168,.12);color:var(--accent-d)}
@@ -645,10 +653,12 @@ body.light .badge-hidden{color:#7a5c1c}
       <div class="card-arrow">▼</div>
     </button>
     <div class="card-body"><div class="card-rule"></div>
-      <div class="item-row"><div class="item-dot"></div><div class="item-text"><strong>Ida: TP72, sex 13/11</strong>Sai do Galeão às 22:05 e pousa em Lisboa no sábado, 14/11, às 10:45. Terminal 1. O código da reserva está no e-mail e no app da TAP.</div></div>
-      <div class="item-row"><div class="item-dot"></div><div class="item-text"><strong>Volta: TP73, dom 13/12</strong>Sai de Lisboa às 12:55 e chega no Galeão às 20:05. Check-in fecha às 11:55. Saiam de casa por volta das 9:45: o aeroporto fica a uns 10 minutos de carro.</div></div>
-      <div class="item-row"><div class="item-dot"></div><div class="item-text"><strong>O Claudio</strong>Chega no domingo, 15/11, às 09:50, e volta para Londres na quarta, 25/11, às 18:35.</div></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text"><strong>Ida: TP72, sex 13/11</strong>Sai do Galeão às 22:05 e pousa em Lisboa no sábado, 14/11, às 10:45. Terminal 1. O código da reserva está no e-mail e no app da TAP.<a class="flight-status" href="https://www.google.com/search?q=voo+TP72" target="_blank" rel="noopener">✈️ Ver como está o voo agora</a></div></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text"><strong>Volta: TP73, dom 13/12</strong>Sai de Lisboa às 12:55 e chega no Galeão às 20:05. Check-in fecha às 11:55. Saiam de casa por volta das 9:45: o aeroporto fica a uns 10 minutos de carro.<a class="flight-status" href="https://www.google.com/search?q=voo+TP73" target="_blank" rel="noopener">✈️ Ver como está o voo agora</a></div></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text"><strong>Claudio chega: BA502, dom 15/11</strong>Sai de Londres às 07:00 e pousa em Lisboa às 09:50, no Terminal 1.<a class="flight-status" href="https://www.google.com/search?q=voo+BA502" target="_blank" rel="noopener">✈️ Ver como está o voo agora</a></div></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text"><strong>Claudio volta: BA511, qua 25/11</strong>Sai de Lisboa às 18:35, do Terminal 1, e chega em Londres às 21:20 (hora de lá).<a class="flight-status" href="https://www.google.com/search?q=voo+BA511" target="_blank" rel="noopener">✈️ Ver como está o voo agora</a></div></div>
       <div class="item-row"><div class="item-dot"></div><div class="item-text"><strong>Bagagem</strong>Uma mala despachada de até 23 kg por pessoa.</div></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text"><strong>Os botões de voo</strong>Abrem o voo no Google, com horário previsto, atraso, terminal e portão. Precisam de internet e só mostram o status de verdade perto do dia do voo.</div></div>
     </div>
   </div>
 
@@ -1003,7 +1013,7 @@ const SAVED = [];
 /* Título, frase e avisos de cada dia */
 const DAYINFO = {
 '2026-11-14':{t:'Chegou, chegou',s:'Chave na mão e jantar do lado de casa',i:'Dia de chegar, tomar um banho e não inventar moda. O voo pousa às 10:45 e o apartamento só libera às 15h: peçam para deixar as malas antes, se o Carlos deixar.',fx:{M:['Pousam em Lisboa às 10:45, voo TP72'],T:['Check-in no apartamento às 15h']}},
-'2026-11-15':{t:'O Claudio chegou',s:'Abastecer a casa e pegar o ritmo',i:'Eu pouso às 09:50. Tarde de supermercado e jantar de novo na Portugália, que ninguém é de ferro.',fx:{M:['Claudio pousa às 09:50']}},
+'2026-11-15':{t:'O Claudio chegou',s:'Abastecer a casa e pegar o ritmo',i:'Eu pouso às 09:50. Tarde de supermercado e jantar de novo na Portugália, que ninguém é de ferro.',fx:{M:['Claudio pousa às 09:50, voo BA502']}},
 '2026-11-16':{t:'Dia em aberto',s:'Talvez o aniversário',i:'Talvez o aniversário da filha do Sergio. Se não rolar, é dia de descanso.',fx:{X:['Talvez: aniversário da filha do Sergio']}},
 '2026-11-17':{t:'Dia de compras',s:'Freeport, do outro lado da ponte',i:'O dia inteiro no outlet. Levem sapato confortável: é tudo ao ar livre e as distâncias entre as lojas são grandes.'},
 '2026-11-18':{t:'O quintal de casa',s:'Torre, estação e pôr do sol na ponte',i:'Tudo a pé, perto de casa. Deixem o Parque Tejo para o fim da tarde, que é quando a ponte fica bonita.'},
@@ -1013,7 +1023,7 @@ const DAYINFO = {
 '2026-11-22':{t:'Lisboa lá de cima',s:'Três mirantes, almoço no Poço e o Castelo',i:'Tudo de Bolt, de mirante em mirante, sem subir ladeira a pé. Almoço no Poço, perto do Rossio, e o Castelo fica para a tarde.'},
 '2026-11-23':{t:'Corte Inglés e bacalhau',s:'Compras e almoço clássico',i:'Manhã de loja de departamentos e almoço no Laurentina, que fica a uns 10 minutos dali.'},
 '2026-11-24':{t:'Chiado de cima a baixo',s:'Do alto do Chiado até o rio',i:'Comecem lá em cima, no Chiado, e venham descendo até a beira-rio. O almoço é no Time Out.'},
-'2026-11-25':{t:'Tchau, Claudio',s:'Último dia comigo por aqui',i:'Eu volto para Londres no fim da tarde. Dia em aberto.',fx:{T:['Claudio volta para Londres às 18:35']}},
+'2026-11-25':{t:'Tchau, Claudio',s:'Último dia comigo por aqui',i:'Eu volto para Londres no fim da tarde. Dia em aberto.',fx:{T:['Claudio volta para Londres às 18:35, voo BA511']}},
 '2026-11-26':{t:'Chiado e Alentejo',s:'Loja coreana e pátio mourisco',i:'Manhã no Chiado e almoço na Casa do Alentejo, atrás do Rossio.'},
 '2026-11-27':{t:'Sintra em miniatura',s:'Bonsai, Biester e café',i:'Trem do Rossio até Sintra. De manhã, o Museu do Bonsai e o Palácio Biester, de táxi entre um e outro. Café na volta, perto da estação.'},
 '2026-11-28':{t:'A Baixa, devagar',s:'Rua Augusta, Rossio e a praça',i:'Tudo plano, do Rossio até o rio.'},
@@ -1046,6 +1056,7 @@ const CONFIG = {
   timeZone:  'Europe/Lisbon',
   coords:    { lat: 38.7223, lng: -9.1393 },
   claudio:   ['2026-11-15','2026-11-25'],
+  adonis:    null,   // ['aaaa-mm-dd','aaaa-mm-dd'] quando tivermos as datas
   storageKey:'lisboa-guia-pais-v2'
 };
 const PERIODS = [['M','Manhã'],['T','Tarde'],['N','Noite']];
@@ -1063,7 +1074,8 @@ const DAYS = [];
     const dt = new Date(Date.UTC(y, m-1, d+i));
     const key = dt.toISOString().slice(0,10);
     DAYS.push({key, n:i+1, wd:WD[dt.getUTCDay()], wds:WDS[dt.getUTCDay()], d:dt.getUTCDate(), m:MO[dt.getUTCMonth()], mi:dt.getUTCMonth(),
-      withC: key >= CONFIG.claudio[0] && key <= CONFIG.claudio[1]});
+      withC: key >= CONFIG.claudio[0] && key <= CONFIG.claudio[1],
+      withA: !!CONFIG.adonis && key >= CONFIG.adonis[0] && key <= CONFIG.adonis[1]});
     if (key === end) break;
   }
 })();
@@ -1141,6 +1153,7 @@ function dayHTML(D){
   const done = cnt.filter(isSeen).length;
   const tags = [];
   if (D.withC) tags.push('<span class="dtag">Com o Claudio</span>');
+  if (D.withA) tags.push('<span class="dtag terra">Com o Adonis</span>');
   if (D.key === '2026-12-01' || D.key === '2026-12-08') tags.push('<span class="dtag blue">Feriado</span>');
   let body = info.i ? `<p class="day-intro">${esc(info.i)}</p>` : '';
   (fx.X || []).forEach(t => body += `<div class="fixed">📌 <span>${esc(t)}</span></div>`);
@@ -1154,7 +1167,7 @@ function dayHTML(D){
   });
   if (!items.length && !(fx.M || fx.T || fx.N || fx.X)) body += '<div class="fixed">🛋️ <span>Dia em aberto. Descansem ou decidam na hora.</span></div>';
   if (!items.length && (fx.M || fx.T || fx.N) && D.key !== '2026-12-13') body += '<div class="fixed">🛋️ <span>O resto do dia está em aberto.</span></div>';
-  return `<div class="day ${D.withC ? 'withc' : ''}" id="day_${D.key}" data-day="${D.n}">
+  return `<div class="day ${D.withC ? 'withc' : ''} ${D.withA ? 'witha' : ''}" id="day_${D.key}" data-day="${D.n}">
     <button class="day-trigger" onclick="toggleCard('day_${D.key}')">
       <span class="day-num">${String(D.n).padStart(2,'0')}</span>
       <div class="day-info">
@@ -1191,7 +1204,7 @@ function renderStrip(){
   $('#strip').innerHTML = DAYS.map(D => {
     const cnt = INST.filter(x => x.day === D.key && x.info.k !== 'livre');
     const all = cnt.length && cnt.every(isSeen);
-    return `<a href="#day_${D.key}" onclick="openDay('${D.key}')" class="${D.withC ? 'withc' : ''} ${D.key === today ? 'today' : ''} ${all ? 'done' : ''}">${D.wds}<b>${D.d}</b></a>`;
+    return `<a href="#day_${D.key}" onclick="openDay('${D.key}')" class="${D.withC ? 'withc' : ''} ${D.withA ? 'witha' : ''} ${D.key === today ? 'today' : ''} ${all ? 'done' : ''}">${D.wds}<b>${D.d}</b></a>`;
   }).join('');
 }
 /* seções dobráveis */
