@@ -3,7 +3,7 @@
    Bump CACHE_VERSION whenever you want clients to re-cache.
    ============================================================ */
 
-const CACHE_VERSION = 'lisboa-pais-v9';
+const CACHE_VERSION = 'lisboa-pais-v10';
 const CORE_ASSETS = [
   './',
   './index.html',
