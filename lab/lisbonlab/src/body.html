@@ -1,0 +1,378 @@
+<body class="light">
+
+<div class="top-controls">
+  <button class="ctrl-btn theme-btn" id="btnTheme" onclick="toggleTheme()" aria-label="Trocar tema">☾</button>
+</div>
+
+<!-- CAPA -->
+<div class="cover" id="top">
+  <div class="cover-bg"></div>
+  <div class="cover-content">
+    <span class="cover-eyebrow">Um Guia de Campo para</span>
+    <h1 class="cover-title">Lis<em>boa</em></h1>
+    <p class="cover-line"><em>sem pressa,</em> outra vez.</p>
+    <p class="cover-author">por Claudio SAROLDI</p>
+    <div class="cover-rule"></div>
+    <p class="cover-dates">14 NOV A 13 DEZ 2026</p>
+    <p class="cover-subtitle">Trinta dias, nenhuma ladeira a pé e um pastel de nata por dia.</p>
+  </div>
+  <div class="cover-scroll">↓</div>
+</div>
+
+<!-- COMMAND DECK -->
+<div class="deck-shell">
+  <div class="deck" id="deck">
+    <div class="deck-title">Lisboa, <em>num olhar</em>.</div>
+    <p class="deck-sub">O plano de hoje, a luz e a contagem.</p>
+
+    <div class="deck-grid">
+      <div class="deck-card deck-today">
+        <div>
+          <div class="deck-label" id="todayLabel">Comece aqui</div>
+          <div class="deck-value" id="todayName">Dia 1</div>
+          <div class="deck-note" id="todayNote">O plano de hoje.</div>
+          <ul class="today-list" id="todayList"></ul>
+        </div>
+        <a href="#dias" class="deck-cta" id="todayCta">Abrir o dia</a>
+      </div>
+      <div class="micro-stack">
+        <div class="micro-card">
+          <div class="micro-label">Luz hoje em Lisboa</div>
+          <div class="sun-row">
+            <span class="sun-ico">☀</span><span id="sunriseVal">--:--</span>
+            <span class="sun-sep">·</span>
+            <span class="sun-ico">☾</span><span id="sunsetVal">--:--</span>
+          </div>
+          <div class="micro-sub" id="goldenVal">Hora dourada</div>
+        </div>
+        <div class="micro-card">
+          <div class="micro-label">Contagem</div>
+          <div class="micro-value" id="countValue">--</div>
+          <div class="micro-sub" id="countSub">Até o embarque.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BARRA DIVERTIDA DE PROGRESSO -->
+    <div class="fun" id="fun">
+      <div class="fun-head">
+        <span class="fun-level" id="funLevel">Ainda com cheiro de avião</span>
+        <span class="fun-count" id="funCount">0 de 0</span>
+      </div>
+      <div class="fun-track" id="funTrack">
+        <div class="fun-fill" id="funFill"></div>
+        <span class="fun-mile" style="left:25%" title="25%">🥐</span>
+        <span class="fun-mile" style="left:50%" title="50%">🏰</span>
+        <span class="fun-mile" style="left:75%" title="75%">🎶</span>
+        <span class="fun-mile fun-end" style="left:100%" title="100%">🏆</span>
+        <span class="fun-tram" id="funTram">🚋</span>
+      </div>
+      <div class="fun-sub" id="funSub">Marquem "visto" em cada lugar, e o elétrico anda.</div>
+      <button class="deck-cta dashboard-print" id="dashPrint" onclick="openPrintTrip()" hidden>Imprimir a viagem ↗</button>
+    </div>
+
+    <div class="jump-grid">
+      <a class="jump-card" href="#essencial"><span class="jump-icon">◆</span><span>Essencial</span></a>
+      <a class="jump-card" href="#dias"><span class="jump-icon">◐</span><span>Os dias</span></a>
+      <a class="jump-card" href="#diario"><span class="jump-icon">✎</span><span>Diário</span></a>
+      <a class="jump-card" href="#bomsaber"><span class="jump-icon">✦</span><span>Bom saber</span></a>
+    </div>
+  </div>
+</div>
+
+<main>
+
+<!-- 1. ESSENCIAL -->
+<div class="section-wrap" id="essencial">
+  <div class="section-header">
+    <div class="section-tag">Antes de sair</div>
+    <h2 class="section-title">O <em>Essencial</em></h2>
+    <div class="section-rule"></div>
+  </div>
+  <p class="section-intro">A parte prática. Leiam antes de tudo, e voltem aqui quando der dúvida.</p>
+
+  <div class="card open" id="ess_home">
+    <button class="card-trigger" onclick="toggleCard('ess_home')">
+      <div class="card-icon">🏠</div>
+      <div class="card-info"><div class="card-name">A casa</div><div class="card-sub">Airbnb no Parque das Nações</div></div>
+      <div class="card-arrow">▼</div>
+    </button>
+    <div class="card-body"><div class="card-rule"></div>
+      <div class="taxi-card">
+        <div class="taxi-label">Mostrem isto ao motorista</div>
+        <div class="taxi-addr">Rua dos Argonautas, 5<br>Edifício Fernando Pessoa<br>Parque das Nações, 1990-090 Lisboa</div>
+      </div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text"><strong>Check-in e check-out</strong>Entrada no sábado, 14/11, às 15h. Saída no domingo, 13/12, até as 11h. Anfitrião: Carlos.</div></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text"><strong>Reserva do Airbnb</strong>Os detalhes e o contato do Carlos estão no app do Airbnb da mãe.</div></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text"><strong>O bairro</strong>Plano, com calçada larga e a orla do Tejo na porta. O Centro Vasco da Gama (supermercado, farmácia, restaurantes) e a estação do Oriente ficam a uns 5 minutos a pé.</div></div>
+      <a href="https://www.google.com/maps/search/?api=1&query=Rua%20dos%20Argonautas%205%201990-090%20Lisboa" target="_blank" class="map-btn">📍 Ver no mapa</a>
+    </div>
+  </div>
+
+  <div class="card" id="ess_flights">
+    <button class="card-trigger" onclick="toggleCard('ess_flights')">
+      <div class="card-icon">✈️</div>
+      <div class="card-info"><div class="card-name">Voos</div><div class="card-sub">Ida, volta, o Claudio e os amigos</div></div>
+      <div class="card-arrow">▼</div>
+    </button>
+    <div class="card-body"><div class="card-rule"></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text"><strong>Ida: TP72, sex 13/11</strong>Sai do Galeão às 22:05 e pousa em Lisboa no sábado, 14/11, às 10:45. Terminal 1. O código da reserva está no e-mail e no app da TAP.<a class="flight-status" href="https://www.google.com/search?q=voo+TP72" target="_blank" rel="noopener">✈️ Ver como está o voo agora</a></div></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text"><strong>Volta: TP73, dom 13/12</strong>Sai de Lisboa às 12:55 e chega no Galeão às 20:05. Check-in fecha às 11:55. Saiam de casa por volta das 9:45: o aeroporto fica a uns 10 minutos de carro.<a class="flight-status" href="https://www.google.com/search?q=voo+TP73" target="_blank" rel="noopener">✈️ Ver como está o voo agora</a></div></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text"><strong>Claudio chega: BA502, dom 15/11</strong>Sai de Londres às 07:00 e pousa em Lisboa às 09:50, no Terminal 1.<a class="flight-status" href="https://www.google.com/search?q=voo+BA502" target="_blank" rel="noopener">✈️ Ver como está o voo agora</a></div></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text"><strong>Claudio volta: BA511, qua 25/11</strong>Sai de Lisboa às 18:35, do Terminal 1, e chega em Londres às 21:20 (hora de lá).<a class="flight-status" href="https://www.google.com/search?q=voo+BA511" target="_blank" rel="noopener">✈️ Ver como está o voo agora</a></div></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text"><strong>Adonis e Dayse: TP72, seg 30/11</strong>Saem do Galeão às 22:05 e pousam em Lisboa na terça, 01/12, às 10:45, no Terminal 1. Voltam com vocês no mesmo TP73, domingo, 13/12.<a class="flight-status" href="https://www.google.com/search?q=voo+TP72" target="_blank" rel="noopener">✈️ Ver como está o voo agora</a></div></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text"><strong>Bagagem</strong>Uma mala despachada de até 23 kg por pessoa.</div></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text"><strong>Os botões de voo</strong>Abrem o voo no Google, com horário previsto, atraso, terminal e portão. Precisam de internet e só mostram o status de verdade perto do dia do voo.</div></div>
+    </div>
+  </div>
+
+  <div class="card" id="ess_transit">
+    <button class="card-trigger" onclick="toggleCard('ess_transit')">
+      <div class="card-icon">🚕</div>
+      <div class="card-info"><div class="card-name">Como se locomover</div><div class="card-sub">A versão sem ladeira</div></div>
+      <div class="card-arrow">▼</div>
+    </button>
+    <div class="card-body"><div class="card-rule"></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text"><strong>Bolt e Uber, sempre</strong>Instalem os dois no celular antes de viajar. Em Lisboa, carro de aplicativo é barato e deixa vocês na porta, sem ladeira. É o jeito padrão deste guia.</div></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text"><strong>Trem para Sintra, Cascais e Porto</strong>Sintra sai do Rossio, Cascais sai do Cais do Sodré, e o Porto sai do Oriente, do lado de casa. Para o Porto, comprem antes no site ou no app da CP.</div></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text"><strong>Metrô</strong>A estação Oriente fica na linha vermelha. Para usar, comprem o cartão Navegante ocasional na máquina e carreguem com o valor das viagens. Tem elevador na maioria das estações.</div></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text"><strong>Tuk-tuk</strong>Bom para Alfama e o Castelo. Combinem o preço e a duração antes de subir.</div></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text"><strong>A calçada portuguesa escorrega</strong>Aquele chão de pedrinhas brancas fica um sabão quando chove. Sapato de sola de borracha, sempre, e cuidado nas descidas.</div></div>
+    </div>
+  </div>
+
+  <div class="card" id="ess_money">
+    <button class="card-trigger" onclick="toggleCard('ess_money')">
+      <div class="card-icon">💶</div>
+      <div class="card-info"><div class="card-name">Dinheiro</div><div class="card-sub">Euro, cartão e gorjeta</div></div>
+      <div class="card-arrow">▼</div>
+    </button>
+    <div class="card-body"><div class="card-rule"></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text"><strong>Cartão por aproximação em quase tudo</strong>Restaurante, táxi, supermercado e museu aceitam. Tenham uns 20 euros em notas pequenas para tasca, quiosque e banheiro pago.</div></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text"><strong>Caixa eletrônico: só Multibanco</strong>Usem os caixas Multibanco dos bancos. Fujam dos caixas azuis e amarelos da Euronet, que cobram taxas altas. Se a máquina perguntar, escolham pagar em euros, nunca em reais.</div></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text"><strong>O couvert não é de graça</strong>Pão, azeitona e manteiga que chegam na mesa sem vocês pedirem entram na conta. Não querem? É só dizer "não, obrigado" e devolver.</div></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text"><strong>Gorjeta</strong>Não é obrigatória e não vem na conta. Arredondar ou deixar uns 5 a 10% num lugar bom já está ótimo.</div></div>
+    </div>
+  </div>
+
+  <div class="card" id="ess_weather">
+    <button class="card-trigger" onclick="toggleCard('ess_weather')">
+      <div class="card-icon">🌦️</div>
+      <div class="card-info"><div class="card-name">Clima e o que vestir</div><div class="card-sub">Meados de novembro a meados de dezembro</div></div>
+      <div class="card-arrow">▼</div>
+    </button>
+    <div class="card-body"><div class="card-rule"></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text"><strong>Entre 9 e 17 °C</strong>Novembro fica por volta de 11 a 17 °C. Dezembro esfria, com mínimas de 8 a 9 °C de manhã cedo e à noite. Para carioca, é frio de verdade.</div></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text"><strong>Chove uma semana por mês</strong>Contem com uns 8 a 10 dias de chuva no período. Guarda-chuva pequeno na bolsa e casaco impermeável.</div></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text"><strong>O vento de Sintra, Cascais e Cabo</strong>Na serra e na beira-mar a sensação é bem mais fria. Levem um casaco a mais nesses dias.</div></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text"><strong>Sol se põe cedo</strong>Por volta das 17h10 em dezembro. Planejem os passeios de fora para voltar antes de escurecer.</div></div>
+    </div>
+  </div>
+
+  <div class="card" id="ess_health">
+    <button class="card-trigger" onclick="toggleCard('ess_health')">
+      <div class="card-icon">🩺</div>
+      <div class="card-info"><div class="card-name">Saúde e emergência</div><div class="card-sub">Os números que importam</div></div>
+      <div class="card-arrow">▼</div>
+    </button>
+    <div class="card-body"><div class="card-rule"></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text"><strong>112</strong>Emergência para tudo: ambulância, polícia e bombeiros.</div></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text"><strong>SNS 24: 808 24 24 24</strong>Linha de saúde do governo, com enfermeiro ao telefone. Ajuda a decidir se precisa ir ao hospital.</div></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text"><strong>Farmácia</strong>Cruz verde acesa na porta. Tem uma dentro do Centro Vasco da Gama. Remédio de uso contínuo: levem da viagem com a receita, em quantidade para os 30 dias.</div></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text"><strong>Seguro viagem</strong>Levem o número do seguro anotado em papel e no celular.</div></div>
+    </div>
+  </div>
+
+  <div class="card" id="ess_power">
+    <button class="card-trigger" onclick="toggleCard('ess_power')">
+      <div class="card-icon">🔌</div>
+      <div class="card-info"><div class="card-name">Tomada e internet</div><div class="card-sub">Carregador e chip</div></div>
+      <div class="card-arrow">▼</div>
+    </button>
+    <div class="card-body"><div class="card-rule"></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text"><strong>Tomada de dois pinos redondos, 230 V</strong>O plugue brasileiro fino de dois pinos costuma entrar. O de pinos grossos e o de três pinos não entram: levem um adaptador universal. Celular e carregador de celular aguentam os 230 V.</div></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text"><strong>Internet</strong>Um chip ou eSIM europeu resolve o mês todo. Wi-Fi tem no apartamento, nos cafés e no shopping.</div></div>
+    </div>
+  </div>
+
+  <div class="card" id="ess_book">
+    <button class="card-trigger" onclick="toggleCard('ess_book')">
+      <div class="card-icon">🎟️</div>
+      <div class="card-info"><div class="card-name">Reservar antes</div><div class="card-sub">As poucas coisas que pedem</div></div>
+      <div class="card-arrow">▼</div>
+    </button>
+    <div class="card-body"><div class="card-rule"></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text"><strong>Porto, 7 a 9/12</strong>Trem do Oriente até Porto Campanhã, ida e volta, e hotel por duas noites. É a única coisa grande para reservar com antecedência.</div></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text"><strong>Palácio da Pena, 4/12</strong>Bilhete com hora marcada no site da Parques de Sintra. Escolham o horário do fim da manhã.</div></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text"><strong>Mosteiro dos Jerónimos, 19/11 e 10/12</strong>Comprem o bilhete pela internet para não pegar a fila de quem compra na hora.</div></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text"><strong>Óbidos de carro, 20/11</strong>Carro alugado ou motorista para esse dia.</div></div>
+    </div>
+  </div>
+
+  <div class="card" id="ess_scams">
+    <button class="card-trigger" onclick="toggleCard('ess_scams')">
+      <div class="card-icon">⚠️</div>
+      <div class="card-info"><div class="card-name">Golpes e pequenos desastres</div><div class="card-sub">O básico de cidade grande</div></div>
+      <div class="card-arrow">▼</div>
+    </button>
+    <div class="card-body"><div class="card-rule"></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text"><strong>Batedor de carteira</strong>Bondinho cheio, Baixa e Rossio são os lugares clássicos. Bolsa na frente do corpo e celular no bolso de dentro.</div></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text"><strong>"Haxixe? Cocaína?"</strong>Na Baixa e no Rossio, uns caras oferecem baixinho na rua. Vendem folha de louro amassada. Só ignorar e seguir andando.</div></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text"><strong>Táxi sem taxímetro</strong>Peçam sempre pelo app. Se pegarem táxi na rua, confiram se o taxímetro está ligado.</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- 2. OS DIAS -->
+<div class="section-wrap" id="dias">
+  <div class="section-header">
+    <div class="section-tag">Dia a dia</div>
+    <h2 class="section-title">Os <em>dias</em></h2>
+    <div class="section-rule"></div>
+  </div>
+  <p class="section-intro">O plano que vocês montaram, com o que eu conferi. Toquem na bolinha para marcar "visto", e no nome para ver os detalhes.</p>
+  <div class="strip" id="strip"></div>
+  <div id="days"></div>
+
+  <div class="saved" id="saved"></div>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- 3. DIÁRIO -->
+<div class="section-wrap" id="diario">
+  <div class="section-header">
+    <div class="section-tag">Para lembrar</div>
+    <h2 class="section-title">O <em>Diário</em></h2>
+    <div class="section-rule"></div>
+  </div>
+  <p class="section-intro">O que vocês marcam como visto entra aqui sozinho, com a hora. Escrevam uma linha por período, coloquem até duas fotos por dia e, no fim, imprimam a viagem.</p>
+  <div class="journal-print-action"><button class="deck-cta print-btn" onclick="openPrintTrip()">Imprimir a viagem ↗</button><span>Lugares, notas e fotos, prontos para guardar.</span></div>
+  <div id="journal"></div>
+  <div class="copy-box">
+    <p><b>Guardar uma cópia.</b> Se trocarem de celular ou algo der errado, a cópia traz de volta os vistos, as notas e as fotos. Façam uma de vez em quando.</p>
+    <div class="copy-actions"><button type="button" class="secondary-btn" onclick="saveCopy()">Guardar uma cópia</button><label class="secondary-btn">Recuperar uma cópia<input type="file" id="copyFile" accept="application/json,.json"></label></div>
+  </div>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- 4. BOM SABER -->
+<div class="section-wrap" id="bomsaber">
+  <div class="section-header">
+    <div class="section-tag">Na prática</div>
+    <h2 class="section-title">Bom <em>saber</em></h2>
+    <div class="section-rule"></div>
+  </div>
+  <p class="section-intro">O que os guias não contam.</p>
+
+  <div class="card" id="gtk_food">
+    <button class="card-trigger" onclick="toggleCard('gtk_food')">
+      <div class="card-icon">🍽️</div>
+      <div class="card-info"><div class="card-name">O que pedir</div><div class="card-sub">Comida portuguesa de verdade</div></div>
+      <div class="card-arrow">▼</div>
+    </button>
+    <div class="card-body"><div class="card-rule"></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text"><strong>Bitoque</strong>Bife com ovo frito por cima, batata frita e arroz. O prato feito português, e quase sempre o mais seguro do cardápio.</div></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text"><strong>Prato do dia</strong>No almoço de dia útil, quase toda tasca tem prato do dia, com bebida e café, por um preço bem abaixo do cardápio. Perguntem sempre.</div></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text"><strong>Bifana</strong>Sanduíche de carne de porco temperada, no pão. O lanche de rua de Lisboa.</div></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text"><strong>Frango assado no churrasco</strong>Frango de churrasqueira, com ou sem piri-piri, a pimenta portuguesa. Para levar para casa num dia de preguiça.</div></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text"><strong>Pastel de nata</strong>Comam ainda morno, com canela. Manteigaria e Pastéis de Belém são os melhores; o de padaria de esquina também é bom.</div></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text"><strong>Vinho da casa</strong>Em tasca, o vinho da casa costuma ser bom e barato. Peçam "meio jarro" para dois.</div></div>
+    </div>
+  </div>
+
+  <div class="card" id="gtk_views">
+    <button class="card-trigger" onclick="toggleCard('gtk_views')">
+      <div class="card-icon">🍸</div>
+      <div class="card-info"><div class="card-name">Vistas com um drink</div><div class="card-sub">Lisboa lá de cima, sem subir ladeira</div></div>
+      <div class="card-arrow">▼</div>
+    </button>
+    <div class="card-body"><div class="card-rule"></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text"><strong>Vista do centro histórico: Rossio Gastrobar</strong>No 7º andar do hotel Altis Avenida, em cima do Rossio. Dali se vê a praça, o Elevador de Santa Justa, o Arco da Rua Augusta e o rio. Tem salão fechado e terraço, e funciona o ano todo. É dos mais caros. Abre de quarta a domingo, das 12h30 à meia-noite.<br><a href="https://www.google.com/maps/search/?api=1&query=Rossio%20Gastrobar%20Altis%20Avenida%20Lisboa" target="_blank" rel="noopener" class="map-btn">📍 Ver no mapa</a></div></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text"><strong>Clássico, com o castelo na frente: Rooftop Bar Mundial</strong>No 9º andar do Hotel Mundial, no Martim Moniz. O Castelo de São Jorge fica quase ao alcance da mão. É o preferido dos próprios lisboetas. Tem uma sala fechada com vista do castelo, boa para noite de vento. Abre todos os dias, das 15h30 às 23h. Não aceita reserva: cheguem cedo, de preferência antes do pôr do sol (por volta das 17h15 em novembro).<br><a href="https://www.google.com/maps/search/?api=1&query=Rooftop%20Bar%20Hotel%20Mundial%20Lisboa" target="_blank" rel="noopener" class="map-btn">📍 Ver no mapa</a></div></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text"><strong>Telhados e rio, com sala fechada: Lumi Rooftop</strong>No alto do hotel The Lumiares, no Bairro Alto. Vista dos telhados e do rio, com salão interno e terraço. Abre todos os dias, do meio-dia à meia-noite (sábado e domingo a partir das 11h30). Dá para reservar pelo site do hotel.<br><a href="https://www.google.com/maps/search/?api=1&query=The%20Lumiares%20Hotel%20Lisboa" target="_blank" rel="noopener" class="map-btn">📍 Ver no mapa</a></div></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text"><strong>Elegante, no Chiado: BAHR, do Bairro Alto Hotel</strong>No 5º andar do Bairro Alto Hotel, ao lado da Praça Luís de Camões. Vista do rio e dos telhados, com salão interno e terraço. Abre todos os dias, até a meia-noite.<br><a href="https://www.google.com/maps/search/?api=1&query=Bairro%20Alto%20Hotel%20Lisboa" target="_blank" rel="noopener" class="map-btn">📍 Ver no mapa</a></div></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text"><strong>Alfama e o rio: terraço do Memmo Alfama</strong>Terraço de um hotel pequeno no meio de Alfama, aberto ao público. Vista dos telhados de Alfama e dos barcos no rio. Abre todos os dias, do meio-dia às 23h. É terraço aberto e a rua é de ladeira: vão de táxi até a porta e só em dia sem vento.<br><a href="https://www.google.com/maps/search/?api=1&query=Memmo%20Alfama%20Lisboa" target="_blank" rel="noopener" class="map-btn">📍 Ver no mapa</a></div></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text"><strong>A vista mais completa: terraço do Verride</strong>No 4º andar do hotel Verride Palácio Santa Catarina, com vista de 360° da cidade e do rio. É todo aberto e tem consumo mínimo de €25 por pessoa para quem não é hóspede. Abre todos os dias, das 12h30 às 22h30. Só vale num fim de tarde de sol e sem vento.<br><a href="https://www.google.com/maps/search/?api=1&query=Verride%20Pal%C3%A1cio%20Santa%20Catarina%20Lisboa" target="_blank" rel="noopener" class="map-btn">📍 Ver no mapa</a></div></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text"><strong>O mais alto, do lado de casa: Babylon 360º</strong>No topo da Torre Vasco da Gama, a 120 m, a poucos minutos a pé do apartamento, sem ladeira, só elevador. O bar é fechado, com vidro, então o vento não atrapalha. A vista é do rio e da Ponte Vasco da Gama, não da Lisboa antiga. Abre às 18h. Em 2023 a entrada à noite custava €15 com uma bebida incluída: confiram o valor de agora.<br><a href="https://www.google.com/maps/search/?api=1&query=Torre%20Vasco%20da%20Gama%20Lisboa" target="_blank" rel="noopener" class="map-btn">📍 Ver no mapa</a></div></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text"><strong>Também do lado de casa: Sky Bar do Tivoli Oriente</strong>No 16º andar do hotel Tivoli Oriente, na Avenida Dom João II, com vista do rio e da Ponte Vasco da Gama. Tem parte fechada e terraço. Confiram o horário antes de ir.<br><a href="https://www.google.com/maps/search/?api=1&query=Tivoli%20Oriente%20Lisboa" target="_blank" rel="noopener" class="map-btn">📍 Ver no mapa</a></div></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text"><strong>Novembro venta</strong>Nos terraços abertos faz frio à noite e venta bastante. Prefiram lugar com parte fechada e levem um casaco.</div></div>
+    </div>
+  </div>
+
+  <div class="card" id="gtk_rules">
+    <button class="card-trigger" onclick="toggleCard('gtk_rules')">
+      <div class="card-icon">🕰️</div>
+      <div class="card-info"><div class="card-name">Horários e regras</div><div class="card-sub">O ritmo de Lisboa</div></div>
+      <div class="card-arrow">▼</div>
+    </button>
+    <div class="card-body"><div class="card-rule"></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text"><strong>Almoço de 12h30 às 15h, jantar a partir das 19h30</strong>Muita tasca fecha a cozinha entre o almoço e o jantar. Fora desses horários, o caminho é café, pastelaria ou shopping.</div></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text"><strong>Segunda-feira: museus fechados</strong>Jerónimos, Torre de Belém e vários museus fecham às segundas. A Gulbenkian fecha às terças.</div></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text"><strong>Domingo: tasca fechada</strong>Muita tasca de bairro fecha no domingo, e algumas no sábado também. Shopping e restaurante de zona turística abrem.</div></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text"><strong>Feriados: 1 e 8 de dezembro</strong>Dia 1 é a Restauração da Independência, e dia 8 é Nossa Senhora da Conceição. Comércio de rua pode fechar.</div></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text"><strong>"Bom dia" ao entrar</strong>Na loja, no café e no táxi. Faz muita diferença no atendimento.</div></div>
+    </div>
+  </div>
+
+  <div class="card" id="gtk_miss">
+    <button class="card-trigger" onclick="toggleCard('gtk_miss')">
+      <div class="card-icon">💭</div>
+      <div class="card-info"><div class="card-name">O que a maioria perde</div><div class="card-sub">Opinião de filho</div></div>
+      <div class="card-arrow">▼</div>
+    </button>
+    <div class="card-body"><div class="card-rule"></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text"><strong>🌅 O melhor de Lisboa vocês já têm na porta</strong>A orla do Parque das Nações no fim da tarde, com a ponte acendendo, é das coisas mais bonitas da cidade, e é plana, sem turista e a cinco minutos de casa. Façam esse passeio mais de uma vez.</div></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text"><strong>☕ Café é bica, e bica é em pé</strong>No balcão, o café custa menos do que sentado na mesa. Pedir "uma bica" e tomar em dois goles no balcão é o jeito mais lisboeta de começar a manhã.</div></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text"><strong>🚕 Não economizem no Bolt</strong>O que cansa em Lisboa não é a distância, é a ladeira. Um Bolt de dez minutos poupa uma subida que acaba com o dia. Usem sem dó.</div></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text"><strong>🛋️ Dia sem nada também é passeio</strong>Trinta dias é muito. Os dias "livres" que vocês colocaram no plano são os mais importantes. Não deixem a culpa encher esses dias de programação.</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- 5. PORTUGUÊS DE LÁ X DE CÁ -->
+<div class="section-wrap" id="falar">
+  <div class="section-header">
+    <div class="section-tag">Fale como um local</div>
+    <h2 class="section-title">Português de <em>lá</em> x de cá</h2>
+    <div class="section-rule"></div>
+  </div>
+  <p class="section-intro">É a mesma língua, mas não é. Toquem no play para ouvir com sotaque de lá.</p>
+  <div id="phrases"></div>
+</div>
+
+</main>
+
+<footer>
+  Um guia de campo por Claudio SAROLDI<br>Para os coroas, com carinho · Lisboa 2026
+</footer>
+
+<!-- DOCK -->
+<nav class="dock" aria-label="Atalhos">
+  <a href="#deck"><span class="dock-icon">◎</span>Hoje</a>
+  <a href="#dias"><span class="dock-icon">◐</span>Dias</a>
+  <a href="#diario"><span class="dock-icon">✎</span>Diário</a>
+  <a href="#essencial"><span class="dock-icon">◆</span>Casa</a>
+  <a href="#falar"><span class="dock-icon">❦</span>Falar</a>
+</nav>
+
+<dialog id="seenEditor" class="mini-dialog" aria-labelledby="seenEditName">
+  <p class="mini-eyebrow">Quando vocês viram</p>
+  <h3 id="seenEditName"></h3>
+  <label for="seenEditDay">Dia</label><select id="seenEditDay"></select>
+  <label for="seenEditTime">Hora</label><input type="time" id="seenEditTime">
+  <div class="mini-actions"><button type="button" class="link-btn" onclick="unseeFromEditor()">Desmarcar</button><span></span><button type="button" class="secondary-btn" onclick="this.closest('dialog').close()">Cancelar</button><button type="button" class="primary-btn" onclick="saveSeenEdit()">Salvar</button></div>
+</dialog>
+<dialog id="copyAsk" class="mini-dialog" aria-labelledby="copyAskTitle">
+  <h3 id="copyAskTitle">Recuperar a cópia?</h3>
+  <p id="copyAskText"></p>
+  <div class="mini-actions"><span></span><button type="button" class="secondary-btn" onclick="pendingCopy=null;this.closest('dialog').close()">Cancelar</button><button type="button" class="primary-btn" onclick="restoreCopy()">Recuperar</button></div>
+</dialog>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+<div id="confetti" class="confetti" aria-hidden="true"></div>
+<dialog id="printTripDialog" aria-labelledby="printTripTitle"><div class="print-toolbar"><div><h2 id="printTripTitle">A viagem, no papel.</h2><p id="printStatus" role="status" aria-live="polite">Preparando o diário…</p></div><div class="print-toolbar-actions"><label class="sr-only" for="printMode">Nível de detalhe</label><select id="printMode"><option value="full">Diário completo</option><option value="short">Diário curto</option></select><button id="printNow" class="primary-btn" onclick="printTripNow()" disabled>Imprimir / Salvar PDF</button><button class="secondary-btn" onclick="closePrintTrip()">Voltar ao guia</button></div></div><details class="print-photo-options"><summary>Escolher a foto da capa</summary><p>As fotos de cada dia já vêm do diário (até duas por dia). Aqui dá para escolher uma foto só para a capa. Ela fica só nesta impressão.</p><div class="print-photo-controls"><label class="secondary-btn photo-file-label">Escolher foto da capa<input id="printCoverFile" type="file" accept="image/jpeg,image/png,image/webp"></label><button id="printCoverClear" class="secondary-btn" hidden>Tirar a foto da capa</button></div></details><p class="print-help">Só entra o que foi vivido. No iPhone, toquem em Imprimir e depois em Compartilhar, Salvar em Arquivos, para guardar em PDF. No computador, escolham A4, escala 100%, sem cabeçalho e rodapé, e com gráficos de fundo ligados.</p><iframe id="tripPrintFrame" title="Prévia do diário em A4"></iframe></dialog>
