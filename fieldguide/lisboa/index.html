@@ -649,7 +649,7 @@ body.light .badge-hidden{color:#7a5c1c}
   <div class="card" id="ess_flights">
     <button class="card-trigger" onclick="toggleCard('ess_flights')">
       <div class="card-icon">✈️</div>
-      <div class="card-info"><div class="card-name">Voos</div><div class="card-sub">Ida, volta e o Claudio</div></div>
+      <div class="card-info"><div class="card-name">Voos</div><div class="card-sub">Ida, volta, o Claudio e os amigos</div></div>
       <div class="card-arrow">▼</div>
     </button>
     <div class="card-body"><div class="card-rule"></div>
@@ -657,6 +657,7 @@ body.light .badge-hidden{color:#7a5c1c}
       <div class="item-row"><div class="item-dot"></div><div class="item-text"><strong>Volta: TP73, dom 13/12</strong>Sai de Lisboa às 12:55 e chega no Galeão às 20:05. Check-in fecha às 11:55. Saiam de casa por volta das 9:45: o aeroporto fica a uns 10 minutos de carro.<a class="flight-status" href="https://www.google.com/search?q=voo+TP73" target="_blank" rel="noopener">✈️ Ver como está o voo agora</a></div></div>
       <div class="item-row"><div class="item-dot"></div><div class="item-text"><strong>Claudio chega: BA502, dom 15/11</strong>Sai de Londres às 07:00 e pousa em Lisboa às 09:50, no Terminal 1.<a class="flight-status" href="https://www.google.com/search?q=voo+BA502" target="_blank" rel="noopener">✈️ Ver como está o voo agora</a></div></div>
       <div class="item-row"><div class="item-dot"></div><div class="item-text"><strong>Claudio volta: BA511, qua 25/11</strong>Sai de Lisboa às 18:35, do Terminal 1, e chega em Londres às 21:20 (hora de lá).<a class="flight-status" href="https://www.google.com/search?q=voo+BA511" target="_blank" rel="noopener">✈️ Ver como está o voo agora</a></div></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text"><strong>Adonis e Dayse: TP72, seg 30/11</strong>Saem do Galeão às 22:05 e pousam em Lisboa na terça, 01/12, às 10:45, no Terminal 1. Voltam com vocês no mesmo TP73, domingo, 13/12.<a class="flight-status" href="https://www.google.com/search?q=voo+TP72" target="_blank" rel="noopener">✈️ Ver como está o voo agora</a></div></div>
       <div class="item-row"><div class="item-dot"></div><div class="item-text"><strong>Bagagem</strong>Uma mala despachada de até 23 kg por pessoa.</div></div>
       <div class="item-row"><div class="item-dot"></div><div class="item-text"><strong>Os botões de voo</strong>Abrem o voo no Google, com horário previsto, atraso, terminal e portão. Precisam de internet e só mostram o status de verdade perto do dia do voo.</div></div>
     </div>
@@ -1029,7 +1030,7 @@ const DAYINFO = {
 '2026-11-28':{t:'A Baixa, devagar',s:'Rua Augusta, Rossio e a praça',i:'Tudo plano, do Rossio até o rio.'},
 '2026-11-29':{t:'Domingo de museu',s:'Gulbenkian, jardim e lago',i:'O museu mais bonito da cidade e um jardim para sentar depois.'},
 '2026-11-30':{t:'Jardins de rei',s:'Quinta Real de Caxias',i:'Jardim de palácio em Oeiras, a caminho de Cascais.'},
-'2026-12-01':{t:'Feriado em casa',s:'Restauração da Independência',i:'É feriado nacional em Portugal. Dia tranquilo, perto de casa, e teleférico à noite.'},
+'2026-12-01':{t:'Feriado em casa',s:'Restauração da Independência',i:'É feriado nacional em Portugal. Adonis e Dayse chegam de manhã. Dia tranquilo, perto de casa, e teleférico à noite.',fx:{M:['Adonis e Dayse pousam às 10:45, voo TP72']}},
 '2026-12-02':{t:'Avenida abaixo',s:'Liberdade e Trindade',i:'Desçam a Avenida da Liberdade sem pressa e terminem na Cervejaria Trindade.'},
 '2026-12-03':{t:'Tuk-tuk e orla',s:'As ladeiras sem esforço',i:'Manhã de tuk-tuk pelos bairros altos e tarde em casa, na orla.'},
 '2026-12-04':{t:'Sintra de palácio',s:'Palácio Nacional e Pena',i:'O dia mais puxado da viagem. Saiam cedo, almocem sentados e não tenham pressa na Pena.'},
@@ -1041,7 +1042,7 @@ const DAYINFO = {
 '2026-12-10':{t:'Belém, segunda dose',s:'Torre, Padrão, Mosteiro e MAAT',i:'A segunda volta por Belém, agora com o MAAT na beira-rio.'},
 '2026-12-11':{t:'A Baixa inteira',s:'Praça, arco, Chiado e Trindade',i:'O dia da despedida do centro, terminando na Trindade.'},
 '2026-12-12':{t:'Último sábado',s:'Doces e malas',i:'Dia livre, para os últimos pastéis e para fazer as malas.'},
-'2026-12-13':{t:'Volta para o Rio',s:'Até a próxima, Lisboa',i:'Check-out até as 11h. Saiam de casa por volta das 9:45, o aeroporto fica a uns 10 minutos.',fx:{M:['Check-out até as 11h. Sair de casa por volta das 9:45','Voo TP73 às 12:55 para o Rio']}}
+'2026-12-13':{t:'Volta para o Rio',s:'Até a próxima, Lisboa',i:'Check-out até as 11h. Saiam de casa por volta das 9:45, o aeroporto fica a uns 10 minutos.',fx:{M:['Check-out até as 11h. Sair de casa por volta das 9:45','Voo TP73 às 12:55 para o Rio, junto com Adonis e Dayse']}}
 };
 
 
@@ -1056,7 +1057,7 @@ const CONFIG = {
   timeZone:  'Europe/Lisbon',
   coords:    { lat: 38.7223, lng: -9.1393 },
   claudio:   ['2026-11-15','2026-11-25'],
-  adonis:    null,   // ['aaaa-mm-dd','aaaa-mm-dd'] quando tivermos as datas
+  adonis:    ['2026-12-01','2026-12-13'],
   storageKey:'lisboa-guia-pais-v2'
 };
 const PERIODS = [['M','Manhã'],['T','Tarde'],['N','Noite']];
@@ -1153,7 +1154,7 @@ function dayHTML(D){
   const done = cnt.filter(isSeen).length;
   const tags = [];
   if (D.withC) tags.push('<span class="dtag">Com o Claudio</span>');
-  if (D.withA) tags.push('<span class="dtag terra">Com o Adonis</span>');
+  if (D.withA) tags.push('<span class="dtag terra">Com Adonis e Dayse</span>');
   if (D.key === '2026-12-01' || D.key === '2026-12-08') tags.push('<span class="dtag blue">Feriado</span>');
   let body = info.i ? `<p class="day-intro">${esc(info.i)}</p>` : '';
   (fx.X || []).forEach(t => body += `<div class="fixed">📌 <span>${esc(t)}</span></div>`);

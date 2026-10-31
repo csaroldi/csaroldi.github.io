@@ -132,7 +132,7 @@ const DAYINFO = {
 '2026-11-28':{t:'A Baixa, devagar',s:'Rua Augusta, Rossio e a praça',i:'Tudo plano, do Rossio até o rio.'},
 '2026-11-29':{t:'Domingo de museu',s:'Gulbenkian, jardim e lago',i:'O museu mais bonito da cidade e um jardim para sentar depois.'},
 '2026-11-30':{t:'Jardins de rei',s:'Quinta Real de Caxias',i:'Jardim de palácio em Oeiras, a caminho de Cascais.'},
-'2026-12-01':{t:'Feriado em casa',s:'Restauração da Independência',i:'É feriado nacional em Portugal. Dia tranquilo, perto de casa, e teleférico à noite.'},
+'2026-12-01':{t:'Feriado em casa',s:'Restauração da Independência',i:'É feriado nacional em Portugal. Adonis e Dayse chegam de manhã. Dia tranquilo, perto de casa, e teleférico à noite.',fx:{M:['Adonis e Dayse pousam às 10:45, voo TP72']}},
 '2026-12-02':{t:'Avenida abaixo',s:'Liberdade e Trindade',i:'Desçam a Avenida da Liberdade sem pressa e terminem na Cervejaria Trindade.'},
 '2026-12-03':{t:'Tuk-tuk e orla',s:'As ladeiras sem esforço',i:'Manhã de tuk-tuk pelos bairros altos e tarde em casa, na orla.'},
 '2026-12-04':{t:'Sintra de palácio',s:'Palácio Nacional e Pena',i:'O dia mais puxado da viagem. Saiam cedo, almocem sentados e não tenham pressa na Pena.'},
@@ -144,5 +144,5 @@ const DAYINFO = {
 '2026-12-10':{t:'Belém, segunda dose',s:'Torre, Padrão, Mosteiro e MAAT',i:'A segunda volta por Belém, agora com o MAAT na beira-rio.'},
 '2026-12-11':{t:'A Baixa inteira',s:'Praça, arco, Chiado e Trindade',i:'O dia da despedida do centro, terminando na Trindade.'},
 '2026-12-12':{t:'Último sábado',s:'Doces e malas',i:'Dia livre, para os últimos pastéis e para fazer as malas.'},
-'2026-12-13':{t:'Volta para o Rio',s:'Até a próxima, Lisboa',i:'Check-out até as 11h. Saiam de casa por volta das 9:45, o aeroporto fica a uns 10 minutos.',fx:{M:['Check-out até as 11h. Sair de casa por volta das 9:45','Voo TP73 às 12:55 para o Rio']}}
+'2026-12-13':{t:'Volta para o Rio',s:'Até a próxima, Lisboa',i:'Check-out até as 11h. Saiam de casa por volta das 9:45, o aeroporto fica a uns 10 minutos.',fx:{M:['Check-out até as 11h. Sair de casa por volta das 9:45','Voo TP73 às 12:55 para o Rio, junto com Adonis e Dayse']}}
 };

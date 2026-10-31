@@ -10,7 +10,7 @@ const CONFIG = {
   timeZone:  'Europe/Lisbon',
   coords:    { lat: 38.7223, lng: -9.1393 },
   claudio:   ['2026-11-15','2026-11-25'],
-  adonis:    null,   // ['aaaa-mm-dd','aaaa-mm-dd'] quando tivermos as datas
+  adonis:    ['2026-12-01','2026-12-13'],
   storageKey:'lisboa-guia-pais-v2'
 };
 const PERIODS = [['M','Manhã'],['T','Tarde'],['N','Noite']];
@@ -107,7 +107,7 @@ function dayHTML(D){
   const done = cnt.filter(isSeen).length;
   const tags = [];
   if (D.withC) tags.push('<span class="dtag">Com o Claudio</span>');
-  if (D.withA) tags.push('<span class="dtag terra">Com o Adonis</span>');
+  if (D.withA) tags.push('<span class="dtag terra">Com Adonis e Dayse</span>');
   if (D.key === '2026-12-01' || D.key === '2026-12-08') tags.push('<span class="dtag blue">Feriado</span>');
   let body = info.i ? `<p class="day-intro">${esc(info.i)}</p>` : '';
   (fx.X || []).forEach(t => body += `<div class="fixed">📌 <span>${esc(t)}</span></div>`);
