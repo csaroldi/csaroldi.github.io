@@ -26,10 +26,10 @@ body.light .item-text,body.light .food-desc,body.light .day-intro,body.light .de
 .fun-level{font-family:'Cormorant Garamond',serif;font-size:1.15rem;font-weight:600;color:var(--cream);line-height:1.15}
 .fun-count{font-size:.66rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);white-space:nowrap}
 .fun-track{position:relative;height:16px;border-radius:999px;margin:22px 10px 6px;background:repeating-linear-gradient(90deg,rgba(47,93,168,.10) 0 12px,rgba(47,93,168,.04) 12px 24px);border:1px solid var(--border-accent)}
-.fun-fill{position:absolute;left:0;top:0;bottom:0;width:0;border-radius:999px;background:linear-gradient(90deg,#1f4380,#2f5da8 60%,#b8913f);transition:width .9s cubic-bezier(.2,.8,.2,1)}
-.fun-mile{position:absolute;top:50%;transform:translate(-50%,-50%);font-size:.95rem;filter:grayscale(1);opacity:.45;transition:all .4s}
+.fun-fill{position:absolute;left:0;top:0;bottom:0;width:0;border-radius:999px;background:linear-gradient(90deg,#1f4380,#2f5da8 60%,#b8913f);transition:width .9s var(--ease-out)}
+.fun-mile{position:absolute;top:50%;transform:translate(-50%,-50%);font-size:.95rem;filter:grayscale(1);opacity:.45;transition:filter .4s,opacity .4s,transform .4s var(--ease-out)}
 .fun-mile.on{filter:none;opacity:1;transform:translate(-50%,-50%) scale(1.15)}
-.fun-tram{position:absolute;top:-21px;left:0;transform:translateX(-50%);font-size:1.25rem;transition:left .9s cubic-bezier(.2,.8,.2,1)}
+.fun-tram{position:absolute;top:-21px;left:0;transform:translateX(-50%);font-size:1.25rem;transition:left .9s var(--ease-out)}
 .fun-tram.bump{animation:bump .6s ease}
 @keyframes bump{0%,100%{transform:translateX(-50%) translateY(0)}30%{transform:translateX(-50%) translateY(-7px) rotate(-6deg)}60%{transform:translateX(-50%) translateY(0) rotate(4deg)}}
 .fun-sub{font-size:.72rem;color:var(--muted);font-style:italic;margin-top:6px}
@@ -105,7 +105,7 @@ body:not(.light) .phrase-br b{color:var(--accent-l)}
 .taxi-addr{font-family:'Cormorant Garamond',serif;font-size:1.35rem;font-weight:600;line-height:1.25}
 
 /* Toast e confete */
-.toast{position:fixed;left:50%;bottom:92px;transform:translate(-50%,20px);background:#1a1714;color:#fff;border-radius:14px;padding:12px 18px;font-size:.84rem;opacity:0;pointer-events:none;transition:all .3s;z-index:1500;max-width:90vw;text-align:center}
+.toast{position:fixed;left:50%;bottom:92px;transform:translate(-50%,20px);background:#1a1714;color:#fff;border-radius:14px;padding:12px 18px;font-size:.84rem;opacity:0;pointer-events:none;transition:opacity .3s var(--ease-out),transform .3s var(--ease-out);z-index:1500;max-width:90vw;text-align:center}
 .toast.show{opacity:1;transform:translate(-50%,0)}
 .confetti{position:fixed;inset:0;pointer-events:none;z-index:1400;overflow:hidden}
 .confetti span{position:absolute;top:-40px;font-size:1.4rem;animation:fall 2.4s ease-in forwards}
@@ -207,3 +207,37 @@ body.light .badge-hidden{color:#7a5c1c}
 .mini-dialog{margin:auto}
 .toast.canundo{width:min(92vw,440px)}
 .toast.canundo span{flex:1}
+
+/* ============================================================
+   PASS 1 (lab): mobile fixes and reduced motion
+   ============================================================ */
+/* no grey flash on tap anywhere; own press states cover feedback */
+html{-webkit-tap-highlight-color:transparent}
+/* tap fires at once, no double tap zoom wait */
+button,a,label,summary,[role=button],.stop-header,.food-header{touch-action:manipulation}
+/* controls are not text: a long press must not select their label */
+button,[role=button],.ctrl-btn,.dock a,.jump-card,.strip a,.deck-cta,.map-btn,.flight-status{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+/* iPhone zooms into any field under 16px and does not zoom back */
+.notes-area{font-size:16px}
+/* keep fixed controls clear of the notch and the home bar */
+.top-controls{top:calc(16px + env(safe-area-inset-top,0px));right:calc(16px + env(safe-area-inset-right,0px))}
+.dock{bottom:calc(12px + env(safe-area-inset-bottom,0px))}
+.toast{bottom:calc(92px + env(safe-area-inset-bottom,0px))}
+@media(max-width:640px){.top-controls{top:calc(12px + env(safe-area-inset-top,0px));right:calc(12px + env(safe-area-inset-right,0px))}}
+
+/* gentler motion for people who ask for it: keep fades, drop movement */
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto}
+  .cover-content{animation:fadeIn .4s ease both}
+  .cover-scroll{animation:none}
+  .stop.open .stop-details{animation:fadeIn .15s ease}
+  .fun-tram.bump{animation:none}
+  .fun-fill,.fun-tram{transition-duration:.2s}
+  .fun-mile.on{transform:translate(-50%,-50%)}
+  .confetti{display:none}
+  .dock{transform:none;transition:opacity .2s;pointer-events:none}
+  body.dock-visible .dock{pointer-events:auto}
+  .toast,.toast.show{transform:translate(-50%,0)}
+  .card-arrow,.day-arrow,.fold-arrow,.week-arrow,.food-arrow{transition:none}
+}

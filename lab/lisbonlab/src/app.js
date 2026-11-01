@@ -70,7 +70,7 @@ function seenOn(key){ return INST.filter(x => isSeen(x) && seenDay(x) === key).s
 /* ============================================================
    TEMA
    ============================================================ */
-function applyTheme(){ document.body.classList.toggle('light', ST.theme === 'light'); $('#btnTheme').textContent = ST.theme === 'light' ? '☾' : '☀'; }
+function applyTheme(){ document.body.classList.toggle('light', ST.theme === 'light'); $('#btnTheme').textContent = ST.theme === 'light' ? '☾' : '☀'; const tc = document.querySelector('meta[name="theme-color"]'); if (tc) tc.setAttribute('content', ST.theme === 'light' ? '#f5f0e8' : '#0c0c10'); }
 function toggleTheme(){ ST.theme = ST.theme === 'light' ? 'dark' : 'light'; save(); applyTheme(); }
 function toggleCard(id){ document.getElementById(id).classList.toggle('open'); }
 
