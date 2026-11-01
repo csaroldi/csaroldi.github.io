@@ -3,13 +3,13 @@
    Bump CACHE_VERSION whenever you want clients to re-cache.
    ============================================================ */
 
-const CACHE_VERSION = 'ilhagrande-guide-v3';
+const CACHE_VERSION = 'ilhagrande-guide-v4';
 const CORE_ASSETS = [
   './',
   './index.html',
   './manifest.json',
-  './icon-192.png',
-  './icon-512.png'
+  './ig-icon-192.png',
+  './ig-icon-512.png'
 ];
 
 self.addEventListener('install', (event) => {

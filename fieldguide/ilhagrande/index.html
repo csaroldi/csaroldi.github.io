@@ -9,8 +9,8 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Ilha Grande">
 <link rel="manifest" href="manifest.json">
-<link rel="apple-touch-icon" href="icon-192.png?v=3">
-<link rel="icon" href="icon-192.png?v=3">
+<link rel="apple-touch-icon" href="ig-icon-192.png">
+<link rel="icon" href="ig-icon-192.png">
 <title>Um Guia de Campo para Ilha Grande</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -334,8 +334,11 @@ body.light .left-line b{color:var(--accent-d)}
 .fchip{border:1px solid var(--border-accent);border-radius:999px;padding:7px 14px;font-size:0.72rem;font-weight:600;color:var(--accent-l);min-height:36px}
 body.light .fchip{color:var(--accent-d)}
 .fchip.on{background:var(--accent);color:var(--ink);border-color:var(--accent)}
-.group{margin-bottom:22px}
-.group-title{display:flex;justify-content:space-between;align-items:baseline;font-family:'Cormorant Garamond',serif;font-size:1.35rem;font-weight:600;color:var(--cream);margin:6px 2px 8px}
+.group{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:0 12px;margin-bottom:10px}
+.group.open{border-color:var(--border-accent);padding-bottom:10px}
+.group-title{width:100%;display:flex;justify-content:space-between;align-items:center;font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:600;color:var(--cream);padding:14px 4px;min-height:56px;text-align:left}
+.gchev{display:inline-block;margin-left:6px;font-size:0.6rem;transition:transform 0.3s}
+.group.open .gchev{transform:rotate(180deg)}
 .group-count{font-family:'DM Sans',sans-serif;font-size:0.62rem;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:var(--muted)}
 .sub-title{font-size:0.62rem;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--accent);margin:14px 2px 8px}
 .stop-main{flex:1;min-width:0}
@@ -437,7 +440,7 @@ body.light .month p{color:rgba(26,23,20,0.75)}
           <div class="deck-value" id="tripName">Nenhuma viagem aberta</div>
           <div class="deck-note" id="tripNote">Marque Fiz em qualquer item e a viagem começa sozinha.</div>
         </div>
-        <a href="#historico" class="deck-cta" id="tripCta">Abrir o Histórico</a>
+        <a href="#historico" class="deck-cta" id="tripCta" onclick="tripCta(event)">Começar viagem</a>
       </div>
       <div class="micro-stack">
         <div class="micro-card">
@@ -619,7 +622,7 @@ body.light .month p{color:rgba(26,23,20,0.75)}
     <h2 class="section-title" data-en="What to <em>Do</em>" data-pt="O que <em>Fazer</em>">O que <em>Fazer</em></h2>
     <div class="section-rule"></div>
   </div>
-  <p class="section-intro" data-en="Tap Done when you do something. It goes into the current trip and stays in the History." data-pt="Toque em Fiz quando fizer alguma coisa. Entra na viagem atual e fica no Histórico.">Toque em Fiz quando fizer alguma coisa. Entra na viagem atual e fica no Histórico.</p>
+  <p class="section-intro" data-en="Open a group, tap the circle when you do something. It goes into the current trip." data-pt="Abra um grupo e toque no círculo quando fizer alguma coisa. Entra na viagem atual.">Abra um grupo e toque no círculo quando fizer alguma coisa. Entra na viagem atual.</p>
 
   <div class="filters" id="filters"></div>
   <div id="catalog"></div>
@@ -803,7 +806,7 @@ const CONFIG = {
   storageKey: 'ilhagrande-guia',
   SEND_TO: 'df9aa91efc0a8489ee84c1ce2536c880',       /* FormSubmit: o fechamento da viagem chega por e-mail */
   MAIL_TAG: '[DIARIO-ILHAGRANDE]',
-  VERSION: 'v1.0', BUILT: '01/11/2026'
+  VERSION: 'v1.1', BUILT: '01/11/2026'
 };
 
 /* ============================================================
@@ -846,6 +849,7 @@ let ideas  = load('ideas', []);
 let tips   = load('tips', {});
 let filter = 'all';
 const openIds = new Set();
+const openGroups = new Set();
 
 const L = () => currentLang === 'en' ? 1 : 0;
 const T = (pt, en) => currentLang === 'en' ? en : pt;
@@ -900,6 +904,7 @@ function ensureTrip(){
   toast(T('Viagem nova aberta: ', 'New trip opened: ') + cur.name);
 }
 function persistTrip(){ save('cur', cur); }
+function tripCta(ev){ ev.preventDefault(); if (!cur) { ensureTrip(); persistTrip(); renderAll(); } $('historico').scrollIntoView({behavior:'smooth'}); }
 
 /* ============================================================
    FIZ
@@ -956,6 +961,7 @@ function itemHTML(it){
     </div>` : ''}
   </div>`;
 }
+function toggleGroup(id){ openGroups.has(id) ? openGroups.delete(id) : openGroups.add(id); renderCatalog(); }
 function toggleItem(id){ openIds.has(id) ? openIds.delete(id) : openIds.add(id); renderCatalog(); }
 function renderCatalog(){
   const l = L();
@@ -966,9 +972,9 @@ function renderCatalog(){
       const a = list.filter(i => i.c).map(itemHTML).join(''), b = list.filter(i => !i.c).map(itemHTML).join('');
       body = (a ? `<div class="sub-title">${T('Os 12 principais','The main 12')}</div>` + a : '') + (b ? `<div class="sub-title">${T('Especiais, privativos e na água','Specials, private and in the water')}</div>` + b : '');
     } else body = list.map(itemHTML).join('');
-    if (!body) return '';
-    const n = list.length, d = list.filter(i => doneInfo(i.id).length).length;
-    return `<div class="group"><div class="group-title"><span>${g.i} ${g.n[l]}</span><span class="group-count">${d} ${T('de','of')} ${n}</span></div>${body}</div>`;
+    if (!body && g.id !== 'ideias') return '';
+    const n = list.length, d = list.filter(i => doneInfo(i.id).length).length, op = openGroups.has(g.id);
+    return `<div class="group ${op ? 'open' : ''}"><button class="group-title" onclick="toggleGroup('${g.id}')"><span>${g.i} ${g.n[l]}</span><span class="group-count">${d} ${T('de','of')} ${n} <span class="gchev">▼</span></span></button>${op ? (body || `<p class="muted">${T('Nenhuma ideia ainda.','No ideas yet.')}</p>`) : ''}</div>`;
   }).join('') || `<p class="empty">${T('Nada aqui com esse filtro.','Nothing here with this filter.')}</p>`;
 }
 
@@ -985,7 +991,7 @@ function ideaForm(){
 }
 function saveIdea(){
   const n = $('iName').value.trim(); if (!n) { $('iName').focus(); return; }
-  ideas.push({id:'idea-' + Date.now().toString(36), n, note:$('iNote').value.trim()}); save('ideas', ideas);
+  ideas.push({id:'idea-' + Date.now().toString(36), n, note:$('iNote').value.trim()}); save('ideas', ideas); openGroups.add('ideias');
   closeModal(); renderAll(); toast(T('Ideia criada. Toque em Fiz quando fizer.','Idea created. Tap Done when you do it.'));
 }
 function delIdea(id){ ideas = ideas.filter(i => i.id !== id); save('ideas', ideas); renderAll(); }
@@ -1076,7 +1082,7 @@ function renderDeck(){
   $('tripName').textContent = cur ? cur.name : T('Nenhuma viagem aberta','No trip open');
   $('tripNote').textContent = cur ? cur.items.length + ' ' + T('itens marcados desde ','items ticked since ') + fmtDate(cur.start)
                                   : T('Marque Fiz em qualquer item e a viagem começa sozinha.','Tap Done on anything and the trip starts by itself.');
-  $('tripCta').textContent = cur ? T('Abrir a viagem','Open the trip') : T('Ver o Histórico','See the History');
+  $('tripCta').textContent = cur ? T('Abrir a viagem','Open the trip') : T('Começar viagem','Start a trip');
   const last = past[0];
   $('lastVal').textContent = last ? tripYear(last) : '--';
   $('lastSub').textContent = last ? past.length + ' ' + T(past.length === 1 ? 'ida' : 'idas', past.length === 1 ? 'trip' : 'trips') : '--';
