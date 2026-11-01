@@ -365,14 +365,19 @@ body.light .trip-fields input,body.light .hist-card input,body.light .modal-box 
 .trip-fields input:focus,.hist-card input:focus,.modal-box input:focus{border-color:var(--accent)}
 .add-idea{width:100%;border:1px dashed var(--border-accent);border-radius:12px;padding:14px;color:var(--accent-l);font-size:0.8rem;font-weight:600;letter-spacing:0.06em;margin-top:4px}
 body.light .add-idea{color:var(--accent-d)}
-.hist-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px 18px;margin-bottom:10px;position:relative}
+.hist-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:14px 16px;margin-bottom:10px;position:relative}
+.hist-card.open{border-color:var(--border-accent)}
 .hist-card.current{border-color:var(--border-accent)}
 .hist-card label{display:block;font-size:0.66rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);margin:10px 0 0}
 .hist-card label input,.hist-card label textarea{margin-top:5px;text-transform:none;letter-spacing:0}
 .hist-card .two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .hist-card .detail-label{margin-top:14px;color:var(--accent)}
-.hist-year{position:absolute;top:12px;right:16px;font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:600;color:rgba(212,163,74,0.3)}
-.hist-name{font-family:'Cormorant Garamond',serif;font-size:1.35rem;font-weight:600;color:var(--cream);padding-right:92px}
+.hist-head{width:100%;display:flex;align-items:center;gap:14px;text-align:left;-webkit-tap-highlight-color:transparent}
+.hist-head>span:nth-last-child(2){flex:1;min-width:0;display:flex;flex-direction:column}
+.hist-card.open .card-arrow{background:var(--accent);border-color:var(--accent);color:var(--ink);transform:rotate(180deg)}
+.hist-body{margin-top:10px}
+.hist-year{font-family:'Cormorant Garamond',serif;font-size:1.7rem;font-weight:600;color:rgba(212,163,74,0.55);min-width:58px}
+.hist-name{font-family:'Cormorant Garamond',serif;font-size:1.35rem;font-weight:600;color:var(--cream)}
 .hist-meta{font-size:0.78rem;color:var(--muted);margin-top:2px}
 .hist-flag{margin-top:8px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
 .hist-items{margin:10px 0 0 18px;font-size:0.88rem;line-height:1.6;color:rgba(245,240,232,0.78)}
@@ -806,7 +811,7 @@ const CONFIG = {
   storageKey: 'ilhagrande-guia',
   SEND_TO: 'df9aa91efc0a8489ee84c1ce2536c880',       /* FormSubmit: o fechamento da viagem chega por e-mail */
   MAIL_TAG: '[DIARIO-ILHAGRANDE]',
-  VERSION: 'v1.1', BUILT: '01/11/2026'
+  VERSION: 'v1.2', BUILT: '01/11/2026'
 };
 
 /* ============================================================
@@ -850,7 +855,10 @@ let tips   = load('tips', {});
 let filter = 'all';
 const openIds = new Set();
 const openGroups = new Set();
+const openTrips = new Set();
+function toggleTrip(id){ openTrips.has(id) ? openTrips.delete(id) : openTrips.add(id); renderCurrent(); renderPast(); }
 
+const nItems = n => n + ' ' + (currentLang === 'en' ? (n === 1 ? 'item' : 'items') : (n === 1 ? 'item' : 'itens'));
 const L = () => currentLang === 'en' ? 1 : 0;
 const T = (pt, en) => currentLang === 'en' ? en : pt;
 const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -904,7 +912,7 @@ function ensureTrip(){
   toast(T('Viagem nova aberta: ', 'New trip opened: ') + cur.name);
 }
 function persistTrip(){ save('cur', cur); }
-function tripCta(ev){ ev.preventDefault(); if (!cur) { ensureTrip(); persistTrip(); renderAll(); } $('historico').scrollIntoView({behavior:'smooth'}); }
+function tripCta(ev){ ev.preventDefault(); if (!cur) { ensureTrip(); persistTrip(); } openTrips.add('cur'); renderAll(); $('historico').scrollIntoView({behavior:'smooth'}); }
 
 /* ============================================================
    FIZ
@@ -1007,8 +1015,10 @@ function renderCurrent(){
     return;
   }
   const items = cur.items.map(x => `<li><b>${esc(itemName(x))}</b>${x.op ? ' · ' + esc(x.op) : ''}${x.note ? `<br><span>${esc(x.note)}</span>` : ''}</li>`).join('');
-  $('current').innerHTML = `<div class="hist-card current">
-    <div class="deck-label">${T('Viagem atual','Current trip')}</div>
+  const op = openTrips.has('cur');
+  $('current').innerHTML = `<div class="hist-card current ${op ? 'open' : ''}">
+    <button class="hist-head" onclick="toggleTrip('cur')"><span><span class="deck-label">${T('Viagem atual','Current trip')}</span><span class="hist-name">${esc(cur.name)}</span><span class="hist-meta">${fmtDate(cur.start)} · ${nItems(cur.items.length)}</span></span><span class="card-arrow">▼</span></button>
+    ${op ? `<div class="hist-body">
     <label>${T('Nome','Name')}<input value="${esc(cur.name)}" oninput="cur.name=this.value;persistTrip();renderDeck()"></label>
     <div class="two"><label>${T('Chegada','Arrival')}<input type="date" value="${esc(cur.start)}" onchange="cur.start=this.value;persistTrip()"></label>
     <label>${T('Volta','Departure')}<input type="date" value="${esc(cur.end)}" onchange="cur.end=this.value;persistTrip()"></label></div>
@@ -1018,7 +1028,7 @@ function renderCurrent(){
     <div class="detail-label">${T('O que você fez','What you did')} (${cur.items.length})</div>
     ${items ? `<ul class="hist-items">${items}</ul>` : `<p class="muted">${T('Nada marcado ainda. Use Fiz em O que Fazer.','Nothing ticked yet. Use Done in What to Do.')}</p>`}
     <button class="deck-cta close-btn" onclick="confirmClose()">${T('Fechar viagem','Close the trip')}</button>
-  </div>`;
+  </div>` : ''}</div>`;
 }
 function tripCard(t){
   const dates = t.start ? fmtDate(t.start) + (t.end ? ' · ' + fmtDate(t.end) : '') : String(tripYear(t));
@@ -1026,10 +1036,12 @@ function tripCard(t){
   let flag = '';
   if (!t.published) flag = t.sent ? `<span class="todo-chip">${T('Enviado, aguardando publicação','Sent, waiting to be published')}</span>`
                                   : `<span class="warn-chip">${T('Só neste celular','Only on this phone')}</span> <button class="map-btn" onclick="sendTrip('${t.id}')">${T('Enviar de novo','Send again')}</button>`;
-  return `<div class="hist-card"><div class="hist-year">${tripYear(t)}</div>
-    <div class="hist-name">${esc(t.name)}</div><div class="hist-meta">${esc(dates)}${t.with ? ' · ' + esc(t.with) : ''}${t.stay ? ' · ' + esc(t.stay) : ''}</div>
+  const op = openTrips.has(t.id);
+  return `<div class="hist-card ${op ? 'open' : ''}">
+    <button class="hist-head" onclick="toggleTrip('${t.id}')"><span class="hist-year">${tripYear(t)}</span><span><span class="hist-name">${esc(t.name)}</span><span class="hist-meta">${nItems(t.items.length)}${t.published ? '' : ' · ' + T('neste celular','on this phone')}</span></span><span class="card-arrow">▼</span></button>
+    ${op ? `<div class="hist-body"><div class="hist-meta">${esc(dates)}${t.with ? ' · ' + esc(t.with) : ''}${t.stay ? ' · ' + esc(t.stay) : ''}</div>
     ${flag ? `<div class="hist-flag">${flag}</div>` : ''}
-    ${items ? `<ul class="hist-items">${items}</ul>` : ''}${t.note ? `<p class="muted">${esc(t.note)}</p>` : ''}</div>`;
+    ${items ? `<ul class="hist-items">${items}</ul>` : ''}${t.note ? `<p class="muted">${esc(t.note)}</p>` : ''}</div>` : ''}</div>`;
 }
 function renderPast(){
   const p = pastTrips();

@@ -3,7 +3,7 @@
    Bump CACHE_VERSION whenever you want clients to re-cache.
    ============================================================ */
 
-const CACHE_VERSION = 'ilhagrande-guide-v4';
+const CACHE_VERSION = 'ilhagrande-guide-v5';
 const CORE_ASSETS = [
   './',
   './index.html',
