@@ -241,3 +241,72 @@ button,[role=button],.ctrl-btn,.dock a,.jump-card,.strip a,.deck-cta,.map-btn,.f
   .toast,.toast.show{transform:translate(-50%,0)}
   .card-arrow,.day-arrow,.fold-arrow,.week-arrow,.food-arrow{transition:none}
 }
+
+/* ============================================================
+   PASS 2 (lab): Apple style restyle and animations
+   ============================================================ */
+
+/* 1. Text follows the iPhone text size setting (touch screens only;
+      on a Mac this keyword is 13px, so it stays off there) */
+@media (pointer: coarse){
+  @supports (font: -apple-system-body){
+    html{font:-apple-system-body;line-height:normal}
+  }
+}
+
+/* 2. Small windows become bottom sheets */
+.mini-dialog{margin:auto auto 0;width:100%;max-width:520px;max-height:88dvh;border-radius:22px 22px 0 0;padding:10px 20px calc(22px + env(safe-area-inset-bottom,0px));box-shadow:0 -12px 40px rgba(0,0,0,.18);touch-action:none;overscroll-behavior:contain}
+.mini-dialog::before{content:'';display:block;width:38px;height:5px;border-radius:3px;background:var(--muted);opacity:.35;margin:0 auto 14px}
+.mini-dialog::backdrop{background:rgba(20,24,34,.4)}
+.mini-actions{flex-wrap:wrap}
+
+/* 3. Frosted headers that stay on top while you read a section */
+.section-header{position:sticky;top:calc(-42px + env(safe-area-inset-top,0px));z-index:7;margin-left:-20px;margin-right:-20px;padding:52px 56px 10px 20px;background:rgba(12,12,16,.9);-webkit-backdrop-filter:blur(16px) saturate(160%);backdrop-filter:blur(16px) saturate(160%)}
+body.light .section-header{background:rgba(245,240,232,.92)}
+.section-header::after{content:'';position:absolute;left:0;right:0;top:100%;height:12px;background:linear-gradient(to bottom,rgba(12,12,16,.45),transparent);pointer-events:none}
+body.light .section-header::after{background:linear-gradient(to bottom,rgba(245,240,232,.6),transparent)}
+.section-wrap.folded .section-header{padding-bottom:10px}
+@media(max-width:640px){
+  .section-header{top:calc(-34px + env(safe-area-inset-top,0px));margin-left:-14px;margin-right:-14px;padding:44px 52px 8px 14px}
+}
+/* jumps from the day strip and the dock land below the header, not under it */
+.day,.card,.week,.jday{scroll-margin-top:96px}
+/* the theme button becomes a small frosted pill */
+.top-controls{padding:4px;border-radius:12px;background:rgba(12,12,16,.5);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px)}
+body.light .top-controls{background:rgba(245,240,232,.6)}
+
+/* 4. Quieter stop rows and day headers: name and time lead, the rest steps back */
+.badge{border:none;border-radius:999px;padding:3px 8px;letter-spacing:.06em}
+.stop-eff{text-transform:none;letter-spacing:0;font-weight:500}
+.stop-expand{opacity:.45}
+.day-date{text-transform:none;letter-spacing:.01em;font-weight:500;font-size:.74rem;color:var(--muted)}
+
+/* 5. No label below about 11px */
+.cover-eyebrow,.cover-author,.ctrl-btn,.deck-label,.micro-label,.trip-progress-label,.section-tag,.food-title,.notes-label,.detail-label,.badge,.stop-eff,.dtag,.day-count,.pg-count,.today-list b,.taxi-label,.jump-card,.dock a{font-size:.66rem}
+.mini-eyebrow{font-size:.66rem!important}
+
+/* Animations */
+/* tick: the circle answers the press, the mark pops in once */
+@keyframes tickRing{0%{transform:scale(.82)}55%{transform:scale(1.12)}100%{transform:scale(1)}}
+@keyframes tickMark{0%{opacity:0;transform:scale(.4)}60%{opacity:1;transform:scale(1.15)}100%{opacity:1;transform:scale(1)}}
+.stop.pop .stop-check{animation:tickRing 380ms var(--ease-out)}
+.stop.pop .stop-check::after{display:inline-block;animation:tickMark 380ms var(--ease-out)}
+/* opening a day, a card or a week: a short fade, nothing that moves */
+.day.open .day-body,.card.open .card-body,.week.open .week-body{animation:fadeIn .15s ease-out}
+/* a new photo settles in */
+@keyframes photoIn{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:scale(1)}}
+.photo img.arrive{animation:photoIn .3s var(--ease-out)}
+/* the cover arrow stops once you have scrolled */
+.cover-scroll{transition:opacity .3s}
+body.scrolled .cover-scroll{animation:none;opacity:0}
+
+@media (prefers-reduced-motion: reduce){
+  .stop.pop .stop-check,.stop.pop .stop-check::after{animation:none}
+  .day.open .day-body,.card.open .card-body,.week.open .week-body{animation:none}
+  .photo img.arrive{animation:fadeIn .2s ease}
+}
+@media (prefers-reduced-transparency: reduce){
+  .deck,.dock,.section-header,.top-controls{-webkit-backdrop-filter:none;backdrop-filter:none}
+  .deck,.dock,.section-header{background:var(--ink)}
+  .top-controls{background:transparent}
+}

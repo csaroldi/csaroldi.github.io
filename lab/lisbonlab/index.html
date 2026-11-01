@@ -571,6 +571,75 @@ button,[role=button],.ctrl-btn,.dock a,.jump-card,.strip a,.deck-cta,.map-btn,.f
   .toast,.toast.show{transform:translate(-50%,0)}
   .card-arrow,.day-arrow,.fold-arrow,.week-arrow,.food-arrow{transition:none}
 }
+
+/* ============================================================
+   PASS 2 (lab): Apple style restyle and animations
+   ============================================================ */
+
+/* 1. Text follows the iPhone text size setting (touch screens only;
+      on a Mac this keyword is 13px, so it stays off there) */
+@media (pointer: coarse){
+  @supports (font: -apple-system-body){
+    html{font:-apple-system-body;line-height:normal}
+  }
+}
+
+/* 2. Small windows become bottom sheets */
+.mini-dialog{margin:auto auto 0;width:100%;max-width:520px;max-height:88dvh;border-radius:22px 22px 0 0;padding:10px 20px calc(22px + env(safe-area-inset-bottom,0px));box-shadow:0 -12px 40px rgba(0,0,0,.18);touch-action:none;overscroll-behavior:contain}
+.mini-dialog::before{content:'';display:block;width:38px;height:5px;border-radius:3px;background:var(--muted);opacity:.35;margin:0 auto 14px}
+.mini-dialog::backdrop{background:rgba(20,24,34,.4)}
+.mini-actions{flex-wrap:wrap}
+
+/* 3. Frosted headers that stay on top while you read a section */
+.section-header{position:sticky;top:calc(-42px + env(safe-area-inset-top,0px));z-index:7;margin-left:-20px;margin-right:-20px;padding:52px 56px 10px 20px;background:rgba(12,12,16,.9);-webkit-backdrop-filter:blur(16px) saturate(160%);backdrop-filter:blur(16px) saturate(160%)}
+body.light .section-header{background:rgba(245,240,232,.92)}
+.section-header::after{content:'';position:absolute;left:0;right:0;top:100%;height:12px;background:linear-gradient(to bottom,rgba(12,12,16,.45),transparent);pointer-events:none}
+body.light .section-header::after{background:linear-gradient(to bottom,rgba(245,240,232,.6),transparent)}
+.section-wrap.folded .section-header{padding-bottom:10px}
+@media(max-width:640px){
+  .section-header{top:calc(-34px + env(safe-area-inset-top,0px));margin-left:-14px;margin-right:-14px;padding:44px 52px 8px 14px}
+}
+/* jumps from the day strip and the dock land below the header, not under it */
+.day,.card,.week,.jday{scroll-margin-top:96px}
+/* the theme button becomes a small frosted pill */
+.top-controls{padding:4px;border-radius:12px;background:rgba(12,12,16,.5);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px)}
+body.light .top-controls{background:rgba(245,240,232,.6)}
+
+/* 4. Quieter stop rows and day headers: name and time lead, the rest steps back */
+.badge{border:none;border-radius:999px;padding:3px 8px;letter-spacing:.06em}
+.stop-eff{text-transform:none;letter-spacing:0;font-weight:500}
+.stop-expand{opacity:.45}
+.day-date{text-transform:none;letter-spacing:.01em;font-weight:500;font-size:.74rem;color:var(--muted)}
+
+/* 5. No label below about 11px */
+.cover-eyebrow,.cover-author,.ctrl-btn,.deck-label,.micro-label,.trip-progress-label,.section-tag,.food-title,.notes-label,.detail-label,.badge,.stop-eff,.dtag,.day-count,.pg-count,.today-list b,.taxi-label,.jump-card,.dock a{font-size:.66rem}
+.mini-eyebrow{font-size:.66rem!important}
+
+/* Animations */
+/* tick: the circle answers the press, the mark pops in once */
+@keyframes tickRing{0%{transform:scale(.82)}55%{transform:scale(1.12)}100%{transform:scale(1)}}
+@keyframes tickMark{0%{opacity:0;transform:scale(.4)}60%{opacity:1;transform:scale(1.15)}100%{opacity:1;transform:scale(1)}}
+.stop.pop .stop-check{animation:tickRing 380ms var(--ease-out)}
+.stop.pop .stop-check::after{display:inline-block;animation:tickMark 380ms var(--ease-out)}
+/* opening a day, a card or a week: a short fade, nothing that moves */
+.day.open .day-body,.card.open .card-body,.week.open .week-body{animation:fadeIn .15s ease-out}
+/* a new photo settles in */
+@keyframes photoIn{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:scale(1)}}
+.photo img.arrive{animation:photoIn .3s var(--ease-out)}
+/* the cover arrow stops once you have scrolled */
+.cover-scroll{transition:opacity .3s}
+body.scrolled .cover-scroll{animation:none;opacity:0}
+
+@media (prefers-reduced-motion: reduce){
+  .stop.pop .stop-check,.stop.pop .stop-check::after{animation:none}
+  .day.open .day-body,.card.open .card-body,.week.open .week-body{animation:none}
+  .photo img.arrive{animation:fadeIn .2s ease}
+}
+@media (prefers-reduced-transparency: reduce){
+  .deck,.dock,.section-header,.top-controls{-webkit-backdrop-filter:none;backdrop-filter:none}
+  .deck,.dock,.section-header{background:var(--ink)}
+  .top-controls{background:transparent}
+}
 </style>
 </head>
 <body class="light">
@@ -1319,6 +1388,7 @@ function setSeen(uid, rec, before){
   if (rec) ST.seen[uid] = rec; else delete ST.seen[uid];
   save();
   afterSeenChange(uid, before, [x && x.day, old && old.d, rec && rec.d]);
+  if (rec && !old) { const el = document.getElementById('st_' + uid); if (el) el.classList.add('pop'); }
 }
 function checkStop(ev, uid){
   ev.stopPropagation();
@@ -1544,7 +1614,7 @@ document.addEventListener('input', e => {
 document.addEventListener('change', e => {
   const t = e.target; if (!(t.type === 'file' && t.dataset.d)) return;
   const f = t.files && t.files[0]; if (!f) return;
-  shrink(f).then(blob => idbPut(t.dataset.d + '_' + t.dataset.i, blob)).then(() => { showPhoto(t.dataset.d, +t.dataset.i); toast('Foto guardada'); })
+  shrink(f).then(blob => idbPut(t.dataset.d + '_' + t.dataset.i, blob)).then(() => { NEW_PHOTO = t.dataset.d + '_' + t.dataset.i; showPhoto(t.dataset.d, +t.dataset.i); toast('Foto guardada'); })
     .catch(() => toast('Não deu para guardar a foto. Tentem uma menor.'));
 });
 document.addEventListener('click', e => {
@@ -1571,7 +1641,7 @@ function showPhoto(d, i){
   idbGet(d + '_' + i).then(b => {
     el.querySelectorAll('img,.rm').forEach(x => x.remove());
     if (b) {
-      const img = new Image(); img.src = URL.createObjectURL(b); img.alt = 'Foto ' + (i+1);
+      const img = new Image(); img.src = URL.createObjectURL(b); img.alt = 'Foto ' + (i+1); if (NEW_PHOTO === d + '_' + i) { img.className = 'arrive'; NEW_PHOTO = null; }
       const rm = document.createElement('button'); rm.className = 'rm'; rm.textContent = '×'; rm.dataset.k = d + '|' + i; rm.setAttribute('aria-label', 'Apagar foto');
       el.appendChild(img); el.appendChild(rm);
     }
@@ -1687,7 +1757,7 @@ function speak(text){
    ============================================================ */
 function initDockScroll(){
   const deck = $('#deck'); let ticking = false;
-  const update = () => { document.body.classList.toggle('dock-visible', deck.getBoundingClientRect().bottom < 8); ticking = false; };
+  const update = () => { document.body.classList.toggle('dock-visible', deck.getBoundingClientRect().bottom < 8); if (window.scrollY > 40) document.body.classList.add('scrolled'); ticking = false; };
   window.addEventListener('scroll', () => { if (!ticking) { requestAnimationFrame(update); ticking = true; } }, {passive:true});
   window.addEventListener('resize', update); update();
 }
@@ -1710,6 +1780,70 @@ document.addEventListener('DOMContentLoaded', () => {
   if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(() => {});
 });
 window.__guia = {INST, COUNTABLE, ST: () => ST};
+
+/* ============================================================
+   BOTTOM SHEETS (lab pass 2)
+   The two small windows rise from the bottom, close by tapping
+   the dimmed area, Esc, or dragging them down.
+   ============================================================ */
+let NEW_PHOTO = null;
+function initSheets(){
+  const reduce = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const EASE = 'cubic-bezier(0.32,0.72,0,1)';
+  const rubber = (o, dim) => (o * dim * 0.55) / (dim + 0.55 * Math.abs(o));
+  document.querySelectorAll('dialog.mini-dialog').forEach(d => {
+    const nativeOpen = d.showModal.bind(d), nativeClose = d.close.bind(d);
+    let anim = null, closing = false;
+    const fadeBackdrop = (from, to, ms) => { try { d.animate([{opacity:from},{opacity:to}], {duration:ms, easing:EASE, pseudoElement:'::backdrop', fill:'forwards'}); } catch(e) {} };
+    d.showModal = () => {
+      closing = false; nativeOpen();
+      if (reduce()) return;
+      anim = d.animate([{transform:'translateY(100%)'},{transform:'translateY(0)'}], {duration:420, easing:EASE});
+      fadeBackdrop(0, 1, 300);
+    };
+    const slideOut = (fromY) => {
+      if (closing || !d.open) return; closing = true;
+      if (anim) anim.cancel();
+      if (reduce()) { d.style.transform = ''; nativeClose(); return; }
+      fadeBackdrop(1, 0, 240);
+      const a = d.animate([{transform:'translateY(' + (fromY || 0) + 'px)'},{transform:'translateY(100%)'}], {duration:260, easing:EASE, fill:'forwards'});
+      a.onfinish = () => { d.style.transform = ''; nativeClose(); a.cancel(); };
+    };
+    d.close = () => slideOut(0);
+    d.addEventListener('cancel', e => { e.preventDefault(); slideOut(0); });
+    d.addEventListener('click', e => { if (e.target !== d) return; const r = d.getBoundingClientRect(); if (e.clientY < r.top) slideOut(0); });
+
+    // drag down to close, 1:1 with the finger, soft resistance upwards
+    let startY = 0, y = 0, dragging = false, moved = false, hist = [];
+    d.addEventListener('pointerdown', e => {
+      if (e.target.closest('input,select,textarea,button,a,label') || closing) return;
+      dragging = true; moved = false; startY = e.clientY; y = 0; hist = [{y:0, t:e.timeStamp}];
+      if (anim) { anim.cancel(); anim = null; }
+      d.setPointerCapture(e.pointerId);
+    });
+    d.addEventListener('pointermove', e => {
+      if (!dragging) return;
+      const dy = e.clientY - startY;
+      if (!moved && Math.abs(dy) < 6) return;
+      moved = true;
+      y = dy > 0 ? dy : -rubber(-dy, d.offsetHeight);
+      d.style.transform = 'translateY(' + y + 'px)';
+      hist.push({y, t:e.timeStamp}); if (hist.length > 6) hist.shift();
+    });
+    const end = () => {
+      if (!dragging) return; dragging = false;
+      if (!moved) return;
+      const a = hist[0], b = hist[hist.length - 1];
+      const v = (b.y - a.y) / Math.max(1, b.t - a.t); // px per ms, downwards positive
+      if (y > d.offsetHeight * 0.3 || v > 0.5) { slideOut(y); return; }
+      const back = d.animate([{transform:'translateY(' + y + 'px)'},{transform:'translateY(0)'}], {duration:reduce() ? 0 : 320, easing:EASE});
+      d.style.transform = ''; anim = back;
+    };
+    d.addEventListener('pointerup', end);
+    d.addEventListener('pointercancel', end);
+  });
+}
+document.addEventListener('DOMContentLoaded', initSheets);
 
 /* ============================================================
    IMPRIMIR A VIAGEM: um diário em A4, no mesmo estilo de Budapeste.

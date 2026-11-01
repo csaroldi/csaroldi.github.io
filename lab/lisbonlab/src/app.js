@@ -215,6 +215,7 @@ function setSeen(uid, rec, before){
   if (rec) ST.seen[uid] = rec; else delete ST.seen[uid];
   save();
   afterSeenChange(uid, before, [x && x.day, old && old.d, rec && rec.d]);
+  if (rec && !old) { const el = document.getElementById('st_' + uid); if (el) el.classList.add('pop'); }
 }
 function checkStop(ev, uid){
   ev.stopPropagation();
@@ -440,7 +441,7 @@ document.addEventListener('input', e => {
 document.addEventListener('change', e => {
   const t = e.target; if (!(t.type === 'file' && t.dataset.d)) return;
   const f = t.files && t.files[0]; if (!f) return;
-  shrink(f).then(blob => idbPut(t.dataset.d + '_' + t.dataset.i, blob)).then(() => { showPhoto(t.dataset.d, +t.dataset.i); toast('Foto guardada'); })
+  shrink(f).then(blob => idbPut(t.dataset.d + '_' + t.dataset.i, blob)).then(() => { NEW_PHOTO = t.dataset.d + '_' + t.dataset.i; showPhoto(t.dataset.d, +t.dataset.i); toast('Foto guardada'); })
     .catch(() => toast('Não deu para guardar a foto. Tentem uma menor.'));
 });
 document.addEventListener('click', e => {
@@ -467,7 +468,7 @@ function showPhoto(d, i){
   idbGet(d + '_' + i).then(b => {
     el.querySelectorAll('img,.rm').forEach(x => x.remove());
     if (b) {
-      const img = new Image(); img.src = URL.createObjectURL(b); img.alt = 'Foto ' + (i+1);
+      const img = new Image(); img.src = URL.createObjectURL(b); img.alt = 'Foto ' + (i+1); if (NEW_PHOTO === d + '_' + i) { img.className = 'arrive'; NEW_PHOTO = null; }
       const rm = document.createElement('button'); rm.className = 'rm'; rm.textContent = '×'; rm.dataset.k = d + '|' + i; rm.setAttribute('aria-label', 'Apagar foto');
       el.appendChild(img); el.appendChild(rm);
     }
@@ -583,7 +584,7 @@ function speak(text){
    ============================================================ */
 function initDockScroll(){
   const deck = $('#deck'); let ticking = false;
-  const update = () => { document.body.classList.toggle('dock-visible', deck.getBoundingClientRect().bottom < 8); ticking = false; };
+  const update = () => { document.body.classList.toggle('dock-visible', deck.getBoundingClientRect().bottom < 8); if (window.scrollY > 40) document.body.classList.add('scrolled'); ticking = false; };
   window.addEventListener('scroll', () => { if (!ticking) { requestAnimationFrame(update); ticking = true; } }, {passive:true});
   window.addEventListener('resize', update); update();
 }
@@ -606,3 +607,67 @@ document.addEventListener('DOMContentLoaded', () => {
   if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(() => {});
 });
 window.__guia = {INST, COUNTABLE, ST: () => ST};
+
+/* ============================================================
+   BOTTOM SHEETS (lab pass 2)
+   The two small windows rise from the bottom, close by tapping
+   the dimmed area, Esc, or dragging them down.
+   ============================================================ */
+let NEW_PHOTO = null;
+function initSheets(){
+  const reduce = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const EASE = 'cubic-bezier(0.32,0.72,0,1)';
+  const rubber = (o, dim) => (o * dim * 0.55) / (dim + 0.55 * Math.abs(o));
+  document.querySelectorAll('dialog.mini-dialog').forEach(d => {
+    const nativeOpen = d.showModal.bind(d), nativeClose = d.close.bind(d);
+    let anim = null, closing = false;
+    const fadeBackdrop = (from, to, ms) => { try { d.animate([{opacity:from},{opacity:to}], {duration:ms, easing:EASE, pseudoElement:'::backdrop', fill:'forwards'}); } catch(e) {} };
+    d.showModal = () => {
+      closing = false; nativeOpen();
+      if (reduce()) return;
+      anim = d.animate([{transform:'translateY(100%)'},{transform:'translateY(0)'}], {duration:420, easing:EASE});
+      fadeBackdrop(0, 1, 300);
+    };
+    const slideOut = (fromY) => {
+      if (closing || !d.open) return; closing = true;
+      if (anim) anim.cancel();
+      if (reduce()) { d.style.transform = ''; nativeClose(); return; }
+      fadeBackdrop(1, 0, 240);
+      const a = d.animate([{transform:'translateY(' + (fromY || 0) + 'px)'},{transform:'translateY(100%)'}], {duration:260, easing:EASE, fill:'forwards'});
+      a.onfinish = () => { d.style.transform = ''; nativeClose(); a.cancel(); };
+    };
+    d.close = () => slideOut(0);
+    d.addEventListener('cancel', e => { e.preventDefault(); slideOut(0); });
+    d.addEventListener('click', e => { if (e.target !== d) return; const r = d.getBoundingClientRect(); if (e.clientY < r.top) slideOut(0); });
+
+    // drag down to close, 1:1 with the finger, soft resistance upwards
+    let startY = 0, y = 0, dragging = false, moved = false, hist = [];
+    d.addEventListener('pointerdown', e => {
+      if (e.target.closest('input,select,textarea,button,a,label') || closing) return;
+      dragging = true; moved = false; startY = e.clientY; y = 0; hist = [{y:0, t:e.timeStamp}];
+      if (anim) { anim.cancel(); anim = null; }
+      d.setPointerCapture(e.pointerId);
+    });
+    d.addEventListener('pointermove', e => {
+      if (!dragging) return;
+      const dy = e.clientY - startY;
+      if (!moved && Math.abs(dy) < 6) return;
+      moved = true;
+      y = dy > 0 ? dy : -rubber(-dy, d.offsetHeight);
+      d.style.transform = 'translateY(' + y + 'px)';
+      hist.push({y, t:e.timeStamp}); if (hist.length > 6) hist.shift();
+    });
+    const end = () => {
+      if (!dragging) return; dragging = false;
+      if (!moved) return;
+      const a = hist[0], b = hist[hist.length - 1];
+      const v = (b.y - a.y) / Math.max(1, b.t - a.t); // px per ms, downwards positive
+      if (y > d.offsetHeight * 0.3 || v > 0.5) { slideOut(y); return; }
+      const back = d.animate([{transform:'translateY(' + y + 'px)'},{transform:'translateY(0)'}], {duration:reduce() ? 0 : 320, easing:EASE});
+      d.style.transform = ''; anim = back;
+    };
+    d.addEventListener('pointerup', end);
+    d.addEventListener('pointercancel', end);
+  });
+}
+document.addEventListener('DOMContentLoaded', initSheets);
