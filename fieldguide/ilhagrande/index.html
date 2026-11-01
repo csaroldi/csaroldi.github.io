@@ -1,0 +1,1168 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0c0c10">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Ilha Grande">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="icon" href="icon-192.png">
+<title>Um Guia de Campo para Ilha Grande</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   DESIGN TOKENS
+   Change --accent (primary) and --accent2 (secondary) per
+   destination. Everything else stays locked.
+   Dark is default. body.light swaps to light theme.
+
+   Suggested per-destination palettes:
+     Gdansk      --accent:#c79a52  --accent2:#2f6f87
+     Belgrade    --accent:#c46a3e  --accent2:#3a5a6a
+     Lisbon      --accent:#3a7a8f  --accent2:#c79a52
+     Kyoto       --accent:#7a8b4e  --accent2:#8a4a3e
+     Reykjavik   --accent:#6a8fa8  --accent2:#b89a6a
+   ============================================================ */
+:root{
+  --accent:#d4a34a;
+  --accent-l:#e6bf72;
+  --accent-d:#94702f;
+
+  --accent2:#2f7a6f;
+  --accent2-l:#8fd0c2;
+
+  --ink:#0c0c10;
+  --ink-2:#141419;
+  --cream:#f5f0e8;
+  --muted:#8a8172;
+  --border:rgba(255,255,255,0.07);
+  --border-accent:rgba(230,191,114,0.2);
+  --card:rgba(255,255,255,0.025);
+
+  --dock-h:64px;
+}
+
+body.light{
+  --ink:#f5f0e8;
+  --ink-2:#ece5db;
+  --cream:#1a1714;
+  --muted:#7a7169;
+  --border:rgba(26,23,20,0.08);
+  --border-accent:rgba(212,163,74,0.28);
+  --card:rgba(255,255,255,0.6);
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{font-size:17px;scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{font-family:'DM Sans',sans-serif;background:var(--ink);color:var(--cream);min-height:100vh;overflow-x:hidden;padding-bottom:calc(var(--dock-h) + 40px);transition:background 0.4s,color 0.4s}
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:9999;opacity:0.4}
+body.light::before{opacity:0.25}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;background:none;border:none;cursor:pointer;color:inherit;padding:0}
+
+/* ============================================================
+   TOP CONTROLS
+   ============================================================ */
+.top-controls{position:fixed;top:16px;right:16px;z-index:1000;display:flex;gap:8px;align-items:center}
+.lang-group{display:flex}
+.ctrl-btn{height:30px;padding:0 12px;border:1px solid rgba(212,163,74,0.35);background:transparent;color:rgba(212,163,74,0.75);font-size:0.62rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.2s;font-family:'DM Sans',sans-serif;-webkit-tap-highlight-color:transparent}
+.lang-btn:first-child{border-radius:3px 0 0 3px;border-right:none}
+.lang-btn:last-child{border-radius:0 3px 3px 0}
+.ctrl-btn.active{background:var(--accent);color:var(--ink);border-color:var(--accent)}
+.theme-btn{border-radius:3px;width:30px;padding:0;margin-left:4px}
+
+/* ============================================================
+   COVER
+   ============================================================ */
+.cover{position:relative;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;overflow:hidden;background:var(--ink)}
+.cover-bg{position:absolute;inset:0;background:
+  radial-gradient(ellipse 85% 60% at 25% 35%,rgba(212,163,74,0.15) 0%,transparent 58%),
+  radial-gradient(ellipse 60% 50% at 72% 60%,rgba(47,122,111,0.10) 0%,transparent 60%),
+  radial-gradient(ellipse 110% 80% at 50% 100%,rgba(212,163,74,0.07) 0%,transparent 62%),
+  linear-gradient(165deg,#090a0d 0%,#0c0c10 52%,#09090d 100%)}
+body.light .cover-bg{background:
+  radial-gradient(ellipse 85% 60% at 25% 35%,rgba(212,163,74,0.22) 0%,transparent 58%),
+  radial-gradient(ellipse 60% 50% at 72% 60%,rgba(47,122,111,0.12) 0%,transparent 60%),
+  radial-gradient(ellipse 110% 80% at 50% 100%,rgba(212,163,74,0.10) 0%,transparent 62%),
+  linear-gradient(165deg,#f7f2ea 0%,#f5f0e8 52%,#ece5db 100%)}
+.cover-content{position:relative;z-index:2;padding:24px;animation:fadeUp 1.2s ease both}
+@keyframes fadeUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
+.cover-eyebrow{font-size:0.62rem;font-weight:500;letter-spacing:0.38em;text-transform:uppercase;color:var(--accent);display:block;margin-bottom:24px}
+.cover-title{font-family:'Cormorant Garamond',serif;font-size:clamp(5rem,20vw,9rem);font-weight:300;line-height:0.9;color:var(--cream);letter-spacing:-0.02em;margin-bottom:16px}
+.cover-title em{font-style:italic;color:var(--accent-l);font-weight:400}
+.cover-author{font-size:0.56rem;font-weight:600;letter-spacing:0.3em;text-transform:uppercase;color:var(--accent-d);margin-bottom:20px}
+.cover-rule{width:40px;height:1px;background:var(--accent-d);opacity:0.5;margin:16px auto}
+.cover-dates{font-size:0.7rem;font-weight:600;letter-spacing:0.25em;color:var(--accent-l);opacity:0.7;margin-top:10px}
+.cover-subtitle{font-family:'Cormorant Garamond',serif;font-size:clamp(1rem,2.8vw,1.3rem);font-style:italic;color:rgba(245,240,232,0.45);margin-top:14px;max-width:28ch;margin-left:auto;margin-right:auto}
+body.light .cover-subtitle{color:rgba(26,23,20,0.55)}
+.cover-scroll{position:absolute;bottom:32px;left:50%;transform:translateX(-50%);color:rgba(212,163,74,0.45);font-size:1.2rem;animation:bob 2s ease-in-out infinite;z-index:2}
+@keyframes bob{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(7px)}}
+
+/* ============================================================
+   COMMAND DECK
+   ============================================================ */
+.deck-shell{padding:32px 16px 0;position:relative;z-index:6;max-width:820px;margin-left:auto;margin-right:auto}
+.deck{background:rgba(20,20,25,0.72);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border:1px solid rgba(255,255,255,0.08);border-radius:22px;padding:20px 18px;overflow:hidden;position:relative;box-shadow:0 16px 40px rgba(0,0,0,0.35)}
+body.light .deck{background:rgba(255,255,255,0.78);border-color:rgba(26,23,20,0.08);box-shadow:0 16px 40px rgba(58,46,46,0.1)}
+.deck::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 0% 0%,rgba(212,163,74,0.08) 0%,transparent 60%),radial-gradient(ellipse at 100% 100%,rgba(47,122,111,0.06) 0%,transparent 60%);pointer-events:none;border-radius:22px}
+.deck-title{font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:400;line-height:1.1;color:var(--cream);margin-bottom:6px;position:relative;z-index:1}
+.deck-title em{font-style:italic;color:var(--accent-l)}
+.deck-sub{font-size:0.78rem;color:rgba(245,240,232,0.55);max-width:40ch;position:relative;z-index:1;font-style:italic;font-family:'Cormorant Garamond',serif}
+body.light .deck-sub{color:rgba(26,23,20,0.55)}
+
+.deck-grid{display:grid;grid-template-columns:1.4fr 1fr;gap:10px;margin-top:16px;position:relative;z-index:1}
+.deck-card{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:14px;padding:14px 14px}
+body.light .deck-card{background:rgba(255,255,255,0.5);border-color:rgba(26,23,20,0.06)}
+.deck-today{display:flex;flex-direction:column;justify-content:space-between;min-height:140px}
+.deck-label{font-size:0.56rem;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
+.deck-value{font-family:'Cormorant Garamond',serif;font-size:1.25rem;font-weight:500;line-height:1.15;color:var(--cream);margin-bottom:4px}
+.deck-note{font-size:0.74rem;line-height:1.5;color:rgba(245,240,232,0.55);font-style:italic}
+body.light .deck-note{color:rgba(26,23,20,0.55)}
+.deck-cta{display:inline-flex;align-items:center;justify-content:center;gap:6px;margin-top:10px;padding:8px 12px;background:var(--accent);color:var(--ink);border-radius:10px;font-size:0.66rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;transition:background 0.2s}
+.deck-cta:active{background:var(--accent-d)}
+.micro-stack{display:flex;flex-direction:column;gap:10px}
+.micro-card{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:14px;padding:10px 12px;flex:1;display:flex;flex-direction:column;justify-content:center}
+body.light .micro-card{background:rgba(255,255,255,0.5);border-color:rgba(26,23,20,0.06)}
+.micro-label{font-size:0.54rem;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;color:var(--accent);margin-bottom:4px}
+.micro-value{font-family:'Cormorant Garamond',serif;font-size:1.35rem;font-weight:500;color:var(--cream);line-height:1}
+.micro-sub{font-size:0.66rem;color:rgba(245,240,232,0.5);margin-top:2px;font-style:italic;font-family:'Cormorant Garamond',serif}
+body.light .micro-sub{color:rgba(26,23,20,0.5)}
+
+/* TRIP PROGRESS, single bar, fills with must-see stops checked across the whole trip */
+.trip-progress{margin-top:14px;position:relative;z-index:1}
+.trip-progress-bar{height:8px;border-radius:999px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.06);overflow:hidden}
+body.light .trip-progress-bar{background:rgba(26,23,20,0.05);border-color:rgba(26,23,20,0.06)}
+.trip-progress-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--accent-d),var(--accent),var(--accent-l));border-radius:999px;transition:width 0.45s cubic-bezier(0.2,0.8,0.2,1)}
+.trip-progress-label{font-size:0.58rem;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:rgba(245,240,232,0.5);margin-top:8px;text-align:right}
+body.light .trip-progress-label{color:rgba(26,23,20,0.55)}
+
+/* SUN ROW, for the Light Today micro-card */
+.sun-row{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:500;color:var(--cream);line-height:1;display:flex;align-items:center;gap:5px;flex-wrap:wrap}
+.sun-ico{color:var(--accent);font-size:0.9rem}
+.sun-sep{color:var(--muted);opacity:0.6;font-size:0.85rem}
+
+/* JUMP CARDS, 4 entry points to the main sections */
+.jump-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:14px;position:relative;z-index:1}
+.jump-card{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:12px 6px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;color:rgba(245,240,232,0.65);font-size:0.56rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;min-height:58px;transition:all 0.15s;text-align:center}
+body.light .jump-card{background:rgba(255,255,255,0.5);border-color:rgba(26,23,20,0.06);color:rgba(26,23,20,0.65)}
+.jump-card:active{transform:scale(0.97);border-color:var(--border-accent)}
+.jump-icon{font-size:1rem;color:var(--accent)}
+
+/* ============================================================
+   SECTION
+   ============================================================ */
+main{margin-top:8px}
+.section-wrap{max-width:820px;margin:0 auto;padding:0 20px}
+.section-header{padding:52px 0 8px;display:flex;align-items:center;gap:14px}
+.section-tag{font-size:0.58rem;font-weight:600;letter-spacing:0.3em;text-transform:uppercase;color:var(--accent);display:flex;align-items:center;gap:10px;white-space:nowrap}
+.section-tag::before{content:'';width:20px;height:1px;background:var(--accent)}
+.section-title{font-family:'Cormorant Garamond',serif;font-size:2.2rem;font-weight:300;color:var(--cream);line-height:1.1;letter-spacing:-0.01em}
+.section-title em{font-style:italic;color:var(--accent-l)}
+.section-rule{flex:1;height:1px;background:linear-gradient(90deg,var(--border-accent),transparent)}
+.section-intro{font-family:'Cormorant Garamond',serif;font-size:1rem;font-style:italic;color:var(--muted);margin:8px 0 20px;line-height:1.7}
+.section-divider{height:1px;background:linear-gradient(90deg,transparent,var(--border-accent),transparent);margin:48px auto 0;max-width:820px}
+
+/* ============================================================
+   CARDS (Essentials, Good to Know)
+   ============================================================ */
+.card{background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden;margin-bottom:10px;transition:border-color 0.3s;animation:fadeUp 0.5s ease-out both}
+.card.open{border-color:var(--border-accent)}
+.card-trigger{width:100%;padding:18px 20px;cursor:pointer;display:flex;align-items:center;gap:14px;text-align:left;-webkit-tap-highlight-color:transparent}
+.card-icon{width:36px;height:36px;border-radius:10px;background:rgba(212,163,74,0.08);border:1px solid var(--border-accent);display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0}
+.card-info{flex:1}
+.card-name{font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:600;color:var(--cream);line-height:1.2}
+.card-sub{font-size:0.7rem;color:var(--muted);font-style:italic;margin-top:2px}
+.card-arrow{width:22px;height:22px;border-radius:50%;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:0.6rem;transition:all 0.3s;flex-shrink:0}
+.card.open .card-arrow{background:var(--accent);border-color:var(--accent);color:var(--ink);transform:rotate(180deg)}
+.card-body{display:none;padding:0 20px 20px}
+.card.open .card-body{display:block}
+.card-rule{height:1px;background:linear-gradient(90deg,transparent,var(--border-accent),transparent);margin-bottom:16px}
+
+.item-row{display:flex;gap:12px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.04);align-items:flex-start}
+body.light .item-row{border-bottom-color:rgba(26,23,20,0.05)}
+.item-row:last-child{border-bottom:none;padding-bottom:0}
+.item-dot{width:5px;height:5px;border-radius:50%;background:var(--accent);flex-shrink:0;margin-top:7px}
+.item-text{font-size:0.86rem;line-height:1.65;color:rgba(245,240,232,0.72);font-weight:300;flex:1}
+body.light .item-text{color:rgba(26,23,20,0.75)}
+.item-text strong{color:var(--cream);font-weight:500;display:block;margin-bottom:1px;font-size:0.88rem}
+.item-text a{color:var(--accent-l);border-bottom:1px solid var(--accent-l);padding-bottom:1px}
+
+/* ============================================================
+   ITINERARY, day blocks
+   ============================================================ */
+.day{background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden;margin-bottom:10px;transition:border-color 0.3s;animation:fadeUp 0.5s ease-out both}
+.day.open{border-color:var(--border-accent)}
+.day-trigger{width:100%;padding:18px 20px;cursor:pointer;display:flex;align-items:center;gap:14px;text-align:left;-webkit-tap-highlight-color:transparent}
+.day-num{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:600;color:rgba(212,163,74,0.2);line-height:1;min-width:44px;transition:color 0.3s}
+.day.open .day-num{color:var(--accent)}
+.day-info{flex:1}
+.day-name{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:600;color:var(--cream);line-height:1.2;margin-bottom:3px}
+.day-tagline{font-size:0.7rem;color:var(--muted);font-style:italic}
+.day-date{font-size:0.58rem;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:rgba(212,163,74,0.55);margin-top:4px}
+.day-arrow{width:22px;height:22px;border-radius:50%;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:0.6rem;transition:all 0.3s;flex-shrink:0}
+.day.open .day-arrow{background:var(--accent);border-color:var(--accent);color:var(--ink);transform:rotate(180deg)}
+.day-body{display:none;padding:0 16px 20px}
+.day.open .day-body{display:block}
+.day-divider{height:1px;background:linear-gradient(90deg,transparent,var(--border-accent),transparent);margin-bottom:16px}
+.day-intro{font-family:'Cormorant Garamond',serif;font-size:0.95rem;color:rgba(245,240,232,0.6);font-style:italic;line-height:1.7;padding:4px 4px 14px}
+body.light .day-intro{color:rgba(26,23,20,0.65)}
+
+/* ============================================================
+   STOPS
+   ============================================================ */
+.stop{margin-bottom:7px;border-radius:11px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.05);overflow:hidden;transition:border-color 0.2s}
+body.light .stop{background:rgba(26,23,20,0.02);border-color:rgba(26,23,20,0.05)}
+.stop.checked{background:rgba(212,163,74,0.05);border-color:rgba(212,163,74,0.18)}
+.stop-header{display:flex;align-items:center;gap:13px;padding:13px 15px;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.stop-check{width:22px;height:22px;border-radius:50%;border:1.5px solid rgba(255,255,255,0.18);background:transparent;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all 0.25s;cursor:pointer}
+body.light .stop-check{border-color:rgba(26,23,20,0.2)}
+.stop-check::after{content:'\2713';font-size:0.62rem;color:var(--ink);opacity:0;transition:opacity 0.2s;font-weight:700}
+.stop.checked .stop-check{background:var(--accent);border-color:var(--accent);box-shadow:0 0 12px rgba(212,163,74,0.35)}
+.stop.checked .stop-check::after{opacity:1}
+.stop-name{flex:1;font-family:'Cormorant Garamond',serif;font-size:1.08rem;font-weight:600;color:var(--cream);line-height:1.2;transition:color 0.2s}
+.stop.checked .stop-name{color:var(--muted);text-decoration:line-through;text-decoration-color:rgba(212,163,74,0.4)}
+.badge{font-size:0.56rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;padding:2px 7px;border-radius:3px;white-space:nowrap;flex-shrink:0}
+.badge-must{background:rgba(212,163,74,0.12);color:var(--accent);border:1px solid rgba(212,163,74,0.3)}
+.badge-hidden{background:rgba(47,122,111,0.12);color:var(--accent2-l);border:1px solid rgba(47,122,111,0.4)}
+.stop-expand{font-size:0.52rem;color:var(--muted);flex-shrink:0}
+.stop-details{display:none;padding:0 15px 15px 50px}
+.stop.open .stop-details{display:block;animation:slideDown 0.25s ease-out}
+@keyframes slideDown{from{opacity:0;transform:translateY(-5px)}to{opacity:1;transform:translateY(0)}}
+.detail-rule{height:1px;background:rgba(255,255,255,0.05);margin-bottom:13px}
+body.light .detail-rule{background:rgba(26,23,20,0.06)}
+
+.detail-hist{background:rgba(47,122,111,0.08);border-left:2px solid rgba(47,122,111,0.5);padding:10px 13px;border-radius:0 4px 4px 0;font-size:0.82rem;color:rgba(245,240,232,0.68);margin-bottom:8px;line-height:1.6}
+.detail-fact{background:rgba(212,163,74,0.06);border-left:2px solid var(--accent);padding:10px 13px;border-radius:0 4px 4px 0;font-size:0.82rem;color:rgba(245,240,232,0.68);font-style:italic;margin-bottom:10px;line-height:1.6}
+body.light .detail-hist{color:rgba(26,23,20,0.75)}
+body.light .detail-fact{color:rgba(26,23,20,0.75)}
+.detail-label{font-size:0.58rem;text-transform:uppercase;letter-spacing:0.14em;display:block;margin-bottom:4px;font-style:normal;font-weight:600}
+.detail-hist .detail-label{color:var(--accent2-l)}
+.detail-fact .detail-label{color:var(--accent)}
+.map-btn{display:inline-flex;align-items:center;gap:6px;margin-top:6px;padding:7px 14px;background:transparent;border:1px solid var(--border-accent);border-radius:8px;color:var(--accent-l);font-size:0.68rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;transition:all 0.2s}
+.map-btn:active{background:rgba(212,163,74,0.1)}
+
+/* ============================================================
+   FOOD BLOCK (per day)
+   ============================================================ */
+.food{margin-top:14px;border-radius:11px;background:rgba(212,163,74,0.04);border:1px solid rgba(212,163,74,0.12);overflow:hidden}
+.food-header{padding:11px 15px;display:flex;align-items:center;gap:10px;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.food-title{font-size:0.58rem;font-weight:600;letter-spacing:0.22em;text-transform:uppercase;color:var(--accent);flex:1}
+.food-arrow{font-size:0.55rem;color:var(--muted);transition:transform 0.3s}
+.food.open .food-arrow{transform:rotate(180deg)}
+.food-body{display:none;padding:0 15px 13px}
+.food.open .food-body{display:block}
+.food-rule{height:1px;background:rgba(212,163,74,0.12);margin-bottom:11px}
+.food-item{display:flex;gap:10px;padding:7px 0;border-bottom:1px solid rgba(255,255,255,0.04);align-items:flex-start}
+body.light .food-item{border-bottom-color:rgba(26,23,20,0.05)}
+.food-item:last-child{border-bottom:none;padding-bottom:0}
+.food-info{flex:1}
+.food-name{font-family:'Cormorant Garamond',serif;font-size:0.95rem;color:var(--cream);font-weight:600}
+.food-desc{font-size:0.78rem;color:rgba(245,240,232,0.58);line-height:1.55;margin-top:1px}
+body.light .food-desc{color:rgba(26,23,20,0.65)}
+.food-maps{display:inline-flex;align-items:center;gap:4px;font-size:0.66rem;color:var(--accent);margin-top:3px;opacity:0.75}
+
+/* ============================================================
+   NOTES (per day)
+   ============================================================ */
+.notes-wrap{margin-top:14px}
+.notes-label{font-size:0.56rem;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);margin-bottom:7px;display:block}
+.notes-area{width:100%;background:rgba(255,255,255,0.025);border:1px solid rgba(255,255,255,0.07);border-radius:9px;padding:12px;color:var(--cream);font-family:'DM Sans',sans-serif;font-size:0.86rem;font-weight:300;line-height:1.6;resize:vertical;outline:none;min-height:76px;transition:border-color 0.2s}
+body.light .notes-area{background:rgba(255,255,255,0.5);border-color:rgba(26,23,20,0.08)}
+.notes-area::placeholder{color:rgba(138,129,114,0.5)}
+.notes-area:focus{border-color:var(--accent)}
+
+/* ============================================================
+   PHRASES
+   ============================================================ */
+.phrase-group{margin-bottom:20px}
+.phrase-group-title{font-size:0.6rem;font-weight:600;letter-spacing:0.28em;text-transform:uppercase;color:var(--accent);margin-bottom:8px;display:flex;align-items:center;gap:10px}
+.phrase-group-title::after{content:'';flex:1;height:1px;background:var(--border-accent)}
+.phrase-row{background:var(--card);border:1px solid var(--border);border-radius:8px;margin-bottom:4px;padding:12px 16px;display:flex;align-items:center;gap:12px}
+.phrase-texts{flex:1}
+.phrase-orig{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1rem;color:var(--cream);margin-bottom:2px}
+.phrase-note{font-size:0.68rem;color:var(--muted)}
+.phrase-meaning{font-size:0.78rem;font-weight:500;color:rgba(245,240,232,0.7);font-family:'DM Sans',sans-serif}
+body.light .phrase-meaning{color:rgba(26,23,20,0.7)}
+.speak-btn{background:none;border:1px solid var(--border);border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;transition:all 0.2s;color:var(--accent)}
+.speak-btn:active{background:rgba(212,163,74,0.1);border-color:var(--accent)}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+footer{text-align:center;padding:52px 24px 32px;color:rgba(138,129,114,0.45);font-size:0.6rem;letter-spacing:0.18em;text-transform:uppercase;line-height:2;border-top:1px solid var(--border);margin-top:48px}
+
+/* ============================================================
+   DOCK (hidden until command deck scrolls past midscreen)
+   ============================================================ */
+.dock{position:fixed;left:12px;right:12px;bottom:12px;z-index:1200;background:rgba(20,20,25,0.86);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border:1px solid rgba(255,255,255,0.08);border-radius:20px;box-shadow:0 16px 36px rgba(0,0,0,0.45);padding:6px;display:grid;grid-template-columns:repeat(5,1fr);gap:4px;max-width:820px;margin-left:auto;margin-right:auto;transform:translateY(calc(100% + 20px));opacity:0;transition:transform 0.35s cubic-bezier(0.2,0.8,0.2,1),opacity 0.25s}
+body.dock-visible .dock{transform:translateY(0);opacity:1}
+body.light .dock{background:rgba(255,255,255,0.88);border-color:rgba(26,23,20,0.08);box-shadow:0 16px 36px rgba(58,46,46,0.15)}
+.dock a{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;border-radius:14px;padding:7px 4px;color:rgba(245,240,232,0.6);font-size:0.56rem;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;min-height:48px;transition:all 0.15s;-webkit-tap-highlight-color:transparent}
+body.light .dock a{color:rgba(26,23,20,0.6)}
+.dock a:active{transform:scale(0.95)}
+.dock-icon{font-size:0.92rem;color:var(--accent)}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media(max-width:640px){
+  .section-wrap{padding:0 14px}
+  .cover-title{font-size:4.2rem}
+  .card-name,.day-name{font-size:1.1rem}
+  .card-trigger,.day-trigger{padding:16px}
+  .card-body,.day-body{padding:0 12px 16px}
+  .stop-details{padding:0 12px 14px 44px}
+  .section-header{padding:44px 0 8px;align-items:flex-end}
+  .section-title{font-size:1.95rem}
+  .top-controls{top:12px;right:12px}
+  .deck-grid{grid-template-columns:1fr}
+  .deck-today{min-height:auto}
+}
+
+/* ===== Ilha Grande: catálogo, histórico ===== */
+.left-line{font-size:0.74rem;color:rgba(245,240,232,0.6);margin-top:8px;position:relative;z-index:1;line-height:1.5}
+body.light .left-line{color:rgba(26,23,20,0.62)}
+.left-line b{color:var(--accent-l);font-weight:600}
+body.light .left-line b{color:var(--accent-d)}
+.filters{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.fchip{border:1px solid var(--border-accent);border-radius:999px;padding:7px 14px;font-size:0.72rem;font-weight:600;color:var(--accent-l);min-height:36px}
+body.light .fchip{color:var(--accent-d)}
+.fchip.on{background:var(--accent);color:var(--ink);border-color:var(--accent)}
+.group{margin-bottom:22px}
+.group-title{display:flex;justify-content:space-between;align-items:baseline;font-family:'Cormorant Garamond',serif;font-size:1.35rem;font-weight:600;color:var(--cream);margin:6px 2px 8px}
+.group-count{font-family:'DM Sans',sans-serif;font-size:0.62rem;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:var(--muted)}
+.sub-title{font-size:0.62rem;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--accent);margin:14px 2px 8px}
+.stop-main{flex:1;min-width:0}
+.stop-meta{display:flex;gap:6px;flex-wrap:wrap;margin-top:4px}
+.done-chip,.todo-chip,.now-chip,.warn-chip{font-size:0.62rem;font-weight:600;letter-spacing:0.04em;padding:2px 8px;border-radius:999px;white-space:nowrap}
+.done-chip{background:rgba(47,122,111,0.16);color:var(--accent2-l);border:1px solid rgba(47,122,111,0.4)}
+body.light .done-chip{color:#1f5a51}
+.todo-chip{color:var(--muted);border:1px solid var(--border)}
+.now-chip{background:rgba(212,163,74,0.14);color:var(--accent-l);border:1px solid rgba(212,163,74,0.35)}
+body.light .now-chip{color:var(--accent-d)}
+.warn-chip{background:rgba(196,90,60,0.15);color:#e59a7f;border:1px solid rgba(196,90,60,0.4)}
+.tip-dot{font-size:0.7rem;color:var(--accent)}
+.stop.checked .stop-name{text-decoration:none;color:var(--cream)}
+button.stop-check{flex-shrink:0}
+.detail-text{font-size:0.92rem;line-height:1.65;color:rgba(245,240,232,0.75);margin-bottom:12px;font-weight:300}
+body.light .detail-text{color:rgba(26,23,20,0.78)}
+.tip-label{color:var(--accent);margin-top:4px}
+.links{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.trip-fields{display:flex;flex-direction:column;gap:6px;margin-bottom:12px;padding:10px;border-radius:10px;background:rgba(212,163,74,0.06);border:1px solid rgba(212,163,74,0.15)}
+.trip-fields .detail-label{color:var(--accent)}
+input,textarea{font-family:'DM Sans',sans-serif}
+.trip-fields input,.hist-card input,.modal-box input{width:100%;background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:9px;padding:10px 12px;color:var(--cream);font-size:16px;outline:none}
+body.light .trip-fields input,body.light .hist-card input,body.light .modal-box input{background:rgba(255,255,255,0.7)}
+.trip-fields input:focus,.hist-card input:focus,.modal-box input:focus{border-color:var(--accent)}
+.add-idea{width:100%;border:1px dashed var(--border-accent);border-radius:12px;padding:14px;color:var(--accent-l);font-size:0.8rem;font-weight:600;letter-spacing:0.06em;margin-top:4px}
+body.light .add-idea{color:var(--accent-d)}
+.hist-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px 18px;margin-bottom:10px;position:relative}
+.hist-card.current{border-color:var(--border-accent)}
+.hist-card label{display:block;font-size:0.66rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);margin:10px 0 0}
+.hist-card label input,.hist-card label textarea{margin-top:5px;text-transform:none;letter-spacing:0}
+.hist-card .two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.hist-card .detail-label{margin-top:14px;color:var(--accent)}
+.hist-year{position:absolute;top:12px;right:16px;font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:600;color:rgba(212,163,74,0.3)}
+.hist-name{font-family:'Cormorant Garamond',serif;font-size:1.35rem;font-weight:600;color:var(--cream);padding-right:92px}
+.hist-meta{font-size:0.78rem;color:var(--muted);margin-top:2px}
+.hist-flag{margin-top:8px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.hist-items{margin:10px 0 0 18px;font-size:0.88rem;line-height:1.6;color:rgba(245,240,232,0.78)}
+body.light .hist-items{color:rgba(26,23,20,0.8)}
+.hist-items span{color:var(--muted);font-size:0.8rem}
+.empty-trip p,.muted{font-size:0.86rem;color:var(--muted);margin:8px 0;font-style:italic}
+.close-btn{margin-top:16px;width:100%}
+.hist-tools{margin-top:10px}
+.month{border-bottom:1px solid var(--border);padding:8px 0}
+.month summary{cursor:pointer;font-size:0.88rem;color:var(--cream);list-style:none}
+.month summary::-webkit-details-marker{display:none}
+.month summary b{font-family:'Cormorant Garamond',serif;font-size:1.1rem;margin-right:6px}
+.month summary span{color:var(--muted);font-size:0.78rem}
+.month p{font-size:0.84rem;line-height:1.6;color:rgba(245,240,232,0.7);margin:6px 0 0}
+body.light .month p{color:rgba(26,23,20,0.75)}
+.empty{color:var(--muted);font-style:italic;padding:20px 0}
+.modal{position:fixed;inset:0;z-index:2000;background:rgba(0,0,0,0.55);display:flex;align-items:center;justify-content:center;padding:16px}
+.modal[hidden]{display:none}
+.modal-box{background:var(--ink-2);border:1px solid var(--border-accent);border-radius:18px;padding:22px;width:100%;max-width:440px;display:flex;flex-direction:column;gap:10px}
+.modal-box h3{font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:600;color:var(--cream)}
+.m-sub{font-size:0.86rem;color:var(--muted)}
+.m-row{display:flex;gap:8px;justify-content:flex-end;margin-top:6px}
+.m-btn{border:1px solid var(--border-accent);border-radius:10px;padding:10px 16px;font-size:0.8rem;font-weight:600;color:var(--accent-l);min-height:44px}
+.m-btn.primary{background:var(--accent);color:var(--ink);border-color:var(--accent)}
+.toast{position:fixed;left:50%;bottom:calc(var(--dock-h) + 30px);transform:translateX(-50%) translateY(10px);background:var(--accent);color:#0c0c10;border-radius:12px;padding:10px 16px;font-size:0.82rem;font-weight:600;opacity:0;pointer-events:none;transition:all 0.25s;z-index:2100;max-width:calc(100% - 32px);text-align:center}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+@media(max-width:640px){.cover-title{font-size:3.6rem}.hist-card .two{grid-template-columns:1fr}}
+@media(max-width:360px){.jump-card,.dock a{font-size:0.5rem;letter-spacing:0.02em}.cover-title{font-size:3.1rem}}
+</style>
+</head>
+<body>
+
+<div class="top-controls">
+  <div class="lang-group">
+    <button class="ctrl-btn lang-btn" id="btnEN" onclick="setLang('en')">EN</button>
+    <button class="ctrl-btn lang-btn active" id="btnPT" onclick="setLang('pt')">PT</button>
+  </div>
+  <button class="ctrl-btn theme-btn" id="btnTheme" onclick="toggleTheme()">☾</button>
+</div>
+
+<!-- COVER -->
+<div class="cover" id="top">
+  <div class="cover-bg"></div>
+  <div class="cover-content">
+    <span class="cover-eyebrow" data-en="A Field Guide to" data-pt="Um Guia de Campo para">Um Guia de Campo para</span>
+    <h1 class="cover-title">Ilha <em>Grande</em></h1>
+    <p class="cover-author" data-en="by Claudio SAROLDI" data-pt="por Claudio SAROLDI">por Claudio SAROLDI</p>
+    <div class="cover-rule"></div>
+    <p class="cover-dates" id="coverDates">2024 · 2025</p>
+    <p class="cover-subtitle" data-en="Twelve boat trips, sixteen trails and not one car. The island, again and again." data-pt="Doze passeios de barco, dezesseis trilhas e nenhum carro. A ilha, de novo e de novo.">Doze passeios de barco, dezesseis trilhas e nenhum carro. A ilha, de novo e de novo.</p>
+  </div>
+  <div class="cover-scroll">↓</div>
+</div>
+
+<!-- COMMAND DECK -->
+<div class="deck-shell">
+  <div class="deck" id="deck">
+    <div class="deck-title" data-en="The island, <em>so far</em>." data-pt="A ilha, <em>até aqui</em>.">A ilha, <em>até aqui</em>.</div>
+    <p class="deck-sub" data-en="What you have done, what is left, and the light today." data-pt="O que você já fez, o que falta e a luz de hoje.">O que você já fez, o que falta e a luz de hoje.</p>
+
+    <div class="deck-grid">
+      <div class="deck-card deck-today">
+        <div>
+          <div class="deck-label" id="tripLabel">Viagem</div>
+          <div class="deck-value" id="tripName">Nenhuma viagem aberta</div>
+          <div class="deck-note" id="tripNote">Marque Fiz em qualquer item e a viagem começa sozinha.</div>
+        </div>
+        <a href="#historico" class="deck-cta" id="tripCta">Abrir o Histórico</a>
+      </div>
+      <div class="micro-stack">
+        <div class="micro-card">
+          <div class="micro-label" data-en="Light today" data-pt="Luz hoje">Luz hoje</div>
+          <div class="sun-row">
+            <span class="sun-ico">☀</span><span id="sunriseVal">--:--</span>
+            <span class="sun-sep">·</span>
+            <span class="sun-ico">☾</span><span id="sunsetVal">--:--</span>
+          </div>
+          <div class="micro-sub" id="goldenVal">Hora dourada</div>
+        </div>
+        <div class="micro-card">
+          <div class="micro-label" data-en="Last trip" data-pt="Última ida">Última ida</div>
+          <div class="micro-value" id="lastVal">--</div>
+          <div class="micro-sub" id="lastSub">--</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="trip-progress">
+      <div class="trip-progress-bar"><div class="trip-progress-fill" id="tripProgressFill"></div></div>
+      <div class="trip-progress-label" id="tripProgressLabel">0 de 12 passeios</div>
+    </div>
+    <div class="left-line" id="leftLine"></div>
+
+    <div class="jump-grid">
+      <a class="jump-card" href="#essentials"><span class="jump-icon">◆</span><span data-en="Essentials" data-pt="Essencial">Essencial</span></a>
+      <a class="jump-card" href="#fazer"><span class="jump-icon">◐</span><span data-en="To do" data-pt="Fazer">Fazer</span></a>
+      <a class="jump-card" href="#goodtoknow"><span class="jump-icon">✦</span><span data-en="Know" data-pt="Saber">Saber</span></a>
+      <a class="jump-card" href="#historico"><span class="jump-icon">❦</span><span data-en="History" data-pt="Histórico">Histórico</span></a>
+    </div>
+  </div>
+</div>
+
+<main>
+
+<!-- ============ 1. ESSENCIAL ============ -->
+<div class="section-wrap" id="essentials">
+  <div class="section-header">
+    <div class="section-tag" data-en="Before You Go" data-pt="Antes de Ir">Antes de Ir</div>
+    <h2 class="section-title" data-en="The <em>Essentials</em>" data-pt="O <em>Essencial</em>">O <em>Essencial</em></h2>
+    <div class="section-rule"></div>
+  </div>
+  <p class="section-intro" data-en="What does not change from one trip to the next." data-pt="O que não muda de uma viagem para a outra.">O que não muda de uma viagem para a outra.</p>
+
+  <div class="card" id="ess_home">
+    <button class="card-trigger" onclick="toggleCard('ess_home')">
+      <div class="card-icon">🏠</div>
+      <div class="card-info">
+        <div class="card-name" id="homeBaseName">Vila do Abraão</div>
+        <div class="card-sub" data-en="Home base, every time" data-pt="A base, sempre">A base, sempre</div>
+      </div>
+      <div class="card-arrow">▼</div>
+    </button>
+    <div class="card-body"><div class="card-rule"></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text">
+        <strong id="homeBaseLine">Vila do Abraão</strong>
+        <span id="homeBaseAddr">Ilha Grande, Angra dos Reis, RJ</span>
+        <br><a id="homeBaseMap" href="#" target="_blank" class="map-btn" style="margin-top:8px">📍 <span data-en="Show on map" data-pt="Ver no mapa">Ver no mapa</span></a>
+      </div></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text">
+        <strong data-en="Where you stayed" data-pt="Onde você ficou">Onde você ficou</strong>
+        <span data-en="The guesthouse changes each trip: note it in the History when you close the trip." data-pt="A pousada muda a cada ida: anote no Histórico quando fechar a viagem.">A pousada muda a cada ida: anote no Histórico quando fechar a viagem.</span>
+      </div></div>
+    </div>
+  </div>
+
+  <div class="card" id="ess_arrive">
+    <button class="card-trigger" onclick="toggleCard('ess_arrive')">
+      <div class="card-icon">⛴</div>
+      <div class="card-info">
+        <div class="card-name" data-en="Jacareí to Abraão" data-pt="Jacareí até o Abraão">Jacareí até o Abraão</div>
+        <div class="card-sub" data-en="The crossing, the usual way" data-pt="A travessia, do jeito de sempre">A travessia, do jeito de sempre</div>
+      </div>
+      <div class="card-arrow">▼</div>
+    </button>
+    <div class="card-body"><div class="card-rule"></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text">
+        <strong data-en="Fast boat, 20 to 25 minutes" data-pt="Lancha rápida, 20 a 25 minutos">Lancha rápida, 20 a 25 minutos</strong>
+        <span data-en="Leaves Jacareí almost hourly from about 7:30am to 6:30pm, and the island from 8am to 6pm. R$ 75 to R$ 150 each way depending on season (check). The schooner takes about 50 minutes and costs a bit less." data-pt="Sai de Jacareí quase de hora em hora, das 7h30 às 18h30, e da ilha das 8h às 18h. De R$ 75 a R$ 150 por trecho, conforme a época (conferir). A escuna leva uns 50 minutos e custa um pouco menos.">Sai de Jacareí quase de hora em hora, das 7h30 às 18h30, e da ilha das 8h às 18h. De R$ 75 a R$ 150 por trecho, conforme a época (conferir). A escuna leva uns 50 minutos e custa um pouco menos.</span>
+      </div></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text">
+        <strong data-en="Plan B: the public ferry" data-pt="Plano B: a barca">Plano B: a barca</strong>
+        <span data-en="Once a day from Mangaratiba (usually 8am) and from Angra in the afternoon, R$ 20.50 on the last published table. Check times before relying on it." data-pt="Uma vez por dia de Mangaratiba (costuma ser 8h) e de Angra à tarde, R$ 20,50 na última tabela publicada. Conferir horário antes de contar com ela.">Uma vez por dia de Mangaratiba (costuma ser 8h) e de Angra à tarde, R$ 20,50 na última tabela publicada. Conferir horário antes de contar com ela.</span>
+      </div></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text">
+        <strong data-en="The road back" data-pt="A volta pela estrada">A volta pela estrada</strong>
+        <span data-en="Sunday afternoon on the Rio-Santos is slow. Take a morning boat or stay until after dinner." data-pt="Domingo à tarde a Rio-Santos anda devagar. Pegue o barco de manhã ou volte depois do jantar.">Domingo à tarde a Rio-Santos anda devagar. Pegue o barco de manhã ou volte depois do jantar.</span>
+      </div></div>
+    </div>
+  </div>
+
+  <div class="card" id="ess_park">
+    <button class="card-trigger" onclick="toggleCard('ess_park')">
+      <div class="card-icon">🚗</div>
+      <div class="card-info">
+        <div class="card-name" data-en="Parking in Jacareí" data-pt="Estacionar em Jacareí">Estacionar em Jacareí</div>
+        <div class="card-sub" data-en="Official and improvised" data-pt="O oficial e o arranjado">O oficial e o arranjado</div>
+      </div>
+      <div class="card-arrow">▼</div>
+    </button>
+    <div class="card-body"><div class="card-rule"></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text">
+        <strong>Objetiva, Rua da Praia 27</strong>
+        <span data-en="2 minutes from the pier, uncovered, cameras and night guard. Car R$ 30 per day on their site, book online. (24) 98166-7428." data-pt="A 2 minutos do cais, descoberto, câmeras e vigia noturno. Carro R$ 30 por diária no site, reserva online. (24) 98166-7428.">A 2 minutos do cais, descoberto, câmeras e vigia noturno. Carro R$ 30 por diária no site, reserva online. (24) 98166-7428.</span>
+      </div></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text">
+        <strong>Estacionamento do Cais</strong>
+        <span data-en="Av. Nossa Senhora da Conceição 299, facing the pier, about 30 spaces. No price online: (21) 3789-4325." data-pt="Av. Nossa Senhora da Conceição, 299, de frente para o cais, cerca de 30 vagas. Sem preço no site: (21) 3789-4325.">Av. Nossa Senhora da Conceição, 299, de frente para o cais, cerca de 30 vagas. Sem preço no site: (21) 3789-4325.</span>
+      </div></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text">
+        <strong>Vista Mar (Ilha Tour)</strong>
+        <span data-en="Entrance straight off the Rio-Santos with a shortcut to the pier. Covered spaces too. Price on WhatsApp (21) 98324-9209." data-pt="Entrada direto da Rio-Santos, com atalho para o cais. Tem vaga coberta. Preço no WhatsApp (21) 98324-9209.">Entrada direto da Rio-Santos, com atalho para o cais. Tem vaga coberta. Preço no WhatsApp (21) 98324-9209.</span>
+      </div></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text">
+        <strong data-en="The yards and valets" data-pt="Os quintais e manobristas">Os quintais e manobristas</strong>
+        <span data-en="Agree the daily price before handing over the key, get a phone number and photograph the car. Charged per day: in on the 15th, out on the 17th is usually 3 days." data-pt="Combine o preço da diária antes de entregar a chave, pegue um telefone e fotografe o carro. Cobra por dia: entrar dia 15 e sair dia 17 costuma dar 3 diárias.">Combine o preço da diária antes de entregar a chave, pegue um telefone e fotografe o carro. Cobra por dia: entrar dia 15 e sair dia 17 costuma dar 3 diárias.</span>
+      </div></div>
+    </div>
+  </div>
+
+  <div class="card" id="ess_money">
+    <button class="card-trigger" onclick="toggleCard('ess_money')">
+      <div class="card-icon">💵</div>
+      <div class="card-info">
+        <div class="card-name" data-en="Money and Fees" data-pt="Dinheiro e Taxas">Dinheiro e Taxas</div>
+        <div class="card-sub" data-en="Cash still matters here" data-pt="Aqui o dinheiro vivo ainda manda">Aqui o dinheiro vivo ainda manda</div>
+      </div>
+      <div class="card-arrow">▼</div>
+    </button>
+    <div class="card-body"><div class="card-rule"></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text">
+        <strong data-en="Carry cash and Pix" data-pt="Leve dinheiro e Pix">Leve dinheiro e Pix</strong>
+        <span data-en="Water taxis, kiosks, the Gruta do Acaiá fee (about R$ 37) and the Dois Rios landing (about R$ 20) are often cash only. The village ATM can run dry on holidays." data-pt="Táxi-boat, quiosques, a entrada da Gruta do Acaiá (uns R$ 37) e o desembarque em Dois Rios (uns R$ 20) costumam ser só em dinheiro. O caixa da vila pode ficar vazio no feriado.">Táxi-boat, quiosques, a entrada da Gruta do Acaiá (uns R$ 37) e o desembarque em Dois Rios (uns R$ 20) costumam ser só em dinheiro. O caixa da vila pode ficar vazio no feriado.</span>
+      </div></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text">
+        <strong data-en="Angra tourism fee (TTS)" data-pt="Taxa de turismo de Angra (TTS)">Taxa de turismo de Angra (TTS)</strong>
+        <span data-en="Since January 2026: R$ 47.50 per person for up to 7 days including Ilha Grande. Under 12s and over 60s are exempt. Check how it is charged to independent visitors." data-pt="Desde janeiro de 2026: R$ 47,50 por pessoa para até 7 dias incluindo a Ilha Grande. Menores de 12 e maiores de 60 são isentos. Conferir como cobram de quem vai por conta própria.">Desde janeiro de 2026: R$ 47,50 por pessoa para até 7 dias incluindo a Ilha Grande. Menores de 12 e maiores de 60 são isentos. Conferir como cobram de quem vai por conta própria.</span>
+      </div></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text">
+        <strong data-en="Boat trips: compare two agencies" data-pt="Passeio: compare duas agências">Passeio: compare duas agências</strong>
+        <span data-en="Routes are the same everywhere. What changes is boat size, lunch stop and price. Book the day before in high season." data-pt="O roteiro é igual em todo lugar. Muda o tamanho do barco, a parada do almoço e o preço. Na alta, reserve na véspera.">O roteiro é igual em todo lugar. Muda o tamanho do barco, a parada do almoço e o preço. Na alta, reserve na véspera.</span>
+      </div></div>
+    </div>
+  </div>
+
+  <div class="card" id="ess_weather">
+    <button class="card-trigger" onclick="toggleCard('ess_weather')">
+      <div class="card-icon">🌦</div>
+      <div class="card-info">
+        <div class="card-name" data-en="Weather and What to Bring" data-pt="Tempo e o que Levar">Tempo e o que Levar</div>
+        <div class="card-sub" data-en="January and February, mostly" data-pt="Janeiro e fevereiro, quase sempre">Janeiro e fevereiro, quase sempre</div>
+      </div>
+      <div class="card-arrow">▼</div>
+    </button>
+    <div class="card-body"><div class="card-rule"></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text">
+        <strong data-en="Around 30 °C by day, 23 °C at night" data-pt="Perto de 30 °C de dia, 23 °C à noite">Perto de 30 °C de dia, 23 °C à noite</strong>
+        <span data-en="January has about 14 rainy days, February 11: short storms late in the afternoon. Water around 27 °C in February." data-pt="Janeiro tem uns 14 dias de chuva, fevereiro 11: pancadas curtas no fim da tarde. Água perto de 27 °C em fevereiro.">Janeiro tem uns 14 dias de chuva, fevereiro 11: pancadas curtas no fim da tarde. Água perto de 27 °C em fevereiro.</span>
+      </div></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text">
+        <strong data-en="In the bag" data-pt="Na mochila">Na mochila</strong>
+        <span data-en="Trail shoes, a dry bag for the boat, snorkel mask, head torch for Papagaio, water bottle and a packed lunch for Lopes Mendes and Dois Rios." data-pt="Tênis de trilha, saco estanque para o barco, máscara de snorkel, lanterna de cabeça para o Papagaio, garrafa de água e lanche para Lopes Mendes e Dois Rios.">Tênis de trilha, saco estanque para o barco, máscara de snorkel, lanterna de cabeça para o Papagaio, garrafa de água e lanche para Lopes Mendes e Dois Rios.</span>
+      </div></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text">
+        <strong data-en="Signal comes and goes" data-pt="O sinal oscila">O sinal oscila</strong>
+        <span data-en="Fine in the village, gone on most trails and the south side. This guide works offline once opened." data-pt="Na vila funciona, nas trilhas e no lado sul quase nunca. Este guia funciona offline depois de aberto uma vez.">Na vila funciona, nas trilhas e no lado sul quase nunca. Este guia funciona offline depois de aberto uma vez.</span>
+      </div></div>
+    </div>
+  </div>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- ============ 2. O QUE FAZER ============ -->
+<div class="section-wrap" id="fazer">
+  <div class="section-header">
+    <div class="section-tag" data-en="The Island" data-pt="A Ilha">A Ilha</div>
+    <h2 class="section-title" data-en="What to <em>Do</em>" data-pt="O que <em>Fazer</em>">O que <em>Fazer</em></h2>
+    <div class="section-rule"></div>
+  </div>
+  <p class="section-intro" data-en="Tap Done when you do something. It goes into the current trip and stays in the History." data-pt="Toque em Fiz quando fizer alguma coisa. Entra na viagem atual e fica no Histórico.">Toque em Fiz quando fizer alguma coisa. Entra na viagem atual e fica no Histórico.</p>
+
+  <div class="filters" id="filters"></div>
+  <div id="catalog"></div>
+  <button class="add-idea" onclick="ideaForm()" data-en="+ My idea" data-pt="+ Minha ideia">+ Minha ideia</button>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- ============ 3. BOM SABER ============ -->
+<div class="section-wrap" id="goodtoknow">
+  <div class="section-header">
+    <div class="section-tag" data-en="Off the Page" data-pt="Fora do Roteiro">Fora do Roteiro</div>
+    <h2 class="section-title" data-en="Good to <em>Know</em>" data-pt="Bom <em>Saber</em>">Bom <em>Saber</em></h2>
+    <div class="section-rule"></div>
+  </div>
+  <p class="section-intro" data-en="What the agencies do not tell you, and your own tips." data-pt="O que as agências não contam, e as suas próprias dicas.">O que as agências não contam, e as suas próprias dicas.</p>
+
+  <div class="card" id="gtk_mine">
+    <button class="card-trigger" onclick="toggleCard('gtk_mine')">
+      <div class="card-icon">✍</div>
+      <div class="card-info">
+        <div class="card-name" data-en="My Tips" data-pt="Minhas Dicas">Minhas Dicas</div>
+        <div class="card-sub" data-en="Everything you wrote on the items" data-pt="Tudo o que você escreveu nos itens">Tudo o que você escreveu nos itens</div>
+      </div>
+      <div class="card-arrow">▼</div>
+    </button>
+    <div class="card-body"><div class="card-rule"></div><div id="myTips"></div></div>
+  </div>
+
+  <div class="card" id="gtk_planb">
+    <button class="card-trigger" onclick="toggleCard('gtk_planb')">
+      <div class="card-icon">☂</div>
+      <div class="card-info">
+        <div class="card-name" data-en="Plan B" data-pt="Plano B">Plano B</div>
+        <div class="card-sub" data-en="When the sea or the sky says no" data-pt="Quando o mar ou o céu dizem não">Quando o mar ou o céu dizem não</div>
+      </div>
+      <div class="card-arrow">▼</div>
+    </button>
+    <div class="card-body"><div class="card-rule"></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text">
+        <strong data-en="Rough sea" data-pt="Mar ruim">Mar ruim</strong>
+        <span data-en="Volta à Ilha, Super Sul and Aventureiro go on the open sea and get cancelled with a southerly. The north side (Lagoa Azul, Meia Volta) nearly always still runs. Book the open-sea trips early in the stay." data-pt="Volta à Ilha, Super Sul e Aventureiro vão por mar aberto e cancelam com vento sul. O lado norte (Lagoa Azul, Meia Volta) quase sempre ainda sai. Marque os de mar aberto no começo da estadia.">Volta à Ilha, Super Sul e Aventureiro vão por mar aberto e cancelam com vento sul. O lado norte (Lagoa Azul, Meia Volta) quase sempre ainda sai. Marque os de mar aberto no começo da estadia.</span>
+      </div></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text">
+        <strong data-en="Heavy rain" data-pt="Chuva forte">Chuva forte</strong>
+        <span data-en="Trails turn to mud. Do T1 with Praia Preta and the Lazareto, the Poção, the visitor centre with its model of the island. Skip Papagaio and T9." data-pt="Trilha vira lama. Faça a T1 com Praia Preta e Lazareto, o Poção, o Centro de Visitantes com a maquete da ilha. Esqueça Papagaio e T9.">Trilha vira lama. Faça a T1 com Praia Preta e Lazareto, o Poção, o Centro de Visitantes com a maquete da ilha. Esqueça Papagaio e T9.</span>
+      </div></div>
+    </div>
+  </div>
+
+  <div class="card" id="gtk_boats">
+    <button class="card-trigger" onclick="toggleCard('gtk_boats')">
+      <div class="card-icon">⚓</div>
+      <div class="card-info">
+        <div class="card-name" data-en="Schooner, Speedboat or Private" data-pt="Escuna, Lancha ou Privativo">Escuna, Lancha ou Privativo</div>
+        <div class="card-sub" data-en="Same route, different day" data-pt="Mesmo roteiro, outro dia">Mesmo roteiro, outro dia</div>
+      </div>
+      <div class="card-arrow">▼</div>
+    </button>
+    <div class="card-body"><div class="card-rule"></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text">
+        <strong data-en="Schooner" data-pt="Escuna">Escuna</strong>
+        <span data-en="Up to 50 people, slow, cheapest. Fine for Lagoa Azul and Lopes Mendes, tiring for long routes." data-pt="Até 50 pessoas, lenta, mais barata. Boa para Lagoa Azul e Lopes Mendes, cansativa em roteiro longo.">Até 50 pessoas, lenta, mais barata. Boa para Lagoa Azul e Lopes Mendes, cansativa em roteiro longo.</span>
+      </div></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text">
+        <strong data-en="Shared speedboat or flexboat" data-pt="Lancha compartilhada ou flexboat">Lancha compartilhada ou flexboat</strong>
+        <span data-en="About 17 people, more time at each stop. The only option for Volta à Ilha." data-pt="Umas 17 pessoas, mais tempo em cada parada. A única opção para a Volta à Ilha.">Umas 17 pessoas, mais tempo em cada parada. A única opção para a Volta à Ilha.</span>
+      </div></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text">
+        <strong data-en="Private" data-pt="Privativo">Privativo</strong>
+        <span data-en="R$ 1,800 to R$ 3,290 for the boat on the websites. Run the route in reverse and you get the lagoons empty." data-pt="De R$ 1.800 a R$ 3.290 pela lancha nos sites. Fazendo o roteiro ao contrário, você pega as lagoas vazias.">De R$ 1.800 a R$ 3.290 pela lancha nos sites. Fazendo o roteiro ao contrário, você pega as lagoas vazias.</span>
+      </div></div>
+    </div>
+  </div>
+
+  <div class="card" id="gtk_ops">
+    <button class="card-trigger" onclick="toggleCard('gtk_ops')">
+      <div class="card-icon">☎</div>
+      <div class="card-info">
+        <div class="card-name" data-en="Who Runs the Trips" data-pt="Quem Faz os Passeios">Quem Faz os Passeios</div>
+        <div class="card-sub" data-en="Contacts checked on 01/11/2026" data-pt="Contatos vistos em 01/11/2026">Contatos vistos em 01/11/2026</div>
+      </div>
+      <div class="card-arrow">▼</div>
+    </button>
+    <div class="card-body"><div class="card-rule"></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text"><strong>Adventure Boat</strong><span>WhatsApp (21) 99551-0555 · Rua Getúlio Vargas, 440</span></div></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text"><strong>Ilha Tour</strong><span>WhatsApp (21) 98324-9209 · Rua Getúlio Vargas, 153</span></div></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text"><strong>Objetiva Tour</strong><span>WhatsApp (24) 98166-7428 · @objetivatour</span></div></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text"><strong>Abraão Tour</strong><span>WhatsApp (21) 96559-6708 · @abraaotour</span></div></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text"><strong>LIG Lanchas Ilha Grande</strong><span data-en="Speedboats of up to 17 people" data-pt="Lanchas de até 17 pessoas">Lanchas de até 17 pessoas</span></div></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text"><strong data-en="Old contacts, check" data-pt="Contatos antigos, conferir">Contatos antigos, conferir</strong><span>Sudoeste (24) 3361-5516 · Golfo (24) 3361-5305 · El Farol (24) 3361-9992 · Avant Tour (21) 99700-1995 · Athos (24) 99905-6860 · Como uma Onda (24) 99817-4338 · Gênesis (21) 99763-1831</span></div></div>
+    </div>
+  </div>
+
+  <div class="card" id="gtk_offguard">
+    <button class="card-trigger" onclick="toggleCard('gtk_offguard')">
+      <div class="card-icon">⚡</div>
+      <div class="card-info">
+        <div class="card-name" data-en="Things That Catch You Out" data-pt="O que Pega de Surpresa">O que Pega de Surpresa</div>
+        <div class="card-sub" data-en="Even on the third visit" data-pt="Mesmo na terceira ida">Mesmo na terceira ida</div>
+      </div>
+      <div class="card-arrow">▼</div>
+    </button>
+    <div class="card-body"><div class="card-rule"></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text">
+        <strong data-en="Lagoa Azul at 11am" data-pt="Lagoa Azul às 11h">Lagoa Azul às 11h</strong>
+        <span data-en="Every schooner arrives at once. An early water taxi gets it almost empty." data-pt="Todas as escunas chegam juntas. Um táxi-boat cedo pega a lagoa quase vazia.">Todas as escunas chegam juntas. Um táxi-boat cedo pega a lagoa quase vazia.</span>
+      </div></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text">
+        <strong data-en="Lunch comes late" data-pt="O almoço chega tarde">O almoço chega tarde</strong>
+        <span data-en="On Volta à Ilha lunch is around 4pm. Eat breakfast properly and carry a snack." data-pt="Na Volta à Ilha o almoço sai perto das 16h. Tome um café da manhã reforçado e leve lanche.">Na Volta à Ilha o almoço sai perto das 16h. Tome um café da manhã reforçado e leve lanche.</span>
+      </div></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text">
+        <strong data-en="Swimming to the sand" data-pt="Nadar até a areia">Nadar até a areia</strong>
+        <span data-en="At Dentista and other stops the boat stays off the beach. Ask if they lend floats." data-pt="No Dentista e em outras paradas o barco não encosta. Pergunte se emprestam boia.">No Dentista e em outras paradas o barco não encosta. Pergunte se emprestam boia.</span>
+      </div></div>
+      <div class="item-row"><div class="item-dot"></div><div class="item-text">
+        <strong data-en="Trail cut-off times" data-pt="Horário limite nas trilhas">Horário limite nas trilhas</strong>
+        <span data-en="Papagaio: set off before noon. Farol dos Castelhanos: not after 1pm. Dois Rios to Parnaioca: not after 2pm." data-pt="Papagaio: sair antes do meio-dia. Farol dos Castelhanos: não depois das 13h. Dois Rios até Parnaioca: não depois das 14h.">Papagaio: sair antes do meio-dia. Farol dos Castelhanos: não depois das 13h. Dois Rios até Parnaioca: não depois das 14h.</span>
+      </div></div>
+    </div>
+  </div>
+
+  <div class="card" id="gtk_months">
+    <button class="card-trigger" onclick="toggleCard('gtk_months')">
+      <div class="card-icon">📅</div>
+      <div class="card-info">
+        <div class="card-name" data-en="Month by Month" data-pt="Mês a Mês">Mês a Mês</div>
+        <div class="card-sub" data-en="INMET averages for Angra dos Reis" data-pt="Médias do INMET em Angra dos Reis">Médias do INMET em Angra dos Reis</div>
+      </div>
+      <div class="card-arrow">▼</div>
+    </button>
+    <div class="card-body"><div class="card-rule"></div><div id="months"></div></div>
+  </div>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- ============ 4. HISTÓRICO ============ -->
+<div class="section-wrap" id="historico">
+  <div class="section-header">
+    <div class="section-tag" data-en="Every Trip" data-pt="Cada Ida">Cada Ida</div>
+    <h2 class="section-title" data-en="The <em>History</em>" data-pt="O <em>Histórico</em>">O <em>Histórico</em></h2>
+    <div class="section-rule"></div>
+  </div>
+  <p class="section-intro" data-en="The current trip first, then every trip before it." data-pt="A viagem atual primeiro, depois todas as anteriores.">A viagem atual primeiro, depois todas as anteriores.</p>
+  <div id="current"></div>
+  <div id="past"></div>
+  <div class="hist-tools">
+    <button class="map-btn" onclick="downloadBackup()" data-en="Download backup" data-pt="Baixar backup">Baixar backup</button>
+  </div>
+</div>
+
+</main>
+
+<footer>
+  <p data-en="A Field Guide to Ilha Grande &nbsp;·&nbsp; by Claudio SAROLDI" data-pt="Um Guia de Campo para Ilha Grande &nbsp;·&nbsp; por Claudio SAROLDI">Um Guia de Campo para Ilha Grande &nbsp;·&nbsp; por Claudio SAROLDI</p>
+  <p id="verLine"></p>
+</footer>
+
+<nav class="dock" aria-label="Primary">
+  <a href="#top"><span class="dock-icon">✦</span><span data-en="Home" data-pt="Início">Início</span></a>
+  <a href="#essentials"><span class="dock-icon">◆</span><span data-en="Basics" data-pt="Essencial">Essencial</span></a>
+  <a href="#fazer"><span class="dock-icon">◐</span><span data-en="To do" data-pt="Fazer">Fazer</span></a>
+  <a href="#goodtoknow"><span class="dock-icon">✦</span><span data-en="Know" data-pt="Saber">Saber</span></a>
+  <a href="#historico"><span class="dock-icon">❦</span><span data-en="History" data-pt="Histórico">Histórico</span></a>
+</nav>
+
+<div id="modal" class="modal" hidden><div class="modal-box" id="modalBox"></div></div>
+<div id="toast" class="toast"></div>
+
+<script>
+/* ============================================================
+   CONFIG
+   ============================================================ */
+const CONFIG = {
+  destination: 'Ilha Grande',
+  timeZone: 'America/Sao_Paulo',
+  coords: { lat: -23.1428, lng: -44.1703 },          /* Vila do Abraão */
+  homeBase: { name: 'Vila do Abraão', address: 'Ilha Grande, Angra dos Reis, RJ', mapQuery: 'Vila do Abraão, Ilha Grande, RJ' },
+  storageKey: 'ilhagrande-guia',
+  SEND_TO: 'df9aa91efc0a8489ee84c1ce2536c880',       /* FormSubmit: o fechamento da viagem chega por e-mail */
+  MAIL_TAG: '[DIARIO-ILHAGRANDE]',
+  VERSION: 'v1.0', BUILT: '01/11/2026'
+};
+
+/* ============================================================
+   HISTÓRICO PUBLICADO
+   Viagens já fechadas. A tarefa agendada acrescenta aqui as viagens
+   que chegam por e-mail. Item: {id} de ITEMS, ou {id, n} para ideia própria.
+   ============================================================ */
+/* HISTORY:START */
+const HISTORY = [
+  {"id":"v2024","name":"Ilha Grande 2024","year":2024,"start":"","end":"","with":"","stay":"","note":"Datas e detalhes a completar.","items":[{"id":"ba20","op":"","note":""}]},
+  {"id":"v2025","name":"Ilha Grande 2025","year":2025,"start":"","end":"","with":"","stay":"","note":"Datas e detalhes a completar.","items":[{"id":"ba11","op":"","note":""},{"id":"ba20","op":"","note":""}]}
+];
+/* HISTORY:END */
+
+/* ITEMS e MONTHS: gerados a partir dos dados do planner da Ilha Grande */
+const ITEMS = [{"id":"ba01","g":"barco","n":["Meia Volta","Meia Volta (half loop)"],"d":["O passeio mais pedido. Lagoa Azul, Lagoa Verde, Praia do Amor, Praia da Feiticeira e parada para almoço. Cerca de 6 horas, saída 10h30. Lancha compartilhada de R$ 140 a R$ 160 nos sites, escuna sai mais barato.","The most popular trip. Lagoa Azul, Lagoa Verde, Praia do Amor, Praia da Feiticeira and a lunch stop. About 6 hours, leaving 10:30am. Shared speedboat R$ 140 to R$ 160 on the websites, schooners are cheaper."],"t":"v","c":1},{"id":"ba02","g":"barco","n":["Lagoa Azul de escuna","Lagoa Azul by schooner"],"d":["O clássico mais barato: Lagoa Azul para snorkel, Freguesia de Santana, Praia da Baleia ou Japariz para almoço. Escuna grande, até 50 pessoas. Cerca de R$ 80 a R$ 90.","The cheapest classic: Lagoa Azul for snorkelling, Freguesia de Santana, Praia da Baleia or Japariz for lunch. Big schooner, up to 50 people. About R$ 80 to R$ 90."],"t":"k","c":1},{"id":"ba03","g":"barco","n":["Super Lagoa Azul","Super Lagoa Azul"],"d":["Mais tempo na Lagoa Azul (cerca de 1h30) e depois Grumixama, Macacos, Amor e Camiranga. Costuma sair só na alta temporada.","More time at Lagoa Azul (about 1h30), then Grumixama, Macacos, Amor and Camiranga. Usually runs only in high season."],"t":"","c":1},{"id":"ba04","g":"barco","n":["Gruta do Acaiá","Gruta do Acaiá (sea cave)"],"d":["Gruta com saída para o mar onde a luz deixa a água azul fluorescente, mais Lagoa Azul, Lagoa Verde e Saco do Céu. De R$ 180 a R$ 235 nos sites. Entrada da gruta paga à parte, cerca de R$ 37 (conferir).","A sea cave where light turns the water fluorescent blue, plus Lagoa Azul, Lagoa Verde and Saco do Céu. R$ 180 to R$ 235 on the websites. Cave entry paid separately, about R$ 37 (check)."],"t":"h,v","c":1},{"id":"ba05","g":"barco","n":["Ilha Tour 90 graus","Ilha Tour 90 degrees"],"d":["Versão curta da Ilha Tour: Lagoa Azul, Saco do Céu e pontos menos cheios. A partir de R$ 150. Bom para quem quer meio dia de barco e meio dia de praia.","Ilha Tour's short version: Lagoa Azul, Saco do Céu and quieter spots. From R$ 150. Good if you want half a day on a boat and half on a beach."],"t":"","c":1},{"id":"ba06","g":"barco","n":["Caipirinha Tour","Caipirinha Tour"],"d":["Lagoa Azul, Saco do Céu e Praia do Amor com caipirinha a bordo. A partir de R$ 195. Mais festa que passeio.","Lagoa Azul, Saco do Céu and Praia do Amor with caipirinhas on board. From R$ 195. More party than tour."],"t":"","c":1},{"id":"ba07","g":"barco","n":["Trip Feiticeira","Trip Feiticeira"],"d":["Lagoa Secreta, Saco do Céu e Praia da Feiticeira, com tempo para subir até a cachoeira. Meio dia.","Lagoa Secreta, Saco do Céu and Praia da Feiticeira, with time to walk up to the waterfall. Half day."],"t":"","c":1},{"id":"ba08","g":"barco","n":["Lagoa Verde, Aripeba e Japariz","Lagoa Verde, Aripeba and Japariz"],"d":["Roteiro de escuna focado na Lagoa Verde, com Aripeba, Japariz e Feiticeira. Sai por volta de 10h30 e volta 17h30 (conferir).","A schooner route focused on Lagoa Verde, with Aripeba, Japariz and Feiticeira. Leaves about 10:30am, back 5:30pm (check)."],"t":"","c":1},{"id":"ba10","g":"barco","n":["Volta à Ilha","Full island loop"],"d":["A ilha inteira num dia, só de lancha. Caxadaço, Parnaioca, Aventureiro, Meros e almoço em Maguariqueçaba já perto do fim. Saída 9h30, volta 17h. De R$ 180 a R$ 280. Depende do mar: marque no começo da viagem.","The whole island in a day, speedboat only. Caxadaço, Parnaioca, Aventureiro, Meros and a late lunch at Maguariqueçaba. Leaves 9:30am, back 5pm. R$ 180 to R$ 280. Sea permitting: book it early in the trip."],"t":"m,a,v","c":1},{"id":"ba11","g":"barco","n":["Super Sul","Super Sul"],"d":["Ilha de Jorge Grego para snorkel, Caxadaço, Dois Rios com o antigo presídio e Lopes Mendes. Cerca de 6 horas. De R$ 250 a R$ 320. Desembarque em Dois Rios pode cobrar uns R$ 20 (conferir). Só com tempo bom.","Jorge Grego island for snorkelling, Caxadaço, Dois Rios with the old prison and Lopes Mendes. About 6 hours. R$ 250 to R$ 320. Landing at Dois Rios may cost about R$ 20 (check). Good weather only."],"t":"m,v","c":1},{"id":"ba12","g":"barco","n":["Aventureiro de flexboat","Aventureiro by flexboat"],"d":["Parnaioca, Aventureiro (com o coqueiro deitado da foto famosa) e Meros, com mais tempo em cada praia. Aventureiro fica na reserva da Praia do Sul e tem limite de visitantes. Mar aberto.","Parnaioca, Aventureiro (with the famous leaning palm) and Meros, with more time on each beach. Aventureiro is inside the Praia do Sul reserve and has a visitor cap. Open sea."],"t":"m,h,v","c":1},{"id":"ba20","g":"barco","n":["Ilhas Paradisíacas","Paradise Islands"],"d":["Ilha de Cataguases, Ilhas Botinas (snorkel, sem desembarque), Praia do Dentista e Piedade, na Gipoia, mais almoço. De 6 a 7 horas, saída 10h30. De R$ 160 a R$ 190 nos sites. No Dentista o barco não encosta: precisa nadar um pouco.","Cataguases island, the Botinas islets (snorkelling, no landing), Praia do Dentista and Piedade on Gipoia, plus lunch. 6 to 7 hours, leaving 10:30am. R$ 160 to R$ 190 on the websites. At Dentista the boat does not reach the sand: you swim a little."],"t":"v","c":1},{"id":"ba30","g":"barco","n":["Lancha privativa","Private speedboat"],"d":["Escolhe o roteiro e o horário. Nos sites, de R$ 1.800 a R$ 3.290 pela lancha conforme o roteiro (Super Sul e Gruta do Acaiá são os mais caros). Para 3 pessoas pesa, vale juntar mais gente.","You pick the route and times. On the websites, R$ 1,800 to R$ 3,290 for the boat depending on route (Super Sul and Gruta do Acaiá cost the most). For 3 people it is steep, worth sharing."],"t":"","c":0},{"id":"ba31","g":"barco","n":["Lancha com churrasco a bordo","Speedboat with a barbecue on board"],"d":["Privativa com churrasqueira, parando nas lagoas. Oferecido pela Abraão Tour. Preço sob consulta.","Private boat with a grill, stopping at the lagoons. Offered by Abraão Tour. Price on request."],"t":"","c":0},{"id":"ba32","g":"barco","n":["Pôr do sol no lado norte","Sunset on the north side"],"d":["Saída curta no fim da tarde para o lado calmo da ilha. Várias agências fazem, às vezes só na alta temporada.","A short late-afternoon outing to the calm side of the island. Several agencies run it, sometimes only in high season."],"t":"s,n","c":0},{"id":"ba33","g":"barco","n":["Jantar no Saco do Céu","Dinner at Saco do Céu"],"d":["Saída à noite para jantar na enseada do Saco do Céu, de água parada e céu estrelado. Abraão Tour vende. Conferir o cardápio, a região é forte em peixe.","An evening boat to dinner in the still Saco do Céu cove under the stars. Sold by Abraão Tour. Check the menu, the area leans heavily on fish."],"t":"n,h","c":0},{"id":"ba34","g":"barco","n":["Canoa polinésia","Polynesian canoe"],"d":["Remada em grupo ao nascer ou ao pôr do sol, saindo da praia do Abraão. Abraão Tour oferece. Exercício e vista ao mesmo tempo.","Group paddling at sunrise or sunset from Abraão beach. Offered by Abraão Tour. Exercise and a view at once."],"t":"s,h","c":0},{"id":"ba40","g":"barco","n":["Mergulho de batismo","Discover scuba dive"],"d":["Primeiro mergulho de cilindro com instrutor, sem curso. Adventure Boat cobra R$ 600 com saída 10h30. Outros centros cobram entre R$ 450 e R$ 500 (conferir). Não voar nas 24 horas seguintes.","A first scuba dive with an instructor, no course needed. Adventure Boat charges R$ 600, leaving 10:30am. Other centres charge R$ 450 to R$ 500 (check). Do not fly in the following 24 hours."],"t":"a","c":0},{"id":"ba41","g":"barco","n":["Mergulho para credenciados","Dives for certified divers"],"d":["Naufrágios e costões da baía. Centros com cadastro PADI na região: Elite Dive Center, Dive Cia e Jamanta Dive Center (conferir quais saem do Abraão).","Wrecks and rocky reefs around the bay. PADI-listed centres in the area: Elite Dive Center, Dive Cia and Jamanta Dive Center (check which leave from Abraão)."],"t":"a,h","c":0},{"id":"ba42","g":"barco","n":["Caiaque ou SUP","Kayak or SUP"],"d":["Aluga na praia do Abraão e rema até a Praia do Canto ou Júlia. Melhor de manhã, antes do vento.","Rent one on Abraão beach and paddle to Praia do Canto or Júlia. Best in the morning, before the wind."],"t":"b,k","c":0},{"id":"ba43","g":"barco","n":["Táxi-boat para as praias perto","Water taxi to nearby beaches"],"d":["Barquinhos no cais levam a Crena, Abraãozinho, Feiticeira e outras, e buscam na hora combinada. Preço combinado com o barqueiro, por pessoa, quase sempre em dinheiro.","Small boats at the pier run to Crena, Abraãozinho, Feiticeira and others, and pick you up at a set time. Price agreed with the boatman, per person, nearly always cash."],"t":"k","c":0},{"id":"ba44","g":"barco","n":["Snorkel por conta própria","Snorkelling on your own"],"d":["Aluga máscara na vila e leva para a Lagoa Azul, Praia Preta ou o Poção. Pergunte se o seu passeio já inclui.","Rent a mask in the village and take it to Lagoa Azul, Praia Preta or the Poção. Ask whether your tour already includes one."],"t":"b,g","c":0},{"id":"tr01","g":"trilhas","n":["T1 Circuito do Abraão","T1 Abraão circuit"],"d":["Cerca de 1,8 km, leve. Sede do parque com a maquete da ilha, Praia Preta de areia escura, ruínas do Lazareto, aqueduto e o Poção, uma piscina natural no rio. Ótimo no primeiro dia ou com mar ruim.","About 1.8 km, easy. The park office with a model of the island, dark-sand Praia Preta, the Lazareto ruins, the aqueduct and the Poção, a natural river pool. Great on day one or when the sea is rough."],"t":"b,k,g","c":0},{"id":"tr02","g":"trilhas","n":["T2 Aqueduto até Saco do Céu (via Feiticeira)","T2 Aqueduct to Saco do Céu (via Feiticeira)"],"d":["Cerca de 1 hora até a Cachoeira da Feiticeira, mais 20 minutos até a praia. Dá para voltar de táxi-boat. Seguindo até o Saco do Céu são uns 5 km só de ida.","About 1 hour to the Feiticeira waterfall, 20 more minutes to the beach. You can return by water taxi. Carrying on to Saco do Céu is about 5 km one way."],"t":"b,g","c":0},{"id":"tr03","g":"trilhas","n":["T10 e T11 Abraão até Lopes Mendes a pé","T10 and T11 Abraão to Lopes Mendes on foot"],"d":["Cerca de 3 horas de ida, com uma serra logo no começo. Passa por Palmas, Mangues e Pouso. Sem quiosques no caminho: levar água e almoço. Volta de barco do Pouso à tarde.","About 3 hours one way, with a climb right at the start. Passes Palmas, Mangues and Pouso. No kiosks on the way: carry water and lunch. Boat back from Pouso in the afternoon."],"t":"b,g,v","c":0},{"id":"tr04","g":"trilhas","n":["T14 Abraão até Dois Rios","T14 Abraão to Dois Rios"],"d":["Cerca de 7 a 8 km de ida, de 2h30 a 3h, por estrada de terra antiga com subida longa. Chega na vila do antigo presídio, com museu, praia e rio. Volta pelo mesmo caminho: sair cedo.","About 7 to 8 km one way, 2h30 to 3h, on an old dirt road with a long climb. Arrives at the old prison village, with a museum, beach and river. Same way back: start early."],"t":"b,g","c":0},{"id":"tr05","g":"trilhas","n":["T13 Pico do Papagaio","T13 Pico do Papagaio"],"d":["O ponto mais alto, perto de 980 m, com vista da baía inteira. Cerca de 6 horas ida e volta, a mais difícil da ilha. Guia muito recomendado. Sair antes do meio-dia, ou fazer a versão noturna guiada para ver o sol nascer (cerca de R$ 170 a R$ 375). Reserva no INEA em fim de semana (conferir).","The highest point, about 980 m, with a view over the whole bay. About 6 hours return, the hardest trail on the island. A guide is strongly advised. Set off before noon, or join the guided night hike for sunrise (about R$ 170 to R$ 375). INEA booking at weekends (check)."],"t":"a,v,b","c":0},{"id":"tr06","g":"trilhas","n":["Caminho das praias da vila","Village beaches path"],"d":["Da Praia do Canto até Júlia, Bica, Crena e Abraãozinho, cerca de 50 minutos. Leve, com sombra. Volta de táxi-boat.","From Praia do Canto to Júlia, Bica, Crena and Abraãozinho, about 50 minutes. Easy and shaded. Water taxi back."],"t":"b,g,k","c":0},{"id":"tr10","g":"trilhas","n":["T3 Saco do Céu até Freguesia de Santana","T3 Saco do Céu to Freguesia de Santana"],"d":["Cerca de 4 km, 2 horas. Mata densa, subidas curtas e íngremes, chega na igreja de Santana do século XVIII.","About 4 km, 2 hours. Dense forest, short steep climbs, ending at the 18th-century Santana church."],"t":"","c":0},{"id":"tr11","g":"trilhas","n":["T4 e T5 Freguesia, Bananal e Sítio Forte","T4 and T5 Freguesia, Bananal and Sítio Forte"],"d":["Uns 8 km no total. Vista da Lagoa Azul do mirante do Bananal, figueiras enormes e tartarugas no Sítio Forte.","About 8 km in all. Lagoa Azul from the Bananal lookout, giant fig trees and turtles at Sítio Forte."],"t":"h","c":0},{"id":"tr12","g":"trilhas","n":["T6 e T7 Araçatiba e Gruta do Acaiá","T6 and T7 Araçatiba and Gruta do Acaiá"],"d":["De Araçatiba até a gruta são uns 5 km, cerca de 3 horas. Taxa pequena paga a um morador na entrada da gruta.","From Araçatiba to the cave is about 5 km, around 3 hours. A small fee paid to a local at the cave entrance."],"t":"h","c":0},{"id":"tr13","g":"trilhas","n":["T8 e T9 Provetá até Aventureiro","T8 and T9 Provetá to Aventureiro"],"d":["A T9 é das mais radicais da ilha, com descidas muito íngremes. Água de riacho precisa ser tratada. Para quem dorme numa das vilas.","T9 is one of the toughest on the island, with very steep descents. Stream water needs treating. For people staying in one of the villages."],"t":"a,h","c":0},{"id":"tr14","g":"trilhas","n":["T12 Pouso até o Farol dos Castelhanos","T12 Pouso to Farol dos Castelhanos"],"d":["Uns 6 km de ida, piscina natural do Jurubá e o farol. Muitas bifurcações: guia recomendado. Não seguir para o farol depois das 13h.","About 6 km one way, the Jurubá natural pool and the lighthouse. Many forks: a guide is advised. Do not head for the lighthouse after 1pm."],"t":"a,h","c":0},{"id":"tr15","g":"trilhas","n":["T15 Dois Rios até Caxadaço","T15 Dois Rios to Caxadaço"],"d":["Cerca de 4 km e 2h30 de ida. Praia pequena e escondida, com tartarugas.","About 4 km and 2h30 one way. A small hidden beach with turtles."],"t":"h","c":0},{"id":"tr16","g":"trilhas","n":["T16 Dois Rios até Parnaioca","T16 Dois Rios to Parnaioca"],"d":["O trecho mais longo de praia a praia, cerca de 7,5 km. Não sair de Dois Rios depois das 14h. Pode ter limite de visitantes em feriado.","The longest beach-to-beach stretch, about 7.5 km. Do not leave Dois Rios after 2pm. May have a visitor cap on holidays."],"t":"a","c":0},{"id":"tr17","g":"trilhas","n":["Volta à ilha a pé com guia","Island loop on foot with a guide"],"d":["Cerca de 70 km em 4 a 5 dias, passando por umas 20 praias. Precisa de guia credenciado pelo parque. O trecho Aventureiro e Parnaioca é feito de barco, porque a reserva não deixa caminhar.","About 70 km over 4 to 5 days, passing some 20 beaches. Needs a park-accredited guide. The Aventureiro to Parnaioca stretch is done by boat, as walking through the reserve is not allowed."],"t":"a","c":0},{"id":"pr01","g":"praias","n":["Praia do Canto","Praia do Canto"],"d":["Logo depois da vila, água calma e restaurantes. Ponto de partida da caminhada para as outras praias.","Just past the village, calm water and restaurants. The starting point for the walk to the other beaches."],"t":"p,k,b,g","c":0},{"id":"pr02","g":"praias","n":["Praia da Júlia e Praia da Bica","Praia da Júlia and Praia da Bica"],"d":["Duas pequenas e tranquilas no caminho. A Bica tem uma bica de água doce e quase some na maré alta.","Two small quiet ones on the path. Bica has a freshwater spout and almost disappears at high tide."],"t":"p,b,g","c":0},{"id":"pr03","g":"praias","n":["Praia da Crena","Praia da Crena"],"d":["Pequena, de água esverdeada e calma, com quiosque e chuveiro. Também chega de táxi-boat.","Small, with calm green water, a kiosk and a shower. Also reachable by water taxi."],"t":"p,k,b","c":0},{"id":"pr04","g":"praias","n":["Praia do Abraãozinho","Praia do Abraãozinho"],"d":["Fim do caminho das praias, com bar e estrutura. Boa para almoçar e voltar de táxi-boat.","The end of the beach path, with a bar and facilities. Good for lunch and a water taxi back."],"t":"p,k,b","c":0},{"id":"pr05","g":"praias","n":["Praia Preta","Praia Preta"],"d":["Areia escura de minerais, água calma, a 15 minutos da vila pela T1. Fica no caminho do Lazareto.","Dark mineral sand and calm water, 15 minutes from the village on T1. On the way to the Lazareto."],"t":"p,b,g,k","c":0},{"id":"pr06","g":"praias","n":["Praia da Feiticeira","Praia da Feiticeira"],"d":["Água calma, sombra e nada de estrutura. Junta com a cachoeira. Volta de táxi-boat.","Calm water, shade and no facilities. Combine with the waterfall. Water taxi back."],"t":"p,b","c":0},{"id":"pr10","g":"praias","n":["Lopes Mendes de barco","Lopes Mendes by boat"],"d":["A praia mais famosa da ilha, 3 km de areia branca e mar de surfe. Barco até o Pouso (R$ 40 a R$ 80 ida e volta conforme a agência) e 30 minutos de trilha. Saídas a partir de 9h30, última volta perto das 17h30. Sem quiosques: levar lanche.","The island's most famous beach, 3 km of white sand and surf. Boat to Pouso (R$ 40 to R$ 80 return depending on agency) and a 30-minute trail. Departures from 9:30am, last boat back around 5:30pm. No kiosks: bring a packed lunch."],"t":"p,v","c":0},{"id":"pr11","g":"praias","n":["Praia de Santo Antônio","Praia de Santo Antônio"],"d":["Escondida, a 10 ou 15 minutos do canto de Lopes Mendes. A entrada não tem placa: procure o caminho à direita.","Hidden, 10 to 15 minutes from the end of Lopes Mendes. The turn has no sign: look for a path on the right."],"t":"p,h","c":0},{"id":"pr12","g":"praias","n":["Praia do Pouso","Praia do Pouso"],"d":["Onde os barcos de Lopes Mendes param. Calma, com restaurante flutuante para esperar o barco da volta.","Where the Lopes Mendes boats land. Calm, with a floating restaurant for waiting on the boat back."],"t":"p,k","c":0},{"id":"pr13","g":"praias","n":["Dois Rios","Dois Rios"],"d":["Praia larga entre dois rios, na vila do antigo presídio. Pela T14 ou no Super Sul.","A wide beach between two rivers, at the old prison village. Via T14 or on the Super Sul trip."],"t":"p,h","c":0},{"id":"pr14","g":"praias","n":["Lagoa Azul por conta própria","Lagoa Azul on your own"],"d":["Truque: táxi-boat cedo, antes das escunas das 11h, e você pega a lagoa quase vazia. Combinar o preço na véspera.","Tip: an early water taxi, before the 11am schooners, and you get the lagoon almost to yourself. Agree the price the day before."],"t":"h","c":0},{"id":"va01","g":"vila","n":["Igreja de São Sebastião","São Sebastião church"],"d":["A igrejinha branca na praça, cartão-postal da vila. A feirinha de artesanato fica na praça à noite.","The little white church on the square, the village's postcard. The craft fair sets up on the square at night."],"t":"b,c,g","c":0},{"id":"va02","g":"vila","n":["Centro de Visitantes do Parque","Park visitor centre"],"d":["Maquete da ilha inteira, mapas das trilhas e informação atualizada sobre fechamentos. Bom para planejar no primeiro dia.","A model of the whole island, trail maps and current closure information. Good for planning on day one."],"t":"b,c,g,k","c":0},{"id":"va03","g":"vila","n":["Ruínas do Lazareto e Aqueduto","Lazareto ruins and aqueduct"],"d":["Restos do antigo hospital de quarentena do século XIX, que depois virou presídio, e o aqueduto de pedra coberto de mata. Pela T1.","Remains of the 19th-century quarantine hospital, later a prison, and the moss-covered stone aqueduct. Via T1."],"t":"b,g,v","c":0},{"id":"va04","g":"vila","n":["Poção e Cachoeira dos Escravos","Poção and Cachoeira dos Escravos"],"d":["Piscina natural de rio a uns 30 minutos da vila. Enche em fim de semana e feriado: ir cedo.","A natural river pool about 30 minutes from the village. Busy at weekends and holidays: go early."],"t":"b,g,k","c":0},{"id":"va05","g":"vila","n":["Museu do Cárcere em Dois Rios","Prison museum at Dois Rios"],"d":["Conta a história do Instituto Penal Cândido Mendes, desativado em 1994. Chega pela T14 ou no Super Sul. Conferir horário antes de ir.","Tells the story of the Cândido Mendes prison, closed in 1994. Reach it via T14 or on the Super Sul trip. Check opening hours first."],"t":"b,c,h","c":0},{"id":"va06","g":"vila","n":["Festa de São Sebastião","São Sebastião festival"],"d":["O padroeiro do Abraão é festejado perto de 20 de janeiro, com procissão e barracas. Data e programação mudam a cada ano: conferir.","Abraão's patron saint is celebrated around 20 January, with a procession and stalls. Dates and programme change each year: check."],"t":"n","c":0},{"id":"va07","g":"vila","n":["Réveillon no Abraão","New Year's Eve in Abraão"],"d":["Fogos na baía e praia lotada. Pousada e travessia esgotam cedo: reservar com meses de antecedência.","Fireworks over the bay and a packed beach. Rooms and crossings sell out early: book months ahead."],"t":"n","c":0},{"id":"va08","g":"vila","n":["Festa de Santana na Freguesia","Santana festival at Freguesia"],"d":["A igreja de Santana, do século XVIII, costuma festejar a santa perto de 26 de julho. Conferir se e quando acontece no ano.","The 18th-century Santana church usually honours the saint around 26 July. Check whether and when it happens that year."],"t":"h","c":0},{"id":"va09","g":"vila","n":["Pôr do sol na praia do Abraão","Sunset on Abraão beach"],"d":["A praia da vila não é a melhor para banho, mas o pôr do sol para o lado do continente compensa. Sorvete no Finlandês e mureta.","The village beach is not the best for swimming, but the sunset over the mainland makes up for it. Ice cream from Finlandês on the sea wall."],"t":"s,g,b","c":0},{"id":"va10","g":"vila","n":["Feirinha e noite na vila","Craft fair and village nights"],"d":["Feira de artesanato na praça toda noite e bares com música. Às segundas reggae e às quartas forró no Aquário (conferir).","A craft fair on the square every night and bars with music. Reggae on Mondays and forró on Wednesdays at Aquário (check)."],"t":"n,g,b","c":0},{"id":"va11","g":"vila","n":["Freguesia de Santana","Freguesia de Santana"],"d":["Vila caiçara com a igreja mais antiga da ilha. Parada de várias escunas da Lagoa Azul, ou pela T3.","A caiçara village with the oldest church on the island. A stop on several Lagoa Azul schooners, or via T3."],"t":"h","c":0},{"id":"f01","g":"comer","n":["Las Sorrentinas","Las Sorrentinas"],"d":["Massa fresca recheada, só no jantar. Sorrentinos de muçarela, gorgonzola com nozes ou abóbora, e o brownie com sorvete. Média perto de R$ 85 por pessoa. Rua Getúlio Vargas, 638.","Fresh filled pasta, dinner only. Sorrentinos with mozzarella, gorgonzola and walnut or pumpkin, plus the brownie with ice cream. About R$ 85 a head. Rua Getúlio Vargas 638."],"t":"","c":0},{"id":"f02","g":"comer","n":["Pizzaria Fornalha","Pizzaria Fornalha"],"d":["Pizza de forno a lenha em muitos sabores, e algumas massas. Rua Santana, 44. O nome aparece como Fornalha e Fornilha nos guias: conferir no mapa.","Wood-fired pizza in many flavours, and some pasta. Rua Santana 44. Guides spell it Fornalha and Fornilha: check the map."],"t":"","c":0},{"id":"f03","g":"comer","n":["Pizza na Praça","Pizza na Praça"],"d":["Simples, na praça, com mais de 40 pizzas, buffet e saladas no almoço e música no fim de semana. Bom e barato.","Simple, on the square, with 40-plus pizzas, a lunch buffet and salads, and music at weekends. Good and cheap."],"t":"","c":0},{"id":"f04","g":"comer","n":["Casarão da Ilha","Casarão da Ilha"],"d":["Casa caiçara perto do cais. Por quilo no almoço, petiscos e pizza à noite, com música ao vivo.","A caiçara house near the pier. Pay-by-weight at lunch, snacks and pizza at night, with live music."],"t":"","c":0},{"id":"f05","g":"comer","n":["Padaria Pães e Cia","Padaria Pães e Cia"],"d":["Café da manhã, pão recheado e sanduíche para levar no passeio ou na trilha. Rua Santana.","Breakfast, stuffed bread and sandwiches to take on the boat or trail. Rua Santana."],"t":"","c":0},{"id":"f06","g":"comer","n":["Ateliê Cafeteria","Ateliê Cafeteria"],"d":["Pé na areia, decoração diferente. Omelete, crepe, sanduíche e bruschetta de dia, drinks à noite. O crepe marguerita é elogiado.","On the sand, quirky decor. Omelettes, crêpes, sandwiches and bruschetta by day, drinks at night. The margherita crêpe gets praise."],"t":"","c":0},{"id":"f07","g":"comer","n":["Café do Mar","Café do Mar"],"d":["Na Praia do Canto, com churrasco argentino e espetinhos. Bom para ver o fim da tarde.","On Praia do Canto, with Argentine grills and skewers. Good for watching the late afternoon."],"t":"","c":0},{"id":"f08","g":"comer","n":["Steak and Beach","Steak and Beach"],"d":["Beira-mar, mesas na areia, picanha e grelhados, cerveja artesanal, opções vegetarianas e sem glúten.","Seafront, tables on the sand, picanha and grills, craft beer, vegetarian and gluten-free options."],"t":"","c":0},{"id":"f09","g":"comer","n":["Lonier","Lonier"],"d":["Mesas na areia, prato com frango ou peixe grelhado, arroz, feijão e salada. Dos mais em conta da orla (preços antigos nos guias: conferir).","Tables on the sand, grilled chicken or fish with rice, beans and salad. One of the cheapest on the seafront (old prices in guides: check)."],"t":"","c":0},{"id":"f10","g":"comer","n":["Jardin","Jardin"],"d":["Restaurante caseiro no meio da mata, só no jantar, com caminhada guiada até lá incluída. Saladas, vegetariano e hambúrguer.","A home-style restaurant in the forest, dinner only, with a guided walk there included. Salads, vegetarian dishes and burgers."],"t":"h","c":0},{"id":"f11","g":"comer","n":["Kebab Lounge","Kebab Lounge"],"d":["Kebab e yakisoba que dá para dois. Rua Santana. Dica antiga: conferir se ainda abre.","Kebab and a yakisoba big enough for two. Rua Santana. An old tip: check it still opens."],"t":"","c":0},{"id":"f12","g":"comer","n":["Bardejeco","Bardejeco"],"d":["Boteco perto do cais, cerveja mais barata e porção farta de frango a passarinho ou carne seca com fritas.","A simple bar near the pier, cheaper beer and big plates of fried chicken bites or dried beef with chips."],"t":"n","c":0},{"id":"f13","g":"comer","n":["Sorveteria Finlandês","Sorveteria Finlandês"],"d":["Sorvete a quilo na Rua da Praia. O de banana é o pedido clássico, tomado na mureta da praia.","Ice cream by weight on Rua da Praia. Banana is the classic order, eaten on the beach wall."],"t":"g","c":0}];
+const MONTHS = [{"m":1,"pt":{"clima":"Máxima perto de 30 °C, mínima 23 °C. Abafado.","chuva":"Cerca de 236 mm em uns 14 dias: pancadas de verão no fim da tarde. Água quente.","lotacao":"Altíssima temporada e férias escolares. Pousadas e travessias caras, filas no cais de Jacareí.","acontece":"Ano Novo. Dia de Reis, 6 de janeiro, costuma ser feriado em Angra (conferir). Festa do padroeiro São Sebastião perto do dia 20.","atencao":"Reservar tudo antes. Ir para as lagoas cedo, antes das escunas."},"en":{"clima":"Highs around 30 °C, lows 23 °C. Muggy.","chuva":"About 236 mm over some 14 days: summer showers late in the day. Warm water.","lotacao":"Peak season and school holidays. Rooms and crossings are pricey, queues at the Jacareí pier.","acontece":"New Year. Epiphany, 6 January, is usually a holiday in Angra (check). The São Sebastião patron festival around the 20th.","atencao":"Book everything ahead. Hit the lagoons early, before the schooners."}},{"m":2,"pt":{"clima":"Máxima perto de 30 °C, mínima 23 °C.","chuva":"Cerca de 189 mm em 11 dias. Água perto de 27,6 °C, a mais quente do ano.","lotacao":"Alta até o Carnaval. Depois esvazia bastante.","acontece":"Carnaval cai em fevereiro ou março, conforme a Páscoa: blocos na vila e ilha lotada.","atencao":"No Carnaval a travessia esgota e a Rio-Santos para. Sair cedo."},"en":{"clima":"Highs around 30 °C, lows 23 °C.","chuva":"About 189 mm over 11 days. Water around 27.6 °C, the warmest of the year.","lotacao":"High until Carnival. Much quieter after.","acontece":"Carnival falls in February or March depending on Easter: street parties in the village and a packed island.","atencao":"At Carnival crossings sell out and the Rio-Santos jams. Leave early."}},{"m":3,"pt":{"clima":"Máxima 29 °C, mínima 22,5 °C.","chuva":"Cerca de 206 mm em 12 dias. Água perto de 27 °C.","lotacao":"Cai depois do Carnaval. Bons preços em dia de semana.","acontece":"Às vezes Carnaval no começo do mês.","atencao":"Fim do verão chuvoso: deixe um dia de folga para remarcar passeios."},"en":{"clima":"Highs 29 °C, lows 22.5 °C.","chuva":"About 206 mm over 12 days. Water around 27 °C.","lotacao":"Drops after Carnival. Good weekday prices.","acontece":"Sometimes Carnival early in the month.","atencao":"The end of the rainy summer: leave a spare day to rebook trips."}},{"m":4,"pt":{"clima":"Máxima 28 °C, mínima 21 °C. Ainda quente.","chuva":"Cerca de 167 mm em 10 dias. Água perto de 26 °C.","lotacao":"Baixa temporada, menos gente e preços menores, menos nos feriados.","acontece":"Semana Santa (data muda). Tiradentes, 21 de abril. São Jorge, 23 de abril, feriado no estado do Rio.","atencao":"Feriadão de Páscoa ou Tiradentes enche como verão."},"en":{"clima":"Highs 28 °C, lows 21 °C. Still warm.","chuva":"About 167 mm over 10 days. Water around 26 °C.","lotacao":"Low season, fewer people and lower prices, except on holidays.","acontece":"Holy Week (date moves). Tiradentes, 21 April. São Jorge, 23 April, a Rio state holiday.","atencao":"Easter or Tiradentes long weekends fill up like summer."}},{"m":5,"pt":{"clima":"Máxima 26 °C, mínima 19 °C. Agradável para trilha.","chuva":"Cerca de 114 mm em 9 dias. Água ainda boa para nadar.","lotacao":"Baixa temporada. Um dos meses com melhor equilíbrio entre tempo e preço, segundo os guias.","acontece":"Dia do Trabalho, 1 de maio. Corpus Christi às vezes cai em maio.","atencao":"Frentes frias começam a aparecer: vento sul pode cancelar a Volta à Ilha."},"en":{"clima":"Highs 26 °C, lows 19 °C. Nice for hiking.","chuva":"About 114 mm over 9 days. Water still fine for swimming.","lotacao":"Low season. Guides rate it among the best balance of weather and price.","acontece":"Labour Day, 1 May. Corpus Christi sometimes falls in May.","atencao":"Cold fronts start: a southerly can cancel the island loop."}},{"m":6,"pt":{"clima":"Máxima 25 °C, mínima 18 °C.","chuva":"Cerca de 72 mm em 7 dias. Água perto de 22,8 °C.","lotacao":"Baixa temporada, ilha tranquila.","acontece":"Festas juninas no continente e às vezes na vila. Corpus Christi pode cair em junho.","atencao":"Noites frescas: levar casaco leve. Mar aberto mais instável com as frentes frias."},"en":{"clima":"Highs 25 °C, lows 18 °C.","chuva":"About 72 mm over 7 days. Water around 22.8 °C.","lotacao":"Low season, quiet island.","acontece":"June festivals on the mainland and sometimes in the village. Corpus Christi may fall in June.","atencao":"Cool nights: bring a light jacket. Open sea less settled with cold fronts."}},{"m":7,"pt":{"clima":"Máxima 24 °C, mínima 17 °C. O mês mais fresco.","chuva":"Cerca de 90 mm em 8 dias. Água perto de 22 °C.","lotacao":"Férias escolares de julho: movimento sobe, principalmente nos fins de semana.","acontece":"A igreja de Santana, na Freguesia, costuma festejar perto de 26 de julho (conferir).","atencao":"Bom para Papagaio e trilhas longas, com céu mais limpo nos dias secos."},"en":{"clima":"Highs 24 °C, lows 17 °C. The coolest month.","chuva":"About 90 mm over 8 days. Water around 22 °C.","lotacao":"July school holidays: busier, especially at weekends.","acontece":"The Santana church at Freguesia usually celebrates around 26 July (check).","atencao":"Good for Papagaio and long trails, with clearer skies on dry days."}},{"m":8,"pt":{"clima":"Máxima 24 °C, mínima 17 °C.","chuva":"O mês mais seco: cerca de 54 mm em 7 dias. Água perto de 22 °C.","lotacao":"Baixa temporada.","acontece":"Nada fixo de grande porte.","atencao":"Frente fria pode trazer dois ou três dias de vento e frio. Vale ter o Plano B na mão."},"en":{"clima":"Highs 24 °C, lows 17 °C.","chuva":"The driest month: about 54 mm over 7 days. Water around 22 °C.","lotacao":"Low season.","acontece":"Nothing big and fixed.","atencao":"A cold front can bring two or three windy, cool days. Keep Plan B handy."}},{"m":9,"pt":{"clima":"Máxima 24,5 °C, mínima 18 °C.","chuva":"Cerca de 121 mm em 12 dias: a chuva volta. Água ainda fresca.","lotacao":"Baixa temporada.","acontece":"Independência, 7 de setembro: feriadão enche.","atencao":"Dias nublados mais comuns. Bom preço fora do feriado."},"en":{"clima":"Highs 24.5 °C, lows 18 °C.","chuva":"About 121 mm over 12 days: rain comes back. Water still cool.","lotacao":"Low season.","acontece":"Independence Day, 7 September: the long weekend fills up.","atencao":"Cloudy days more common. Good prices outside the holiday."}},{"m":10,"pt":{"clima":"Máxima 25 °C, mínima 19 °C.","chuva":"Cerca de 142 mm em 13 dias. Começa o período chuvoso.","lotacao":"Baixa temporada, menos no feriado.","acontece":"Nossa Senhora Aparecida, 12 de outubro.","atencao":"Trilhas podem ficar escorregadias. Sair cedo e ver a previsão."},"en":{"clima":"Highs 25 °C, lows 19 °C.","chuva":"About 142 mm over 13 days. The rainy period begins.","lotacao":"Low season, except on the holiday.","acontece":"Our Lady of Aparecida, 12 October.","atencao":"Trails can get slippery. Leave early and check the forecast."}},{"m":11,"pt":{"clima":"Máxima 27 °C, mínima 21 °C. Esquentando.","chuva":"Cerca de 149 mm em 12 dias.","lotacao":"Ainda baixa, subindo no fim do mês.","acontece":"Finados (2), Proclamação da República (15) e Consciência Negra (20): três chances de feriadão.","atencao":"Bom mês para pegar preço de baixa com água esquentando."},"en":{"clima":"Highs 27 °C, lows 21 °C. Warming up.","chuva":"About 149 mm over 12 days.","lotacao":"Still low, rising late in the month.","acontece":"All Souls (2nd), Republic Day (15th) and Black Consciousness Day (20th): three long-weekend chances.","atencao":"A good month for low-season prices with warming water."}},{"m":12,"pt":{"clima":"Máxima 28 °C, mínima 22 °C.","chuva":"O mês mais chuvoso: cerca de 258 mm em 15 dias.","lotacao":"Alta temporada começa na segunda quinzena. Réveillon esgota meses antes.","acontece":"Natal e Réveillon com fogos na baía.","atencao":"Reservar pousada e travessia do Réveillon com muita antecedência. Contar com chuva."},"en":{"clima":"Highs 28 °C, lows 22 °C.","chuva":"The wettest month: about 258 mm over 15 days.","lotacao":"High season starts in the second half. New Year sells out months ahead.","acontece":"Christmas and New Year with fireworks over the bay.","atencao":"Book New Year rooms and crossings well ahead. Expect rain."}}];
+const ITEM = Object.fromEntries(ITEMS.map(i => [i.id, i]));
+const GROUPS = [
+  {id:'barco',   n:['Passeios de barco','Boat trips'], i:'⛵'},
+  {id:'trilhas', n:['Trilhas','Trails'], i:'🥾'},
+  {id:'praias',  n:['Praias','Beaches'], i:'🏖'},
+  {id:'vila',    n:['Na vila e a história','The village and its history'], i:'⛪'},
+  {id:'comer',   n:['Onde comer','Where to eat'], i:'🍴'},
+  {id:'ideias',  n:['Minhas ideias','My ideas'], i:'💡'}
+];
+const CORE = ITEMS.filter(i => i.c).map(i => i.id);
+
+/* ============================================================
+   ESTADO
+   ============================================================ */
+const K = k => CONFIG.storageKey + ':' + k;
+const load = (k, d) => { try { const v = localStorage.getItem(K(k)); return v === null ? d : JSON.parse(v); } catch(e) { return d; } };
+const save = (k, v) => { try { localStorage.setItem(K(k), JSON.stringify(v)); } catch(e) {} };
+let currentLang  = load('lang', 'pt');
+let currentTheme = load('theme', 'dark');
+let cur    = load('cur', null);        /* viagem aberta */
+let closed = load('closed', []);       /* fechadas neste celular */
+let ideas  = load('ideas', []);
+let tips   = load('tips', {});
+let filter = 'all';
+const openIds = new Set();
+
+const L = () => currentLang === 'en' ? 1 : 0;
+const T = (pt, en) => currentLang === 'en' ? en : pt;
+const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const $ = id => document.getElementById(id);
+
+/* ============================================================
+   IDIOMA E TEMA (texto fixo por data-en/data-pt)
+   ============================================================ */
+function applyLang(lang){
+  document.querySelectorAll('[data-en]').forEach(el => {
+    const v = el.getAttribute('data-' + lang);
+    if (v !== null && el.tagName !== 'TEXTAREA') el.innerHTML = v;
+  });
+  $('btnEN').classList.toggle('active', lang === 'en');
+  $('btnPT').classList.toggle('active', lang === 'pt');
+  document.documentElement.lang = lang === 'pt' ? 'pt-BR' : 'en-GB';
+}
+function setLang(lang){ currentLang = lang; save('lang', lang); applyLang(lang); renderAll(); updateLightCard(); }
+function applyTheme(t){ document.body.classList.toggle('light', t === 'light'); $('btnTheme').textContent = t === 'light' ? '☀' : '☾'; }
+function toggleTheme(){ currentTheme = currentTheme === 'dark' ? 'light' : 'dark'; save('theme', currentTheme); applyTheme(currentTheme); }
+function toggleCard(id){ $(id).classList.toggle('open'); }
+
+/* ============================================================
+   VIAGENS E CONTAGENS
+   ============================================================ */
+function tripYear(t){ return t.year || (t.start ? +t.start.slice(0,4) : (t.closedAt ? +t.closedAt.slice(0,4) : new Date().getFullYear())); }
+function pastTrips(){
+  const ids = new Set(HISTORY.map(t => t.id));
+  return HISTORY.map(t => Object.assign({published:true}, t))
+    .concat(closed.filter(t => !ids.has(t.id)))
+    .sort((a, b) => (b.start || String(tripYear(b))).localeCompare(a.start || String(tripYear(a))));
+}
+function allTrips(){ return pastTrips().concat(cur ? [Object.assign({current:true}, cur)] : []); }
+function doneInfo(id){
+  const years = [];
+  allTrips().forEach(t => t.items.filter(x => x.id === id).forEach(() => years.push(t.current ? T('agora','now') : tripYear(t))));
+  return years;
+}
+function itemName(x){ return ITEM[x.id] ? ITEM[x.id].n[L()] : (x.n || (ideas.find(i => i.id === x.id) || {}).n || x.id); }
+function allIdeas(){
+  const map = new Map(ideas.map(i => [i.id, i]));
+  allTrips().forEach(t => t.items.forEach(x => { if (!ITEM[x.id] && x.n && !map.has(x.id)) map.set(x.id, {id:x.id, n:x.n, note:''}); }));
+  return [...map.values()];
+}
+function today(){ return new Intl.DateTimeFormat('en-CA', {timeZone: CONFIG.timeZone, year:'numeric', month:'2-digit', day:'2-digit'}).format(new Date()); }
+function fmtDate(s){ if (!s) return ''; const [y,m,d] = s.split('-').map(Number); return new Date(Date.UTC(y, m-1, d)).toLocaleDateString(currentLang === 'en' ? 'en-GB' : 'pt-BR', {day:'numeric', month:'short', year:'numeric', timeZone:'UTC'}); }
+function ensureTrip(){
+  if (cur) return;
+  const d = today();
+  cur = {id:'v' + d.replace(/-/g,'') + Math.random().toString(36).slice(2,5), name:'Ilha Grande ' + d.slice(0,4), start:d, end:'', with:'', stay:'', note:'', items:[]};
+  toast(T('Viagem nova aberta: ', 'New trip opened: ') + cur.name);
+}
+function persistTrip(){ save('cur', cur); }
+
+/* ============================================================
+   FIZ
+   ============================================================ */
+function toggleDone(ev, id){
+  ev.stopPropagation();
+  ensureTrip();
+  const k = cur.items.findIndex(x => x.id === id);
+  if (k >= 0) cur.items.splice(k, 1);
+  else { const it = {id, op:'', note:'', date:today()}; if (!ITEM[id]) it.n = itemName({id}); cur.items.push(it); }
+  persistTrip(); renderAll();
+}
+function setTripItem(id, field, val){ const x = cur && cur.items.find(i => i.id === id); if (x) { x[field] = val; persistTrip(); } }
+function setTip(id, val){ if (val.trim()) tips[id] = val; else delete tips[id]; save('tips', tips); renderTips(); }
+
+/* ============================================================
+   CATÁLOGO
+   ============================================================ */
+function renderFilters(){
+  const f = [['all', T('Tudo','All')], ['todo', T('Ainda não fiz','Not done yet')], ['done', T('Já fiz','Done')]];
+  $('filters').innerHTML = f.map(([k, n]) => `<button class="fchip ${filter === k ? 'on' : ''}" onclick="setFilter('${k}')">${n}</button>`).join('');
+}
+function setFilter(k){ filter = k; renderFilters(); renderCatalog(); }
+function itemHTML(it){
+  const l = L(), years = doneInfo(it.id), inCur = cur && cur.items.find(x => x.id === it.id);
+  if (filter === 'todo' && years.length) return '';
+  if (filter === 'done' && !years.length) return '';
+  const name = it.n[l] || it.n[0];
+  const status = years.length
+    ? `<span class="done-chip">${T('Feito','Done')} ${years.length}x · ${esc(years.join(', '))}</span>`
+    : `<span class="todo-chip">${T('Ainda não','Not yet')}</span>`;
+  const open = openIds.has(it.id);
+  const q = encodeURIComponent(name + ' Ilha Grande Angra dos Reis');
+  const maps = 'https://www.google.com/maps/search/?api=1&query=' + q;
+  const what = 'https://www.google.com/search?hl=' + (l ? 'en' : 'pt-BR') + '&q=' + q;
+  const tripBits = inCur ? `<div class="trip-fields">
+      <span class="detail-label">${T('Nesta viagem','On this trip')}</span>
+      <input placeholder="${T('Empresa ou barqueiro','Company or boatman')}" value="${esc(inCur.op)}" oninput="setTripItem('${it.id}','op',this.value)">
+      <input placeholder="${T('Como foi? Repetiria?','How was it? Would you repeat it?')}" value="${esc(inCur.note)}" oninput="setTripItem('${it.id}','note',this.value)">
+    </div>` : '';
+  return `<div class="stop ${inCur ? 'checked' : ''} ${open ? 'open' : ''}" id="it-${it.id}">
+    <div class="stop-header" onclick="toggleItem('${it.id}')">
+      <button class="stop-check" onclick="toggleDone(event,'${it.id}')" aria-label="${T('Fiz','Done')}"></button>
+      <div class="stop-main"><div class="stop-name">${esc(name)}</div><div class="stop-meta">${status}${inCur ? `<span class="now-chip">${T('Nesta viagem','This trip')}</span>` : ''}${tips[it.id] ? '<span class="tip-dot">✍</span>' : ''}</div></div>
+      <span class="stop-expand">▾</span>
+    </div>
+    ${open ? `<div class="stop-details"><div class="detail-rule"></div>
+      ${it.d && it.d[l] ? `<div class="detail-text">${esc(it.d[l])}</div>` : ''}
+      ${tripBits}
+      <span class="detail-label tip-label">${T('Minha dica','My tip')}</span>
+      <textarea class="notes-area" placeholder="${T('O que vale lembrar da próxima vez','What to remember next time')}" oninput="setTip('${it.id}',this.value)">${esc(tips[it.id] || '')}</textarea>
+      <div class="links"><a href="${maps}" target="_blank" rel="noopener" class="map-btn">📍 ${T('Ver no mapa','Map')}</a><a href="${what}" target="_blank" rel="noopener" class="map-btn">? ${T('O que é isso?','What is this?')}</a>
+      ${it.idea ? `<button class="map-btn" onclick="delIdea('${it.id}')">${T('Apagar ideia','Delete idea')}</button>` : ''}</div>
+    </div>` : ''}
+  </div>`;
+}
+function toggleItem(id){ openIds.has(id) ? openIds.delete(id) : openIds.add(id); renderCatalog(); }
+function renderCatalog(){
+  const l = L();
+  $('catalog').innerHTML = GROUPS.map(g => {
+    let list = g.id === 'ideias' ? allIdeas().map(i => ({id:i.id, n:[i.n, i.n], d:[i.note || '', i.note || ''], idea:true})) : ITEMS.filter(i => i.g === g.id);
+    let body;
+    if (g.id === 'barco') {
+      const a = list.filter(i => i.c).map(itemHTML).join(''), b = list.filter(i => !i.c).map(itemHTML).join('');
+      body = (a ? `<div class="sub-title">${T('Os 12 principais','The main 12')}</div>` + a : '') + (b ? `<div class="sub-title">${T('Especiais, privativos e na água','Specials, private and in the water')}</div>` + b : '');
+    } else body = list.map(itemHTML).join('');
+    if (!body) return '';
+    const n = list.length, d = list.filter(i => doneInfo(i.id).length).length;
+    return `<div class="group"><div class="group-title"><span>${g.i} ${g.n[l]}</span><span class="group-count">${d} ${T('de','of')} ${n}</span></div>${body}</div>`;
+  }).join('') || `<p class="empty">${T('Nada aqui com esse filtro.','Nothing here with this filter.')}</p>`;
+}
+
+/* ============================================================
+   MINHAS IDEIAS
+   ============================================================ */
+function ideaForm(){
+  openModal(`<h3>${T('Minha ideia','My idea')}</h3>
+    <p class="m-sub">${T('Qualquer coisa que não está na lista: uma praia, um bar, um barqueiro.','Anything not on the list: a beach, a bar, a boatman.')}</p>
+    <input id="iName" placeholder="${T('Nome','Name')}">
+    <input id="iNote" placeholder="${T('Nota (opcional)','Note (optional)')}">
+    <div class="m-row"><button class="m-btn" onclick="closeModal()">${T('Cancelar','Cancel')}</button><button class="m-btn primary" onclick="saveIdea()">${T('Criar','Create')}</button></div>`);
+  setTimeout(() => $('iName').focus(), 50);
+}
+function saveIdea(){
+  const n = $('iName').value.trim(); if (!n) { $('iName').focus(); return; }
+  ideas.push({id:'idea-' + Date.now().toString(36), n, note:$('iNote').value.trim()}); save('ideas', ideas);
+  closeModal(); renderAll(); toast(T('Ideia criada. Toque em Fiz quando fizer.','Idea created. Tap Done when you do it.'));
+}
+function delIdea(id){ ideas = ideas.filter(i => i.id !== id); save('ideas', ideas); renderAll(); }
+
+/* ============================================================
+   HISTÓRICO
+   ============================================================ */
+function renderCurrent(){
+  if (!cur) {
+    $('current').innerHTML = `<div class="hist-card empty-trip"><div class="hist-name">${T('Nenhuma viagem aberta','No trip open')}</div>
+      <p>${T('Ela abre sozinha no primeiro Fiz. Ou abra agora.','It opens itself on the first Done. Or open it now.')}</p>
+      <button class="deck-cta" onclick="ensureTrip();persistTrip();renderAll()">${T('Começar viagem','Start a trip')}</button></div>`;
+    return;
+  }
+  const items = cur.items.map(x => `<li><b>${esc(itemName(x))}</b>${x.op ? ' · ' + esc(x.op) : ''}${x.note ? `<br><span>${esc(x.note)}</span>` : ''}</li>`).join('');
+  $('current').innerHTML = `<div class="hist-card current">
+    <div class="deck-label">${T('Viagem atual','Current trip')}</div>
+    <label>${T('Nome','Name')}<input value="${esc(cur.name)}" oninput="cur.name=this.value;persistTrip();renderDeck()"></label>
+    <div class="two"><label>${T('Chegada','Arrival')}<input type="date" value="${esc(cur.start)}" onchange="cur.start=this.value;persistTrip()"></label>
+    <label>${T('Volta','Departure')}<input type="date" value="${esc(cur.end)}" onchange="cur.end=this.value;persistTrip()"></label></div>
+    <label>${T('Com quem','Who came')}<input value="${esc(cur.with)}" oninput="cur.with=this.value;persistTrip()"></label>
+    <label>${T('Onde ficou','Where you stayed')}<input value="${esc(cur.stay)}" oninput="cur.stay=this.value;persistTrip()"></label>
+    <label>${T('Nota da viagem','Trip note')}<textarea class="notes-area" oninput="cur.note=this.value;persistTrip()">${esc(cur.note)}</textarea></label>
+    <div class="detail-label">${T('O que você fez','What you did')} (${cur.items.length})</div>
+    ${items ? `<ul class="hist-items">${items}</ul>` : `<p class="muted">${T('Nada marcado ainda. Use Fiz em O que Fazer.','Nothing ticked yet. Use Done in What to Do.')}</p>`}
+    <button class="deck-cta close-btn" onclick="confirmClose()">${T('Fechar viagem','Close the trip')}</button>
+  </div>`;
+}
+function tripCard(t){
+  const dates = t.start ? fmtDate(t.start) + (t.end ? ' · ' + fmtDate(t.end) : '') : String(tripYear(t));
+  const items = t.items.map(x => `<li><b>${esc(itemName(x))}</b>${x.op ? ' · ' + esc(x.op) : ''}${x.note ? `<br><span>${esc(x.note)}</span>` : ''}</li>`).join('');
+  let flag = '';
+  if (!t.published) flag = t.sent ? `<span class="todo-chip">${T('Enviado, aguardando publicação','Sent, waiting to be published')}</span>`
+                                  : `<span class="warn-chip">${T('Só neste celular','Only on this phone')}</span> <button class="map-btn" onclick="sendTrip('${t.id}')">${T('Enviar de novo','Send again')}</button>`;
+  return `<div class="hist-card"><div class="hist-year">${tripYear(t)}</div>
+    <div class="hist-name">${esc(t.name)}</div><div class="hist-meta">${esc(dates)}${t.with ? ' · ' + esc(t.with) : ''}${t.stay ? ' · ' + esc(t.stay) : ''}</div>
+    ${flag ? `<div class="hist-flag">${flag}</div>` : ''}
+    ${items ? `<ul class="hist-items">${items}</ul>` : ''}${t.note ? `<p class="muted">${esc(t.note)}</p>` : ''}</div>`;
+}
+function renderPast(){
+  const p = pastTrips();
+  $('past').innerHTML = `<div class="sub-title">${T('Viagens anteriores','Previous trips')} (${p.length})</div>` + p.map(tripCard).join('');
+}
+function confirmClose(){
+  if (!cur) return;
+  openModal(`<h3>${T('Fechar viagem?','Close the trip?')}</h3>
+    <p class="m-sub">${T('Ela vai para as viagens anteriores e chega no seu e-mail para entrar no Histórico publicado.','It moves to previous trips and is emailed to you to join the published History.')}</p>
+    <input id="cName" value="${esc(cur.name)}" placeholder="${T('Nome da viagem','Trip name')}">
+    <div class="m-row"><button class="m-btn" onclick="closeModal()">${T('Ainda não','Not yet')}</button><button class="m-btn primary" onclick="closeTrip()">${T('Fechar e enviar','Close and send')}</button></div>`);
+}
+function closeTrip(){
+  cur.name = $('cName').value.trim() || cur.name;
+  if (!cur.end) cur.end = today();
+  const t = Object.assign({}, cur, {year: +cur.start.slice(0,4), closedAt: today(), sent:false});
+  closed.push(t); save('closed', closed); cur = null; persistTrip();
+  closeModal(); renderAll(); sendTrip(t.id);
+}
+async function sendTrip(id){
+  const t = closed.find(x => x.id === id); if (!t) return;
+  const data = {id:t.id, name:t.name, year:t.year, start:t.start, end:t.end, with:t.with, stay:t.stay, note:t.note,
+    items:t.items.map(x => { const o = {id:x.id, op:x.op || '', note:x.note || ''}; if (!ITEM[x.id]) o.n = itemName(x); return o; })};
+  const list = t.items.map(x => '- ' + itemName(x) + (x.op ? ' (' + x.op + ')' : '') + (x.note ? ': ' + x.note : '')).join('\n');
+  toast(T('Enviando...','Sending...'));
+  let ok = false;
+  try {
+    const r = await fetch('https://formsubmit.co/ajax/' + CONFIG.SEND_TO, {method:'POST', headers:{'Content-Type':'application/json','Accept':'application/json'},
+      body:JSON.stringify({_subject:CONFIG.MAIL_TAG + ' ' + t.name, _template:'table', _captcha:'false', Viagem:t.name, Datas:(t.start || '') + ' a ' + (t.end || ''), Com_quem:t.with || '-', Onde_ficou:t.stay || '-', O_que_fez:list || '-',
+        Dados:'===DIARIO-INICIO===' + JSON.stringify(data) + '===DIARIO-FIM==='})});
+    const j = await r.json().catch(() => ({}));
+    ok = r.ok && (j.success === true || j.success === 'true');
+  } catch(e) { ok = false; }
+  t.sent = ok; save('closed', closed); renderPast();
+  toast(ok ? T('Viagem enviada. Entra no Histórico publicado em até 2 dias.','Trip sent. It joins the published History within 2 days.')
+           : T('Sem sinal agora. A viagem está guardada aqui: toque em Enviar de novo quando tiver internet.','No signal right now. The trip is saved here: tap Send again when online.'));
+}
+function downloadBackup(){
+  const blob = new Blob([JSON.stringify({cur, closed, ideas, tips}, null, 1)], {type:'application/json'});
+  const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'ilhagrande-backup-' + today() + '.json';
+  document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 500);
+}
+
+/* ============================================================
+   DECK, DICAS, MESES
+   ============================================================ */
+function renderDeck(){
+  const past = pastTrips();
+  $('tripLabel').textContent = cur ? T('Viagem atual','Current trip') : T('Próxima ida','Next trip');
+  $('tripName').textContent = cur ? cur.name : T('Nenhuma viagem aberta','No trip open');
+  $('tripNote').textContent = cur ? cur.items.length + ' ' + T('itens marcados desde ','items ticked since ') + fmtDate(cur.start)
+                                  : T('Marque Fiz em qualquer item e a viagem começa sozinha.','Tap Done on anything and the trip starts by itself.');
+  $('tripCta').textContent = cur ? T('Abrir a viagem','Open the trip') : T('Ver o Histórico','See the History');
+  const last = past[0];
+  $('lastVal').textContent = last ? tripYear(last) : '--';
+  $('lastSub').textContent = last ? past.length + ' ' + T(past.length === 1 ? 'ida' : 'idas', past.length === 1 ? 'trip' : 'trips') : '--';
+  const done = CORE.filter(id => doneInfo(id).length).length;
+  $('tripProgressFill').style.width = (done / CORE.length * 100) + '%';
+  $('tripProgressLabel').textContent = `${done} ${T('de','of')} ${CORE.length} ${T('passeios principais','main boat trips')}`;
+  const left = CORE.filter(id => !doneInfo(id).length).map(id => ITEM[id].n[L()]);
+  $('leftLine').innerHTML = left.length ? `<b>${T('Ainda não fez','Not done yet')}:</b> ${esc(left.slice(0,4).join(', '))}${left.length > 4 ? ' ' + T('e mais ','and ') + (left.length - 4) + T('',' more') : ''}` : T('Os 12 feitos. Hora de repetir o favorito.','All 12 done. Time to repeat the favourite.');
+  const years = [...new Set(past.map(tripYear))].sort();
+  $('coverDates').textContent = years.length ? years.join(' · ') : '';
+}
+function renderTips(){
+  const e = Object.entries(tips);
+  $('myTips').innerHTML = e.length ? e.map(([id, v]) => `<div class="item-row"><div class="item-dot"></div><div class="item-text"><strong>${esc(itemName({id}))}</strong><span>${esc(v)}</span></div></div>`).join('')
+    : `<p class="muted">${T('Ainda nenhuma. Abra um item em O que Fazer e escreva em Minha dica.','None yet. Open an item in What to Do and write under My tip.')}</p>`;
+}
+function renderMonths(){
+  const names = currentLang === 'en' ? ['January','February','March','April','May','June','July','August','September','October','November','December'] : ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+  $('months').innerHTML = MONTHS.map(M => { const x = M[currentLang] || M.pt; return `<details class="month" ${M.m <= 2 ? 'open' : ''}><summary><b>${names[M.m-1]}</b> <span>${esc(x.clima)}</span></summary>
+    <p>${esc(x.chuva)}</p><p><b>${T('Movimento','Crowds')}:</b> ${esc(x.lotacao)}</p><p><b>${T('Acontece','What happens')}:</b> ${esc(x.acontece)}</p><p><b>${T('Atenção','Watch out')}:</b> ${esc(x.atencao)}</p></details>`; }).join('');
+}
+function renderAll(){ renderDeck(); renderFilters(); renderCatalog(); renderCurrent(); renderPast(); renderTips(); renderMonths(); }
+
+/* ============================================================
+   LUZ HOJE (horário de Abraão em qualquer aparelho)
+   ============================================================ */
+function solarUT(lat, lng, y, m, d, rise){
+  const rad = Math.PI / 180, deg = 180 / Math.PI;
+  const N = Math.floor((Date.UTC(y, m-1, d) - Date.UTC(y, 0, 0)) / 86400000);
+  const lngHour = lng / 15, t = N + ((rise ? 6 : 18) - lngHour) / 24;
+  const M = 0.9856 * t - 3.289;
+  let Lg = (M + 1.916 * Math.sin(M * rad) + 0.020 * Math.sin(2 * M * rad) + 282.634 + 360) % 360;
+  let RA = (Math.atan(0.91764 * Math.tan(Lg * rad)) * deg + 360) % 360;
+  RA = (RA + Math.floor(Lg / 90) * 90 - Math.floor(RA / 90) * 90) / 15;
+  const sinDec = 0.39782 * Math.sin(Lg * rad), cosDec = Math.cos(Math.asin(sinDec));
+  const cosH = (Math.cos(90.833 * rad) - sinDec * Math.sin(lat * rad)) / (cosDec * Math.cos(lat * rad));
+  if (cosH > 1 || cosH < -1) return null;
+  const H = rise ? (360 - Math.acos(cosH) * deg) / 15 : Math.acos(cosH) * deg / 15;
+  const UT = (H + RA - 0.06571 * t - 6.622 - lngHour + 48) % 24;
+  return Date.UTC(y, m-1, d) + UT * 3600000;
+}
+function fmtClock(ts){ return ts ? new Date(ts).toLocaleTimeString('pt-BR', {hour:'2-digit', minute:'2-digit', timeZone:CONFIG.timeZone}) : '--:--'; }
+function updateLightCard(){
+  const [y, m, d] = today().split('-').map(Number);
+  const rise = solarUT(CONFIG.coords.lat, CONFIG.coords.lng, y, m, d, true);
+  const set = solarUT(CONFIG.coords.lat, CONFIG.coords.lng, y, m, d, false);
+  $('sunriseVal').textContent = fmtClock(rise); $('sunsetVal').textContent = fmtClock(set);
+  const now = Date.now(), H = 3600000, g = $('goldenVal');
+  if (!rise || !set) { g.textContent = '--'; return; }
+  if ((now >= rise && now <= rise + H) || (now >= set - H && now <= set)) { g.textContent = T('Hora dourada agora','Golden hour now'); return; }
+  const next = now < rise ? rise : now < set - H ? set - H : null;
+  if (next) { const mins = Math.round((next - now) / 60000), h = Math.floor(mins / 60); g.textContent = T('Próxima hora dourada em ','Next golden hour in ') + (h ? h + 'h ' : '') + (mins % 60) + 'm'; }
+  else g.textContent = T('Hora dourada amanhã','Golden hour tomorrow');
+}
+
+/* ============================================================
+   MODAL, TOAST, DOCK
+   ============================================================ */
+function openModal(html){ $('modalBox').innerHTML = html; $('modal').hidden = false; }
+function closeModal(){ $('modal').hidden = true; $('modalBox').innerHTML = ''; }
+let toastT;
+function toast(msg){ const el = $('toast'); el.textContent = msg; el.classList.add('show'); clearTimeout(toastT); toastT = setTimeout(() => el.classList.remove('show'), 3200); }
+function initDockScroll(){
+  const deck = $('deck'); let ticking = false;
+  const update = () => { document.body.classList.toggle('dock-visible', deck.getBoundingClientRect().bottom < 8); ticking = false; };
+  window.addEventListener('scroll', () => { if (!ticking) { requestAnimationFrame(update); ticking = true; } }, {passive:true});
+  window.addEventListener('resize', update); update();
+}
+function populateHomeBase(){
+  const hb = CONFIG.homeBase;
+  $('homeBaseMap').href = 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(hb.mapQuery);
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  applyTheme(currentTheme);
+  applyLang(currentLang);
+  populateHomeBase();
+  renderAll();
+  updateLightCard();
+  initDockScroll();
+  $('verLine').textContent = CONFIG.VERSION + ' · ' + CONFIG.BUILT;
+  $('modal').addEventListener('click', e => { if (e.target.id === 'modal') closeModal(); });
+  setInterval(updateLightCard, 60000);
+  if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(() => {});
+});
+
+</script>
+</body>
+</html>
